@@ -1,11 +1,23 @@
 import { NavLink } from 'react-router-dom';
 import {
-  HiOutlineAcademicCap,
-  HiOutlineTruck,
-  HiOutlineChartBar,
+  HiOutlineBuildingOffice2,
+  HiOutlineFolder,
+  HiOutlineCalendarDays,
+  HiOutlineUsers,
 } from 'react-icons/hi2';
 
 import styled from 'styled-components';
+
+const Nav = styled.nav`
+  display: flex;
+  flex-direction: column;
+  gap: 6rem;
+`;
+
+const Logo = styled.img`
+  width: 15rem;
+  align-self: center;
+`;
 
 const NavList = styled.ul`
   display: flex;
@@ -33,10 +45,9 @@ const StyledNavLink = styled(NavLink)`
   &:active,
   &.active:link,
   &.active:visited {
-    color: var(--color-grey-800);
-    background-color: var(--color-green-50);
+    color: var(--color-red-800);
+    background-color: var(--color-red-100);
     border-radius: var(--border-radius-sm);
-    color: var(--color-green-600);
   }
 
   & svg {
@@ -50,34 +61,43 @@ const StyledNavLink = styled(NavLink)`
   &:active svg,
   &.active:link svg,
   &.active:visited svg {
-    color: var(--color-green-600);
+    color: var(--color-red-600);
   }
 `;
 
+// const Logo =
+
 function MainNav() {
   return (
-    <nav>
+    <Nav>
+      <Logo src="/Logo-dai.png" alt="" />
       <NavList>
         <li title="Administrar usuarios">
-          <StyledNavLink to="graduates">
-            <HiOutlineAcademicCap />
-            <span>Egresados</span>
+          <StyledNavLink to="users">
+            <HiOutlineUsers />
+            <span>Empleados</span>
           </StyledNavLink>
         </li>
         <li>
-          <StyledNavLink to="status">
-            <HiOutlineTruck />
-            <span>Estatus </span>
+          <StyledNavLink to="enterprise">
+            <HiOutlineBuildingOffice2 />
+            <span>Empresas</span>
           </StyledNavLink>
         </li>
         <li>
-          <StyledNavLink to="stats">
-            <HiOutlineChartBar />
-            <span>Estadisticas</span>
+          <StyledNavLink to="departments">
+            <HiOutlineFolder />
+            <span>Departamentos</span>
+          </StyledNavLink>
+        </li>
+        <li>
+          <StyledNavLink to="holidays">
+            <HiOutlineCalendarDays />
+            <span>Vacaciones</span>
           </StyledNavLink>
         </li>
       </NavList>
-    </nav>
+    </Nav>
   );
 }
 
