@@ -1,3 +1,4 @@
+import CreateUser from '../features/users/createUser';
 import UsersTable from '../features/users/UsersTable';
 import Row from '../ui/Row';
 import Search from '../ui/Search';
@@ -15,6 +16,7 @@ const User = () => {
           popUpFilter={<h1>Filtros</h1>}
         />
         <UsersTable />
+        <CreateUser />
       </Row>
     </>
   );

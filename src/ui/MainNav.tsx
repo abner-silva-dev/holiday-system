@@ -8,17 +8,6 @@ import {
 
 import styled from 'styled-components';
 
-const Nav = styled.nav`
-  display: flex;
-  flex-direction: column;
-  gap: 6rem;
-`;
-
-const Logo = styled.img`
-  width: 15rem;
-  align-self: center;
-`;
-
 const NavList = styled.ul`
   display: flex;
   flex-direction: column;
@@ -31,7 +20,6 @@ const StyledNavLink = styled(NavLink)`
     display: flex;
     align-items: center;
     gap: 1.2rem;
-
     color: var(--color-grey-600);
     font-size: 1.6rem;
     font-weight: 500;
@@ -41,7 +29,11 @@ const StyledNavLink = styled(NavLink)`
   }
 
   /* This works because react-router places the active class on the active NavLink */
-  &:hover,
+  &:hover {
+    transform: translateX(2px);
+    color: var(--color-red-800);
+  }
+
   &:active,
   &.active:link,
   &.active:visited {
@@ -57,20 +49,20 @@ const StyledNavLink = styled(NavLink)`
     transition: all 0.3s;
   }
 
-  &:hover svg,
+  &:hover svg {
+    color: var(--color-red-800);
+  }
+
   &:active svg,
   &.active:link svg,
   &.active:visited svg {
-    color: var(--color-red-600);
+    color: var(--color-red-800);
   }
 `;
 
-// const Logo =
-
 function MainNav() {
   return (
-    <Nav>
-      <Logo src="/Logo-dai.png" alt="" />
+    <nav>
       <NavList>
         <li title="Administrar usuarios">
           <StyledNavLink to="users">
@@ -97,7 +89,7 @@ function MainNav() {
           </StyledNavLink>
         </li>
       </NavList>
-    </Nav>
+    </nav>
   );
 }
 

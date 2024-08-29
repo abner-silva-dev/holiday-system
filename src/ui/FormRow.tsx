@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactElement } from 'react';
 import styled from 'styled-components';
 
 const Label = styled.label`
@@ -8,19 +8,20 @@ const Label = styled.label`
 
 const StyledFormRow = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 1rem;
 `;
 
 type Props = {
-  children?: ReactNode;
+  children?: ReactElement<{ id: string }>;
   label: string;
 };
 
 function FormRow({ children, label }: Props) {
   return (
     <StyledFormRow>
-      <Label htmlFor={children?.id}>{label}</Label>
+      <Label htmlFor={children?.props.id}>{label}</Label>
       {children}
     </StyledFormRow>
   );

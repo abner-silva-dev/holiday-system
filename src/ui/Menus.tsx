@@ -1,11 +1,4 @@
-import {
-  ReactNode,
-  createContext,
-  useContext,
-  useState,
-  MouseEvent,
-  FC,
-} from 'react';
+import { ReactNode, createContext, useContext, useState, MouseEvent, FC } from 'react';
 import { HiEllipsisVertical } from 'react-icons/hi2';
 import styled from 'styled-components';
 import { useOutsideClick } from '../hooks/useOutsideClick';
@@ -28,9 +21,9 @@ type PropsMenus = {
 };
 
 type ButtonProps = {
-  children: ReactNode;
-  icon: ReactNode;
-  onClick: () => void;
+  children?: ReactNode;
+  icon?: ReactNode;
+  onClick?: () => void;
 };
 
 const Menu = styled.div`
@@ -105,9 +98,7 @@ const Menus: FC<Props> & {
   Button: FC<ButtonProps>;
 } = ({ children }: Props) => {
   const [openId, setOpenId] = useState<string>('');
-  const [position, setPosition] = useState<{ x: number; y: number } | null>(
-    null
-  );
+  const [position, setPosition] = useState<{ x: number; y: number } | null>(null);
 
   const close = () => setOpenId('');
   const open = (id: string) => setOpenId(id);
@@ -120,9 +111,7 @@ const Menus: FC<Props> & {
     setPosition,
   };
 
-  return (
-    <MenusContext.Provider value={state}>{children}</MenusContext.Provider>
-  );
+  return <MenusContext.Provider value={state}>{children}</MenusContext.Provider>;
 };
 
 const Toggle: FC<{ id: string }> = ({ id }) => {
@@ -166,7 +155,7 @@ const Button: FC<ButtonProps> = ({ children, icon, onClick }) => {
 
   const handleClick = () => {
     onClick?.();
-    close();
+    close?.();
   };
 
   return (
