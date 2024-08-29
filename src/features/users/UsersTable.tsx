@@ -9,7 +9,6 @@ import Menus from '../../ui/Menus';
 const UsersTable = () => {
   const { users, isPending, error } = useUsers();
 
-  console.log(isPending);
   if (isPending) return <Spinner />;
   if (error) return <h1>{error.message}</h1>;
 

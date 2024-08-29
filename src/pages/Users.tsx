@@ -1,4 +1,5 @@
 import CreateUser from '../features/users/createUser';
+import UserOptions from '../features/users/userOptions';
 import UsersTable from '../features/users/UsersTable';
 import Row from '../ui/Row';
 import Search from '../ui/Search';
@@ -9,14 +10,17 @@ const User = () => {
     <>
       <Row>
         <Heading as="h1">Empleados</Heading>
-        <Search
-          width="60%"
-          placeholder="Buscar por: nombre | N° Empleado"
-          onSetQuery={() => {}}
-          popUpFilter={<h1>Filtros</h1>}
-        />
+
+        <Row type="horizontal">
+          <Search
+            width="60%"
+            placeholder="Buscar por: nombre | N° Empleado"
+            onSetQuery={() => {}}
+            popUpFilter={<h1>Filtros</h1>}
+          />
+          <UserOptions />
+        </Row>
         <UsersTable />
-        <CreateUser />
       </Row>
     </>
   );
