@@ -1,4 +1,4 @@
-import { cloneElement, createContext, useContext, useState } from 'react';
+import { cloneElement, createContext, ReactNode, useContext, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { HiXMark } from 'react-icons/hi2';
 import styled from 'styled-components';
@@ -53,9 +53,30 @@ const Button = styled.button`
   }
 `;
 
-const ModalContext = createContext();
+interface PropsModal {
+  children: ReactNode;
+}
 
-function Modal({ children }) {
+interface PropsOpen {
+  children: React.ReactElement;
+  opens: string;
+}
+
+interface PropsWindows {
+  children: React.ReactElement;
+  name: string;
+}
+
+const ModalContext = createContext<
+  | {
+      openName: string;
+      close: () => void;
+      open: (name: string) => void;
+    }
+  | undefined
+>(undefined);
+
+function Modal({ children }: PropsModal) {
   const [openName, setOpenName] = useState('');
 
   const close = () => setOpenName('');
@@ -68,15 +89,28 @@ function Modal({ children }) {
   );
 }
 
-function Open({ children, opens: opensWindowName }) {
-  const { open } = useContext(ModalContext);
+function Open({ children, opens: opensWindowName }: PropsOpen) {
+  const context = useContext(ModalContext);
+
+  if (!context) {
+    throw new Error('Open must be used within a Modal');
+  }
+
+  const { open } = context;
 
   return cloneElement(children, { onClick: () => open(opensWindowName) });
 }
 
-function Window({ children, name }) {
-  const { openName, close } = useContext(ModalContext);
-  const ref = useOutsideClick(close);
+function Window({ children, name }: PropsWindows) {
+  const context = useContext(ModalContext);
+
+  if (!context) {
+    throw new Error('Open must be used within a Modal');
+  }
+
+  const { openName, close } = context;
+
+  const ref = useOutsideClick<HTMLDivElement>(close);
 
   if (name !== openName) return null;
 

@@ -127,7 +127,11 @@ const Toggle: FC<{ id: string }> = ({ id }) => {
       y: rect.height + 1,
     });
 
-    openId === '' || openId !== id ? open(id) : close();
+    if (openId === '' || openId !== id) {
+      open(id);
+    } else {
+      close();
+    }
   };
 
   return (
@@ -139,7 +143,7 @@ const Toggle: FC<{ id: string }> = ({ id }) => {
 
 const List: FC<PropsMenus> = ({ id, children }) => {
   const { openId, position, close } = useContext(MenusContext)!;
-  const ref = useOutsideClick(close, false);
+  const ref = useOutsideClick<HTMLUListElement>(close, false);
 
   if (openId !== id) return null;
 

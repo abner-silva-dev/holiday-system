@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 
 type Props = {
-  $variation?: 'primary' | 'secondary' | 'danger';
+  $variation?: 'primary' | 'secondary' | 'danger' | 'confirm';
   $size?: 'small' | 'medium' | 'large';
 };
 
@@ -41,6 +41,14 @@ const variations = {
 
     &:hover {
       background-color: var(--color-grey-50);
+    }
+  `,
+  confirm: css`
+    color: var(--color-grey-0);
+    background-color: var(--color-green-700);
+
+    &:hover {
+      background-color: var(--color-green-600);
     }
   `,
   danger: css`

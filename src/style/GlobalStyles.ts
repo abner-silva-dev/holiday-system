@@ -20,6 +20,7 @@ const GlobalStyles = createGlobalStyle`
   --color-blue-100: #e0f2fe;
   --color-blue-700: #0369a1;
   --color-green-100: #dcfce7;
+  --color-green-600: #16a34a;
   --color-green-700: #15803d;
   --color-yellow-100: #fef9c3;
   --color-yellow-700: #a16207;
@@ -37,6 +38,7 @@ const GlobalStyles = createGlobalStyle`
   --color-red-700: #b91c1c;
   --color-red-800: #991b1b;
   --color-red-900: #7f1d1d;
+
 
 
   --backdrop-color: rgba(255, 255, 255, 0.1);
@@ -130,7 +132,7 @@ html {
 }
 
 body {
-  font-family: "Poppins", sans-serif;
+  font-family: sans-serif;
   color: var(--color-grey-700);
 
   transition: color 0.3s, background-color 0.3s;
@@ -165,7 +167,7 @@ input:focus,
 button:focus,
 textarea:focus,
 select:focus {
-  outline: 2px solid var(--color-brand-600);
+  outline: 2px solid var(--color-red-200);
   outline-offset: -1px;
 }
 

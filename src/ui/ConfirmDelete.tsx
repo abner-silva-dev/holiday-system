@@ -20,21 +20,29 @@ const StyledConfirmDelete = styled.div`
   }
 `;
 
-function ConfirmDelete({ resourceName, onConfirm, disabled, onCloseModal }) {
+interface ConfirmDelete {
+  resourceName?: string;
+  onConfirm: () => void;
+  disabled?: boolean;
+  onCloseModal?: () => void;
+}
+
+function ConfirmDelete({
+  resourceName,
+  onConfirm,
+  disabled,
+  onCloseModal,
+}: ConfirmDelete) {
   return (
     <StyledConfirmDelete>
       <Heading as="h3">Delete {resourceName}</Heading>
       <p>
-        ¿Está seguro de que desea eliminar este {resourceName} de forma
-        permanente? Este la acción no se podra deshacer.
+        ¿Está seguro de que desea eliminar este {resourceName} de forma permanente? Este
+        la acción no se podra deshacer.
       </p>
 
       <div>
-        <Button
-          $variation="secondary"
-          disabled={disabled}
-          onClick={onCloseModal}
-        >
+        <Button $variation="secondary" disabled={disabled} onClick={onCloseModal}>
           Cancel
         </Button>
         <Button $variation="danger" disabled={disabled} onClick={onConfirm}>

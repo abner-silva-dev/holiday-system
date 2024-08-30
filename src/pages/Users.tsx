@@ -1,4 +1,3 @@
-import CreateUser from '../features/users/createUser';
 import UserOptions from '../features/users/userOptions';
 import UsersTable from '../features/users/UsersTable';
 import Row from '../ui/Row';
