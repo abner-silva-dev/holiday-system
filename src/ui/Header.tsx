@@ -1,7 +1,7 @@
 import { HiBell } from 'react-icons/hi2';
+// import { HiOutlineBell } from 'react-icons/hi2';
 
 import styled from 'styled-components';
-import Row from './Row';
 
 const StyledHeader = styled.header`
   position: relative;
@@ -13,7 +13,7 @@ const StyledHeader = styled.header`
 
 const Bell = styled.div`
   display: inline-block;
-  color: var(--color-grey-700);
+
   border-radius: 50%;
 
   cursor: pointer;
@@ -22,8 +22,9 @@ const Bell = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 4rem;
-    width: 4rem;
+    height: 3rem;
+    width: 3rem;
+    fill: var(--color-grey-600);
   }
 
   position: relative;
@@ -33,10 +34,11 @@ const Notification = styled.div`
   position: absolute;
   top: -0.5rem;
   right: -0.5rem;
-  width: 2rem;
-  height: 2rem;
+  width: 1.5rem;
+  height: 1.5rem;
 
   background-color: var(--color-red-500);
+  color: var(--color-grey-0);
   display: flex;
   align-items: center;
   justify-content: center;
