@@ -17,7 +17,7 @@ const StyleSidebar = styled.aside`
 function Sidebar() {
   return (
     <StyleSidebar>
-      <Logo src="/Logo-dai.png" />
+      <Logo src="/logo-dai.png" />
       <MainNav />
     </StyleSidebar>
   );

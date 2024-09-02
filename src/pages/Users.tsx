@@ -4,7 +4,11 @@ import Row from '../ui/Row';
 import Search from '../ui/Search';
 import Heading from './../ui/Heading';
 
+import { useStateApp } from '../context/stateAppContext';
+
 const User = () => {
+  const { handleSearch } = useStateApp();
+
   return (
     <>
       <Row>
@@ -14,7 +18,7 @@ const User = () => {
           <Search
             width="60%"
             placeholder="Buscar por: nombre | N° Empleado"
-            onSetQuery={() => {}}
+            onSetQuery={handleSearch}
             popUpFilter={<h1>Filtros</h1>}
           />
           <UserOptions />
