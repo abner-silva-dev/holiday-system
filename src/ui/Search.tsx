@@ -1,15 +1,12 @@
 import { useState, ChangeEvent, ReactNode, cloneElement } from 'react';
 
-import {
-  HiOutlineMagnifyingGlass,
-  HiAdjustmentsHorizontal,
-} from 'react-icons/hi2';
+import { HiOutlineMagnifyingGlass, HiAdjustmentsHorizontal } from 'react-icons/hi2';
 
 import styled from 'styled-components';
 import { useOutsideClick } from '../hooks/useOutsideClick';
 
 const StyledSearch = styled.div`
-  background-color: #fff;
+  background-color: var(--color-grey-0);
   display: flex;
   align-items: center;
   gap: 10px;
@@ -33,6 +30,7 @@ const StyledSearch = styled.div`
 
 const StyledSearchInput = styled.input`
   color: var(--color-grey-600);
+  background-color: var(--color-grey-0);
   border: none;
   font-size: 1.5rem;
 
