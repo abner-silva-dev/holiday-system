@@ -37,6 +37,11 @@ const ShowMoreAnchor = styled.a`
   border-radius: 9px;
   color: #f3f4f6;
   font-weight: 600;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: #208848;
+  }
 `;
 
 const TitleInfo = styled.span`
