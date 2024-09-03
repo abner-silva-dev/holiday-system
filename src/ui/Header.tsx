@@ -2,6 +2,8 @@
 import { HiOutlineBell } from 'react-icons/hi2';
 import { HiOutlineMoon } from 'react-icons/hi2';
 import { HiOutlineSun } from 'react-icons/hi2';
+import { HiOutlineArrowRightOnRectangle } from 'react-icons/hi2';
+
 import FloatFeat from './FloatFeat';
 
 import styled from 'styled-components';
@@ -15,6 +17,20 @@ const StyledHeader = styled.header`
   justify-content: space-between;
   gap: 2.4rem;
   background-color: var(--color-grey-0);
+`;
+
+const UserView = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+`;
+
+const ImageContainer = styled.div``;
+
+const ImageUser = styled.img`
+  border-radius: 50%;
+  border: 2px solid #991b1b;
+  width: 4rem;
 `;
 
 const Bell = styled.div`
@@ -54,8 +70,6 @@ const Notification = styled.div`
 const DarkMode = styled.div`
   display: inline-block;
 
-  border-radius: 50%;
-
   cursor: pointer;
 
   & svg {
@@ -68,6 +82,19 @@ const DarkMode = styled.div`
   }
 
   position: relative;
+`;
+
+const LogOff = styled.div`
+  cursor: pointer;
+
+  & svg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 2.8rem;
+    width: 3rem;
+    stroke: var(--color-grey-600);
+  }
 `;
 
 const IconSpacing = styled.div`
@@ -88,7 +115,12 @@ function Header() {
 
   return (
     <StyledHeader>
-      <div>function 1</div>
+      <UserView>
+        <ImageContainer>
+          <ImageUser src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBrDpzWSWvT8WQKdSxpdEaoev3e0uixuPvdw&s" />
+        </ImageContainer>
+        <span>José Armando</span>
+      </UserView>
 
       <IconSpacing>
         <DarkMode onClick={() => setIsDark(!isDark)}>
@@ -100,6 +132,9 @@ function Header() {
           <HiOutlineBell></HiOutlineBell>
           {isClicked ? <FloatFeat /> : null}
         </Bell>
+        <LogOff title="Cerrar Sesión">
+          <HiOutlineArrowRightOnRectangle />
+        </LogOff>
       </IconSpacing>
     </StyledHeader>
   );

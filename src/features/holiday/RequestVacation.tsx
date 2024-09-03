@@ -13,6 +13,12 @@ const ImageRequest = styled.img`
   width: 100%;
 `;
 
+const ImageContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 const GroupText = styled.div`
   display: flex;
   flex-direction: column;
@@ -20,12 +26,6 @@ const GroupText = styled.div`
   font-size: 1.6rem;
   width: 100%;
   color: var(--color-grey-800);
-`;
-
-const ImageContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;
 
 const ShowMoreAnchor = styled.a`
