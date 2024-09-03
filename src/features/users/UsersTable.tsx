@@ -18,8 +18,6 @@ const UsersTable = () => {
 
   // Filter
   const dataFilters = users.filter((user: UserInfo) => {
-    console.log(user.name.toLowerCase());
-
     return (
       user.name.toLowerCase().includes(filterUser) ||
       user.employNumber.includes(filterUser)
