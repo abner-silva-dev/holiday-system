@@ -1,7 +1,7 @@
-import { useState } from 'react';
 import styled from 'styled-components';
-import { HiPuzzlePiece } from 'react-icons/hi2';
 import RequestVacation from '../features/holiday/RequestVacation';
+import { useState } from 'react';
+import { HiPuzzlePiece } from 'react-icons/hi2';
 
 const FloatFeatStyled = styled.div`
   display: flex;

@@ -1,22 +1,26 @@
 import styled from 'styled-components';
-import Button from '../../ui/Button';
 import Modal from '../../ui/Modal';
 import CreateUser from './createUser';
 
 import { HiOutlineUserPlus } from 'react-icons/hi2';
-import Row from '../../ui/Row';
-import Heading from '../../ui/Heading';
 
 const BtnIcon = styled.button`
-  border: 1px solid var(--color-grey-200);
-  background-color: var(--color-green-700);
-  color: var(--color-grey-0);
   padding: 1rem;
-  box-shadow: var(--shadow-sm);
-  border-radius: var(--border-radius-lg);
+  font-weight: 500;
+  gap: 1rem;
+
   display: flex;
   align-items: center;
-  gap: 1rem;
+
+  color: #fff;
+  background-color: var(--color-green-700);
+  box-shadow: var(--shadow-sm);
+  border-radius: var(--border-radius-lg);
+  border: 1px solid var(--color-grey-200);
+
+  &:hover {
+    background-color: var(--color-green-600);
+  }
 
   & svg {
     width: 2.3rem;

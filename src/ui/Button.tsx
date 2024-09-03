@@ -44,7 +44,7 @@ const variations = {
     }
   `,
   confirm: css`
-    color: var(--color-grey-0);
+    color: #fff;
     background-color: var(--color-green-700);
 
     &:hover {
