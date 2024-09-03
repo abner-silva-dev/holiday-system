@@ -1,14 +1,12 @@
 import { ReactNode, createContext, useContext, useReducer } from 'react';
-
 type State = {
   filterGraduate: string;
   filterDegree: string;
   filterStatus: string;
-};
-
+};                                                              
 type Action =
   | { type: 'graduates/filter'; payload: string }
-  | { type: 'graduates/filter/degree'; payload: string }
+  | { type: 'graduates/filter/degree'; payload: string } 
   | { type: 'graduates/filter/status'; payload: string };
 
 const graduatesContext = createContext<

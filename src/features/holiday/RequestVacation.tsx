@@ -3,9 +3,9 @@ import styled from 'styled-components';
 const RequestCard = styled.div`
   display: flex;
   gap: 1.6rem;
-  background-color: var(--color-grey-300);
+  background-color: var(--color-grey-100);
   padding: 1.2rem 1.6rem;
-  border-radius: 9px;
+  border-bottom: 1px solid var(--color-grey-200);
 `;
 
 const ImageRequest = styled.img`
@@ -17,8 +17,9 @@ const GroupText = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   width: 100%;
+  color: var(--color-grey-800);
 `;
 
 const ImageContainer = styled.div`
@@ -31,11 +32,26 @@ const ShowMoreAnchor = styled.a`
   display: flex;
   align-self: center;
   justify-content: center;
-  background-color: var(--color-red-600);
+  background-color: #166534;
   padding: 1rem;
   border-radius: 9px;
-  color: var(--color-grey-200);
+  color: #f3f4f6;
   font-weight: 600;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: #208848;
+  }
+`;
+
+const TitleInfo = styled.span`
+  line-height: 1.2;
+  font-weight: 600;
+`;
+
+const ContentInfo = styled.span`
+  font-size: 1.4rem;
+  line-height: 1.2;
 `;
 
 function RequestVacation() {
@@ -45,14 +61,14 @@ function RequestVacation() {
         <ImageRequest src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBrDpzWSWvT8WQKdSxpdEaoev3e0uixuPvdw&s" />
       </ImageContainer>
       <GroupText>
-        <span>No. de Empleado</span>
-        <span>20251081</span>
+        <TitleInfo>No. de Empleado:</TitleInfo>
+        <ContentInfo>20251081</ContentInfo>
       </GroupText>
       <GroupText>
-        <span>Nombre</span>
-        <span>José Armando Rodriguez Hernández</span>
+        <TitleInfo>Nombre:</TitleInfo>
+        <ContentInfo>José Armando Rodríguez Hernández</ContentInfo>
       </GroupText>
-      <ShowMoreAnchor href="#">VER</ShowMoreAnchor>
+      <ShowMoreAnchor href="#">Ver</ShowMoreAnchor>
     </RequestCard>
   );
 }
