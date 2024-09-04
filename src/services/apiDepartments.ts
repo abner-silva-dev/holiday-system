@@ -1,6 +1,6 @@
 import { API_DAI_SYSTEM } from '../config';
 
-import { DepartmentesInfo } from '../features/departments/types';
+import { DepartmentInfo } from '../features/departments/types';
 
 export const getDepartments = async () => {
   const res = await fetch(`${API_DAI_SYSTEM}/department`);
@@ -12,7 +12,7 @@ export const getDepartments = async () => {
   return data;
 };
 
-export const createDepartments = async (department: DepartmentesInfo) => {
+export const createDepartments = async (department: DepartmentInfo) => {
   const res = await fetch(`${API_DAI_SYSTEM}/departments`, {
     method: 'POST',
     headers: { 'Content-type': 'application/json' },
@@ -38,7 +38,7 @@ export const deleteDepartments = async (departmentId: string) => {
   return data;
 };
 
-export const updateDepartments = async (department: DepartmentesInfo) => {
+export const updateDepartments = async (department: DepartmentInfo) => {
   const res = await fetch(`${API_DAI_SYSTEM}/departments`, {
     method: 'PATCH',
     headers: { 'Content-type': 'application/json' },

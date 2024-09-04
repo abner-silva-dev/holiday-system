@@ -1,4 +1,4 @@
-import UserOptions from '../features/users/userOptions';
+import UserOptions from '../features/users/UserOptions';
 import UsersTable from '../features/users/UsersTable';
 import Row from '../ui/Row';
 import Search from '../ui/Search';
