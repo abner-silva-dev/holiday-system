@@ -28,7 +28,10 @@ const UserRow: React.FC<Props> = ({ user }) => {
         <span>{user.employNumber}</span>
         <span>{user.name}</span>
         <span>{user.dateHiring}</span>
-        <span>{user.seniority}</span>
+        <span>
+          {user.seniority?.years} años {user.seniority?.moths} meses{' '}
+          {user.seniority?.days} dias
+        </span>
         <div>
           <Modal>
             <Menus.Menu>
