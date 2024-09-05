@@ -2,16 +2,21 @@ import React, { createContext, ReactNode, useContext, useReducer } from 'react';
 
 type State = {
   filterUser: string;
+  filterDepartment: string;
 };
 
-type Action = { type: 'user/filter'; payload: string };
+type ActionsName = 'user' | 'department';
+
+type Action =
+  | { type: 'user/filter'; payload: string }
+  | { type: 'department/filter'; payload: string };
 
 // 1) create Context
 const stateAppContext = createContext<
   | {
       state: State;
       dispatch?: React.Dispatch<Action>;
-      handleSearch: (query: string) => void;
+      handleSearch: (type: ActionsName, query: string) => void;
     }
   | undefined
 >(undefined);
@@ -19,6 +24,7 @@ const stateAppContext = createContext<
 // 2) Create Initial state
 const initalState: State = {
   filterUser: '',
+  filterDepartment: '',
 };
 
 // 3) Create Reducer
@@ -26,6 +32,8 @@ function reducer(state: State, action: Action): State {
   switch (action.type) {
     case 'user/filter':
       return { ...state, filterUser: action.payload };
+    case 'department/filter':
+      return { ...state, filterDepartment: action.payload };
   }
 }
 
@@ -33,8 +41,8 @@ function reducer(state: State, action: Action): State {
 function StateAppProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(reducer, initalState);
 
-  function handleSearch(query: string) {
-    dispatch({ type: 'user/filter', payload: query });
+  function handleSearch(type: ActionsName, query: string) {
+    dispatch({ type: `${type}/filter`, payload: query });
   }
 
   return (

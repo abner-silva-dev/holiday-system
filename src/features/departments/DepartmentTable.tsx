@@ -1,14 +1,15 @@
 import Spinner from '../../ui/Spinner';
 import Table from '../../ui/Table';
-import { useDepartment } from './useDepartment';
+import { useDepartments } from './useDepartment';
 
 import { DepartmentInfo } from './types';
-import UserRow from './userRow';
+import DepartmentRow from './DepartmentRow';
+
 import Menus from '../../ui/Menus';
 import { useStateApp } from '../../context/stateAppContext';
 
 const DepartmentTable = () => {
-  const { department, isPending, error } = useDepartment();
+  const { departments, isPending, error } = useDepartments();
   const {
     state: { filterDepartment },
   } = useStateApp();
@@ -17,7 +18,7 @@ const DepartmentTable = () => {
   if (error) return <h1>{error.message}</h1>;
 
   // Filter
-  const dataFilters = department.filter((department: DepartmentInfo) => {
+  const dataFilters = departments.filter((department: DepartmentInfo) => {
     return (
       department.name.toLowerCase().includes(filterDepartment) ||
       department.nameAbreviate.includes(filterDepartment)
@@ -38,7 +39,9 @@ const DepartmentTable = () => {
           </Table.Header>
           <Table.Body
             data={dataFilters}
-            render={(user: UserInfo) => <UserRow user={user} key={user.id} />}
+            render={(department: DepartmentInfo) => (
+              <DepartmentRow department={department} key={department.id} />
+            )}
           ></Table.Body>
         </Table>
       </Menus>
