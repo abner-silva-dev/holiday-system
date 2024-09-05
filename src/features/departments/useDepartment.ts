@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getDepartments } from '../../services/apiDepartments';
 
-export const useDepartmentes = () => {
+export const useDepartments = () => {
   const {
     isPending,
     error,
