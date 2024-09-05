@@ -22,10 +22,11 @@ const DepartmentRow: React.FC<Props> = ({ department }) => {
 
   return (
     <>
-      <Table.Row key={departmentId} columns="1fr 1fr 1fr 1fr 1fr 1fr 1fr">
+      <Table.Row key={department.id} columns="1fr 1fr 1fr 1fr">
         <span>{department.name}</span>
         <span>{department.nameAbreviate}</span>
-        <span>{department.enterprise}</span>
+        <span>{department.enterprise.name}</span>
+        <span></span>
         <div>
           <Modal>
             <Menus.Menu>

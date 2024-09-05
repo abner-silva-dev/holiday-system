@@ -28,13 +28,11 @@ const DepartmentTable = () => {
   return (
     <>
       <Menus>
-        <Table columns="1fr 1fr 1fr 1fr  1fr .2fr">
+        <Table columns="1fr 1fr 1fr 1fr">
           <Table.Header>
-            <span>Status</span>
-            <span>N° Empleado</span>
             <span>Nombre</span>
-            <span>Fecha de egreso</span>
-            <span>Antiguedad</span>
+            <span>Abreviación</span>
+            <span>Empresa Asociada</span>
             <span></span>
           </Table.Header>
           <Table.Body
