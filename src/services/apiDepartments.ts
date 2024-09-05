@@ -12,13 +12,8 @@ export const getDepartments = async () => {
   return data;
 };
 
-<<<<<<< HEAD
 export const createDepartments = async (department: DepartmentInfo) => {
-  const res = await fetch(`${API_DAI_SYSTEM}/departments`, {
-=======
-export const createDepartments = async (department: DepartmentesInfo) => {
   const res = await fetch(`${API_DAI_SYSTEM}/department`, {
->>>>>>> 16aac5cdfe8538074893c4311a83783a26be5711
     method: 'POST',
     headers: { 'Content-type': 'application/json' },
     body: JSON.stringify(department),
@@ -43,13 +38,8 @@ export const deleteDepartments = async (departmentId: string) => {
   return data;
 };
 
-<<<<<<< HEAD
 export const updateDepartments = async (department: DepartmentInfo) => {
-  const res = await fetch(`${API_DAI_SYSTEM}/departments`, {
-=======
-export const updateDepartments = async (department: DepartmentesInfo) => {
   const res = await fetch(`${API_DAI_SYSTEM}/department`, {
->>>>>>> 16aac5cdfe8538074893c4311a83783a26be5711
     method: 'PATCH',
     headers: { 'Content-type': 'application/json' },
     body: JSON.stringify(department),

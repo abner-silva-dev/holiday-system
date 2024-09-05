@@ -6,6 +6,7 @@ import { useDeleteUser } from './useDeleteUser';
 import Modal from '../../ui/Modal';
 import CreateUser from './createUser';
 import ConfirmDelete from '../../ui/ConfirmDelete';
+import { formatDate } from '../../utils/helpers';
 
 interface Props {
   user: UserInfo;
@@ -27,7 +28,7 @@ const UserRow: React.FC<Props> = ({ user }) => {
         <span>{user.employNumber}</span>
         <span>{user.employNumber}</span>
         <span>{user.name}</span>
-        <span>{user.dateHiring}</span>
+        <span>{formatDate(user.dateHiring)}</span>
         <span>
           {user.seniority?.years} años {user.seniority?.moths} meses{' '}
           {user.seniority?.days} dias

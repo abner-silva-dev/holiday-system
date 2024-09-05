@@ -1,9 +1,14 @@
 import DepartmentOptions from '../features/departments/DepartmentOptions';
+import DepartmentTable from '../features/departments/DepartmentTable';
 import Heading from '../ui/Heading';
 import Row from '../ui/Row';
 import Search from '../ui/Search';
 
+import { useStateApp } from '../context/stateAppContext';
+
 const Departments = () => {
+  const { handleSearch } = useStateApp();
+
   return (
     <>
       <Row>
@@ -13,12 +18,11 @@ const Departments = () => {
           <Search
             width="60%"
             placeholder="Buscar por: nombre | N° Empleado"
-            onSetQuery={handleSearch}
-            popUpFilter={<FilterUser />}
+            onSetQuery={(query) => handleSearch('department', query)}
           />
           <DepartmentOptions />
         </Row>
-        <UsersTable />
+        <DepartmentTable />
       </Row>
     </>
   );

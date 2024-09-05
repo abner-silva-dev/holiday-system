@@ -8,31 +8,30 @@ import CreateDepartment from './CreateDepartment';
 import ConfirmDelete from '../../ui/ConfirmDelete';
 
 interface Props {
-: DepartmentInfo;
+  department: DepartmentInfo;
 }
 
 const DepartmentRow: React.FC<Props> = ({ department }) => {
-  const { deleteDepartment, isDeleting } = useDeleteDepartment();
+  const { deleteDepartments, isDeleting } = useDeleteDepartment();
 
   if (!department) return null;
 
-  const { name, nameAbreviate, enterprise } =
-    department;
+  const { name, nameAbreviate, enterprise } = department;
 
   const departmentId = department.id || '';
 
   return (
     <>
-      <Table.Row key=.id} columns="1fr 1fr 1fr 1fr 1fr 1fr 1fr">
+      <Table.Row key={departmentId} columns="1fr 1fr 1fr 1fr 1fr 1fr 1fr">
         <span>{department.name}</span>
         <span>{department.nameAbreviate}</span>
         <span>{department.enterprise}</span>
         <div>
           <Modal>
             <Menus.Menu>
-              <Menus.Toggle id=Id} />
+              <Menus.Toggle id={departmentId} />
 
-              <Menus.List id=Id}>
+              <Menus.List id={departmentId}>
                 <Modal.Open opens="delete">
                   <Menus.Button icon={<HiMiniTrash />}>Eliminar</Menus.Button>
                 </Modal.Open>
@@ -44,9 +43,9 @@ const DepartmentRow: React.FC<Props> = ({ department }) => {
 
               <Modal.Window name="delete">
                 <ConfirmDelete
-                  resourceName="Empleados"
+                  resourceName="Departamentos"
                   disabled={isDeleting}
-                  onConfirm={() => deletId)}}
+                  onConfirm={() => deleteDepartments(departmentId)}
                 />
               </Modal.Window>
 
@@ -55,7 +54,7 @@ const DepartmentRow: React.FC<Props> = ({ department }) => {
                   edit={{
                     name,
                     nameAbreviate,
-                    enterprise
+                    enterprise,
                   }}
                 />
               </Modal.Window>

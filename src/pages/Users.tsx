@@ -19,7 +19,7 @@ const User = () => {
           <Search
             width="60%"
             placeholder="Buscar por: nombre | N° Empleado"
-            onSetQuery={handleSearch}
+            onSetQuery={(query) => handleSearch('user', query)}
             popUpFilter={<FilterUser />}
           />
           <UserOptions />
