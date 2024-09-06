@@ -6,7 +6,7 @@ import { useDeleteUser } from './useDeleteUser';
 import Modal from '../../ui/Modal';
 import CreateUser from './createUser';
 import ConfirmDelete from '../../ui/ConfirmDelete';
-import { formatDate } from '../../utils/helpers';
+import { formatDate, yearMothDay } from '../../utils/helpers';
 
 interface Props {
   user: UserInfo;
@@ -17,21 +17,44 @@ const UserRow: React.FC<Props> = ({ user }) => {
 
   if (!user) return null;
 
-  const { employNumber, dateHiring, name, email, phoneNumber, enterprise, department } =
-    user;
+  const {
+    employNumber,
+    dateHiring,
+    name,
+    paternSurname,
+    motherSurname,
+    email,
+    phoneNumber,
+    enterprise,
+    department,
+  } = user;
+
+  const dateHiringFormat = formatDate(dateHiring, {
+    formatDate: 'yyyy-mm-dd',
+    separationBy: '-',
+  });
 
   const userId = user.id || '';
+  const departmentId =
+    typeof department === 'object' && department ? department._id || '' : '';
+  const enterpriseId =
+    typeof enterprise === 'object' && enterprise ? enterprise._id || '' : '';
 
   return (
     <>
       <Table.Row key={user.id} columns="1fr 1fr 1fr 1fr 1fr 1fr 1fr">
         <span>{user.employNumber}</span>
         <span>{user.employNumber}</span>
-        <span>{user.name}</span>
+        <span>
+          {user.name} {user.paternSurname} {user.motherSurname}
+        </span>
         <span>{formatDate(user.dateHiring)}</span>
         <span>
-          {user.seniority?.years} años {user.seniority?.moths} meses{' '}
-          {user.seniority?.days} dias
+          {yearMothDay(
+            user.seniority?.years,
+            user.seniority?.moths,
+            user.seniority?.days
+          )}
         </span>
         <div>
           <Modal>
@@ -60,12 +83,14 @@ const UserRow: React.FC<Props> = ({ user }) => {
                 <CreateUser
                   edit={{
                     employNumber,
-                    dateHiring,
+                    dateHiring: dateHiringFormat,
                     name,
                     email,
                     phoneNumber,
-                    enterprise,
-                    department,
+                    enterprise: enterpriseId,
+                    department: departmentId,
+                    paternSurname,
+                    motherSurname,
                   }}
                 />
               </Modal.Window>

@@ -6,6 +6,7 @@ import Heading from './../ui/Heading';
 
 import { useStateApp } from '../context/stateAppContext';
 import FilterUser from '../features/users/FiltersUser';
+import { formatText } from '../utils/helpers';
 
 const User = () => {
   const { handleSearch } = useStateApp();
@@ -19,7 +20,7 @@ const User = () => {
           <Search
             width="60%"
             placeholder="Buscar por: nombre | N° Empleado"
-            onSetQuery={(query) => handleSearch('user', query)}
+            onSetQuery={(query) => handleSearch('user', formatText(query))}
             popUpFilter={<FilterUser />}
           />
           <UserOptions />

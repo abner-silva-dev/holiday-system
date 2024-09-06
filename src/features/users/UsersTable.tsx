@@ -6,23 +6,46 @@ import { UserInfo } from './types';
 import UserRow from './userRow';
 import Menus from '../../ui/Menus';
 import { useStateApp } from '../../context/stateAppContext';
+import { formatText } from '../../utils/helpers';
 
 const UsersTable = () => {
   const { users, isPending, error } = useUsers();
   const {
-    state: { filterUser },
+    state: { queryUser, filterDepartment, filterEnterprise },
   } = useStateApp();
+
+  // console.log(filterDepartment, filterEnterprise);
 
   if (isPending) return <Spinner />;
   if (error) return <h1>{error.message}</h1>;
 
-  // Filter
-  const dataFilters = users.filter((user: UserInfo) => {
+  // DATA SEARCH
+  const dataSearch = users.filter((user: UserInfo) => {
     return (
-      user.name.toLowerCase().includes(filterUser) ||
-      user.employNumber.includes(filterUser)
+      formatText(`${user.name} ${user.paternSurname} ${user.motherSurname}`).includes(
+        queryUser
+      ) || user.employNumber.includes(queryUser)
     );
   });
+
+  // DATA FILTER
+  const dataFilters = dataSearch
+    .filter((user: UserInfo) => {
+      const departmentId =
+        typeof user.department === 'object' && user.department
+          ? user.department._id || ''
+          : '';
+
+      return departmentId.includes(filterDepartment) || filterDepartment === 'all';
+    })
+    .filter((user: UserInfo) => {
+      const enterpriseId =
+        typeof user.enterprise === 'object' && user.enterprise
+          ? user.enterprise._id || ''
+          : '';
+
+      return enterpriseId.includes(filterEnterprise) || filterEnterprise === 'all';
+    });
 
   return (
     <>

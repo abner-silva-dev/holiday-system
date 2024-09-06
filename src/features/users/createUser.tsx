@@ -31,18 +31,18 @@ const Input = styled.input`
   border: 1px solid var(--color-grey-400);
 `;
 
-interface HandleSubmit extends UserInfo {
-  paternSurname?: string;
-  motherSurname?: string;
-}
+// interface HandleSubmit extends UserInfo {
+//   paternSurname?: string;
+//   motherSurname?: string;
+// }
 
 interface PropsCreateUSer {
-  edit?: HandleSubmit;
+  edit?: UserInfo;
   onCloseModal?: () => void;
 }
 
 const CreateUser: React.FC<PropsCreateUSer> = ({ edit = {}, onCloseModal }) => {
-  const { register, handleSubmit, reset } = useForm<HandleSubmit>({
+  const { register, handleSubmit, reset } = useForm<UserInfo>({
     defaultValues: edit,
   });
 
@@ -51,10 +51,7 @@ const CreateUser: React.FC<PropsCreateUSer> = ({ edit = {}, onCloseModal }) => {
 
   const { createUser } = useCreateUser();
 
-  // console.log(departments);
-  // console.log(enterprises);
-
-  const onSubmit = (data: HandleSubmit) => {
+  const onSubmit = (data: UserInfo) => {
     const {
       employNumber,
       dateHiring,
@@ -72,9 +69,11 @@ const CreateUser: React.FC<PropsCreateUSer> = ({ edit = {}, onCloseModal }) => {
       dateHiring,
       email,
       phoneNumber,
-      enterprise,
+      enterprise: enterprise,
       department,
-      name: joinName({ name, paternSurname, motherSurname }),
+      paternSurname,
+      motherSurname,
+      name,
     });
 
     reset();
@@ -145,7 +144,7 @@ const CreateUser: React.FC<PropsCreateUSer> = ({ edit = {}, onCloseModal }) => {
         </FormRow>
         <FormRow label="Empresa">
           <Input id="enterprise" as="select" {...register('enterprise')} required>
-            <option value="">Selecciona...</option>;
+            {/* <option value="">Selecciona...</option>; */}
             {enterprises?.map((enterprise: EnterpriseInfo) => {
               return (
                 <option value={enterprise._id} key={enterprise._id}>
@@ -157,7 +156,7 @@ const CreateUser: React.FC<PropsCreateUSer> = ({ edit = {}, onCloseModal }) => {
         </FormRow>
         <FormRow label="Departamento">
           <Input id="department" as="select" {...register('department')} required>
-            <option value="">Selecciona...</option>;
+            {/* <option value="">Selecciona...</option>; */}
             {departments?.map((department: DepartmentInfo) => {
               return (
                 <option value={department._id} key={department._id}>
