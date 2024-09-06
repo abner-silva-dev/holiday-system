@@ -28,7 +28,7 @@ const DepartmentTable = () => {
   return (
     <>
       <Menus>
-        <Table columns="1fr 1fr 1fr 1fr">
+        <Table columns="1fr 1fr 1fr .2fr">
           <Table.Header>
             <span>Nombre</span>
             <span>Abreviación</span>

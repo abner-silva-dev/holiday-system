@@ -9,16 +9,22 @@ import { joinName } from '../../utils/helpers';
 import { useCreateUser } from './useCreateUser';
 import Row from '../../ui/Row';
 import Heading from '../../ui/Heading';
+import { useEnterprises } from '../enterprises/useEnterprises';
+import { useDeleteDepartment } from '../departments/useDeleteDepartment';
+import { useDepartments } from '../departments/useDepartment';
+import { DepartmentInfo } from '../departments/types';
+import { EnterpriseInfo } from '../enterprises/types';
 
 const Form = styled.form`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  align-items: end;
+  align-items: center;
   justify-content: center;
   gap: 4rem;
 `;
 
 const Input = styled.input`
+  width: 100%;
   padding: 0.5rem;
   border-radius: var(--border-radius-md);
   background-color: var(--color-grey-0);
@@ -40,7 +46,13 @@ const CreateUser: React.FC<PropsCreateUSer> = ({ edit = {}, onCloseModal }) => {
     defaultValues: edit,
   });
 
+  const { departments } = useDepartments();
+  const { enterprises } = useEnterprises();
+
   const { createUser } = useCreateUser();
+
+  // console.log(departments);
+  // console.log(enterprises);
 
   const onSubmit = (data: HandleSubmit) => {
     const {
@@ -132,10 +144,28 @@ const CreateUser: React.FC<PropsCreateUSer> = ({ edit = {}, onCloseModal }) => {
           <Input type="date" id="dateHiring" {...register('dateHiring')} required />
         </FormRow>
         <FormRow label="Empresa">
-          <Input type="text" id="enterprise" {...register('enterprise')} required />
+          <Input id="enterprise" as="select" {...register('enterprise')} required>
+            <option value="">Selecciona...</option>;
+            {enterprises?.map((enterprise: EnterpriseInfo) => {
+              return (
+                <option value={enterprise._id} key={enterprise._id}>
+                  {enterprise.name}
+                </option>
+              );
+            })}
+          </Input>
         </FormRow>
         <FormRow label="Departamento">
-          <Input type="text" id="department" {...register('department')} required />
+          <Input id="department" as="select" {...register('department')} required>
+            <option value="">Selecciona...</option>;
+            {departments?.map((department: DepartmentInfo) => {
+              return (
+                <option value={department._id} key={department._id}>
+                  {department.name}
+                </option>
+              );
+            })}
+          </Input>
         </FormRow>
         <Button $variation="confirm">Crear Empleado</Button>
       </Form>

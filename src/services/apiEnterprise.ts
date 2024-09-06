@@ -1,51 +1,50 @@
 import { API_DAI_SYSTEM } from '../config';
+import { EnterpriseInfo } from '../features/enterprises/types';
 
-import { EnterpriseInfo } from '../features/enterprise/types';
+export const getEnterprises = async () => {
+  const res = await fetch(`${API_DAI_SYSTEM}/enterprise`);
 
-export const getDepartments = async () => {
-  const res = await fetch(`${API_DAI_SYSTEM}/department`);
-
-  if (!res.ok) throw new Error('departments could not loaded');
+  if (!res.ok) throw new Error('Enterprises could not loaded');
 
   const { data } = await res.json();
 
   return data;
 };
 
-export const createDepartments = async (department: EnterpriseInfo) => {
-  const res = await fetch(`${API_DAI_SYSTEM}/departments`, {
+export const createEnterprises = async (department: EnterpriseInfo) => {
+  const res = await fetch(`${API_DAI_SYSTEM}/enterprise`, {
     method: 'POST',
     headers: { 'Content-type': 'application/json' },
     body: JSON.stringify(department),
   });
 
-  if (!res.ok) throw new Error('departments does not was created');
+  if (!res.ok) throw new Error('Enterprises does not was created');
 
   const { data } = await res.json();
 
   return data;
 };
 
-export const deleteDepartments = async (departmentId: string) => {
-  const res = await fetch(`${API_DAI_SYSTEM}/departments/${departmentId}`, {
+export const deleteEnterprises = async (departmentId: string) => {
+  const res = await fetch(`${API_DAI_SYSTEM}/enterprise/${departmentId}`, {
     method: 'DELETE',
   });
 
-  if (!res.ok) throw new Error('departments does not was deleted');
+  if (!res.ok) throw new Error('Enterprises does not was deleted');
 
   const { data } = await res.json();
 
   return data;
 };
 
-export const updateDepartments = async (department: EnterpriseInfo) => {
-  const res = await fetch(`${API_DAI_SYSTEM}/departments`, {
+export const updateEnterprises = async (department: EnterpriseInfo) => {
+  const res = await fetch(`${API_DAI_SYSTEM}/enterprise`, {
     method: 'PATCH',
     headers: { 'Content-type': 'application/json' },
     body: JSON.stringify(department),
   });
 
-  if (!res.ok) throw new Error('departments does not was created');
+  if (!res.ok) throw new Error('Enterprises does not was created');
 
   const { data } = await res.json();
 

@@ -18,19 +18,24 @@ const DepartmentRow: React.FC<Props> = ({ department }) => {
 
   const { name, nameAbreviate, enterprise } = department;
 
-  const departmentId = department.id || '';
+  const departmentId = department._id || '';
 
   return (
     <>
-      <Table.Row key={department.id} columns="1fr 1fr 1fr 1fr">
+      <Table.Row key={department.id} columns="1fr 1fr 1fr 1fr 1fr 1fr 1fr">
         <span>{department.name}</span>
         <span>{department.nameAbreviate}</span>
         <span>{department.enterprise.name}</span>
-        <span></span>
         <div>
           <Modal>
             <Menus.Menu>
               <Menus.Toggle id={departmentId} />
+
+              <Menus.List id={departmentId + 1}>
+                <Modal.Open opens="delete">
+                  <Menus.Button icon={<HiMiniTrash />}>Eliminar</Menus.Button>
+                </Modal.Open>
+              </Menus.List>
 
               <Menus.List id={departmentId}>
                 <Modal.Open opens="delete">

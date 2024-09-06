@@ -3,6 +3,7 @@ type Enterprise = {
 };
 
 export interface DepartmentInfo {
+  _id?: string;
   id?: string;
   name: string;
   nameAbreviate: string;
