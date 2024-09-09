@@ -12,12 +12,12 @@ const Departments = () => {
   return (
     <>
       <Row>
-        <Heading as="h1">Empleados</Heading>
+        <Heading as="h1">Departamentos</Heading>
 
         <Row type="horizontal">
           <Search
             width="60%"
-            placeholder="Buscar por: nombre | N° Empleado"
+            placeholder="Buscar por: nombre | Abreviación"
             onSetQuery={(query) => handleSearch('department', query)}
           />
           <DepartmentOptions />
