@@ -1,5 +1,6 @@
 import { useStateApp } from '../context/stateAppContext';
 import HolidayOptions from '../features/holiday/HolildayOptions';
+import RequestScroll from '../features/holiday/RequestScroll';
 import FilterUser from '../features/users/FiltersUser';
 import Row from '../ui/Row';
 import Search from '../ui/Search';
@@ -25,6 +26,7 @@ const Holiday = () => {
           />
           <HolidayOptions />
         </Row>
+        <RequestScroll />
       </Row>
     </>
   );
