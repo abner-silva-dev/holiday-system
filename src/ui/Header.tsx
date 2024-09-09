@@ -47,7 +47,6 @@ const Bell = styled.div`
     width: 3rem;
     stroke: var(--color-grey-600);
   }
-
   position: relative;
 `;
 

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import Modal from '../../ui/Modal';
 import CreateDeparment from './CreateDepartment';
 
-import { HiOutlineFolder } from 'react-icons/hi2';
+import { HiOutlineUserPlus } from 'react-icons/hi2';
 
 const BtnIcon = styled.button`
   padding: 1rem;
