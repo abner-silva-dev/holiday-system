@@ -44,7 +44,6 @@ const UserRow: React.FC<Props> = ({ user }) => {
     <>
       <Table.Row key={user.id} columns="1fr 1fr 1fr 1fr 1fr 1fr 1fr">
         <span>{user.employNumber}</span>
-        <span>{user.employNumber}</span>
         <span>
           {user.name} {user.paternSurname} {user.motherSurname}
         </span>
@@ -56,6 +55,7 @@ const UserRow: React.FC<Props> = ({ user }) => {
             user.seniority?.days
           )}
         </span>
+        <span>{user.department.name}</span>
         <div>
           <Modal>
             <Menus.Menu>

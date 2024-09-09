@@ -52,11 +52,11 @@ const UsersTable = () => {
       <Menus>
         <Table columns="1fr 1fr 1fr 1fr  1fr .2fr">
           <Table.Header>
-            <span>Status</span>
             <span>N° Empleado</span>
             <span>Nombre</span>
             <span>Fecha de egreso</span>
             <span>Antiguedad</span>
+            <span>Area</span>
             <span></span>
           </Table.Header>
           <Table.Body

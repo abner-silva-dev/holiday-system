@@ -7,22 +7,21 @@ import DepartmentRow from './DepartmentRow';
 
 import Menus from '../../ui/Menus';
 import { useStateApp } from '../../context/stateAppContext';
+import { formatText } from '../../utils/helpers';
 
 const DepartmentTable = () => {
   const { departments, isPending, error } = useDepartments();
   const {
-    state: { filterDepartment },
+    state: { queryDepartment },
   } = useStateApp();
 
   if (isPending) return <Spinner />;
   if (error) return <h1>{error.message}</h1>;
 
-  // Filter
-  const dataFilters = departments.filter((department: DepartmentInfo) => {
-    return (
-      department.name.toLowerCase().includes(filterDepartment) ||
-      department.nameAbreviate.includes(filterDepartment)
-    );
+  // SEARCH
+  // DATA SEARCH
+  const dataSearch = departments.filter((department: DepartmentInfo) => {
+    return formatText(`${department.name}`).includes(queryDepartment);
   });
 
   return (
@@ -36,7 +35,7 @@ const DepartmentTable = () => {
             <span></span>
           </Table.Header>
           <Table.Body
-            data={dataFilters}
+            data={dataSearch}
             render={(department: DepartmentInfo) => (
               <DepartmentRow department={department} key={department.id} />
             )}
