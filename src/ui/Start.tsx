@@ -12,6 +12,8 @@ const StyledStat = styled.div`
   grid-template-rows: auto auto;
   column-gap: 1.6rem;
   row-gap: 0.4rem;
+
+  box-shadow: var(--shadow-sm);
 `;
 
 const Icon = styled.div`
@@ -38,11 +40,11 @@ const Title = styled.h5`
   text-transform: uppercase;
   letter-spacing: 0.4px;
   font-weight: 600;
-  color: var(--color-grey-500);
+  color: var(--color-red-800);
 `;
 
 const Value = styled.p`
-  font-size: 2.4rem;
+  font-size: 1.8rem;
   line-height: 1;
   font-weight: 500;
 `;
