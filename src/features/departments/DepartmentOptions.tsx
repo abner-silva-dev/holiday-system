@@ -35,8 +35,8 @@ const DepartmentOptions = () => {
       <Modal>
         <Modal.Open opens="modal">
           <BtnIcon title="crear empleado">
-            <HiOutlineFolder />
-            Crear departamento
+            <HiOutlineUserPlus />
+            Crear empleado
           </BtnIcon>
         </Modal.Open>
         <Modal.Window name="modal">

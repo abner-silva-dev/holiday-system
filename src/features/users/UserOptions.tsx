@@ -36,7 +36,7 @@ const UserOptions = () => {
         <Modal.Open opens="modal">
           <BtnIcon title="crear empleado">
             <HiOutlineUserPlus />
-            Crear empleado
+            Crear Empleado
           </BtnIcon>
         </Modal.Open>
         <Modal.Window name="modal">
