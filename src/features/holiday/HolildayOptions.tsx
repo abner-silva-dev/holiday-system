@@ -1,4 +1,9 @@
 import styled from 'styled-components';
+import Row from '../../ui/Row';
+import Button from '../../ui/Button';
+import Modal from '../../ui/Modal';
+import { HiOutlineUserPlus } from 'react-icons/hi2';
+import CreateHoliday from './CreateHoliday';
 
 const AreaContainer = styled.div`
   background-color: var(--color-grey-0);
@@ -37,14 +42,51 @@ const ButtonSpacing = styled.div`
   justify-content: space-between;
 `;
 
+const BtnIcon = styled.button`
+  padding: 1rem;
+  font-weight: 500;
+  gap: 1rem;
+
+  display: flex;
+  align-items: center;
+
+  color: #fff;
+  background-color: var(--color-green-700);
+  box-shadow: var(--shadow-sm);
+  border-radius: var(--border-radius-lg);
+  border: 1px solid var(--color-grey-200);
+
+  &:hover {
+    background-color: var(--color-green-600);
+  }
+
+  & svg {
+    width: 2.3rem;
+    height: 2.3rem;
+  }
+`;
+
 const HolidayOptions = () => {
   return (
-    <AreaContainer>
-      <ButtonSpacing>
-        <ButtonOptionActive>Solicitudes</ButtonOptionActive>
-        <ButtonOption>Historial</ButtonOption>
-      </ButtonSpacing>
-    </AreaContainer>
+    <Row type="horizontal">
+      <AreaContainer>
+        <ButtonSpacing>
+          <ButtonOptionActive>Solicitudes</ButtonOptionActive>
+          <ButtonOption>Historial</ButtonOption>
+        </ButtonSpacing>
+      </AreaContainer>
+      <Modal>
+        <Modal.Open opens="modal">
+          <BtnIcon title="crear empleado">
+            <HiOutlineUserPlus />
+            Crear empleado
+          </BtnIcon>
+        </Modal.Open>
+        <Modal.Window name="modal">
+          <CreateHoliday />
+        </Modal.Window>
+      </Modal>
+    </Row>
   );
 };
 

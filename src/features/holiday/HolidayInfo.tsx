@@ -5,6 +5,7 @@ import { HiOutlineCheck } from 'react-icons/hi2';
 import { HiOutlineXMark } from 'react-icons/hi2';
 
 import Stat from '../../ui/Start';
+import UserPhoto from '../users/UserPhoto';
 
 const HolidayInfoStyles = styled.div`
   /* height: 100vh; */
@@ -143,9 +144,11 @@ const HolidayInfo = () => {
     <HolidayInfoStyles>
       <UserInfo>
         <UserImage>
-          <img
+          <UserPhoto
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBrDpzWSWvT8WQKdSxpdEaoev3e0uixuPvdw&s"
-            alt=""
+            alt="User Photo"
+            $size="large"
+            $type="square"
           />
         </UserImage>
         <UserData>

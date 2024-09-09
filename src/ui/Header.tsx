@@ -5,7 +5,7 @@ import { HiOutlineSun } from 'react-icons/hi2';
 import { HiOutlineArrowRightOnRectangle } from 'react-icons/hi2';
 
 import FloatFeat from './FloatFeat';
-
+import UserPhoto from './../../src/features/users/UserPhoto';
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 
@@ -26,12 +26,6 @@ const UserView = styled.div`
 `;
 
 const ImageContainer = styled.div``;
-
-const ImageUser = styled.img`
-  border-radius: 50%;
-  border: 2px solid #991b1b;
-  width: 4rem;
-`;
 
 const Bell = styled.div`
   display: inline-block;
@@ -116,7 +110,11 @@ function Header() {
     <StyledHeader>
       <UserView>
         <ImageContainer>
-          <ImageUser src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBrDpzWSWvT8WQKdSxpdEaoev3e0uixuPvdw&s" />
+          <UserPhoto
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBrDpzWSWvT8WQKdSxpdEaoev3e0uixuPvdw&s"
+            alt="user photo"
+            $border={true}
+          />
         </ImageContainer>
         <span>José Armando</span>
       </UserView>

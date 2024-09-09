@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import UserPhoto from '../users/UserPhoto';
 
 const RequestCard = styled.div`
   display: flex;
@@ -6,11 +7,6 @@ const RequestCard = styled.div`
   background-color: var(--color-grey-100);
   padding: 1.2rem 1.6rem;
   border-bottom: 1px solid var(--color-grey-200);
-`;
-
-const ImageRequest = styled.img`
-  border-radius: 50%;
-  width: 100%;
 `;
 
 const ImageContainer = styled.div`
@@ -58,7 +54,11 @@ function RequestVacation() {
   return (
     <RequestCard>
       <ImageContainer>
-        <ImageRequest src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBrDpzWSWvT8WQKdSxpdEaoev3e0uixuPvdw&s" />
+        <UserPhoto
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBrDpzWSWvT8WQKdSxpdEaoev3e0uixuPvdw&s"
+          alt="User Photo"
+          $size="adaptative"
+        />
       </ImageContainer>
       <GroupText>
         <TitleInfo>No. de Empleado:</TitleInfo>
