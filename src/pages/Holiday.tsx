@@ -1,4 +1,5 @@
 import { useStateApp } from '../context/stateAppContext';
+import HolidayInfo from '../features/holiday/holidayInfo';
 import HolidayOptions from '../features/holiday/HolildayOptions';
 import FilterUser from '../features/users/FiltersUser';
 import Row from '../ui/Row';
@@ -26,6 +27,7 @@ const Holiday = () => {
           <HolidayOptions />
         </Row>
       </Row>
+      <HolidayInfo />
     </>
   );
 };
