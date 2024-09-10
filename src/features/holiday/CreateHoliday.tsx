@@ -54,7 +54,7 @@ const CreateHoliday: React.FC<PropsCreateDepartment> = ({ edit = {}, onCloseModa
     defaultValues: edit,
   });
   const [dates, setDates] = useState();
-  const {} use
+  // const { current } = useOutsideClick<JSX.Element>(false);
 
   const onSubmit = (data: HolidayInfo) => {
     // const { name, nameAbreviate, enterprise } = data;
