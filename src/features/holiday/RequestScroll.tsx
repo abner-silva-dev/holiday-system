@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import { HiOutlineEye } from 'react-icons/hi2';
+import Modal from '../../ui/Modal';
+import HolidayInfo from './holidayInfo';
 
 const RequestsContainer = styled.div`
   /* background-color: var(--color-grey-0); */
@@ -102,10 +104,19 @@ const RequestScroll = () => {
           <TextTitle>Departamento</TextTitle>
           <TextCont>Tecnologias de la Información</TextCont>
         </TextContainer>
-        <ShowButton>
-          <HiOutlineEye />
-          Ver
-        </ShowButton>
+
+        <Modal>
+          <Modal.Open opens="ver">
+            <ShowButton>
+              <HiOutlineEye />
+              Ver
+            </ShowButton>
+          </Modal.Open>
+
+          <Modal.Window name="ver">
+            <HolidayInfo />
+          </Modal.Window>
+        </Modal>
       </RequestCard>
     </RequestsContainer>
   );

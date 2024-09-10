@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { HiXMark } from 'react-icons/hi2';
 import styled from 'styled-components';
 import { useOutsideClick } from './../hooks/useOutsideClick.js';
+import { useKey } from '../hooks/useKey.js';
 
 const StyledModal = styled.div`
   position: fixed;
@@ -110,13 +111,15 @@ function Window({ children, name }: PropsWindows) {
 
   const { openName, close } = context;
 
-  const ref = useOutsideClick<HTMLDivElement>(close);
+  useKey('Escape', close);
+  // const ref = useOutsideClick<HTMLDivElement>(close);
 
   if (name !== openName) return null;
 
   return createPortal(
     <Overlay>
-      <StyledModal ref={ref}>
+      <StyledModal>
+        {/* <StyledModal ref={ref}> */}
         <Button onClick={close}>
           <HiXMark />
         </Button>

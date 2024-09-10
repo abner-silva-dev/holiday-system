@@ -6,6 +6,8 @@ import { HiOutlineXMark } from 'react-icons/hi2';
 
 import Stat from '../../ui/Start';
 import UserPhoto from '../users/UserPhoto';
+import Row from '../../ui/Row';
+import Heading from '../../ui/Heading';
 
 const HolidayInfoStyles = styled.div`
   /* height: 100vh; */
@@ -13,6 +15,7 @@ const HolidayInfoStyles = styled.div`
   grid-template-columns: 50rem 1fr;
   grid-template-rows: auto 1fr;
   gap: 2rem;
+  width: 75vw;
 `;
 
 const UserInfo = styled.aside`
@@ -65,13 +68,15 @@ const TextTitle = styled.main`
 const HolidayMain = styled.main`
   display: grid;
   grid-template-columns: 1fr 1fr;
+  row-gap: 2rem;
 
   background-color: var(--color-grey-100);
   box-shadow: var(--shadow-md);
   border: 1px solid var(--color-grey-200);
-  padding: 2rem 4rem 8rem;
+  /* padding: 2rem 4rem 8rem; */
   overflow-y: scroll;
   border-radius: 9px;
+  height: 40rem;
 `;
 
 const HeadingMain = styled.h3`
@@ -141,127 +146,190 @@ const RowComponents = styled.div`
 
 const HolidayInfo = () => {
   return (
-    <HolidayInfoStyles>
-      <UserInfo>
-        <UserImage>
-          <UserPhoto
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBrDpzWSWvT8WQKdSxpdEaoev3e0uixuPvdw&s"
-            alt="User Photo"
-            $size="large"
-            $type="square"
+    <Row>
+      <Heading as="h1">Admnistracion de vacaciones</Heading>
+      <HolidayInfoStyles>
+        <UserInfo>
+          <UserImage>
+            <UserPhoto
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBrDpzWSWvT8WQKdSxpdEaoev3e0uixuPvdw&s"
+              alt="User Photo"
+              $size="large"
+              $type="square"
+            />
+          </UserImage>
+          <UserData>
+            <Group>
+              <TextTitle>No. Empleado</TextTitle>
+              <span>20251086</span>
+            </Group>
+            <Group>
+              <TextTitle>Departamento</TextTitle>
+              <span>Tecnologias de la informacion</span>
+            </Group>
+            <Group>
+              <TextTitle>Nombre</TextTitle>
+              <span>Silva Araujo Dylan Abner</span>
+            </Group>
+            <Group>
+              <TextTitle>Jefe directo</TextTitle>
+              <span>Ricardo Anaya Obrador</span>
+            </Group>
+            <Group>
+              <TextTitle>Antiguedad</TextTitle>
+              <span>2 años 2 meses 1 dia</span>
+            </Group>
+            <Group>
+              <TextTitle>Puesto</TextTitle>
+              <span>Hombre de negocios</span>
+            </Group>
+          </UserData>
+        </UserInfo>
+        <HolidayOptions>
+          <Stat
+            color="green"
+            icon={<HiCalendarDays />}
+            title="Solicitudes pendientes"
+            value="2 solicitudes"
           />
-        </UserImage>
-        <UserData>
-          <Group>
-            <TextTitle>No. Empleado</TextTitle>
-            <span>20251086</span>
-          </Group>
-          <Group>
-            <TextTitle>Departamento</TextTitle>
-            <span>Tecnologias de la informacion</span>
-          </Group>
-          <Group>
-            <TextTitle>Nombre</TextTitle>
-            <span>Silva Araujo Dylan Abner</span>
-          </Group>
-          <Group>
-            <TextTitle>Jefe directo</TextTitle>
-            <span>Ricardo Anaya Obrador</span>
-          </Group>
-          <Group>
-            <TextTitle>Antiguedad</TextTitle>
-            <span>2 años 2 meses 1 dia</span>
-          </Group>
-          <Group>
-            <TextTitle>Puesto</TextTitle>
-            <span>Hombre de negocios</span>
-          </Group>
-        </UserData>
-      </UserInfo>
-      <HolidayOptions>
-        <Stat
-          color="green"
-          icon={<HiCalendarDays />}
-          title="Solicitudes pendientes"
-          value="2 solicitudes"
-        />
-        <Stat
-          color="red"
-          icon={<HiCalendarDays />}
-          title="Días Restantes"
-          value="2 dias"
-        />
-        <Stat
-          color="brand"
-          icon={<HiCalendarDays />}
-          title="Vacaciones del periodo"
-          value="12 días / 2 días en prorroga"
-        />
-      </HolidayOptions>
+          <Stat
+            color="red"
+            icon={<HiCalendarDays />}
+            title="Días Restantes"
+            value="2 dias"
+          />
+          <Stat
+            color="brand"
+            icon={<HiCalendarDays />}
+            title="Vacaciones del periodo"
+            value="12 días / 2 días en prorroga"
+          />
+        </HolidayOptions>
 
-      <HolidayMain>
-        <AuthorizationCard>
-          <HeadingMain>Solicitud 1: 12/09/2024 - 22/09/2024</HeadingMain>
-          <RowComponents>
-            <ColumnContainer>
+        <HolidayMain>
+          <AuthorizationCard>
+            <HeadingMain>Solicitud 1: 12/09/2024 - 22/09/2024</HeadingMain>
+            <RowComponents>
               <ColumnContainer>
-                <TitleBold>Jefe Directo</TitleBold>
-                <RowMain>
-                  <StateColor></StateColor>
-                  <span>Aprobado</span>
-                </RowMain>
+                <ColumnContainer>
+                  <TitleBold>Jefe Directo</TitleBold>
+                  <RowMain>
+                    <StateColor></StateColor>
+                    <span>Aprobado</span>
+                  </RowMain>
+                </ColumnContainer>
+
+                <ColumnContainer>
+                  <TitleBold>Administrador</TitleBold>
+                  <RowMain>
+                    <StateColor></StateColor>
+                    <span>Aprobado</span>
+                  </RowMain>
+                </ColumnContainer>
               </ColumnContainer>
 
               <ColumnContainer>
-                <TitleBold>Administrador</TitleBold>
-                <RowMain>
-                  <StateColor></StateColor>
-                  <span>Aprobado</span>
-                </RowMain>
-              </ColumnContainer>
-            </ColumnContainer>
+                <ColumnContainer>
+                  <RowMain>
+                    <SubTitle>Observación</SubTitle>
+                    <span>Lic. Juan Lopez Gonzalez</span>
+                  </RowMain>
+                  <ObservationField></ObservationField>
+                  <AuthorizationButtons>
+                    <Button>
+                      <HiOutlineCheck />
+                      Aceptar
+                    </Button>
+                    <Button>
+                      <HiOutlineXMark />
+                      Rechazar
+                    </Button>
+                  </AuthorizationButtons>
+                </ColumnContainer>
 
-            <ColumnContainer>
+                <ColumnContainer>
+                  <RowMain>
+                    <SubTitle>Observación</SubTitle>
+                    <span>Lic. José Crisóstomo Cortés</span>
+                  </RowMain>
+                  <ObservationField></ObservationField>
+                  <AuthorizationButtons>
+                    <Button>
+                      <HiOutlineCheck />
+                      Aceptar
+                    </Button>
+                    <Button>
+                      <HiOutlineXMark />
+                      Rechazar
+                    </Button>
+                  </AuthorizationButtons>
+                </ColumnContainer>
+              </ColumnContainer>
+            </RowComponents>
+          </AuthorizationCard>
+          <AuthorizationCard>
+            <HeadingMain>Solicitud 1: 12/09/2024 - 22/09/2024</HeadingMain>
+            <RowComponents>
               <ColumnContainer>
-                <RowMain>
-                  <SubTitle>Observación</SubTitle>
-                  <span>Lic. Juan Lopez Gonzalez</span>
-                </RowMain>
-                <ObservationField></ObservationField>
-                <AuthorizationButtons>
-                  <Button>
-                    <HiOutlineCheck />
-                    Aceptar
-                  </Button>
-                  <Button>
-                    <HiOutlineXMark />
-                    Rechazar
-                  </Button>
-                </AuthorizationButtons>
+                <ColumnContainer>
+                  <TitleBold>Jefe Directo</TitleBold>
+                  <RowMain>
+                    <StateColor></StateColor>
+                    <span>Aprobado</span>
+                  </RowMain>
+                </ColumnContainer>
+
+                <ColumnContainer>
+                  <TitleBold>Administrador</TitleBold>
+                  <RowMain>
+                    <StateColor></StateColor>
+                    <span>Aprobado</span>
+                  </RowMain>
+                </ColumnContainer>
               </ColumnContainer>
 
               <ColumnContainer>
-                <RowMain>
-                  <SubTitle>Observación</SubTitle>
-                  <span>Lic. José Crisóstomo Cortés</span>
-                </RowMain>
-                <ObservationField></ObservationField>
-                <AuthorizationButtons>
-                  <Button>
-                    <HiOutlineCheck />
-                    Aceptar
-                  </Button>
-                  <Button>
-                    <HiOutlineXMark />
-                    Rechazar
-                  </Button>
-                </AuthorizationButtons>
+                <ColumnContainer>
+                  <RowMain>
+                    <SubTitle>Observación</SubTitle>
+                    <span>Lic. Juan Lopez Gonzalez</span>
+                  </RowMain>
+                  <ObservationField></ObservationField>
+                  <AuthorizationButtons>
+                    <Button>
+                      <HiOutlineCheck />
+                      Aceptar
+                    </Button>
+                    <Button>
+                      <HiOutlineXMark />
+                      Rechazar
+                    </Button>
+                  </AuthorizationButtons>
+                </ColumnContainer>
+
+                <ColumnContainer>
+                  <RowMain>
+                    <SubTitle>Observación</SubTitle>
+                    <span>Lic. José Crisóstomo Cortés</span>
+                  </RowMain>
+                  <ObservationField></ObservationField>
+                  <AuthorizationButtons>
+                    <Button>
+                      <HiOutlineCheck />
+                      Aceptar
+                    </Button>
+                    <Button>
+                      <HiOutlineXMark />
+                      Rechazar
+                    </Button>
+                  </AuthorizationButtons>
+                </ColumnContainer>
               </ColumnContainer>
-            </ColumnContainer>
-          </RowComponents>
-        </AuthorizationCard>
-      </HolidayMain>
-    </HolidayInfoStyles>
+            </RowComponents>
+          </AuthorizationCard>
+        </HolidayMain>
+      </HolidayInfoStyles>
+    </Row>
   );
 };
 
