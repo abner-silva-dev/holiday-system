@@ -58,6 +58,8 @@ const Notification = styled.div`
   align-items: center;
   justify-content: center;
   border-radius: 50%;
+
+  user-select: none;
 `;
 
 const DarkMode = styled.div`

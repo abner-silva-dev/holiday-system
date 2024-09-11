@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { HiOutlineEye } from 'react-icons/hi2';
+// import { HiOutlineEye } from 'react-icons/hi2';
 import Modal from '../../ui/Modal';
 import HolidayInfo from './holidayInfo';
 
@@ -14,14 +14,16 @@ const RequestsContainer = styled.div`
 `;
 
 const RequestCard = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 2fr;
+  align-items: center;
+
   background-color: var(--color-grey-0);
   padding: 2rem;
   border-radius: 9px;
-  display: flex;
-  justify-content: space-around;
-  gap: 2.4rem;
   box-shadow: var(--shadow-sm);
   position: relative;
+  cursor: pointer;
 `;
 
 const ImageContainer = styled.div``;
@@ -46,23 +48,23 @@ const TextTitle = styled.span`
 `;
 const TextCont = styled.span``;
 
-const ShowButton = styled.button`
-  background-color: transparent;
-  border: none;
-  /* padding: 1rem 3rem; */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  align-self: center;
-  justify-self: center;
-  font-size: 2.4rem;
-  transition: all 0.2s;
+// const ShowButton = styled.button`
+//   background-color: transparent;
+//   border: none;
+//   /* padding: 1rem 3rem; */
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   gap: 1rem;
+//   align-self: center;
+//   justify-self: center;
+//   font-size: 2.4rem;
+//   transition: all 0.2s;
 
-  &:hover {
-    color: var(--color-red-700);
-  }
-`;
+//   &:hover {
+//     color: var(--color-red-700);
+//   }
+// `;
 
 const Notification = styled.div`
   position: absolute;
@@ -78,48 +80,118 @@ const Notification = styled.div`
   align-items: center;
   justify-content: center;
   border-radius: 50%;
+
+  user-select: none;
 `;
+
+// REQUEST LISTS
+
+const RequestListContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  /* background-color: grey; */
+  padding: 0.8rem;
+  overflow-y: scroll;
+  height: 9rem;
+  background-color: var(--color-grey-0);
+  /* border: 1px solid var(--color-grey-300); */
+  border-radius: 11px;
+  /* box-shadow: var(--shadow-sm); */
+  /* background-color: var(--color-grey-50); */
+`;
+
+const RequestListCard = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  background-color: var(--color-brand-100);
+  padding: 0.8rem;
+  box-shadow: var(--shadow-sm);
+  color: var(--color-brand-800);
+  border-radius: 11px;
+`;
+
+const TextCreation = styled.span`
+  font-size: 1.2rem;
+  text-align: center;
+`;
+
+const TitleCreation = styled.span`
+  font-size: 1.6rem;
+  text-align: center;
+  font-weight: bold;
+`;
+
+const Group = styled.div``;
 
 const RequestScroll = () => {
   return (
     <RequestsContainer>
-      <RequestCard>
-        <Notification>2</Notification>
-        <ImageContainer>
-          <Image src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBrDpzWSWvT8WQKdSxpdEaoev3e0uixuPvdw&s" />
-        </ImageContainer>
-        <TextContainer>
-          <TextTitle>No. de Empleado</TextTitle>
-          <TextCont>20251081</TextCont>
-        </TextContainer>
-        <TextContainer>
-          <TextTitle>Nombre</TextTitle>
-          <TextCont>José Armando Rodriguez Hernández</TextCont>
-        </TextContainer>
-        <TextContainer>
-          <TextTitle>Solicitudes Pendientes</TextTitle>
-          <TextCont>2 Solicitudes</TextCont>
-        </TextContainer>
-        <TextContainer>
-          <TextTitle>Departamento</TextTitle>
-          <TextCont>Tecnologias de la Información</TextCont>
-        </TextContainer>
-
-        <Modal>
-          <Modal.Open opens="ver">
-            <ShowButton>
-              <HiOutlineEye />
-              Ver
-            </ShowButton>
-          </Modal.Open>
-
-          <Modal.Window name="ver">
-            <HolidayInfo />
-          </Modal.Window>
-        </Modal>
-      </RequestCard>
+      <Modal>
+        <Modal.Open opens="ver">
+          <RequestCard title="Ver más">
+            <Notification>2</Notification>
+            <ImageContainer>
+              <Image src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBrDpzWSWvT8WQKdSxpdEaoev3e0uixuPvdw&s" />
+            </ImageContainer>
+            <TextContainer>
+              <TextTitle>No. de Empleado</TextTitle>
+              <TextCont>20251081</TextCont>
+            </TextContainer>
+            <TextContainer>
+              <TextTitle>Nombre</TextTitle>
+              <TextCont>José Armando Rodriguez Hernández</TextCont>
+            </TextContainer>
+            <TextContainer>
+              <TextTitle>Puesto</TextTitle>
+              <TextCont>Hombre de Negocios</TextCont>
+            </TextContainer>
+            <TextContainer>
+              <TextTitle>Departamento</TextTitle>
+              <TextCont>Tecnologias de la Información</TextCont>
+            </TextContainer>
+            <Group>
+              <TextTitle>Solicitudes</TextTitle>
+              <RequestListContainer>
+                <RequestListCard>
+                  <TitleCreation>Solicitud 1</TitleCreation>
+                  <TextCreation>
+                    Creada: <span>28/08/2024 21:23 hrs</span>
+                  </TextCreation>
+                </RequestListCard>
+                <RequestListCard>
+                  <TitleCreation>Solicitud 2</TitleCreation>
+                  <TextCreation>
+                    Creada: <span>21/09/2024 18:50 hrs</span>
+                  </TextCreation>
+                </RequestListCard>
+              </RequestListContainer>
+            </Group>
+          </RequestCard>
+        </Modal.Open>
+        <Modal.Window name="ver">
+          <HolidayInfo />
+        </Modal.Window>
+      </Modal>
     </RequestsContainer>
   );
 };
 
 export default RequestScroll;
+
+{
+  /* <Modal>
+<Modal.Open opens="ver">
+  <ShowButton>
+    <HiOutlineEye />
+    Ver
+  </ShowButton>
+</Modal.Open>
+
+<Modal.Window name="ver">
+  <HolidayInfo />
+</Modal.Window>
+</Modal> */
+}

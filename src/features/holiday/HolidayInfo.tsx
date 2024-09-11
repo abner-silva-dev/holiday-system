@@ -183,6 +183,22 @@ const HolidayInfo = () => {
               <TextTitle>Puesto</TextTitle>
               <span>Hombre de negocios</span>
             </Group>
+            <Group>
+              <Stat
+                color="red"
+                icon={<HiCalendarDays />}
+                title="Días Restantes"
+                value="2 de 12"
+              />
+            </Group>
+            <Group>
+              <Stat
+                color="brand"
+                icon={<HiCalendarDays />}
+                title="Vacaciones del periodo"
+                value="2024"
+              />
+            </Group>
           </UserData>
         </UserInfo>
         <HolidayOptions>
@@ -191,18 +207,6 @@ const HolidayInfo = () => {
             icon={<HiCalendarDays />}
             title="Solicitudes pendientes"
             value="2 solicitudes"
-          />
-          <Stat
-            color="red"
-            icon={<HiCalendarDays />}
-            title="Días Restantes"
-            value="2 dias"
-          />
-          <Stat
-            color="brand"
-            icon={<HiCalendarDays />}
-            title="Vacaciones del periodo"
-            value="12 días / 2 días en prorroga"
           />
         </HolidayOptions>
 
