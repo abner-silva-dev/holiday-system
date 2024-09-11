@@ -6,6 +6,7 @@ import { HiOutlineXMark } from 'react-icons/hi2';
 import { HiOutlineClock } from 'react-icons/hi2';
 import { HiOutlineChevronRight } from 'react-icons/hi2';
 import { HiOutlineChevronLeft } from 'react-icons/hi2';
+import { HiOutlineClipboardDocumentList } from 'react-icons/hi2';
 
 import Stat from '../../ui/Start';
 import UserPhoto from '../users/UserPhoto';
@@ -80,7 +81,7 @@ const HolidayMain = styled.main`
   /* padding: 2rem 4rem 8rem; */
   overflow-y: scroll;
   border-radius: 9px;
-  height: 40rem;
+  height: 45rem;
 `;
 
 const HeadingMain = styled.h3`
@@ -334,7 +335,7 @@ const HolidayInfo = () => {
         <HolidayOptions>
           <Stat
             color="green"
-            icon={<HiCalendarDays />}
+            icon={<HiOutlineClipboardDocumentList />}
             title="Solicitudes pendientes"
             value="2 solicitudes"
           />
