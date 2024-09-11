@@ -16,7 +16,7 @@ const RequestsContainer = styled.div`
 const RequestCard = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 2fr;
-  align-items: center;
+  /* align-items: center; */
 
   background-color: var(--color-grey-0);
   padding: 2rem;
@@ -26,7 +26,10 @@ const RequestCard = styled.div`
   cursor: pointer;
 `;
 
-const ImageContainer = styled.div``;
+const ImageContainer = styled.div`
+  align-self: center;
+  justify-self: center;
+`;
 
 const Image = styled.img`
   border-radius: 50%;
