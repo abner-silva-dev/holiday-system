@@ -76,9 +76,9 @@ const Notification = styled.div`
   width: 3rem;
   height: 3rem;
   font-size: 2rem;
-  background-color: var(--color-red-500);
+  background-color: #b91c1c;
   border: 1px solid var(--color-red-600);
-  color: var(--color-grey-0);
+  color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -183,18 +183,3 @@ const RequestScroll = () => {
 };
 
 export default RequestScroll;
-
-{
-  /* <Modal>
-<Modal.Open opens="ver">
-  <ShowButton>
-    <HiOutlineEye />
-    Ver
-  </ShowButton>
-</Modal.Open>
-
-<Modal.Window name="ver">
-  <HolidayInfo />
-</Modal.Window>
-</Modal> */
-}

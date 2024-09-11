@@ -8,6 +8,7 @@ import Stat from '../../ui/Start';
 import UserPhoto from '../users/UserPhoto';
 import Row from '../../ui/Row';
 import Heading from '../../ui/Heading';
+import Filter from '../../ui/Filter';
 
 const HolidayInfoStyles = styled.div`
   /* height: 100vh; */
@@ -144,6 +145,30 @@ const RowComponents = styled.div`
   padding: 0 3.2rem;
 `;
 
+const Option = styled.nav`
+  background-color: var(--color-grey-0);
+  border: 1px solid var(--color-grey-200);
+  box-shadow: var(--shadow-sm);
+
+  padding: 0.4rem;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+
+  align-self: center;
+
+  & svg {
+    height: 2.5rem;
+    width: 2.5rem;
+  }
+
+  & svg:hover {
+    cursor: pointer;
+    color: var(--color-green-700);
+  }
+`;
+
 const HolidayInfo = () => {
   return (
     <Row>
@@ -202,6 +227,16 @@ const HolidayInfo = () => {
           </UserData>
         </UserInfo>
         <HolidayOptions>
+          <Filter
+            searchField="history"
+            options={[
+              { label: 'Solicitudes', value: 'request' },
+              { label: 'Aceptadas', value: 'successfull' },
+              { label: 'Rechazadas', value: 'rejected' },
+              { label: 'Todas', value: 'all' },
+            ]}
+          />
+
           <Stat
             color="green"
             icon={<HiCalendarDays />}

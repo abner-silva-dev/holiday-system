@@ -111,14 +111,14 @@ function Window({ children, name }: PropsWindows) {
 
   const { openName, close } = context;
 
-  useKey('Escape', close);
+  const ref = useKey<HTMLDivElement>('Escape', close);
   // const ref = useOutsideClick<HTMLDivElement>(close);
 
   if (name !== openName) return null;
 
   return createPortal(
     <Overlay>
-      <StyledModal>
+      <StyledModal ref={ref}>
         {/* <StyledModal ref={ref}> */}
         <Button onClick={close}>
           <HiXMark />

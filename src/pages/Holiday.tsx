@@ -30,8 +30,6 @@ const Holiday = () => {
         </Row>
         <RequestScroll />
       </Row>
-      {/* <CreateHoliday /> */}
-      {/* <HolidayInfo /> */}
     </>
   );
 };

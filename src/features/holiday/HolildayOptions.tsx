@@ -75,17 +75,6 @@ const HolidayOptions = () => {
           <ButtonOption>Historial</ButtonOption>
         </ButtonSpacing>
       </AreaContainer>
-      <Modal>
-        <Modal.Open opens="modal">
-          <BtnIcon title="crear empleado">
-            <HiOutlineUserPlus />
-            Crear empleado
-          </BtnIcon>
-        </Modal.Open>
-        <Modal.Window name="modal">
-          <CreateHoliday />
-        </Modal.Window>
-      </Modal>
     </Row>
   );
 };
