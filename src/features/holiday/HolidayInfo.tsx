@@ -80,7 +80,7 @@ const HolidayMain = styled.main`
   /* padding: 2rem 4rem 8rem; */
   overflow-y: scroll;
   border-radius: 9px;
-  height: 40rem;
+  height: 45rem;
 `;
 
 const HeadingMain = styled.h3`
