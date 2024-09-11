@@ -11,6 +11,7 @@ import Stat from '../../ui/Start';
 import UserPhoto from '../users/UserPhoto';
 import Row from '../../ui/Row';
 import Heading from '../../ui/Heading';
+import Filter from '../../ui/Filter';
 
 const HolidayInfoStyles = styled.div`
   /* height: 100vh; */
@@ -170,87 +171,6 @@ const RowComponents = styled.div`
   padding: 0 3.2rem;
 `;
 
-// Periods Component
-
-const PeriodComponent = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  position: relative;
-`;
-
-const PeriodTag = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
-  justify-items: center;
-  gap: 1.2rem;
-  color: var(--color-brand-900);
-
-  border: 1px solid var(--color-brand-200);
-  box-shadow: var(--shadow-md);
-  border-radius: 9px;
-  font-size: 1.8rem;
-  padding: 1.6rem 3.2rem 1.6rem 1.2rem;
-  background-color: var(--color-brand-50);
-
-  & svg {
-    height: 4rem;
-    width: 4rem;
-  }
-`;
-
-const TagTextContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-`;
-
-const periodBtn = css`
-  background-color: var(--color-brand-900);
-  border: none;
-  border-radius: 50%;
-  height: 3rem;
-  width: 3rem;
-
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-
-  box-shadow: var(--shadow-md);
-  transform: all 0.2s;
-  & svg {
-    height: 2rem;
-    width: 2rem;
-    stroke: var(--color-grey-100);
-  }
-  &:hover {
-    background-color: var(--color-brand-800);
-  }
-`;
-
-const PeriodButtonLeft = styled.button`
-  ${periodBtn}
-
-  left: -1.3rem;
-`;
-const PeriodButtonRight = styled.button`
-  ${periodBtn}
-
-  right: -1.3rem;
-`;
-
-const TagTitle = styled.span`
-  font-weight: bold;
-`;
-
-const ClockContainer = styled.div`
-  /* background-color: var(--color-green-100); */
-  display: flex;
-  align-items: center;
-  /* border-radius: 50%; */
-`;
-
 const HolidayInfo = () => {
   return (
     <Row>
@@ -309,6 +229,16 @@ const HolidayInfo = () => {
           </UserData>
         </UserInfo>
         <HolidayOptions>
+          <Filter
+            searchField="history"
+            options={[
+              { label: 'Solicitudes', value: 'request' },
+              { label: 'Aceptadas', value: 'successfull' },
+              { label: 'Rechazadas', value: 'rejected' },
+              { label: 'Todas', value: 'all' },
+            ]}
+          />
+
           <Stat
             color="green"
             icon={<HiCalendarDays />}

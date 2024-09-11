@@ -16,24 +16,9 @@ type PropsFilter = {
 const StyledFilter = styled.nav`
   display: flex;
   gap: 1rem;
-
-  background-color: var(--color-grey-0);
-  border: 1px solid var(--color-grey-200);
-  box-shadow: var(--shadow-sm);
-
-  padding: 0.4rem;
-  border-radius: 7px;
-  align-items: center;
-  gap: 2rem;
-
-  align-self: center;
 `;
 
-interface PropsButton {
-  $active: boolean;
-}
-
-const Button = styled.button<PropsButton>`
+const Button = styled.button`
   background-color: var(--color-grey-0);
   border: none;
   padding: 0.4rem 0.6rem;
@@ -64,11 +49,9 @@ function Filter({ searchField, options }: PropsFilter) {
   const currentFilter = searchParams.get(searchField);
 
   function handleClick(value: string) {
-    searchParams.set('history', value);
+    searchParams.set('accepted', value);
     setSearchParams(searchParams);
   }
-
-  // handleClick('request');
 
   return (
     <StyledFilter>
