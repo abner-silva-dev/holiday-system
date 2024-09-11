@@ -308,6 +308,22 @@ const HolidayInfo = () => {
                 value="2024"
               />
             </Group>
+            <Group>
+              <Stat
+                color="green"
+                icon={<HiCalendarDays />}
+                title="Vacaciones del periodo"
+                value="2023 - 0/12"
+              />
+            </Group>
+            <Group>
+              <Stat
+                color="blue"
+                icon={<HiCalendarDays />}
+                title="Vacaciones del periodo"
+                value="2025 - 15/15"
+              />
+            </Group>
           </UserData>
         </UserInfo>
         <HolidayOptions>
