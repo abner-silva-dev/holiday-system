@@ -17,7 +17,7 @@ const HolidayInfoStyles = styled.div`
   /* height: 100vh; */
   display: grid;
   grid-template-columns: 50rem 1fr;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto auto 1fr;
   gap: 2rem;
   width: 75vw;
 `;
@@ -60,7 +60,7 @@ const UserData = styled.div`
 
 const HolidayOptions = styled.header`
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 `;
 
 const TextTitle = styled.main`
@@ -253,6 +253,11 @@ const ClockContainer = styled.div`
   /* border-radius: 50%; */
 `;
 
+const Filters = styled.div`
+  display: flex;
+  justify-content: end;
+`;
+
 const HolidayInfo = () => {
   return (
     <Row>
@@ -348,21 +353,23 @@ const HolidayInfo = () => {
                 <span>2024</span>
               </TagTextContainer>
             </PeriodTag>
-            <Filter
-              searchField="history"
-              options={[
-                { label: 'Solicitudes', value: 'request' },
-                { label: 'Aceptadas', value: 'successfull' },
-                { label: 'Rechazadas', value: 'rejected' },
-                { label: 'Todas', value: 'all' },
-              ]}
-            />
-
             <PeriodButtonRight>
               <HiOutlineChevronRight />
             </PeriodButtonRight>
           </PeriodComponent>
         </HolidayOptions>
+
+        <Filters>
+          <Filter
+            searchField="history"
+            options={[
+              { label: 'Solicitudes', value: 'request' },
+              { label: 'Aceptadas', value: 'successfull' },
+              { label: 'Rechazadas', value: 'rejected' },
+              { label: 'Todas', value: 'all' },
+            ]}
+          />
+        </Filters>
 
         {/* HOLIDAY MAIN */}
         <HolidayMain>
