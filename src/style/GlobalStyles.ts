@@ -65,8 +65,21 @@ const GlobalStyles = createGlobalStyle`
   --image-opacity: 100%;
 }
   
- 
+ ::-webkit-scrollbar{
+  width: 6px;
+ }
+
+ ::-webkit-scrollbar-thumb{
+  background-color: var(--color-brand-800);
+  border-radius: 9px;
+ }
   
+ ::-webkit-scrollbar-track{
+  background-color: var(--color-grey-200);
+  border-radius: 9px;
+  padding: 10px;
+ }
+
   /* For dark mode */
   &.dark-mode{
     --color-grey-0: #18212f;
@@ -153,6 +166,8 @@ body {
   min-height: 100vh;
   line-height: 1.5;
   font-size: 1.6rem;
+
+  
 }
 
 input,

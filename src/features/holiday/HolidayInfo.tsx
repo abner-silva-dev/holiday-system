@@ -1,8 +1,11 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { HiCalendarDays } from 'react-icons/hi2';
 import { HiOutlineCheck } from 'react-icons/hi2';
 import { HiOutlineXMark } from 'react-icons/hi2';
+import { HiOutlineClock } from 'react-icons/hi2';
+import { HiOutlineChevronRight } from 'react-icons/hi2';
+import { HiOutlineChevronLeft } from 'react-icons/hi2';
 
 import Stat from '../../ui/Start';
 import UserPhoto from '../users/UserPhoto';
@@ -95,7 +98,9 @@ const StateColor = styled.div`
   height: 0.6rem;
   width: 0.6rem;
   padding: 1.6rem;
+  /* background-color: #35e478; */
   background-color: #03682a;
+  /* border-radius: 50%; */
   align-self: center;
 `;
 
@@ -103,19 +108,31 @@ const ColumnContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
+  /* font-size: 2rem; */
 `;
 
 const AuthorizationButtons = styled.div`
   display: flex;
   justify-content: center;
-  gap: 3.2rem;
+  gap: 4rem;
   background-color: transparent;
+
+  margin-bottom: 1.8rem;
 `;
 
 const Button = styled.button`
   background-color: transparent;
   border: none;
   font-weight: bold;
+
+  display: flex;
+  align-items: center;
+  text-transform: uppercase;
+
+  & svg {
+    height: 2rem;
+    width: 2rem;
+  }
 
   &:hover {
   }
@@ -127,6 +144,7 @@ const TitleBold = styled.span`
 
 const SubTitle = styled.span`
   color: var(--color-red-800);
+  font-weight: bold;
 `;
 
 const RowMain = styled.div`
@@ -136,12 +154,101 @@ const RowMain = styled.div`
 
 const ObservationField = styled.textarea`
   resize: none;
+  /* height: 8rem; */
+  /* border-radius: 9px; */
+  border: 1px solid var(--color-grey-400);
+  background-color: var(--color-grey-0);
+  box-shadow: var(--shadow-sm);
 `;
 
 const RowComponents = styled.div`
+  /* display: grid;
+  grid-template-columns: 1fr 1fr; */
+
   display: flex;
   justify-content: space-between;
   padding: 0 3.2rem;
+`;
+
+// Periods Component
+
+const PeriodComponent = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+`;
+
+const PeriodTag = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  justify-items: center;
+  gap: 1.2rem;
+  color: var(--color-brand-900);
+
+  border: 1px solid var(--color-brand-200);
+  box-shadow: var(--shadow-md);
+  border-radius: 9px;
+  font-size: 1.8rem;
+  padding: 1.6rem 3.2rem 1.6rem 1.2rem;
+  background-color: var(--color-brand-50);
+
+  & svg {
+    height: 4rem;
+    width: 4rem;
+  }
+`;
+
+const TagTextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+`;
+
+const periodBtn = css`
+  background-color: var(--color-brand-900);
+  border: none;
+  border-radius: 50%;
+  height: 3rem;
+  width: 3rem;
+
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+
+  box-shadow: var(--shadow-md);
+  transform: all 0.2s;
+  & svg {
+    height: 2rem;
+    width: 2rem;
+    stroke: var(--color-grey-100);
+  }
+  &:hover {
+    background-color: var(--color-brand-800);
+  }
+`;
+
+const PeriodButtonLeft = styled.button`
+  ${periodBtn}
+
+  left: -1.3rem;
+`;
+const PeriodButtonRight = styled.button`
+  ${periodBtn}
+
+  right: -1.3rem;
+`;
+
+const TagTitle = styled.span`
+  font-weight: bold;
+`;
+
+const ClockContainer = styled.div`
+  /* background-color: var(--color-green-100); */
+  display: flex;
+  align-items: center;
+  /* border-radius: 50%; */
 `;
 
 const HolidayInfo = () => {
@@ -208,8 +315,28 @@ const HolidayInfo = () => {
             title="Solicitudes pendientes"
             value="2 solicitudes"
           />
+
+          {/* PERIOD COMPONENT */}
+          <PeriodComponent>
+            <PeriodButtonLeft>
+              <HiOutlineChevronLeft />
+            </PeriodButtonLeft>
+            <PeriodTag>
+              <ClockContainer>
+                <HiOutlineClock />
+              </ClockContainer>
+              <TagTextContainer>
+                <TagTitle>Periodo</TagTitle>
+                <span>2024</span>
+              </TagTextContainer>
+            </PeriodTag>
+            <PeriodButtonRight>
+              <HiOutlineChevronRight />
+            </PeriodButtonRight>
+          </PeriodComponent>
         </HolidayOptions>
 
+        {/* HOLIDAY MAIN */}
         <HolidayMain>
           <AuthorizationCard>
             <HeadingMain>Solicitud 1: 12/09/2024 - 22/09/2024</HeadingMain>

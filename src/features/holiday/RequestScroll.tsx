@@ -127,8 +127,6 @@ const TitleCreation = styled.span`
   font-weight: bold;
 `;
 
-const Group = styled.div``;
-
 const RequestScroll = () => {
   return (
     <RequestsContainer>
@@ -155,7 +153,7 @@ const RequestScroll = () => {
               <TextTitle>Departamento</TextTitle>
               <TextCont>Tecnologias de la Información</TextCont>
             </TextContainer>
-            <Group>
+            <div>
               <TextTitle>Solicitudes</TextTitle>
               <RequestListContainer>
                 <RequestListCard>
@@ -171,7 +169,7 @@ const RequestScroll = () => {
                   </TextCreation>
                 </RequestListCard>
               </RequestListContainer>
-            </Group>
+            </div>
           </RequestCard>
         </Modal.Open>
         <Modal.Window name="ver">
