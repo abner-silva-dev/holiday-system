@@ -5,14 +5,14 @@ import { joinName } from './../../utils/helpers';
 
 const UserInfo = styled.aside`
   background-color: var(--color-grey-0);
+  display: flex;
+  padding: 2rem;
+  flex-direction: column;
   border: 1px solid var(--color-grey-200);
   border-radius: 9px;
   box-shadow: var(--shadow-md);
-  display: flex;
-  flex-direction: column;
   align-items: center;
   gap: 3rem;
-  padding: 2rem;
   grid-row: 1/-1;
 `;
 

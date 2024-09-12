@@ -38,10 +38,10 @@ const Form = styled.form`
 `;
 
 const Input = styled.input`
-  padding: 0.5rem;
-  border-radius: var(--border-radius-md);
   background-color: var(--color-grey-0);
+  padding: 0.5rem;
   border: 1px solid var(--color-grey-400);
+  border-radius: var(--border-radius-md);
 `;
 
 interface PropsCreateDepartment {

@@ -5,18 +5,18 @@ import CreateUser from './createUser';
 import { HiOutlineUserPlus } from 'react-icons/hi2';
 
 const BtnIcon = styled.button`
-  padding: 1rem;
   font-weight: 500;
+  padding: 1rem;
   gap: 1rem;
 
   display: flex;
   align-items: center;
 
-  color: #fff;
   background-color: var(--color-green-700);
+  color: #fff;
   box-shadow: var(--shadow-sm);
-  border-radius: var(--border-radius-lg);
   border: 1px solid var(--color-grey-200);
+  border-radius: var(--border-radius-lg);
 
   &:hover {
     background-color: var(--color-green-600);

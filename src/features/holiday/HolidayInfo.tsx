@@ -1,12 +1,13 @@
 import styled, { css } from 'styled-components';
 
-import { HiCalendarDays } from 'react-icons/hi2';
+import { HiCalendarDays, HiOutlineUserPlus } from 'react-icons/hi2';
 import { HiOutlineCheck } from 'react-icons/hi2';
 import { HiOutlineXMark } from 'react-icons/hi2';
 import { HiOutlineClock } from 'react-icons/hi2';
 import { HiOutlineChevronRight } from 'react-icons/hi2';
 import { HiOutlineChevronLeft } from 'react-icons/hi2';
 import { HiOutlineClipboardDocumentList } from 'react-icons/hi2';
+import { HiOutlineDocumentCheck } from 'react-icons/hi2';
 
 import Stat from '../../ui/Start';
 import UserPhoto from '../users/UserPhoto';
@@ -15,7 +16,6 @@ import Heading from '../../ui/Heading';
 import Filter from '../../ui/Filter';
 
 const HolidayInfoStyles = styled.div`
-  /* height: 100vh; */
   display: grid;
   grid-template-columns: 50rem 1fr;
   grid-template-rows: auto auto 1fr;
@@ -78,7 +78,7 @@ const HolidayMain = styled.main`
   background-color: var(--color-grey-100);
   box-shadow: var(--shadow-md);
   border: 1px solid var(--color-grey-200);
-  /* padding: 2rem 4rem 8rem; */
+
   overflow-y: scroll;
   border-radius: 9px;
   height: 45rem;
@@ -97,12 +97,10 @@ const AuthorizationCard = styled.div`
 `;
 
 const StateColor = styled.div`
+  background-color: #03682a;
+  padding: 1.6rem;
   height: 0.6rem;
   width: 0.6rem;
-  padding: 1.6rem;
-  /* background-color: #35e478; */
-  background-color: #03682a;
-  /* border-radius: 50%; */
   align-self: center;
 `;
 
@@ -110,16 +108,14 @@ const ColumnContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
-  /* font-size: 2rem; */
 `;
 
 const AuthorizationButtons = styled.div`
+  background-color: transparent;
   display: flex;
   justify-content: center;
-  gap: 4rem;
-  background-color: transparent;
-
   margin-bottom: 1.8rem;
+  gap: 4rem;
 `;
 
 const Button = styled.button`
@@ -155,47 +151,39 @@ const RowMain = styled.div`
 `;
 
 const ObservationField = styled.textarea`
-  resize: none;
-  /* height: 8rem; */
-  /* border-radius: 9px; */
-  border: 1px solid var(--color-grey-400);
   background-color: var(--color-grey-0);
+  border: 1px solid var(--color-grey-400);
+  resize: none;
   box-shadow: var(--shadow-sm);
 `;
 
 const RowComponents = styled.div`
-  /* display: grid;
-  grid-template-columns: 1fr 1fr; */
-
   display: flex;
-  justify-content: space-between;
   padding: 0 3.2rem;
+  justify-content: space-between;
 `;
-
-// Periods Component
-//HOLA PEPILLO
 
 const PeriodComponent = styled.div`
   display: flex;
+  position: relative;
   align-items: center;
   gap: 1rem;
-  position: relative;
 `;
 
 const PeriodTag = styled.div`
+  background-color: var(--color-brand-50);
+  color: var(--color-brand-900);
+  font-size: 1.8rem;
   display: grid;
-  grid-template-columns: 1fr 1fr;
   align-items: center;
   justify-items: center;
   gap: 1.2rem;
-  color: var(--color-brand-900);
 
+  grid-template-columns: 1fr 1fr;
   border: 1px solid var(--color-brand-200);
-  box-shadow: var(--shadow-md);
-  border-radius: 9px;
-  font-size: 1.8rem;
   padding: 1.6rem 3.2rem 1.6rem 1.2rem;
-  background-color: var(--color-brand-50);
+  border-radius: 9px;
+  box-shadow: var(--shadow-md);
 
   & svg {
     height: 4rem;
@@ -217,8 +205,8 @@ const periodBtn = css`
   width: 3rem;
 
   position: absolute;
-  top: 50%;
   transform: translateY(-50%);
+  top: 50%;
 
   box-shadow: var(--shadow-md);
   transform: all 0.2s;
@@ -248,15 +236,38 @@ const TagTitle = styled.span`
 `;
 
 const ClockContainer = styled.div`
-  /* background-color: var(--color-green-100); */
   display: flex;
   align-items: center;
-  /* border-radius: 50%; */
 `;
 
 const Filters = styled.div`
   display: flex;
   justify-content: end;
+`;
+
+const BtnIcon = styled.button`
+  padding: 1rem;
+  font-weight: 500;
+  gap: 1rem;
+
+  display: flex;
+  align-items: center;
+  align-self: center;
+
+  color: #fff;
+  background-color: var(--color-green-700);
+  box-shadow: var(--shadow-sm);
+  border-radius: var(--border-radius-lg);
+  border: 1px solid var(--color-grey-200);
+
+  &:hover {
+    background-color: var(--color-green-600);
+  }
+
+  & svg {
+    width: 2.3rem;
+    height: 2.3rem;
+  }
 `;
 
 const HolidayInfo = () => {
@@ -332,7 +343,12 @@ const HolidayInfo = () => {
             </Group>
           </UserData>
         </UserInfo>
+
         <HolidayOptions>
+          <BtnIcon title="Crear vacaciones">
+            <HiOutlineDocumentCheck />
+            Registrar Vacaciones
+          </BtnIcon>
           <Stat
             color="green"
             icon={<HiOutlineClipboardDocumentList />}
@@ -340,7 +356,6 @@ const HolidayInfo = () => {
             value="2 solicitudes"
           />
 
-          {/* PERIOD COMPONENT */}
           <PeriodComponent>
             <PeriodButtonLeft>
               <HiOutlineChevronLeft />

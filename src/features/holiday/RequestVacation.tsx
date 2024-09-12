@@ -16,23 +16,23 @@ const ImageContainer = styled.div`
 `;
 
 const GroupText = styled.div`
+  color: var(--color-grey-800);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   font-size: 1.6rem;
   width: 100%;
-  color: var(--color-grey-800);
 `;
 
 const ShowMoreAnchor = styled.a`
+  background-color: #166534;
+  color: #f3f4f6;
+  padding: 1rem;
+  font-weight: 600;
+  border-radius: 9px;
   display: flex;
   align-self: center;
   justify-content: center;
-  background-color: #166534;
-  padding: 1rem;
-  border-radius: 9px;
-  color: #f3f4f6;
-  font-weight: 600;
   transition: all 0.2s;
 
   &:hover {

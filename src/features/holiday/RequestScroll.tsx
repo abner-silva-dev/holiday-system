@@ -1,28 +1,25 @@
 import styled from 'styled-components';
-// import { HiOutlineEye } from 'react-icons/hi2';
 import Modal from '../../ui/Modal';
 import HolidayInfo from './holidayInfo';
 
 const RequestsContainer = styled.div`
-  /* background-color: var(--color-grey-0); */
   border-radius: 9px;
   padding: 2rem 2rem;
-  /* box-shadow: var(--shadow-md); */
-  /* height: 64vh; */
+
   overflow-y: scroll;
-  /* border: 1px solid var(--color-grey-300); */
 `;
 
 const RequestCard = styled.div`
+  background-color: var(--color-grey-0);
+
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 2fr;
-  /* align-items: center; */
 
-  background-color: var(--color-grey-0);
+  position: relative;
+
   padding: 2rem;
   border-radius: 9px;
   box-shadow: var(--shadow-sm);
-  position: relative;
   cursor: pointer;
 `;
 
@@ -41,7 +38,7 @@ const TextContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.4rem;
-  /* justify-content: space-between; */
+
   width: 20rem;
 `;
 

@@ -5,6 +5,8 @@ import CreateDeparment from './CreateDepartment';
 import { HiOutlineUserPlus } from 'react-icons/hi2';
 
 const BtnIcon = styled.button`
+  background-color: var(--color-green-700);
+  color: #fff;
   padding: 1rem;
   font-weight: 500;
   gap: 1rem;
@@ -12,8 +14,6 @@ const BtnIcon = styled.button`
   display: flex;
   align-items: center;
 
-  color: #fff;
-  background-color: var(--color-green-700);
   box-shadow: var(--shadow-sm);
   border-radius: var(--border-radius-lg);
   border: 1px solid var(--color-grey-200);
