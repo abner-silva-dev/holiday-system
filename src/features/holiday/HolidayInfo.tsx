@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-import { HiCalendarDays, HiOutlineUserPlus } from 'react-icons/hi2';
+import { HiCalendarDays } from 'react-icons/hi2';
 import { HiOutlineCheck } from 'react-icons/hi2';
 import { HiOutlineXMark } from 'react-icons/hi2';
 import { HiOutlineClock } from 'react-icons/hi2';
