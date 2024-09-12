@@ -1,6 +1,5 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import Modal from '../../ui/Modal';
-import HolidayInfo from './holidayInfo';
 
 const RequestsContainer = styled.div`
   border-radius: 9px;
@@ -9,7 +8,7 @@ const RequestsContainer = styled.div`
   overflow-y: scroll;
 `;
 
-const RequestCard = styled.div`
+const RequestCard = styled(Link)`
   background-color: var(--color-grey-0);
 
   display: grid;
@@ -107,52 +106,45 @@ const TitleCreation = styled.span`
 const RequestScroll = () => {
   return (
     <RequestsContainer>
-      <Modal>
-        <Modal.Open opens="ver">
-          <RequestCard title="Ver más">
-            <Notification>2</Notification>
-            <ImageContainer>
-              <Image src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBrDpzWSWvT8WQKdSxpdEaoev3e0uixuPvdw&s" />
-            </ImageContainer>
-            <TextContainer>
-              <TextTitle>No. de Empleado</TextTitle>
-              <TextCont>20251081</TextCont>
-            </TextContainer>
-            <TextContainer>
-              <TextTitle>Nombre</TextTitle>
-              <TextCont>José Armando Rodriguez Hernández</TextCont>
-            </TextContainer>
-            <TextContainer>
-              <TextTitle>Puesto</TextTitle>
-              <TextCont>Hombre de Negocios</TextCont>
-            </TextContainer>
-            <TextContainer>
-              <TextTitle>Departamento</TextTitle>
-              <TextCont>Tecnologias de la Información</TextCont>
-            </TextContainer>
-            <div>
-              <TextTitle>Solicitudes</TextTitle>
-              <RequestListContainer>
-                <RequestListCard>
-                  <TitleCreation>Solicitud 1</TitleCreation>
-                  <TextCreation>
-                    Creada: <span>28/08/2024 21:23 hrs</span>
-                  </TextCreation>
-                </RequestListCard>
-                <RequestListCard>
-                  <TitleCreation>Solicitud 2</TitleCreation>
-                  <TextCreation>
-                    Creada: <span>21/09/2024 18:50 hrs</span>
-                  </TextCreation>
-                </RequestListCard>
-              </RequestListContainer>
-            </div>
-          </RequestCard>
-        </Modal.Open>
-        <Modal.Window name="ver">
-          <HolidayInfo />
-        </Modal.Window>
-      </Modal>
+      <RequestCard title="Ver más" to="123454?history=all">
+        <Notification>2</Notification>
+        <ImageContainer>
+          <Image src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBrDpzWSWvT8WQKdSxpdEaoev3e0uixuPvdw&s" />
+        </ImageContainer>
+        <TextContainer>
+          <TextTitle>No. de Empleado</TextTitle>
+          <TextCont>20251081</TextCont>
+        </TextContainer>
+        <TextContainer>
+          <TextTitle>Nombre</TextTitle>
+          <TextCont>José Armando Rodriguez Hernández</TextCont>
+        </TextContainer>
+        <TextContainer>
+          <TextTitle>Puesto</TextTitle>
+          <TextCont>Hombre de Negocios</TextCont>
+        </TextContainer>
+        <TextContainer>
+          <TextTitle>Departamento</TextTitle>
+          <TextCont>Tecnologias de la Información</TextCont>
+        </TextContainer>
+        <div>
+          <TextTitle>Solicitudes</TextTitle>
+          <RequestListContainer>
+            <RequestListCard>
+              <TitleCreation>Solicitud 1</TitleCreation>
+              <TextCreation>
+                Creada: <span>28/08/2024 21:23 hrs</span>
+              </TextCreation>
+            </RequestListCard>
+            <RequestListCard>
+              <TitleCreation>Solicitud 2</TitleCreation>
+              <TextCreation>
+                Creada: <span>21/09/2024 18:50 hrs</span>
+              </TextCreation>
+            </RequestListCard>
+          </RequestListContainer>
+        </div>
+      </RequestCard>
     </RequestsContainer>
   );
 };

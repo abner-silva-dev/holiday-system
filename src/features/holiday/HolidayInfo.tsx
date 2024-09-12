@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-import { HiCalendarDays, HiOutlineUserPlus } from 'react-icons/hi2';
+import { HiCalendarDays, HiArrowLeft } from 'react-icons/hi2';
 import { HiOutlineCheck } from 'react-icons/hi2';
 import { HiOutlineXMark } from 'react-icons/hi2';
 import { HiOutlineClock } from 'react-icons/hi2';
@@ -14,6 +14,7 @@ import UserPhoto from '../users/UserPhoto';
 import Row from '../../ui/Row';
 import Heading from '../../ui/Heading';
 import Filter from '../../ui/Filter';
+import { Link, useNavigate } from 'react-router-dom';
 
 const HolidayInfoStyles = styled.div`
   display: grid;
@@ -242,26 +243,28 @@ const ClockContainer = styled.div`
 
 const Filters = styled.div`
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const BtnIcon = styled.button`
-  padding: 1rem;
-  font-weight: 500;
+  padding: 0.7rem 1rem;
+  font-weight: 600;
+  font-size: 1.3rem;
   gap: 1rem;
 
   display: flex;
   align-items: center;
   align-self: center;
 
-  color: #fff;
-  background-color: var(--color-green-700);
+  color: var(--color-grey-900);
+  background-color: var(--color-grey-0);
   box-shadow: var(--shadow-sm);
   border-radius: var(--border-radius-lg);
   border: 1px solid var(--color-grey-200);
 
   &:hover {
-    background-color: var(--color-green-600);
+    background-color: var(--color-green-100);
   }
 
   & svg {
@@ -270,10 +273,32 @@ const BtnIcon = styled.button`
   }
 `;
 
+const GoBack = styled.button`
+  border: none;
+  background-color: transparent;
+
+  & svg {
+    color: var(--color-grey-900);
+    width: 6rem;
+    height: 3rem;
+  }
+`;
+
 const HolidayInfo = () => {
+  const navigate = useNavigate();
+
+  const goBack = () => {
+    navigate(-1);
+  };
+
   return (
     <Row>
-      <Heading as="h1">Admnistracion de vacaciones</Heading>
+      <Row type="horizontal">
+        <GoBack onClick={goBack}>
+          <HiArrowLeft />
+        </GoBack>
+        <Heading as="h1">Admnistracion de vacaciones</Heading>
+      </Row>
       <HolidayInfoStyles>
         <UserInfo>
           <UserImage>
@@ -345,10 +370,6 @@ const HolidayInfo = () => {
         </UserInfo>
 
         <HolidayOptions>
-          <BtnIcon title="Crear vacaciones">
-            <HiOutlineDocumentCheck />
-            Registrar Vacaciones
-          </BtnIcon>
           <Stat
             color="green"
             icon={<HiOutlineClipboardDocumentList />}
@@ -376,6 +397,11 @@ const HolidayInfo = () => {
         </HolidayOptions>
 
         <Filters>
+          <BtnIcon title="Crear vacaciones">
+            <HiOutlineDocumentCheck />
+            Registrar Vacaciones
+          </BtnIcon>
+
           <Filter
             searchField="history"
             options={[
