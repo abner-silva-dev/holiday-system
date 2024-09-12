@@ -9,6 +9,7 @@ import Departments from './pages/Departments';
 import Holiday from './pages/Holiday';
 import Seniority from './pages/Seniority';
 import Enterprise from './pages/Enterprise';
+import HolidayInfo from './features/holiday/holidayInfo';
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ function App() {
               <Route path="departments" element={<Departments />} />
               <Route path="seniority" element={<Seniority />} />
               <Route path="holidays" element={<Holiday />} />
+              <Route path="holidays/:id" element={<HolidayInfo />} />
             </Route>
           </Routes>
         </BrowserRouter>
