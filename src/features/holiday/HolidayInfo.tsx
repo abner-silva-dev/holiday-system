@@ -22,7 +22,6 @@ const HolidayInfoStyles = styled.div`
   grid-template-columns: 50rem 1fr;
   grid-template-rows: auto auto 1fr;
   gap: 2rem;
-  width: 75vw;
 `;
 
 const UserInfo = styled.aside`
@@ -298,7 +297,7 @@ const HolidayInfo = () => {
         <GoBack onClick={goBack}>
           <HiArrowLeft />
         </GoBack>
-        <Heading as="h1">Admnistracion de vacaciones</Heading>
+        <Heading as="h1">Administracion de vacaciones</Heading>
       </Row>
       <HolidayInfoStyles>
         <UserInfo>
