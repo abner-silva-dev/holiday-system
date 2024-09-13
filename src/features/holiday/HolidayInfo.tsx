@@ -15,7 +15,7 @@ import UserPhoto from '../users/UserPhoto';
 import Row from '../../ui/Row';
 import Heading from '../../ui/Heading';
 import Filter from '../../ui/Filter';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const HolidayInfoStyles = styled.div`
   display: grid;
@@ -265,6 +265,7 @@ const BtnIcon = styled.button`
 
   &:hover {
     background-color: var(--color-green-100);
+    color: black;
   }
 
   & svg {
@@ -273,7 +274,7 @@ const BtnIcon = styled.button`
   }
 `;
 
-const GoBack = styled.button`
+const GoBack = styled(Link)`
   border: none;
   background-color: transparent;
 
@@ -285,19 +286,19 @@ const GoBack = styled.button`
 `;
 
 const HolidayInfo = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  const goBack = () => {
-    navigate(-1);
-  };
+  // const goBack = () => {
+  //   navigate(-1);
+  // };
 
   return (
     <Row>
       <Row type="horizontal">
-        <GoBack onClick={goBack}>
+        <GoBack to="/holidays">
           <HiArrowLeft />
         </GoBack>
-        <Heading as="h1">Administracion de vacaciones</Heading>
+        <Heading as="h1">Administración de Vacaciones</Heading>
       </Row>
       <HolidayInfoStyles>
         <UserInfo>
