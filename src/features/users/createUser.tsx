@@ -5,15 +5,14 @@ import Button from '../../ui/Button';
 import FormRow from '../../ui/FormRow';
 
 import { UserInfo } from './types';
-import { joinName } from '../../utils/helpers';
 import { useCreateUser } from './useCreateUser';
 import Row from '../../ui/Row';
 import Heading from '../../ui/Heading';
 import { useEnterprises } from '../enterprises/useEnterprises';
-import { useDeleteDepartment } from '../departments/useDeleteDepartment';
 import { useDepartments } from '../departments/useDepartment';
 import { DepartmentInfo } from '../departments/types';
 import { EnterpriseInfo } from '../enterprises/types';
+import { useUpdateUser } from './useUpdateUser';
 
 const Form = styled.form`
   display: grid;
@@ -37,52 +36,62 @@ const Input = styled.input`
 // }
 
 interface PropsCreateUSer {
-  edit?: UserInfo;
+  userToUpdate?: UserInfo;
   onCloseModal?: () => void;
 }
 
-const CreateUser: React.FC<PropsCreateUSer> = ({ edit = {}, onCloseModal }) => {
+const CreateUser: React.FC<PropsCreateUSer> = ({ userToUpdate = {}, onCloseModal }) => {
+  console.log(userToUpdate);
+  const { id: userId = '', ...editValues } = userToUpdate as UserInfo;
+
+  // Check if is Edition or Create user
+  const isEditSession = Boolean(userId);
+
+  console.log(userToUpdate);
+
+  // utilities hook form
   const { register, handleSubmit, reset } = useForm<UserInfo>({
-    defaultValues: edit,
+    defaultValues: isEditSession
+      ? {
+          ...editValues,
+          department: editValues?.department?._id as unknown as DepartmentInfo,
+          enterprise: editValues?.enterprise?._id as unknown as EnterpriseInfo,
+        }
+      : {},
   });
 
   const { departments } = useDepartments();
   const { enterprises } = useEnterprises();
 
   const { createUser } = useCreateUser();
+  const { updateUser } = useUpdateUser();
 
+  // Get Current data after to submit
   const onSubmit = (data: UserInfo) => {
-    const {
-      employNumber,
-      dateHiring,
-      name,
-      paternSurname,
-      motherSurname,
-      email,
-      phoneNumber,
-      enterprise,
-      department,
-    } = data;
-
-    createUser({
-      employNumber,
-      dateHiring,
-      email,
-      phoneNumber,
-      enterprise: enterprise,
-      department,
-      paternSurname,
-      motherSurname,
-      name,
-    });
-
-    reset();
-    onCloseModal?.();
+    if (isEditSession)
+      updateUser(
+        { newUser: data, id: userId },
+        {
+          onSuccess: () => {
+            reset();
+            onCloseModal?.();
+          },
+        }
+      );
+    else
+      createUser(data, {
+        onSuccess: () => {
+          reset();
+          onCloseModal?.();
+        },
+      });
   };
 
   return (
     <Row>
-      <Heading as="h2">Registro de empleado</Heading>
+      <Heading as="h2">
+        {isEditSession ? 'Modificar usuario' : 'Registro de empleado'}
+      </Heading>
 
       <Form onSubmit={handleSubmit(onSubmit)}>
         <FormRow label="Numero de Empleado">
@@ -144,7 +153,6 @@ const CreateUser: React.FC<PropsCreateUSer> = ({ edit = {}, onCloseModal }) => {
         </FormRow>
         <FormRow label="Empresa">
           <Input id="enterprise" as="select" {...register('enterprise')} required>
-            {/* <option value="">Selecciona...</option>; */}
             {enterprises?.map((enterprise: EnterpriseInfo) => {
               return (
                 <option value={enterprise._id} key={enterprise._id}>
@@ -156,7 +164,6 @@ const CreateUser: React.FC<PropsCreateUSer> = ({ edit = {}, onCloseModal }) => {
         </FormRow>
         <FormRow label="Departamento">
           <Input id="department" as="select" {...register('department')} required>
-            {/* <option value="">Selecciona...</option>; */}
             {departments?.map((department: DepartmentInfo) => {
               return (
                 <option value={department._id} key={department._id}>
@@ -166,7 +173,9 @@ const CreateUser: React.FC<PropsCreateUSer> = ({ edit = {}, onCloseModal }) => {
             })}
           </Input>
         </FormRow>
-        <Button $variation="confirm">Crear Empleado</Button>
+        <Button $variation="confirm">
+          {isEditSession ? 'Actualizar Empleado' : 'Crear Empleado'}
+        </Button>
       </Form>
     </Row>
   );

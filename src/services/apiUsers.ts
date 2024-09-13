@@ -38,8 +38,8 @@ export const deleteUser = async (userId: string) => {
   return data;
 };
 
-export const updateUser = async (user: UserInfo) => {
-  const res = await fetch(`${API_DAI_SYSTEM}/users`, {
+export const updateUser = async (idUser: string, user: UserInfo) => {
+  const res = await fetch(`${API_DAI_SYSTEM}/users/${idUser}`, {
     method: 'PATCH',
     headers: { 'Content-type': 'application/json' },
     body: JSON.stringify(user),

@@ -55,7 +55,7 @@ const UserRow: React.FC<Props> = ({ user }) => {
             user.seniority?.days
           )}
         </span>
-        <span>{user.department.name}</span>
+        <span>{user.department?.name}</span>
         <div>
           <Modal>
             <Menus.Menu>
@@ -81,14 +81,15 @@ const UserRow: React.FC<Props> = ({ user }) => {
 
               <Modal.Window name="edit">
                 <CreateUser
-                  edit={{
+                  userToUpdate={{
+                    id: userId,
                     employNumber,
                     dateHiring: dateHiringFormat,
                     name,
                     email,
                     phoneNumber,
-                    enterprise: enterpriseId,
-                    department: departmentId,
+                    enterprise: { _id: enterpriseId },
+                    department: { _id: departmentId },
                     paternSurname,
                     motherSurname,
                   }}
