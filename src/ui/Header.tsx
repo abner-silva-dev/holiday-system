@@ -122,15 +122,15 @@ function Header() {
       </UserView>
 
       <IconSpacing>
-        <DarkMode onClick={() => setIsDark(!isDark)}>
+        <DarkMode title="Modo Oscuro / Modo Claro" onClick={() => setIsDark(!isDark)}>
           {isDark ? <HiOutlineSun /> : <HiOutlineMoon />}
         </DarkMode>
 
-        <Bell onClick={() => setClicked(!isClicked)}>
+        <Bell title="Notificaciones" onClick={() => setClicked(!isClicked)}>
           <Notification>5</Notification>
           <HiOutlineBell></HiOutlineBell>
-          {isClicked ? <FloatFeat /> : null}
         </Bell>
+        {isClicked ? <FloatFeat /> : null}
         <LogOff title="Cerrar Sesión">
           <HiOutlineArrowRightOnRectangle />
         </LogOff>

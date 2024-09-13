@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import UserPhoto from '../users/UserPhoto';
+import { Link } from 'react-router-dom';
 
 const RequestCard = styled.div`
   display: flex;
@@ -24,7 +25,7 @@ const GroupText = styled.div`
   width: 100%;
 `;
 
-const ShowMoreAnchor = styled.a`
+const ShowMoreAnchor = styled(Link)`
   background-color: #166534;
   color: #f3f4f6;
   padding: 1rem;
@@ -68,7 +69,7 @@ function RequestVacation() {
         <TitleInfo>Nombre:</TitleInfo>
         <ContentInfo>José Armando Rodríguez Hernández</ContentInfo>
       </GroupText>
-      <ShowMoreAnchor href="#">Ver</ShowMoreAnchor>
+      <ShowMoreAnchor to="/holidays/123454?history=all">Ver</ShowMoreAnchor>
     </RequestCard>
   );
 }

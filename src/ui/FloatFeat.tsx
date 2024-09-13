@@ -9,8 +9,8 @@ const FloatFeatStyled = styled.div`
   justify-content: space-between;
   /* gap: 2.4rem; */
   position: absolute;
-  top: 3.2rem;
-  right: 0;
+  top: 4.4rem;
+  right: 8.5rem;
   background-color: var(--color-grey-0);
   border: 1px solid var(--color-grey-300);
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.08);
