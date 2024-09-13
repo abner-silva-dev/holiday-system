@@ -10,6 +10,7 @@ import Holiday from './pages/Holiday';
 import Seniority from './pages/Seniority';
 import Enterprise from './pages/Enterprise';
 import HolidayInfo from './features/holiday/holidayInfo';
+import Login from './pages/Login';
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,7 @@ function App() {
         <ReactQueryDevtools />
         <BrowserRouter>
           <Routes>
+            <Route path="login" element={<Login />} />
             <Route element={<AppLayout />}>
               <Route index element={<Navigate replace to="users" />} />
               <Route path="users" element={<User />} />
