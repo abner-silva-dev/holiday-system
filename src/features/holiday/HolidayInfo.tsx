@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 
 import { HiCalendarDays, HiArrowLeft } from 'react-icons/hi2';
+
 import { HiOutlineCheck } from 'react-icons/hi2';
 import { HiOutlineXMark } from 'react-icons/hi2';
 import { HiOutlineClock } from 'react-icons/hi2';
@@ -14,14 +15,13 @@ import UserPhoto from '../users/UserPhoto';
 import Row from '../../ui/Row';
 import Heading from '../../ui/Heading';
 import Filter from '../../ui/Filter';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const HolidayInfoStyles = styled.div`
   display: grid;
   grid-template-columns: 50rem 1fr;
   grid-template-rows: auto auto 1fr;
   gap: 2rem;
-  width: 75vw;
 `;
 
 const UserInfo = styled.aside`
@@ -265,6 +265,7 @@ const BtnIcon = styled.button`
 
   &:hover {
     background-color: var(--color-green-100);
+    color: black;
   }
 
   & svg {
@@ -273,7 +274,7 @@ const BtnIcon = styled.button`
   }
 `;
 
-const GoBack = styled.button`
+const GoBack = styled(Link)`
   border: none;
   background-color: transparent;
 
@@ -285,19 +286,19 @@ const GoBack = styled.button`
 `;
 
 const HolidayInfo = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  const goBack = () => {
-    navigate(-1);
-  };
+  // const goBack = () => {
+  //   navigate(-1);
+  // };
 
   return (
     <Row>
       <Row type="horizontal">
-        <GoBack onClick={goBack}>
+        <GoBack to="/holidays">
           <HiArrowLeft />
         </GoBack>
-        <Heading as="h1">Admnistracion de vacaciones</Heading>
+        <Heading as="h1">Administración de Vacaciones</Heading>
       </Row>
       <HolidayInfoStyles>
         <UserInfo>

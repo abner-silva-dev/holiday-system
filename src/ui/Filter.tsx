@@ -43,7 +43,7 @@ const Button = styled.button<PropsButton>`
     props.$active &&
     css`
       background-color: var(--color-green-700);
-      color: var(--color-brand-50);
+      color: #fff;
     `}
 
   border-radius: var(--border-radius-sm);
@@ -55,7 +55,7 @@ const Button = styled.button<PropsButton>`
 
   &:hover:not(:disabled) {
     background-color: var(--color-green-700);
-    color: var(--color-brand-50);
+    color: #fff;
   }
 `;
 
