@@ -1,40 +1,23 @@
 import styled from 'styled-components';
-import Row from '../../ui/Row';
 import Heading from '../../ui/Heading';
-import UserCard from '../../../src/features/users/UserCard';
 
 import { addLocale, locale } from 'primereact/api';
 import { Calendar } from 'primereact/calendar';
 import { useState } from 'react';
-import FormRow from '../../ui/FormRow';
+
 import { useForm } from 'react-hook-form';
 import Button from '../../ui/Button';
 import { HolidayInfo } from './type';
 
-const StyledCreateHoliday = styled.div``;
+import './calendar.css';
 
-const StyledCalendarInput = styled(Calendar)`
-  b .p-calendar {
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-
-  .p-calendar-header {
-    background-color: #4caf50;
-    color: #fff;
-  }
-
-  .p-calendar .p-calendar-day {
-    border: 1px solid #4caf50;
-  }
-`;
+const StyledCalendarInput = styled.div``;
 
 const Form = styled.form`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  align-items: end;
-  justify-content: center;
-  gap: 4rem;
+  /* justify-content: center; */
+  gap: 2rem;
 `;
 
 const Input = styled.input`
@@ -43,6 +26,23 @@ const Input = styled.input`
   border: 1px solid var(--color-grey-400);
   border-radius: var(--border-radius-md);
 `;
+
+const TextArea = styled.textarea`
+  resize: none;
+  border-radius: 9px;
+  border: 1px solid var(--color-grey-400);
+  background-color: var(--color-grey-0);
+`;
+
+const Label = styled.label``;
+
+const FieldContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
+
+// const SelectOption = styled.select``;
 
 interface PropsCreateDepartment {
   edit?: HandleSubmit;
@@ -107,33 +107,81 @@ const CreateHoliday: React.FC<PropsCreateDepartment> = ({ edit = {}, onCloseModa
 
   locale('es');
 
+  const RegContainer = styled.div`
+    background-color: var(--color-grey-0);
+    grid-column: 1/-1;
+    padding: 2rem;
+  `;
+
+  const CurrentRow = styled.div`
+    margin-top: 3.2rem;
+  `;
+
   return (
     <>
-      <Heading as="h2">Registro de Departamento</Heading>
+      <RegContainer>
+        <Heading as="h2">Registro de Vacaciones</Heading>
+        <CurrentRow>
+          {/* <UserCard user={{}}></UserCard> */}
+          <Form onSubmit={handleSubmit(onSubmit)}>
+            <FieldContainer>
+              {/* <input type="text" onChange={()} /> */}
+              <Label>Seleccionar Días</Label>
+              <StyledCalendarInput>
+                <Calendar
+                  value={dates}
+                  onChange={(e) => setDates(e.value)}
+                  selectionMode="multiple"
+                  dateFormat="dd/mm/yy"
+                  showIcon
+                  readOnlyInput
+                  className="p-inputtext p-component p-inputtext p-component"
+                  variant="filled"
+                />
+              </StyledCalendarInput>
+            </FieldContainer>
+            <FieldContainer>
+              <Label>Fecha de Creación</Label>
+              <Input
+                type="text"
+                id="dateCreation"
+                placeholder=""
+                {...register('dayCreated')}
+                readOnly
+                required
+              />
+            </FieldContainer>
+            <FieldContainer>
+              <Label>Días Seleccionados</Label>
+              <Input
+                type="text"
+                id="daySelected"
+                placeholder=""
+                {...register('daySelected')}
+                readOnly
+                required
+              />
+            </FieldContainer>
 
-      <Row type="horizontal">
-        <UserCard user={{}}></UserCard>
-        <Form onSubmit={handleSubmit(onSubmit)}>
-          <FormRow label="Selecciona dias">
-            <Calendar
-              value={dates}
-              onChange={(e) => setDates(e.value)}
-              selectionMode="multiple"
-              readOnlyInput
-            />
-          </FormRow>
-          <FormRow label="Abreviatura">
-            <Input
-              type="text"
-              id="nameAbreviate"
-              placeholder="V"
-              {...register('nameAbreviate')}
-              required
-            />
-          </FormRow>
-          <Button $variation="confirm">Crear Departamento</Button>
-        </Form>
-      </Row>
+            <FieldContainer>
+              <Label>Notas</Label>
+              <TextArea id="observation" placeholder="" {...register('dayCreated')} />
+            </FieldContainer>
+
+            <Button
+              style={{
+                gridColumn: '1/-1',
+                width: '40%',
+                justifySelf: 'center',
+                marginTop: '3.2rem',
+              }}
+              $variation="confirm"
+            >
+              Crear Registro
+            </Button>
+          </Form>
+        </CurrentRow>
+      </RegContainer>
     </>
   );
 };

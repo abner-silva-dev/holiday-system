@@ -41,7 +41,7 @@ function Calendary() {
         events={events}
         startAccessor="start"
         endAccessor="end"
-        style={{ height: '100%' }}
+        style={{ height: '100%', fontSize: '2.4rem' }}
         messages={messages}
       />
     </div>

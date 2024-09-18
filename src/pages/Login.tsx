@@ -39,7 +39,7 @@ const LoginContainer = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 60rem;
+  min-width: 60rem;
 
   border-radius: 12px;
   padding: 5rem;
@@ -60,14 +60,15 @@ const LoginContainer = styled.div`
 
   z-index: 99;
 
-  @media (max-width: 37.5em) {
+  /* @media (max-width: 37.5em) {
     width: 100%;
     height: 100%;
     border-radius: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
-  }
+    overflow-y: scroll;
+  } */
 `;
 
 const SectionsContainerLeft = styled.div`
@@ -169,7 +170,7 @@ export default function App() {
             <TextBox
               title="Completa este campo"
               type="text"
-              placeholder="Ingrese su Usuario"
+              placeholder="Ingrese su usuario"
               required
             ></TextBox>
             <HiOutlineUserCircle />
@@ -179,7 +180,7 @@ export default function App() {
             <TextBox
               title="Completa este campo"
               type={isClicked ? 'text' : 'password'}
-              placeholder="Ingrese su Contraseña"
+              placeholder="Ingrese su contraseña"
               required
             ></TextBox>
             <EyeContainer

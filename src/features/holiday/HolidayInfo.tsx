@@ -16,6 +16,7 @@ import Row from '../../ui/Row';
 import Heading from '../../ui/Heading';
 import Filter from '../../ui/Filter';
 import { Link } from 'react-router-dom';
+import CreateHoliday from './CreateHoliday';
 
 const HolidayInfoStyles = styled.div`
   display: grid;
@@ -416,7 +417,10 @@ const HolidayInfo = () => {
 
         {/* HOLIDAY MAIN */}
         <HolidayMain>
-          <AuthorizationCard>
+          <CreateHoliday></CreateHoliday>
+
+          {/*  */}
+          {/* <AuthorizationCard>
             <HeadingMain>Solicitud 1: 12/09/2024 - 22/09/2024</HeadingMain>
             <RowComponents>
               <ColumnContainer>
@@ -535,7 +539,8 @@ const HolidayInfo = () => {
                 </ColumnContainer>
               </ColumnContainer>
             </RowComponents>
-          </AuthorizationCard>
+          </AuthorizationCard> */}
+          {/*  */}
         </HolidayMain>
       </HolidayInfoStyles>
     </Row>
