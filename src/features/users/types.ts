@@ -13,6 +13,7 @@ export interface UserInfo {
   name: string;
   paternSurname?: string;
   motherSurname?: string;
+  photo?: string;
   dateHiring: string;
   seniority?: Seniority;
   email: string;
