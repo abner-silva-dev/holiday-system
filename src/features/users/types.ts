@@ -1,5 +1,6 @@
 import { DepartmentInfo } from '../departments/types';
 import { EnterpriseInfo } from '../enterprises/types';
+import { HolidayInfo } from '../holiday/type';
 
 type Seniority = {
   years: number;
@@ -20,6 +21,7 @@ export interface UserInfo {
   phoneNumber: string;
   enterprise: EnterpriseInfo;
   department: DepartmentInfo;
+  holidays?: HolidayInfo[];
 }
 // export interface UserInfo {
 //   employNumber: string;

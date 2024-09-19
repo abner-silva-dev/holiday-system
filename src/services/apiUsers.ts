@@ -12,6 +12,16 @@ export const getUsers = async () => {
   return data;
 };
 
+export const getUser = async (id: string) => {
+  const res = await fetch(`${API_DAI_SYSTEM}/users/${id}`);
+
+  if (!res.ok) throw new Error('User could not loaded');
+
+  const { data } = await res.json();
+
+  return data;
+};
+
 export const createUser = async (user: UserInfo) => {
   const res = await fetch(`${API_DAI_SYSTEM}/users`, {
     method: 'POST',

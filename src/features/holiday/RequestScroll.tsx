@@ -1,7 +1,12 @@
 import styled from 'styled-components';
-import { useHolidays } from './useHolidays';
 import HolidayRow from './HolidayRow';
-import { HolidayInfo } from './type';
+import { useUsers } from '../users/useUsers';
+import { UserInfo } from '../users/types';
+import { useStateApp } from '../../context/stateAppContext';
+import Spinner from '../../ui/Spinner';
+import { formatText } from '../../utils/helpers';
+// import { HolidayInfo } from './type';
+// import { useHolidays } from './useHolidays';
 
 const RequestsContainer = styled.div`
   border-radius: 9px;
@@ -11,14 +16,27 @@ const RequestsContainer = styled.div`
 `;
 
 const RequestScroll = () => {
-  const { holidays } = useHolidays();
+  const { users, isPending, error } = useUsers();
+  const {
+    state: { queryUser },
+  } = useStateApp();
 
-  console.log(holidays);
+  if (isPending) return <Spinner />;
+  if (error) return <h1>{error.message}</h1>;
+
+  // DATA SEARCH
+  const dataSearch = users.filter((user: UserInfo) => {
+    return (
+      formatText(`${user.name} ${user.paternSurname} ${user.motherSurname}`).includes(
+        queryUser
+      ) || user.employNumber.includes(queryUser)
+    );
+  });
 
   return (
     <RequestsContainer>
-      {holidays?.map((holiday: HolidayInfo) => {
-        return <HolidayRow key={holiday._id} holiday={holiday} />;
+      {dataSearch?.map((user: UserInfo) => {
+        return <HolidayRow key={user.id} user={user} />;
       })}
     </RequestsContainer>
   );

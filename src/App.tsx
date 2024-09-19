@@ -24,13 +24,13 @@ function App() {
           <Routes>
             <Route path="login" element={<Login />} />
             <Route element={<AppLayout />}>
-              <Route index element={<Navigate replace to="users" />} />
+              <Route index element={<Navigate replace to="holidays" />} />
+              <Route path="holidays" element={<Holiday />} />
+              <Route path="holidays/:holidayId" element={<HolidayInfo />} />
               <Route path="users" element={<User />} />
               <Route path="enterprise" element={<Enterprise />} />
               <Route path="departments" element={<Departments />} />
               <Route path="seniority" element={<Seniority />} />
-              <Route path="holidays" element={<Holiday />} />
-              <Route path="holidays/:id" element={<HolidayInfo />} />
             </Route>
           </Routes>
         </BrowserRouter>

@@ -1,6 +1,6 @@
 import Spinner from '../../ui/Spinner';
 import Table from '../../ui/Table';
-import { useUsers } from './useUser';
+import { useUsers } from './useUsers';
 
 import { UserInfo } from './types';
 import UserRow from './userRow';

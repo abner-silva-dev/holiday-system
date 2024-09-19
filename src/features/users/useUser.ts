@@ -1,15 +1,19 @@
 import { useQuery } from '@tanstack/react-query';
-import { getUsers } from '../../services/apiUsers';
+import { useParams } from 'react-router-dom';
+import { getUser } from '../../services/apiUsers';
 
-export const useUsers = () => {
+export function useUser() {
+  const { holidayId } = useParams();
+
   const {
     isPending,
+    data: user,
     error,
-    data: users,
   } = useQuery({
-    queryKey: ['users'],
-    queryFn: getUsers,
+    queryKey: ['user', holidayId],
+    queryFn: () => getUser(holidayId || ''),
+    retry: false,
   });
 
-  return { isPending, error, users };
-};
+  return { isPending, user, error };
+}
