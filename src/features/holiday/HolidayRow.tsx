@@ -105,7 +105,11 @@ const HolidayRow: React.FC<{ holiday: HolidayInfo }> = ({ holiday }) => {
     <RequestCard title="Ver más" to={`${holiday._id}?history=all`}>
       <Notification>2</Notification>
 
-      <UserPhoto src={`${API_DAI_BASE}/img/user/${user?.photo}`} $size="medium" />
+      <UserPhoto
+        $type="circle"
+        src={`${API_DAI_BASE}/img/user/${user?.photo}`}
+        $size="medium"
+      />
 
       <TextContainer>
         <TextTitle>No. de Empleado</TextTitle>

@@ -3,11 +3,22 @@
   background-color: var(--color-grey-0);
   width: 100%;
   border: 1px solid var(--color-grey-400);
+  color: var(--color-grey-900);
+  text-align: center;
+}
+
+td {
+  text-align: center;
 }
 
 .p-datepicker-header {
   background-color: var(--color-grey-0);
   color: var(--color-grey-800);
+}
+
+.p-datepicker table td > span.p-highlight {
+  background-color: #2196f3;
+  color: var(--color-grey-100);
 }
 
 .p-datepicker-prev {
@@ -39,15 +50,15 @@
 }
 
 .p-datepicker-touch-ui {
-  background-color: red;
+  /* background-color: red; */
 }
 
 .p-datepicker-inline {
-  background-color: red;
+  /* background-color: red; */
 }
 
 .p-calendar-w-btn {
-  background-color: red;
+  /* background-color: red; */
 }
 .p-monthpicker-month {
   font-size: 1.4rem;
@@ -58,7 +69,7 @@
 
 .p-datepicker-calendar {
   font-size: large;
-  gap: 2rem;
+  text-align: center;
 }
 
 .p-datepicker-current-day {
@@ -83,8 +94,8 @@
 
 td span {
   &:hover {
-    background-color: var(--color-brand-800);
-    color: var(--color-grey-100);
+    background-color: #d8eeff;
+    color: black;
   }
 }
 

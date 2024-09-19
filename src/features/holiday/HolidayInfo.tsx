@@ -2,8 +2,6 @@ import styled, { css } from 'styled-components';
 
 import { HiCalendarDays, HiArrowLeft } from 'react-icons/hi2';
 
-import { HiOutlineCheck } from 'react-icons/hi2';
-import { HiOutlineXMark } from 'react-icons/hi2';
 import { HiOutlineClock } from 'react-icons/hi2';
 import { HiOutlineChevronRight } from 'react-icons/hi2';
 import { HiOutlineChevronLeft } from 'react-icons/hi2';
@@ -17,6 +15,8 @@ import Heading from '../../ui/Heading';
 import Filter from '../../ui/Filter';
 import { Link } from 'react-router-dom';
 import CreateHoliday from './CreateHoliday';
+import { useState } from 'react';
+import AuthorizationCard from './AuthorizationCard';
 
 const HolidayInfoStyles = styled.div`
   display: grid;
@@ -86,84 +86,84 @@ const HolidayMain = styled.main`
   height: 45rem;
 `;
 
-const HeadingMain = styled.h3`
-  margin-bottom: 2rem;
-`;
+// const HeadingMain = styled.h3`
+//   margin-bottom: 2rem;
+// `;
 
-const AuthorizationCard = styled.div`
-  background-color: var(--color-grey-0);
-  padding: 2rem;
-  grid-column: 1 /3;
-  border-radius: 9px;
-  box-shadow: var(--shadow-sm);
-`;
+// const AuthorizationCard = styled.div`
+//   background-color: var(--color-grey-0);
+//   padding: 2rem;
+//   grid-column: 1 /3;
+//   border-radius: 9px;
+//   box-shadow: var(--shadow-sm);
+// `;
 
-const StateColor = styled.div`
-  background-color: #03682a;
-  padding: 1.6rem;
-  height: 0.6rem;
-  width: 0.6rem;
-  align-self: center;
-`;
+// const StateColor = styled.div`
+//   background-color: #03682a;
+//   padding: 1.6rem;
+//   height: 0.6rem;
+//   width: 0.6rem;
+//   align-self: center;
+// `;
 
-const ColumnContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-`;
+// const ColumnContainer = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   gap: 1.2rem;
+// `;
 
-const AuthorizationButtons = styled.div`
-  background-color: transparent;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 1.8rem;
-  gap: 4rem;
-`;
+// const AuthorizationButtons = styled.div`
+//   background-color: transparent;
+//   display: flex;
+//   justify-content: center;
+//   margin-bottom: 1.8rem;
+//   gap: 4rem;
+// `;
 
-const Button = styled.button`
-  background-color: transparent;
-  border: none;
-  font-weight: bold;
+// const Button = styled.button`
+//   background-color: transparent;
+//   border: none;
+//   font-weight: bold;
 
-  display: flex;
-  align-items: center;
-  text-transform: uppercase;
+//   display: flex;
+//   align-items: center;
+//   text-transform: uppercase;
 
-  & svg {
-    height: 2rem;
-    width: 2rem;
-  }
+//   & svg {
+//     height: 2rem;
+//     width: 2rem;
+//   }
 
-  &:hover {
-  }
-`;
+//   &:hover {
+//   }
+// `;
 
-const TitleBold = styled.span`
-  font-weight: bold;
-`;
+// const TitleBold = styled.span`
+//   font-weight: bold;
+// `;
 
-const SubTitle = styled.span`
-  color: var(--color-red-800);
-  font-weight: bold;
-`;
+// const SubTitle = styled.span`
+//   color: var(--color-red-800);
+//   font-weight: bold;
+// `;
 
-const RowMain = styled.div`
-  display: flex;
-  gap: 1.8rem;
-`;
+// const RowMain = styled.div`
+//   display: flex;
+//   gap: 1.8rem;
+// `;
 
-const ObservationField = styled.textarea`
-  background-color: var(--color-grey-0);
-  border: 1px solid var(--color-grey-400);
-  resize: none;
-  box-shadow: var(--shadow-sm);
-`;
+// const ObservationField = styled.textarea`
+//   background-color: var(--color-grey-0);
+//   border: 1px solid var(--color-grey-400);
+//   resize: none;
+//   box-shadow: var(--shadow-sm);
+// `;
 
-const RowComponents = styled.div`
-  display: flex;
-  padding: 0 3.2rem;
-  justify-content: space-between;
-`;
+// const RowComponents = styled.div`
+//   display: flex;
+//   padding: 0 3.2rem;
+//   justify-content: space-between;
+// `;
 
 const PeriodComponent = styled.div`
   display: flex;
@@ -292,6 +292,7 @@ const HolidayInfo = () => {
   // const goBack = () => {
   //   navigate(-1);
   // };
+  const [isClicked, setClicked] = useState(false);
 
   return (
     <Row>
@@ -399,147 +400,30 @@ const HolidayInfo = () => {
         </HolidayOptions>
 
         <Filters>
-          <BtnIcon title="Crear vacaciones">
+          <BtnIcon onClick={() => setClicked(!isClicked)} title="Crear vacaciones">
             <HiOutlineDocumentCheck />
             Registrar Vacaciones
           </BtnIcon>
 
-          <Filter
-            searchField="history"
-            options={[
-              { label: 'Solicitudes', value: 'request' },
-              { label: 'Aceptadas', value: 'successfull' },
-              { label: 'Rechazadas', value: 'rejected' },
-              { label: 'Todas', value: 'all' },
-            ]}
-          />
+          {isClicked ? null : (
+            <Filter
+              searchField="history"
+              options={[
+                { label: 'Solicitudes', value: 'request' },
+                { label: 'Aceptadas', value: 'successfull' },
+                { label: 'Rechazadas', value: 'rejected' },
+                { label: 'Todas', value: 'all' },
+              ]}
+            />
+          )}
         </Filters>
 
         {/* HOLIDAY MAIN */}
         <HolidayMain>
-          <CreateHoliday></CreateHoliday>
+          {isClicked ? <CreateHoliday /> : <AuthorizationCard />}
 
           {/*  */}
-          {/* <AuthorizationCard>
-            <HeadingMain>Solicitud 1: 12/09/2024 - 22/09/2024</HeadingMain>
-            <RowComponents>
-              <ColumnContainer>
-                <ColumnContainer>
-                  <TitleBold>Jefe Directo</TitleBold>
-                  <RowMain>
-                    <StateColor></StateColor>
-                    <span>Aprobado</span>
-                  </RowMain>
-                </ColumnContainer>
 
-                <ColumnContainer>
-                  <TitleBold>Administrador</TitleBold>
-                  <RowMain>
-                    <StateColor></StateColor>
-                    <span>Aprobado</span>
-                  </RowMain>
-                </ColumnContainer>
-              </ColumnContainer>
-
-              <ColumnContainer>
-                <ColumnContainer>
-                  <RowMain>
-                    <SubTitle>Observación</SubTitle>
-                    <span>Lic. Juan Lopez Gonzalez</span>
-                  </RowMain>
-                  <ObservationField></ObservationField>
-                  <AuthorizationButtons>
-                    <Button>
-                      <HiOutlineCheck />
-                      Aceptar
-                    </Button>
-                    <Button>
-                      <HiOutlineXMark />
-                      Rechazar
-                    </Button>
-                  </AuthorizationButtons>
-                </ColumnContainer>
-
-                <ColumnContainer>
-                  <RowMain>
-                    <SubTitle>Observación</SubTitle>
-                    <span>Lic. José Crisóstomo Cortés</span>
-                  </RowMain>
-                  <ObservationField></ObservationField>
-                  <AuthorizationButtons>
-                    <Button>
-                      <HiOutlineCheck />
-                      Aceptar
-                    </Button>
-                    <Button>
-                      <HiOutlineXMark />
-                      Rechazar
-                    </Button>
-                  </AuthorizationButtons>
-                </ColumnContainer>
-              </ColumnContainer>
-            </RowComponents>
-          </AuthorizationCard>
-          <AuthorizationCard>
-            <HeadingMain>Solicitud 1: 12/09/2024 - 22/09/2024</HeadingMain>
-            <RowComponents>
-              <ColumnContainer>
-                <ColumnContainer>
-                  <TitleBold>Jefe Directo</TitleBold>
-                  <RowMain>
-                    <StateColor></StateColor>
-                    <span>Aprobado</span>
-                  </RowMain>
-                </ColumnContainer>
-
-                <ColumnContainer>
-                  <TitleBold>Administrador</TitleBold>
-                  <RowMain>
-                    <StateColor></StateColor>
-                    <span>Aprobado</span>
-                  </RowMain>
-                </ColumnContainer>
-              </ColumnContainer>
-
-              <ColumnContainer>
-                <ColumnContainer>
-                  <RowMain>
-                    <SubTitle>Observación</SubTitle>
-                    <span>Lic. Juan Lopez Gonzalez</span>
-                  </RowMain>
-                  <ObservationField></ObservationField>
-                  <AuthorizationButtons>
-                    <Button>
-                      <HiOutlineCheck />
-                      Aceptar
-                    </Button>
-                    <Button>
-                      <HiOutlineXMark />
-                      Rechazar
-                    </Button>
-                  </AuthorizationButtons>
-                </ColumnContainer>
-
-                <ColumnContainer>
-                  <RowMain>
-                    <SubTitle>Observación</SubTitle>
-                    <span>Lic. José Crisóstomo Cortés</span>
-                  </RowMain>
-                  <ObservationField></ObservationField>
-                  <AuthorizationButtons>
-                    <Button>
-                      <HiOutlineCheck />
-                      Aceptar
-                    </Button>
-                    <Button>
-                      <HiOutlineXMark />
-                      Rechazar
-                    </Button>
-                  </AuthorizationButtons>
-                </ColumnContainer>
-              </ColumnContainer>
-            </RowComponents>
-          </AuthorizationCard> */}
           {/*  */}
         </HolidayMain>
       </HolidayInfoStyles>
