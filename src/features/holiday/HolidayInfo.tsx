@@ -9,10 +9,12 @@ import { HiOutlineClipboardDocumentList } from 'react-icons/hi2';
 import { HiOutlineDocumentCheck } from 'react-icons/hi2';
 
 import Stat from '../../ui/Start';
-import UserPhoto from '../users/UserPhoto';
 import Row from '../../ui/Row';
 import Heading from '../../ui/Heading';
 import Filter from '../../ui/Filter';
+
+import { useUser } from '../users/useUser';
+import UserCard from '../users/UserCard';
 import { Link } from 'react-router-dom';
 import CreateHoliday from './CreateHoliday';
 import { useState } from 'react';
@@ -25,50 +27,9 @@ const HolidayInfoStyles = styled.div`
   gap: 2rem;
 `;
 
-const UserInfo = styled.aside`
-  background-color: var(--color-grey-0);
-  border: 1px solid var(--color-grey-200);
-  border-radius: 9px;
-  box-shadow: var(--shadow-md);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3rem;
-  padding: 2rem;
-  grid-row: 1/-1;
-`;
-
-const UserImage = styled.div`
-  &image {
-    border-radius: 50%;
-    border: 2px solid #991b1b;
-    width: 4rem;
-  }
-`;
-const Group = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  & span:first-child {
-    color: red;
-  }
-`;
-
-const UserData = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  column-gap: 2rem;
-  row-gap: 1rem;
-`;
-
 const HolidayOptions = styled.header`
   display: flex;
   justify-content: space-between;
-`;
-
-const TextTitle = styled.main`
-  color: var(--color-red-800);
-  font-weight: bold;
 `;
 
 //MAIN
@@ -83,7 +44,7 @@ const HolidayMain = styled.main`
 
   overflow-y: scroll;
   border-radius: 9px;
-  height: 45rem;
+  height: 50rem;
 `;
 
 // const HeadingMain = styled.h3`
@@ -286,14 +247,15 @@ const GoBack = styled(Link)`
   }
 `;
 
+const Stats = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+`;
+
 const HolidayInfo = () => {
-  // const navigate = useNavigate();
+  const { user } = useUser();
 
-  // const goBack = () => {
-  //   navigate(-1);
-  // };
   const [isClicked, setClicked] = useState(false);
-
   return (
     <Row>
       <Row type="horizontal">
@@ -303,74 +265,37 @@ const HolidayInfo = () => {
         <Heading as="h1">Administración de Vacaciones</Heading>
       </Row>
       <HolidayInfoStyles>
-        <UserInfo>
-          <UserImage>
-            <UserPhoto
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBrDpzWSWvT8WQKdSxpdEaoev3e0uixuPvdw&s"
-              alt="User Photo"
-              $size="large"
-              $type="square"
+        <UserCard user={user}>
+          <Stats>
+            <Stat
+              color="red"
+              icon={<HiCalendarDays />}
+              title="Días Restantes"
+              value="2 de 12"
             />
-          </UserImage>
-          <UserData>
-            <Group>
-              <TextTitle>No. Empleado</TextTitle>
-              <span>20251086</span>
-            </Group>
-            <Group>
-              <TextTitle>Departamento</TextTitle>
-              <span>Tecnologias de la informacion</span>
-            </Group>
-            <Group>
-              <TextTitle>Nombre</TextTitle>
-              <span>Silva Araujo Dylan Abner</span>
-            </Group>
-            <Group>
-              <TextTitle>Jefe directo</TextTitle>
-              <span>Ricardo Anaya Obrador</span>
-            </Group>
-            <Group>
-              <TextTitle>Antiguedad</TextTitle>
-              <span>2 años 2 meses 1 dia</span>
-            </Group>
-            <Group>
-              <TextTitle>Puesto</TextTitle>
-              <span>Hombre de negocios</span>
-            </Group>
-            <Group>
-              <Stat
-                color="red"
-                icon={<HiCalendarDays />}
-                title="Días Restantes"
-                value="2 de 12"
-              />
-            </Group>
-            <Group>
-              <Stat
-                color="brand"
-                icon={<HiCalendarDays />}
-                title="Vacaciones del periodo"
-                value="2024"
-              />
-            </Group>
-            <Group>
-              <Stat
-                color="green"
-                icon={<HiCalendarDays />}
-                title="Vacaciones del periodo"
-                value="2023 - 0/12"
-              />
-            </Group>
-            <Group>
-              <Stat
-                color="blue"
-                icon={<HiCalendarDays />}
-                title="Vacaciones del periodo"
-                value="2025 - 15/15"
-              />
-            </Group>
-          </UserData>
-        </UserInfo>
+
+            <Stat
+              color="brand"
+              icon={<HiCalendarDays />}
+              title="Vacaciones del periodo"
+              value="2024"
+            />
+
+            <Stat
+              color="green"
+              icon={<HiCalendarDays />}
+              title="Vacaciones del periodo"
+              value="2023 - 0/12"
+            />
+
+            <Stat
+              color="blue"
+              icon={<HiCalendarDays />}
+              title="Vacaciones del periodo"
+              value="2025 - 15/15"
+            />
+          </Stats>
+        </UserCard>
 
         <HolidayOptions>
           <Stat

@@ -1,100 +1,131 @@
-import React from 'react';
-
 import styled from 'styled-components';
-import { joinName } from './../../utils/helpers';
+import { joinName, yearMothDay } from './../../utils/helpers';
+import { UserInfo } from './types';
+import { ReactNode } from 'react';
+import UserPhoto from './UserPhoto';
+import { API_DAI_BASE } from '../../config';
+import Heading from '../../ui/Heading';
 
-const UserInfo = styled.aside`
+const StyledUserCard = styled.aside`
   background-color: var(--color-grey-0);
-  display: flex;
-  padding: 2rem;
-  flex-direction: column;
   border: 1px solid var(--color-grey-200);
   border-radius: 9px;
   box-shadow: var(--shadow-md);
-  align-items: center;
-  gap: 3rem;
-  grid-row: 1/-1;
-`;
+  border-radius: 11px;
+  overflow: hidden;
 
-const UserImage = styled.div`
-  &image {
-    border-radius: 50%;
-    border: 2px solid #991b1b;
-    width: 4rem;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 5rem;
+  grid-row: 1/-1;
 `;
 
 const Group = styled.div`
   display: flex;
   flex-direction: column;
-
-  & span:first-child {
-    color: red;
-  }
+  align-items: center;
 `;
 
 const UserData = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   column-gap: 2rem;
-  row-gap: 1rem;
+  row-gap: 2rem;
 `;
 
-const TextTitle = styled.main`
-  color: var(--color-red-800);
-  font-weight: bold;
+const TextTitle = styled.p`
+  color: var(--color-grey-700);
+  font-size: 1.8rem;
+  font-weight: 700;
 `;
 
-const UserCard = ({ user }) => {
-  const {
-    employNumber,
-    name,
-    paternSurname,
-    motherSurname,
-    seniority,
-    // dateHiring,
-    // Seniority,
-    // email,
-    // phoneNumber,
-    // enterprise,
-    department,
-  } = user;
+const Text = styled.p`
+  color: var(--color-grey-500);
+  font-size: 1.4rem;
+  font-weight: 600;
+  text-transform: lowercase;
+`;
+const PhotoContainer = styled.div`
+  height: 15rem;
+  margin-bottom: 6rem;
+  color: #fff;
+  position: relative;
 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  background: url('/patron3.png');
+  background-position: center;
+  background-size: cover;
+  width: 100%;
+  border-bottom: 1px solid var(--color--grey-700);
+
+  img {
+    position: absolute;
+    bottom: 0;
+    transform: translateY(50%);
+  }
+`;
+
+const UserCard: React.FC<{ user: UserInfo; children?: ReactNode }> = ({
+  user,
+  children,
+}) => {
   return (
-    <UserInfo>
-      <UserImage>
-        <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBrDpzWSWvT8WQKdSxpdEaoev3e0uixuPvdw&s"
-          alt=""
+    <StyledUserCard>
+      <PhotoContainer>
+        {/* <Heading as="h2">Informacion de usuario</Heading> */}
+        <UserPhoto
+          src={`${API_DAI_BASE}/img/user/${user?.photo}`}
+          $size="large"
+          $type="circle"
         />
-      </UserImage>
+      </PhotoContainer>
+
       <UserData>
         <Group>
           <TextTitle>No. Empleado</TextTitle>
-          <span>{employNumber}</span>
+          <Text>{user?.employNumber}</Text>
         </Group>
         <Group>
           <TextTitle>Departamento</TextTitle>
-          <span>{department}</span>
+          <Text>{user?.department.name}</Text>
         </Group>
         <Group>
           <TextTitle>Nombre</TextTitle>
-          <span>{joinName({ motherSurname, name, paternSurname })}</span>
+          <Text>
+            {joinName({
+              motherSurname: user?.motherSurname || '',
+              name: user?.name || '',
+              paternSurname: user?.paternSurname || '',
+            })}
+          </Text>
         </Group>
         <Group>
           <TextTitle>Jefe directo</TextTitle>
-          <span>Ricardo Anaya Obrador</span>
+          <Text>Ricardo Anaya Obrador</Text>
         </Group>
         <Group>
           <TextTitle>Antiguedad</TextTitle>
-          <span>{seniority}</span>
+          <Text>
+            {yearMothDay(
+              user?.seniority?.years,
+              user?.seniority?.moths,
+              user?.seniority?.days
+            )}
+          </Text>
         </Group>
         <Group>
           <TextTitle>Puesto</TextTitle>
-          <span>Hombre de negocios</span>
+          <Text>Hombre de negocios</Text>
         </Group>
       </UserData>
-    </UserInfo>
+      {children}
+    </StyledUserCard>
   );
 };
 

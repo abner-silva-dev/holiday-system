@@ -119,7 +119,7 @@ const CreateHoliday: React.FC<PropsCreateDepartment> = ({ edit = {}, onCloseModa
     gap: 2.4rem;
     background-color: var(--color-grey-0);
     grid-column: 1/-1;
-    padding: 2rem;
+    padding: 5rem 15rem;
   `;
 
   const ButtonRow = styled.div`

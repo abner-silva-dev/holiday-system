@@ -33,6 +33,7 @@ const types = {
 const UserPhoto = styled.img<Props>`
   border: none;
   box-shadow: var(--shadow-sm);
+  border: 10px solid #fff;
   ${(props) =>
     props.$border
       ? css`

@@ -64,6 +64,12 @@ function MainNav() {
   return (
     <nav>
       <NavList>
+        <li title="Solicitudes de Vacaciones">
+          <StyledNavLink to="holidays">
+            <HiOutlineCalendarDays />
+            <span>Vacaciones</span>
+          </StyledNavLink>
+        </li>
         <li title="Administrar Usuarios">
           <StyledNavLink to="users">
             <HiOutlineUsers />
@@ -80,12 +86,6 @@ function MainNav() {
           <StyledNavLink to="departments">
             <HiOutlineFolder />
             <span>Departamentos</span>
-          </StyledNavLink>
-        </li>
-        <li title="Solicitudes de Vacaciones">
-          <StyledNavLink to="holidays">
-            <HiOutlineCalendarDays />
-            <span>Vacaciones</span>
           </StyledNavLink>
         </li>
       </NavList>

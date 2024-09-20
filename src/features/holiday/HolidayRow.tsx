@@ -4,6 +4,7 @@ import { HolidayInfo } from './type';
 import { joinName } from '../../utils/helpers';
 import { API_DAI_BASE } from '../../config';
 import UserPhoto from '../users/UserPhoto';
+import { UserInfo } from '../users/types';
 
 const RequestCard = styled(Link)`
   background-color: var(--color-grey-0);
@@ -98,12 +99,10 @@ const TitleCreation = styled.span`
   font-weight: bold;
 `;
 
-const HolidayRow: React.FC<{ holiday: HolidayInfo }> = ({ holiday }) => {
-  const { user } = holiday;
-
+const HolidayRow: React.FC<{ user: UserInfo }> = ({ user }) => {
   return (
-    <RequestCard title="Ver más" to={`${holiday._id}?history=all`}>
-      <Notification>2</Notification>
+    <RequestCard title="Ver más" to={`${user.id}?history=all`}>
+      {user.holidays?.length ? <Notification>{user.holidays?.length}</Notification> : ''}
 
       <UserPhoto
         $type="circle"
@@ -136,18 +135,17 @@ const HolidayRow: React.FC<{ holiday: HolidayInfo }> = ({ holiday }) => {
       <div>
         <TextTitle>Solicitudes</TextTitle>
         <RequestListContainer>
-          <RequestListCard>
-            <TitleCreation>Solicitud 1</TitleCreation>
-            <TextCreation>
-              Creada: <span>28/08/2024 21:23 hrs</span>
-            </TextCreation>
-          </RequestListCard>
-          <RequestListCard>
-            <TitleCreation>Solicitud 2</TitleCreation>
-            <TextCreation>
-              Creada: <span>21/09/2024 18:50 hrs</span>
-            </TextCreation>
-          </RequestListCard>
+          {user.holidays?.map((holiday, i) => {
+            return (
+              <RequestListCard>
+                <TitleCreation>Solicitud {i + 1}</TitleCreation>
+                <TextCreation>
+                  Creada: <span>{holiday.createdAt} hrs</span>
+                </TextCreation>
+              </RequestListCard>
+            );
+          })}
+          {!user.holidays?.length && <TextCont>No hay solicitudes</TextCont>}
         </RequestListContainer>
       </div>
     </RequestCard>
