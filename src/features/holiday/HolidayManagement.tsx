@@ -252,7 +252,7 @@ const Stats = styled.div`
   grid-template-columns: repeat(2, 1fr);
 `;
 
-const HolidayInfo = () => {
+const HolidayManagement = () => {
   const { user } = useUser();
 
   const [isClicked, setClicked] = useState(false);
@@ -356,4 +356,4 @@ const HolidayInfo = () => {
   );
 };
 
-export default HolidayInfo;
+export default HolidayManagement;
