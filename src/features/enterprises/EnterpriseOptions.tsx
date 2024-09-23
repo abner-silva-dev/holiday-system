@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import Modal from '../../ui/Modal';
 import CreateEnterprise from './CreateEnterprise';
 
-import { HiOutlineUserPlus } from 'react-icons/hi2';
+import { HiOutlineBuildingOffice2 } from 'react-icons/hi2';
 
 const BtnIcon = styled.button`
   font-weight: 500;
@@ -35,7 +35,7 @@ const EnterpriseOptions = () => {
       <Modal>
         <Modal.Open opens="modal">
           <BtnIcon title="crear empresa">
-            <HiOutlineUserPlus />
+            <HiOutlineBuildingOffice2 />
             Crear Empresa
           </BtnIcon>
         </Modal.Open>

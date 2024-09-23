@@ -12,6 +12,7 @@ import Enterprise from './pages/Enterprise';
 import HolidayManagement from './features/holiday/HolidayManagement';
 import Login from './pages/Login';
 import Settings from './pages/Settings';
+import Account from './pages/Account';
 
 const queryClient = new QueryClient();
 
@@ -33,6 +34,7 @@ function App() {
               <Route path="departments" element={<Departments />} />
               <Route path="seniority" element={<Seniority />} />
               <Route path="settings" element={<Settings />} />
+              <Route path="me" element={<Account />} />
             </Route>
           </Routes>
         </BrowserRouter>

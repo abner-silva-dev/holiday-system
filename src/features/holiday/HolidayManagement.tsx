@@ -256,6 +256,7 @@ const HolidayManagement = () => {
   const { user } = useUser();
 
   const [isClicked, setClicked] = useState(false);
+
   return (
     <Row>
       <Row type="horizontal">

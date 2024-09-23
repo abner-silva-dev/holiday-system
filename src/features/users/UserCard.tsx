@@ -4,7 +4,6 @@ import { UserInfo } from './types';
 import { ReactNode } from 'react';
 import UserPhoto from './UserPhoto';
 import { API_DAI_BASE } from '../../config';
-import Heading from '../../ui/Heading';
 
 const StyledUserCard = styled.aside`
   background-color: var(--color-grey-0);

@@ -4,6 +4,7 @@ import {
   HiOutlineFolder,
   HiOutlineCalendarDays,
   HiOutlineUsers,
+  HiOutlineCog8Tooth,
 } from 'react-icons/hi2';
 
 import styled from 'styled-components';
@@ -60,9 +61,18 @@ const StyledNavLink = styled(NavLink)`
   }
 `;
 
+const NavigationBottom = styled(NavList)``;
+
+const Navigation = styled.nav`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+`;
+
 function MainNav() {
   return (
-    <nav>
+    <Navigation>
       <NavList>
         <li title="Solicitudes de Vacaciones">
           <StyledNavLink to="holidays">
@@ -89,7 +99,15 @@ function MainNav() {
           </StyledNavLink>
         </li>
       </NavList>
-    </nav>
+      <NavigationBottom>
+        <li title="Configuración">
+          <StyledNavLink to="settings">
+            <HiOutlineCog8Tooth />
+            <span>Configuración</span>
+          </StyledNavLink>
+        </li>
+      </NavigationBottom>
+    </Navigation>
   );
 }
 

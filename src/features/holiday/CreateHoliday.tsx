@@ -48,6 +48,31 @@ const Message = styled.label`
   font-style: italic;
 `;
 
+const RegContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+  background-color: var(--color-grey-0);
+  grid-column: 1/-1;
+  padding: 5rem 15rem;
+`;
+
+const ButtonRow = styled.div`
+  display: flex;
+  gap: 3rem;
+`;
+
+const SubmitButton = styled(Button)`
+  grid-column: 1/2;
+  width: 70%;
+  justify-self: center;
+`;
+
+const CancelButton = styled(Button)`
+  width: 70%;
+  justify-self: center;
+`;
+
 // const SelectOption = styled.select``;
 
 interface PropsCreateDepartment {
@@ -113,30 +138,13 @@ const CreateHoliday: React.FC<PropsCreateDepartment> = ({ edit = {}, onCloseModa
 
   locale('es');
 
-  const RegContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 2.4rem;
-    background-color: var(--color-grey-0);
-    grid-column: 1/-1;
-    padding: 5rem 15rem;
-  `;
+  //MIN DATE
+  const today = new Date();
+  const month = today.getMonth();
+  const prevMonth = month === 0 ? 11 : month;
 
-  const ButtonRow = styled.div`
-    display: flex;
-    gap: 3rem;
-  `;
-
-  const SubmitButton = styled(Button)`
-    grid-column: 1/2;
-    width: 70%;
-    justify-self: center;
-  `;
-
-  const CancelButton = styled(Button)`
-    width: 70%;
-    justify-self: center;
-  `;
+  const minDate = new Date();
+  minDate.setMonth(prevMonth);
 
   return (
     <>
@@ -158,6 +166,7 @@ const CreateHoliday: React.FC<PropsCreateDepartment> = ({ edit = {}, onCloseModa
                 readOnlyInput
                 className="p-inputtext p-component p-inputtext p-component"
                 variant="filled"
+                minDate={minDate}
               />
             </StyledCalendarInput>
           </FieldContainer>

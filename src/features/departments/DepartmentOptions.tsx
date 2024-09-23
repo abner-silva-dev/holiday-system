@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import Modal from '../../ui/Modal';
 import CreateDeparment from './CreateDepartment';
 
-import { HiOutlineUserPlus } from 'react-icons/hi2';
+import { HiOutlineFolder } from 'react-icons/hi2';
 
 const BtnIcon = styled.button`
   background-color: var(--color-green-700);
@@ -35,8 +35,8 @@ const DepartmentOptions = () => {
       <Modal>
         <Modal.Open opens="modal">
           <BtnIcon title="crear empleado">
-            <HiOutlineUserPlus />
-            Crear empleado
+            <HiOutlineFolder />
+            Crear Departamento
           </BtnIcon>
         </Modal.Open>
         <Modal.Window name="modal">
