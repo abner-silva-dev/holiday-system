@@ -12,6 +12,7 @@ export interface UserInfo {
   employNumber: string;
   id?: string;
   name: string;
+  role?: string;
   paternSurname?: string;
   motherSurname?: string;
   photo?: string;

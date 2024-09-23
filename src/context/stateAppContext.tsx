@@ -4,16 +4,18 @@ type State = {
   queryUser: string;
   queryDepartment: string;
   queryEnterprise: string;
+  queryHoliday: string;
   filterDepartment: string;
   filterEnterprise: string;
 };
 
-type ActionsName = 'user' | 'department' | 'enterprise';
+type ActionsName = 'user' | 'department' | 'enterprise' | 'holiday';
 
 type Action =
   | { type: 'user/search'; payload: string }
   | { type: 'department/search'; payload: string }
   | { type: 'enterprise/search'; payload: string }
+  | { type: 'holiday/search'; payload: string }
   | { type: 'department/filter'; payload: string }
   | { type: 'enterprise/filter'; payload: string };
 
@@ -23,7 +25,8 @@ const stateAppContext = createContext<
       state: State;
       dispatch?: React.Dispatch<Action>;
       handleSearch: (type: ActionsName, query: string) => void;
-      handleFilter: (type: Exclude<ActionsName, 'user'>, filter: string) => void;
+      handleFilter: (type: 'department' | 'enterprise', filter: string) => void;
+      resetGlobalState: () => void;
     }
   | undefined
 >(undefined);
@@ -33,6 +36,7 @@ const initalState: State = {
   queryUser: '',
   queryDepartment: '',
   queryEnterprise: '',
+  queryHoliday: '',
   filterDepartment: '',
   filterEnterprise: '',
 };
@@ -46,6 +50,8 @@ function reducer(state: State, action: Action): State {
       return { ...state, queryDepartment: action.payload };
     case 'enterprise/search':
       return { ...state, queryEnterprise: action.payload };
+    case 'holiday/search':
+      return { ...state, queryHoliday: action.payload };
     case 'department/filter':
       return { ...state, filterDepartment: action.payload };
     case 'enterprise/filter':
@@ -61,12 +67,21 @@ function StateAppProvider({ children }: { children: ReactNode }) {
     dispatch({ type: `${type}/search`, payload: query });
   }
 
-  function handleFilter(type: Exclude<ActionsName, 'user'>, filter: string) {
+  function handleFilter(type: 'department' | 'enterprise', filter: string) {
     dispatch({ type: `${type}/filter`, payload: filter });
   }
 
+  function resetGlobalState() {
+    handleSearch('department', '');
+    handleSearch('enterprise', '');
+    handleSearch('user', '');
+    handleSearch('holiday', '');
+  }
+
   return (
-    <stateAppContext.Provider value={{ state, handleSearch, handleFilter }}>
+    <stateAppContext.Provider
+      value={{ state, handleSearch, handleFilter, resetGlobalState }}
+    >
       {children}
     </stateAppContext.Provider>
   );

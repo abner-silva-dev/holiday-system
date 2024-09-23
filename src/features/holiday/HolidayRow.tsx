@@ -99,10 +99,27 @@ const TitleCreation = styled.span`
   font-weight: bold;
 `;
 
-const HolidayRow: React.FC<{ user: UserInfo }> = ({ user }) => {
+interface PropsHolidayRow {
+  user: UserInfo;
+}
+
+const HolidayRow: React.FC<PropsHolidayRow> = ({ user }) => {
+  const { holidays } = user;
+
+  const holidaysPending = holidays?.filter((holiday: HolidayInfo) => {
+    return (
+      holiday.authorizationAdmin === 'pending' ||
+      holiday.authorizationManager === 'pending'
+    );
+  });
+
   return (
-    <RequestCard title="Ver más" to={`${user.id}?history=all`}>
-      {user.holidays?.length ? <Notification>{user.holidays?.length}</Notification> : ''}
+    <RequestCard title="Ver más" to={`${user.id}?history=request`}>
+      {holidaysPending?.length ? (
+        <Notification>{holidaysPending.length}</Notification>
+      ) : (
+        ''
+      )}
 
       <UserPhoto
         $type="circle"
@@ -135,7 +152,7 @@ const HolidayRow: React.FC<{ user: UserInfo }> = ({ user }) => {
       <div>
         <TextTitle>Solicitudes</TextTitle>
         <RequestListContainer>
-          {user.holidays?.map((holiday, i) => {
+          {holidaysPending?.map((holiday, i) => {
             return (
               <RequestListCard>
                 <TitleCreation>Solicitud {i + 1}</TitleCreation>

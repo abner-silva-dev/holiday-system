@@ -10,6 +10,11 @@ import Button from '../../ui/Button';
 import { HolidayInfo } from './type';
 
 import './calendar.css';
+import { useCreateHoliday } from './useCreateHoliday';
+import { useUser } from '../users/useUser';
+import { useUsers } from '../users/useUsers';
+import { UserInfo } from '../users/types';
+import { useQueryClient } from '@tanstack/react-query';
 
 const StyledCalendarInput = styled.div``;
 
@@ -48,30 +53,73 @@ const Message = styled.label`
   font-style: italic;
 `;
 
-// const SelectOption = styled.select``;
+const RegContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+  background-color: var(--color-grey-0);
+  grid-column: 1/-1;
+  padding: 5rem 15rem;
+`;
+
+const ButtonRow = styled.div`
+  display: flex;
+  gap: 3rem;
+`;
+
+const SubmitButton = styled(Button)`
+  grid-column: 1/2;
+  width: 70%;
+  justify-self: center;
+`;
+
+const CancelButton = styled(Button)`
+  width: 70%;
+  justify-self: center;
+`;
 
 interface PropsCreateDepartment {
-  edit?: HandleSubmit;
-  onCloseModal?: () => void;
+  edit?: HolidayInfo;
+  onClose: (isclic: boolean) => void;
 }
 
-const CreateHoliday: React.FC<PropsCreateDepartment> = ({ edit = {}, onCloseModal }) => {
-  const { register, handleSubmit, reset } = useForm<HandleSubmit>({
+const CreateHoliday: React.FC<PropsCreateDepartment> = ({ edit = {}, onClose }) => {
+  const queryClient = useQueryClient();
+  const { register, handleSubmit } = useForm<HolidayInfo>({
     defaultValues: edit,
   });
-  const [dates, setDates] = useState();
-  // const { current } = useOutsideClick<JSX.Element>(false);
+
+  const { user: curUser } = useUser();
+  const { users } = useUsers();
+
+  const { createHoliday } = useCreateHoliday();
+
+  const manager = users?.find(
+    (user: UserInfo) =>
+      user?.role === 'manager' && user?.department?._id === curUser?.department?._id
+  );
+
+  const admin = users?.find((user: UserInfo) => user?.role === 'admin');
+
+  const [dates, setDates] = useState<Date[]>([]);
 
   const onSubmit = (data: HolidayInfo) => {
-    // const { name, nameAbreviate, enterprise } = data;
-    // createDepartment({
-    //   name,
-    //   nameAbreviate,
-    //   enterprise,
-    //   //   name: joinName({ name, paternSurname, motherSurname }),
-    // });
-    // reset();
-    // onCloseModal?.();
+    createHoliday(
+      {
+        ...data,
+        days: dates,
+        createdAt: new Date() + '',
+        admin: admin.id,
+        manager: manager.id,
+        user: curUser.id,
+      },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['user', curUser.id] });
+          onClose(false);
+        },
+      }
+    );
   };
 
   addLocale('es', {
@@ -113,49 +161,21 @@ const CreateHoliday: React.FC<PropsCreateDepartment> = ({ edit = {}, onCloseModa
 
   locale('es');
 
-  const RegContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 2.4rem;
-    background-color: var(--color-grey-0);
-    grid-column: 1/-1;
-    padding: 5rem 15rem;
-  `;
-
-  const ButtonRow = styled.div`
-    display: flex;
-    gap: 3rem;
-  `;
-
-  const SubmitButton = styled(Button)`
-    grid-column: 1/2;
-    width: 70%;
-    justify-self: center;
-  `;
-
-  const CancelButton = styled(Button)`
-    width: 70%;
-    justify-self: center;
-  `;
-
   return (
     <>
       <RegContainer>
         <Heading as="h2">Registro de Vacaciones</Heading>
 
-        {/* <UserCard user={{}}></UserCard> */}
         <Form onSubmit={handleSubmit(onSubmit)}>
           <FieldContainer>
-            {/* <input type="text" onChange={()} /> */}
             <Label>Seleccionar Días</Label>
             <StyledCalendarInput>
               <Calendar
                 value={dates}
-                onChange={(e) => setDates(e.value)}
+                onChange={(event) => setDates(event.value || [])}
                 selectionMode="multiple"
                 dateFormat="dd/mm/yy"
                 showIcon
-                readOnlyInput
                 className="p-inputtext p-component p-inputtext p-component"
                 variant="filled"
               />
@@ -164,7 +184,7 @@ const CreateHoliday: React.FC<PropsCreateDepartment> = ({ edit = {}, onCloseModa
 
           <FieldContainer>
             <Label>Notas</Label>
-            <TextArea id="observation" placeholder="" {...register('dayCreated')} />
+            <TextArea id="observation" placeholder="" {...register('observation')} />
           </FieldContainer>
 
           <FieldContainer>

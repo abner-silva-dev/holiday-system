@@ -1,17 +1,17 @@
 import { UserInfo } from '../users/types';
 
-type StateAutorization = 'Pending' | 'Approved' | 'Rejected';
+export type StateAutorization = 'pending' | 'approved' | 'rejected';
 
 export interface HolidayInfo {
   _id?: string;
-  days?: string[];
+  days?: Date[];
   authorizationAdmin?: StateAutorization;
-  authorizationMannager?: StateAutorization;
+  authorizationManager?: StateAutorization;
   observation?: string;
-  observationMannager?: string;
+  observationManager?: string;
   observationAdmin?: string;
   createdAt?: string;
   admin?: UserInfo;
-  mannager?: UserInfo;
+  manager?: UserInfo;
   user?: UserInfo;
 }

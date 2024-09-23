@@ -41,13 +41,10 @@ interface PropsCreateUSer {
 }
 
 const CreateUser: React.FC<PropsCreateUSer> = ({ userToUpdate = {}, onCloseModal }) => {
-  console.log(userToUpdate);
   const { id: userId = '', ...editValues } = userToUpdate as UserInfo;
 
   // Check if is Edition or Create user
   const isEditSession = Boolean(userId);
-
-  console.log(userToUpdate);
 
   // utilities hook form
   const { register, handleSubmit, reset } = useForm<UserInfo>({

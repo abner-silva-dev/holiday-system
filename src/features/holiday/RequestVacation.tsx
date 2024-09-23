@@ -1,19 +1,17 @@
 import styled from 'styled-components';
 import UserPhoto from '../users/UserPhoto';
 import { Link } from 'react-router-dom';
+import { HolidayInfo } from './type';
+import { joinName } from '../../utils/helpers';
+import { API_DAI_BASE } from '../../config';
+import React from 'react';
 
 const RequestCard = styled.div`
   display: flex;
   gap: 1.6rem;
-  background-color: var(--color-grey-100);
+  background-color: var(--color-grey-50);
   padding: 1.2rem 1.6rem;
   border-bottom: 1px solid var(--color-grey-200);
-`;
-
-const ImageContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;
 
 const GroupText = styled.div`
@@ -51,27 +49,38 @@ const ContentInfo = styled.span`
   line-height: 1.2;
 `;
 
-function RequestVacation() {
+interface PropsRequestVacation {
+  holiday: HolidayInfo;
+  onClose: () => void;
+}
+
+const RequestVacation: React.FC<PropsRequestVacation> = ({ holiday, onClose }) => {
   return (
     <RequestCard>
-      <ImageContainer>
-        <UserPhoto
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBrDpzWSWvT8WQKdSxpdEaoev3e0uixuPvdw&s"
-          alt="User Photo"
-          $size="adaptative"
-        />
-      </ImageContainer>
+      <UserPhoto
+        src={`${API_DAI_BASE}/img/user/${holiday?.user?.photo}`}
+        alt="User Photo"
+        $size="medium"
+      />
       <GroupText>
         <TitleInfo>No. de Empleado:</TitleInfo>
-        <ContentInfo>20251081</ContentInfo>
+        <ContentInfo>{holiday?.user?.employNumber}</ContentInfo>
       </GroupText>
       <GroupText>
         <TitleInfo>Nombre:</TitleInfo>
-        <ContentInfo>José Armando Rodríguez Hernández</ContentInfo>
+        <ContentInfo>
+          {joinName({
+            motherSurname: holiday?.user?.motherSurname || '',
+            name: holiday?.user?.name || '',
+            paternSurname: holiday?.user?.paternSurname || '',
+          })}
+        </ContentInfo>
       </GroupText>
-      <ShowMoreAnchor to="/holidays/123454?history=all">Ver</ShowMoreAnchor>
+      <ShowMoreAnchor to={`/holidays/${holiday?.user?.id}?history=all`} onClick={onClose}>
+        Ver
+      </ShowMoreAnchor>
     </RequestCard>
   );
-}
+};
 
 export default RequestVacation;
