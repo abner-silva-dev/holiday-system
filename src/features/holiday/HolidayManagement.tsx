@@ -183,7 +183,6 @@ const HolidayManagement = () => {
 
   const { user } = useUser();
 
-
   if (!user) return null;
   const { holidays } = user;
 
@@ -221,7 +220,6 @@ const HolidayManagement = () => {
       holidaysFilter = holidays;
       break;
   }
-
 
   return (
     <Row>
@@ -269,7 +267,7 @@ const HolidayManagement = () => {
             color="green"
             icon={<HiOutlineClipboardDocumentList />}
             title="Solicitudes pendientes"
-            value="2 solicitudes"
+            value={`${holidays?.length} solicitudes`}
           />
 
           <PeriodComponent>
