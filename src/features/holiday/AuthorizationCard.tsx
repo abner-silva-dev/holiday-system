@@ -1,28 +1,79 @@
+import StateHoliday from './StateHoliday';
 import styled from 'styled-components';
 
 import { HiOutlineCheck } from 'react-icons/hi2';
 import { HiOutlineXMark } from 'react-icons/hi2';
 import { HolidayInfo } from './type';
-import { joinName } from '../../utils/helpers';
-import StateHoliday from './StateHoliday';
+import { formatDate, joinName } from '../../utils/helpers';
 import { useUpdateHoliday } from './useUpdateHoliday';
 import { useForm } from 'react-hook-form';
-import { updateHoliday } from '../../services/apiHolidays';
 import { useQueryClient } from '@tanstack/react-query';
 import { useUser } from '../users/useUser';
 
-const AuthorizationContainer = styled.div`
+import Row from '../../ui/Row';
+import Heading from '../../ui/Heading';
+
+const AuthorizationCardStyled = styled.form`
   background-color: var(--color-grey-0);
-  padding: 2rem;
+  padding: 3rem;
   grid-column: 1 /3;
   border-radius: 9px;
   box-shadow: var(--shadow-sm);
 `;
 
-const ColumnContainer = styled.div`
+const Status = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: start;
+  /* justify-content: ; */
   gap: 2rem;
+`;
+
+const AuthorizationItem = styled.div`
+  display: grid;
+  grid-template-columns: 0.7fr 1fr;
+  align-items: start;
+  gap: 5rem;
+`;
+
+const EmployedItem = styled.div`
+  display: grid;
+  grid-template-columns: 0.7fr 1fr;
+  gap: 5rem;
+`;
+
+const Title = styled.p`
+  font-size: 1.8rem;
+  font-weight: 700;
+`;
+
+const Authorization = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: center;
+  gap: 2rem;
+`;
+
+const RowMain = styled.div`
+  display: flex;
+  gap: 1.8rem;
+`;
+
+const SubTitle = styled.span`
+  color: var(--color-red-800);
+  font-weight: bold;
+`;
+
+const ObservationField = styled.textarea`
+  background-color: var(--color-grey-0);
+  border: 1px solid var(--color-grey-300);
+  box-shadow: var(--shadow-sm);
+  border-radius: 5px;
+  padding: 1rem;
+  resize: none;
+  width: 100%;
 `;
 
 const AuthorizationButtons = styled.div`
@@ -36,7 +87,9 @@ const AuthorizationButtons = styled.div`
 const Button = styled.button`
   background-color: transparent;
   border: none;
-  font-weight: bold;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 1rem 2rem;
 
   display: flex;
   align-items: center;
@@ -51,42 +104,43 @@ const Button = styled.button`
   }
 `;
 
-const TitleBold = styled.span`
-  font-weight: bold;
-`;
+// COMPONENT DAYS
 
-const SubTitle = styled.span`
-  color: var(--color-red-800);
-  font-weight: bold;
-`;
-
-const RowMain = styled.div`
-  display: flex;
-  gap: 1.8rem;
-`;
-
-const ObservationField = styled.textarea`
+const RequestListContainer = styled.div`
   background-color: var(--color-grey-0);
-  border: 1px solid var(--color-grey-400);
-  resize: none;
+
+  display: flex;
+  /* width: 50%; */
+
+  gap: 0.5rem;
+
+  width: 26rem;
+  padding: 0.8rem;
+  border-radius: 11px;
+  overflow-x: scroll;
+`;
+
+const TextTitle = styled.span`
+  color: var(--color-grey-600);
+  font-size: 1.8rem;
+  font-weight: 700;
+`;
+
+const RequestListCard = styled.div`
+  background-color: var(--color-brand-100);
   box-shadow: var(--shadow-sm);
-`;
+  color: var(--color-brand-800);
+  border-radius: 11px;
 
-const RowComponents = styled.div`
   display: flex;
-  padding: 0 3.2rem;
-  justify-content: space-between;
+  padding: 0.8rem;
 `;
 
-const HeadingMain = styled.h3`
-  margin-bottom: 2rem;
-`;
-
-const Form = styled.form`
-  width: 100%;
+const TextCreation = styled.span`
+  font-size: 1.2rem;
+  text-align: center;
   display: flex;
-  flex-direction: column;
-  gap: 2rem;
+  align-items: center;
 `;
 
 interface PropsAuthorizationCard {
@@ -96,10 +150,16 @@ interface PropsAuthorizationCard {
 const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
   const queryClient = useQueryClient();
 
-  console.log(holiday);
   const { register, handleSubmit, setValue } = useForm<HolidayInfo>({
-    defaultValues: holiday,
+    defaultValues: {
+      authorizationAdmin: holiday.authorizationAdmin,
+      authorizationManager: holiday.authorizationManager,
+      observation: holiday.observation,
+      observationAdmin: holiday.observationAdmin,
+      observationManager: holiday.observationManager,
+    },
   });
+
   const { user: curUser } = useUser();
 
   const { updateHoliday } = useUpdateHoliday();
@@ -117,27 +177,40 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
   };
 
   return (
-    <AuthorizationContainer>
-      {/* MANAGER */}
-      <HeadingMain>Solicitud 1: {holiday?.createdAt}</HeadingMain>
-      <RowComponents>
-        <ColumnContainer>
-          <ColumnContainer>
-            <TitleBold>Jefe Directo</TitleBold>
+    <AuthorizationCardStyled onSubmit={handleSubmit(onSubmit)}>
+      <Row>
+        <Heading as="h2">Solicitud: {formatDate(holiday?.createdAt || '')}</Heading>
+
+        {/* CLAIMAND */}
+        <EmployedItem>
+          <div>
+            <TextTitle>Días solicitados</TextTitle>
+            <RequestListContainer>
+              {holiday?.days?.map((day) => {
+                return (
+                  <RequestListCard>
+                    <TextCreation>{formatDate(day.toString())}</TextCreation>
+                  </RequestListCard>
+                );
+              })}
+            </RequestListContainer>
+          </div>
+          <Authorization>
             <RowMain>
-              <StateHoliday state={holiday?.authorizationManager || 'pending'} />
+              <SubTitle>Observación empleado</SubTitle>
             </RowMain>
-          </ColumnContainer>
+            <ObservationField defaultValue={holiday?.observation} disabled={true} />
+          </Authorization>
+        </EmployedItem>
 
-          <ColumnContainer>
-            <TitleBold>Administrador</TitleBold>
-            <StateHoliday state={holiday?.authorizationAdmin || 'pending'} />
-          </ColumnContainer>
-        </ColumnContainer>
+        {/* MANAGER */}
+        <AuthorizationItem>
+          <Status>
+            <Title>Jefe Directo</Title>
+            <StateHoliday state={holiday?.authorizationManager || 'pending'} />
+          </Status>
 
-        {/* ADMIN */}
-        <ColumnContainer>
-          <ColumnContainer>
+          <Authorization>
             <RowMain>
               <SubTitle>Observación</SubTitle>
               <span>
@@ -148,20 +221,32 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
                 })}
               </span>
             </RowMain>
-            <ObservationField disabled={true} value={holiday.observationManager} />
-            <AuthorizationButtons>
-              <Button disabled={true}>
+            <ObservationField
+              defaultValue={holiday?.observationManager}
+              {...register('observationManager')}
+              disabled={true}
+            />
+            {/* <AuthorizationButtons>
+              <Button onClick={() => setValue('authorizationManager', 'approved')}>
                 <HiOutlineCheck />
                 Aceptar
               </Button>
-              <Button disabled={true}>
+              <Button onClick={() => setValue('authorizationManager', 'rejected')}>
                 <HiOutlineXMark />
                 Rechazar
               </Button>
-            </AuthorizationButtons>
-          </ColumnContainer>
+            </AuthorizationButtons> */}
+          </Authorization>
+        </AuthorizationItem>
 
-          <ColumnContainer>
+        {/* ADMIN */}
+        <AuthorizationItem>
+          <Status>
+            <Title>Administrador</Title>
+            <StateHoliday state={holiday?.authorizationAdmin || 'pending'} />
+          </Status>
+
+          <Authorization>
             <RowMain>
               <SubTitle>Observación</SubTitle>
               <span>
@@ -172,28 +257,24 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
                 })}
               </span>
             </RowMain>
-
-            {/* FORM ADMIN */}
-            <Form onSubmit={handleSubmit(onSubmit)}>
-              <ObservationField
-                defaultValue={holiday.observationAdmin}
-                {...register('observationAdmin')}
-              />
-              <AuthorizationButtons>
-                <Button onClick={() => setValue('authorizationAdmin', 'approved')}>
-                  <HiOutlineCheck />
-                  Aceptar
-                </Button>
-                <Button onClick={() => setValue('authorizationAdmin', 'rejected')}>
-                  <HiOutlineXMark />
-                  Rechazar
-                </Button>
-              </AuthorizationButtons>
-            </Form>
-          </ColumnContainer>
-        </ColumnContainer>
-      </RowComponents>
-    </AuthorizationContainer>
+            <ObservationField
+              defaultValue={holiday.observationAdmin}
+              {...register('observationAdmin')}
+            />
+            <AuthorizationButtons>
+              <Button onClick={() => setValue('authorizationAdmin', 'approved')}>
+                <HiOutlineCheck />
+                Aceptar
+              </Button>
+              <Button onClick={() => setValue('authorizationAdmin', 'rejected')}>
+                <HiOutlineXMark />
+                Rechazar
+              </Button>
+            </AuthorizationButtons>
+          </Authorization>
+        </AuthorizationItem>
+      </Row>
+    </AuthorizationCardStyled>
   );
 };
 
