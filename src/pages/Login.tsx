@@ -17,6 +17,8 @@ import { HiOutlineEyeSlash } from 'react-icons/hi2';
 import { Autoplay, EffectFade, Navigation, Pagination } from 'swiper/modules';
 import styled from 'styled-components';
 import { useState } from 'react';
+// import { UserInfo } from '../features/users/types';
+import { useForm } from 'react-hook-form';
 
 const StyledSwiper = styled(Swiper)`
   position: relative;
@@ -153,8 +155,22 @@ const Title = styled.h1`
   font-size: 5rem;
 `;
 
+//TEMPORAL INTERFACE
+
+interface TempForm {
+  user: string;
+  pass: string;
+}
+
 export default function App() {
   const [isClicked, setClicked] = useState(false);
+  const { register, handleSubmit } = useForm<TempForm>({});
+
+  const onSubmit = (data: TempForm) => {
+    console.log(`Usuario: ${data.user}`);
+    console.log(`Contraseña: ${data.pass}`);
+  };
+
   return (
     <>
       <LoginContainer>
@@ -163,35 +179,42 @@ export default function App() {
           <Slogan>¡ Tu Soporte en el Camino !</Slogan>
           <Title>¡Bienvenido!</Title>
         </SectionsContainerLeft>
-        <SectionsContainerRight>
-          <h2>Iniciar Sesión</h2>
-          <Labels>Usuario</Labels>
-          <TextFieldContainer>
-            <TextBox
-              title="Completa este campo"
-              type="text"
-              placeholder="Ingrese su usuario"
-              required
-            ></TextBox>
-            <HiOutlineUserCircle />
-          </TextFieldContainer>
-          <Labels>Contraseña</Labels>
-          <TextFieldContainer>
-            <TextBox
-              title="Completa este campo"
-              type={isClicked ? 'text' : 'password'}
-              placeholder="Ingrese su contraseña"
-              required
-            ></TextBox>
-            <EyeContainer
-              title={isClicked ? 'Ocultar Contraseña' : 'Mostrar Contraseña'}
-              onClick={() => setClicked(!isClicked)}
-            >
-              {isClicked ? <HiOutlineEyeSlash /> : <HiOutlineEye />}
-            </EyeContainer>
-          </TextFieldContainer>
-          <ButtonSubmit>Ingresar</ButtonSubmit>
-        </SectionsContainerRight>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <SectionsContainerRight>
+            <h2>Iniciar Sesión</h2>
+
+            <Labels>Usuario</Labels>
+            <TextFieldContainer>
+              <TextBox
+                title="Completa este campo"
+                type="text"
+                placeholder="Ingrese su usuario"
+                id="user"
+                {...register('user')}
+                required
+              ></TextBox>
+              <HiOutlineUserCircle />
+            </TextFieldContainer>
+            <Labels>Contraseña</Labels>
+            <TextFieldContainer>
+              <TextBox
+                title="Completa este campo"
+                type={isClicked ? 'text' : 'password'}
+                id="password"
+                {...register('pass')}
+                placeholder="Ingrese su contraseña"
+                required
+              ></TextBox>
+              <EyeContainer
+                title={isClicked ? 'Ocultar Contraseña' : 'Mostrar Contraseña'}
+                onClick={() => setClicked(!isClicked)}
+              >
+                {isClicked ? <HiOutlineEyeSlash /> : <HiOutlineEye />}
+              </EyeContainer>
+            </TextFieldContainer>
+            <ButtonSubmit>Ingresar</ButtonSubmit>
+          </SectionsContainerRight>
+        </form>
       </LoginContainer>
       <StyledSwiper
         spaceBetween={30}

@@ -6,6 +6,7 @@ import Row from '../ui/Row';
 import { HiOutlineEye, HiOutlineEyeSlash } from 'react-icons/hi2';
 import { useState } from 'react';
 import Button from '../ui/Button';
+import { useForm } from 'react-hook-form';
 
 //Account Settings
 
@@ -28,7 +29,7 @@ const AccountContainer = styled.div`
   color: var(--color-grey-700);
 
   width: 100%;
-  padding: 3rem 5rem;
+  padding: 7rem 5rem;
 `;
 
 const TextBox = styled.input`
@@ -106,31 +107,68 @@ const Label = styled.label`
 
 const FileImage = styled(FileButton)``;
 
+const BorderMarker = styled.div`
+  border-bottom: 1px solid var(--color-grey-200);
+`;
+
+//TEMPORAL INTERFACE
+
+interface TempFormInfo {
+  user: string;
+  email: string;
+}
+
+// interface TempFormPasswords {
+//   currentPass: string;
+//   newPass: string;
+//   confirmPass: string;
+// }
+
 const Account = () => {
   const [isClicked, setClicked] = useState(false);
+  const { register, handleSubmit } = useForm<TempFormInfo>({});
+  // const { register, handleSubmit } = useForm<TempFormPasswords>({});
+
+  const onSubmitInfo = (data: TempFormInfo) => {
+    console.log(`Usuario: ${data.user}`);
+    console.log(`Email: ${data.email}`);
+  };
+
+  // const onSubmitPasswords = (data: TempFormPasswords) => {
+  //   console.log(`Usuario: ${data.currentPass}`);
+  //   console.log(`Email: ${data.newPass}`);
+  //   console.log(`Email: ${data.confirmPass}`);
+  // };
+
   return (
     <Row type="vertical">
       <Heading as="h1">Configuración de Cuenta</Heading>
       <AccountSection>
-        <AccountContainer>
-          <UserPhoto
-            $size="large"
-            src="https://www.shutterstock.com/image-vector/avatar-man-icon-profile-placeholder-600nw-1229859850.jpg"
-          />
-          <FileImage>Actualizar Imagen...</FileImage>
-          <Form>
-            <Field>
-              <Label>Nombre de Usuario</Label>
-              <TextBox type="text"></TextBox>
-            </Field>
-            <Field>
-              <Label>Correo Electrónico</Label>
-              <TextBox type="email"></TextBox>
-            </Field>
-            <SubmitButton $variation="confirm">Guardar Cambios</SubmitButton>
-          </Form>
-        </AccountContainer>
-
+        <BorderMarker>
+          <AccountContainer>
+            <UserPhoto
+              $size="large"
+              src="https://www.shutterstock.com/image-vector/avatar-man-icon-profile-placeholder-600nw-1229859850.jpg"
+            />
+            <FileImage>Actualizar Imagen...</FileImage>
+            <Form onSubmit={handleSubmit(onSubmitInfo)}>
+              <Field>
+                <Label>Nombre de Usuario</Label>
+                <TextBox type="text" id="user" {...register('user')} required></TextBox>
+              </Field>
+              <Field>
+                <Label>Correo Electrónico</Label>
+                <TextBox
+                  type="email"
+                  id="email"
+                  {...register('email')}
+                  required
+                ></TextBox>
+              </Field>
+              <SubmitButton $variation="confirm">Guardar Cambios</SubmitButton>
+            </Form>
+          </AccountContainer>
+        </BorderMarker>
         <AccountContainer>
           <Heading as="h2">Cambiar Contraseña</Heading>
           <Form>

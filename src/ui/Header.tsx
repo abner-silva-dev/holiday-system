@@ -8,6 +8,7 @@ import FloatFeat from './FloatFeat';
 import UserPhoto from './../../src/features/users/UserPhoto';
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const StyledHeader = styled.header`
   position: relative;
@@ -19,7 +20,7 @@ const StyledHeader = styled.header`
   background-color: var(--color-grey-0);
 `;
 
-const UserView = styled.div`
+const UserView = styled(Link)`
   display: flex;
   align-items: center;
   gap: 1.4rem;
@@ -109,7 +110,7 @@ function Header() {
 
   return (
     <StyledHeader>
-      <UserView>
+      <UserView to="/me" title="Configuración de Usuario">
         <ImageContainer>
           <UserPhoto
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBrDpzWSWvT8WQKdSxpdEaoev3e0uixuPvdw&s"
