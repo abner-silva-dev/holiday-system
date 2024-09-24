@@ -12,7 +12,7 @@ export const getHolidays = async () => {
   return data;
 };
 
-export const createHolidays = async (holiday: HolidayInfo) => {
+export const createHoliday = async (holiday: HolidayInfo) => {
   const res = await fetch(`${API_DAI_SYSTEM}/holiday`, {
     method: 'POST',
     headers: { 'Content-type': 'application/json' },
@@ -38,14 +38,14 @@ export const deleteHolidays = async (holidayId: string) => {
   return data;
 };
 
-export const updateHolidays = async (holiday: HolidayInfo) => {
-  const res = await fetch(`${API_DAI_SYSTEM}/holiday`, {
+export const updateHoliday = async (holidayId: string, holiday: HolidayInfo) => {
+  const res = await fetch(`${API_DAI_SYSTEM}/holiday/${holidayId}`, {
     method: 'PATCH',
     headers: { 'Content-type': 'application/json' },
     body: JSON.stringify(holiday),
   });
 
-  if (!res.ok) throw new Error('holidays does not was created');
+  if (!res.ok) throw new Error('holidays does not was updated');
 
   const { data } = await res.json();
 

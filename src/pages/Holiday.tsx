@@ -1,6 +1,6 @@
 import { useStateApp } from '../context/stateAppContext';
 import HolidayOptions from '../features/holiday/HolildayOptions';
-import RequestScroll from '../features/holiday/RequestScroll';
+import HolidayTable from '../features/holiday/HolidayTable';
 import FilterUser from '../features/users/FiltersUser';
 import Row from '../ui/Row';
 import Search from '../ui/Search';
@@ -21,12 +21,12 @@ const Holiday = () => {
           <Search
             width="60%"
             placeholder="Buscar por: nombre | N° Empleado"
-            onSetQuery={(query) => handleSearch('user', formatText(query))}
+            onSetQuery={(query) => handleSearch('holiday', formatText(query))}
             popUpFilter={<FilterUser />}
           />
           <HolidayOptions />
         </Row>
-        <RequestScroll />
+        <HolidayTable />
       </Row>
     </>
   );

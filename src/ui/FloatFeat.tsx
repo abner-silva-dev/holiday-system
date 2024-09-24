@@ -2,6 +2,10 @@ import styled from 'styled-components';
 import RequestVacation from '../features/holiday/RequestVacation';
 import { useState } from 'react';
 import { HiPuzzlePiece } from 'react-icons/hi2';
+import { useHolidays } from '../features/holiday/useHolidays';
+import { HolidayInfo } from '../features/holiday/type';
+import { Link } from 'react-router-dom';
+import ContentEmpty from './ContentEmpty';
 
 const FloatFeatStyled = styled.div`
   display: flex;
@@ -70,7 +74,7 @@ const Message = styled.span`
   }
 `;
 
-const LinkShowMore = styled.a`
+const LinkShowMore = styled(Link)`
   display: flex;
   justify-content: center;
   transition: all 0.1s;
@@ -88,9 +92,20 @@ const LinkShowMore = styled.a`
   }
 `;
 
-const FloatFeat = () => {
-  //state component (control component)
-  const [isEmpty] = useState(false);
+interface PropsFloatFeat {
+  onClose: () => void;
+}
+
+const FloatFeat: React.FC<PropsFloatFeat> = ({ onClose }) => {
+  const { holidays } = useHolidays();
+  const holidaysPending = holidays?.filter((holiday: HolidayInfo) => {
+    return (
+      holiday.authorizationAdmin === 'pending' ||
+      holiday.authorizationManager === 'pending'
+    );
+  });
+
+  const isEmpty = holidays?.length === 0;
 
   return (
     <FloatFeatStyled>
@@ -98,18 +113,17 @@ const FloatFeat = () => {
         <FloatTitle>Notificaciones</FloatTitle>
       </FloatHeader>
       <Main>
-        <RequestVacation></RequestVacation>
+        {holidaysPending?.map((holiday: HolidayInfo) => (
+          <RequestVacation key={holiday._id} holiday={holiday} onClose={onClose} />
+        ))}
 
-        {isEmpty && (
-          <Message>
-            <HiPuzzlePiece />
-            <span>No hay datos para mostrar</span>
-          </Message>
-        )}
+        {isEmpty && <ContentEmpty />}
       </Main>
 
       <GoTo>
-        <LinkShowMore href="#">Ver Más</LinkShowMore>
+        <LinkShowMore to="/holidays" onClick={onClose}>
+          Ver Más
+        </LinkShowMore>
       </GoTo>
     </FloatFeatStyled>
   );

@@ -1,8 +1,10 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import Header from './Header';
 
 import styled from 'styled-components';
+import { useEffect } from 'react';
+import { useStateApp } from '../context/stateAppContext';
 
 const StyledAppLayout = styled.div`
   height: 100vh;
@@ -23,6 +25,13 @@ const Container = styled.div`
 `;
 
 function AppLayout() {
+  const location = useLocation();
+  const { resetGlobalState } = useStateApp();
+
+  useEffect(() => {
+    resetGlobalState();
+  }, [location]);
+
   return (
     <StyledAppLayout>
       <Sidebar />

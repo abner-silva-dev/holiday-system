@@ -2,6 +2,14 @@ import styled from 'styled-components';
 
 import { HiOutlineCheck } from 'react-icons/hi2';
 import { HiOutlineXMark } from 'react-icons/hi2';
+import { HolidayInfo } from './type';
+import { joinName } from '../../utils/helpers';
+import StateHoliday from './StateHoliday';
+import { useUpdateHoliday } from './useUpdateHoliday';
+import { useForm } from 'react-hook-form';
+import { updateHoliday } from '../../services/apiHolidays';
+import { useQueryClient } from '@tanstack/react-query';
+import { useUser } from '../users/useUser';
 
 const AuthorizationContainer = styled.div`
   background-color: var(--color-grey-0);
@@ -11,18 +19,10 @@ const AuthorizationContainer = styled.div`
   box-shadow: var(--shadow-sm);
 `;
 
-const StateColor = styled.div`
-  background-color: #03682a;
-  padding: 1.6rem;
-  height: 0.6rem;
-  width: 0.6rem;
-  align-self: center;
-`;
-
 const ColumnContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1.2rem;
+  gap: 2rem;
 `;
 
 const AuthorizationButtons = styled.div`
@@ -82,130 +82,118 @@ const HeadingMain = styled.h3`
   margin-bottom: 2rem;
 `;
 
-const AuthorizationCard = () => {
+const Form = styled.form`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+`;
+
+interface PropsAuthorizationCard {
+  holiday: HolidayInfo;
+}
+
+const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
+  const queryClient = useQueryClient();
+
+  console.log(holiday);
+  const { register, handleSubmit, setValue } = useForm<HolidayInfo>({
+    defaultValues: holiday,
+  });
+  const { user: curUser } = useUser();
+
+  const { updateHoliday } = useUpdateHoliday();
+
+  const onSubmit = (data: HolidayInfo) => {
+    console.log(data);
+    updateHoliday(
+      { id: holiday._id || '', newHoliday: data },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['user', curUser.id] });
+        },
+      }
+    );
+  };
+
   return (
-    <>
-      <AuthorizationContainer>
-        <HeadingMain>Solicitud 1: 12/09/2024 - 22/09/2024</HeadingMain>
-        <RowComponents>
+    <AuthorizationContainer>
+      {/* MANAGER */}
+      <HeadingMain>Solicitud 1: {holiday?.createdAt}</HeadingMain>
+      <RowComponents>
+        <ColumnContainer>
           <ColumnContainer>
-            <ColumnContainer>
-              <TitleBold>Jefe Directo</TitleBold>
-              <RowMain>
-                <StateColor></StateColor>
-                <span>Aprobado</span>
-              </RowMain>
-            </ColumnContainer>
-
-            <ColumnContainer>
-              <TitleBold>Administrador</TitleBold>
-              <RowMain>
-                <StateColor></StateColor>
-                <span>Aprobado</span>
-              </RowMain>
-            </ColumnContainer>
+            <TitleBold>Jefe Directo</TitleBold>
+            <RowMain>
+              <StateHoliday state={holiday?.authorizationManager || 'pending'} />
+            </RowMain>
           </ColumnContainer>
 
           <ColumnContainer>
-            <ColumnContainer>
-              <RowMain>
-                <SubTitle>Observación</SubTitle>
-                <span>Lic. Juan Lopez Gonzalez</span>
-              </RowMain>
-              <ObservationField></ObservationField>
+            <TitleBold>Administrador</TitleBold>
+            <StateHoliday state={holiday?.authorizationAdmin || 'pending'} />
+          </ColumnContainer>
+        </ColumnContainer>
+
+        {/* ADMIN */}
+        <ColumnContainer>
+          <ColumnContainer>
+            <RowMain>
+              <SubTitle>Observación</SubTitle>
+              <span>
+                {joinName({
+                  name: holiday?.manager?.name || '',
+                  paternSurname: holiday?.manager?.paternSurname || '',
+                  motherSurname: holiday?.manager?.motherSurname || '',
+                })}
+              </span>
+            </RowMain>
+            <ObservationField disabled={true} value={holiday.observationManager} />
+            <AuthorizationButtons>
+              <Button disabled={true}>
+                <HiOutlineCheck />
+                Aceptar
+              </Button>
+              <Button disabled={true}>
+                <HiOutlineXMark />
+                Rechazar
+              </Button>
+            </AuthorizationButtons>
+          </ColumnContainer>
+
+          <ColumnContainer>
+            <RowMain>
+              <SubTitle>Observación</SubTitle>
+              <span>
+                {joinName({
+                  name: holiday?.admin?.name || '',
+                  paternSurname: holiday?.admin?.paternSurname || '',
+                  motherSurname: holiday?.admin?.motherSurname || '',
+                })}
+              </span>
+            </RowMain>
+
+            {/* FORM ADMIN */}
+            <Form onSubmit={handleSubmit(onSubmit)}>
+              <ObservationField
+                defaultValue={holiday.observationAdmin}
+                {...register('observationAdmin')}
+              />
               <AuthorizationButtons>
-                <Button>
+                <Button onClick={() => setValue('authorizationAdmin', 'approved')}>
                   <HiOutlineCheck />
                   Aceptar
                 </Button>
-                <Button>
+                <Button onClick={() => setValue('authorizationAdmin', 'rejected')}>
                   <HiOutlineXMark />
                   Rechazar
                 </Button>
               </AuthorizationButtons>
-            </ColumnContainer>
-
-            <ColumnContainer>
-              <RowMain>
-                <SubTitle>Observación</SubTitle>
-                <span>Lic. José Crisóstomo Cortés</span>
-              </RowMain>
-              <ObservationField></ObservationField>
-              <AuthorizationButtons>
-                <Button>
-                  <HiOutlineCheck />
-                  Aceptar
-                </Button>
-                <Button>
-                  <HiOutlineXMark />
-                  Rechazar
-                </Button>
-              </AuthorizationButtons>
-            </ColumnContainer>
+            </Form>
           </ColumnContainer>
-        </RowComponents>
-      </AuthorizationContainer>
-      <AuthorizationContainer>
-        <HeadingMain>Solicitud 1: 12/09/2024 - 22/09/2024</HeadingMain>
-        <RowComponents>
-          <ColumnContainer>
-            <ColumnContainer>
-              <TitleBold>Jefe Directo</TitleBold>
-              <RowMain>
-                <StateColor></StateColor>
-                <span>Aprobado</span>
-              </RowMain>
-            </ColumnContainer>
-
-            <ColumnContainer>
-              <TitleBold>Administrador</TitleBold>
-              <RowMain>
-                <StateColor></StateColor>
-                <span>Aprobado</span>
-              </RowMain>
-            </ColumnContainer>
-          </ColumnContainer>
-
-          <ColumnContainer>
-            <ColumnContainer>
-              <RowMain>
-                <SubTitle>Observación</SubTitle>
-                <span>Lic. Juan Lopez Gonzalez</span>
-              </RowMain>
-              <ObservationField></ObservationField>
-              <AuthorizationButtons>
-                <Button>
-                  <HiOutlineCheck />
-                  Aceptar
-                </Button>
-                <Button>
-                  <HiOutlineXMark />
-                  Rechazar
-                </Button>
-              </AuthorizationButtons>
-            </ColumnContainer>
-
-            <ColumnContainer>
-              <RowMain>
-                <SubTitle>Observación</SubTitle>
-                <span>Lic. José Crisóstomo Cortés</span>
-              </RowMain>
-              <ObservationField></ObservationField>
-              <AuthorizationButtons>
-                <Button>
-                  <HiOutlineCheck />
-                  Aceptar
-                </Button>
-                <Button>
-                  <HiOutlineXMark />
-                  Rechazar
-                </Button>
-              </AuthorizationButtons>
-            </ColumnContainer>
-          </ColumnContainer>
-        </RowComponents>
-      </AuthorizationContainer>
-    </>
+        </ColumnContainer>
+      </RowComponents>
+    </AuthorizationContainer>
   );
 };
 

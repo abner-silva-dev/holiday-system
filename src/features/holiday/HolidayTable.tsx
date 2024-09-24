@@ -8,17 +8,17 @@ import { formatText } from '../../utils/helpers';
 // import { HolidayInfo } from './type';
 // import { useHolidays } from './useHolidays';
 
-const RequestsContainer = styled.div`
+const HolidayTableStyled = styled.div`
   border-radius: 9px;
   display: flex;
   flex-direction: column;
   border: 1px solid var(--color-grey-200);
 `;
 
-const RequestScroll = () => {
+const HolidayTable = () => {
   const { users, isPending, error } = useUsers();
   const {
-    state: { queryUser },
+    state: { queryHoliday },
   } = useStateApp();
 
   if (isPending) return <Spinner />;
@@ -28,18 +28,18 @@ const RequestScroll = () => {
   const dataSearch = users.filter((user: UserInfo) => {
     return (
       formatText(`${user.name} ${user.paternSurname} ${user.motherSurname}`).includes(
-        queryUser
-      ) || user.employNumber.includes(queryUser)
+        queryHoliday
+      ) || user.employNumber.includes(queryHoliday)
     );
   });
 
   return (
-    <RequestsContainer>
+    <HolidayTableStyled>
       {dataSearch?.map((user: UserInfo) => {
         return <HolidayRow key={user.id} user={user} />;
       })}
-    </RequestsContainer>
+    </HolidayTableStyled>
   );
 };
 
-export default RequestScroll;
+export default HolidayTable;

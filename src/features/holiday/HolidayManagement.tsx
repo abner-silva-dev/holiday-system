@@ -15,10 +15,13 @@ import Filter from '../../ui/Filter';
 
 import { useUser } from '../users/useUser';
 import UserCard from '../users/UserCard';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import CreateHoliday from './CreateHoliday';
 import { useState } from 'react';
 import AuthorizationCard from './AuthorizationCard';
+import { HolidayInfo } from './type';
+import { QueryClient, useQueryClient } from '@tanstack/react-query';
+import ContentEmpty from '../../ui/ContentEmpty';
 
 const HolidayInfoStyles = styled.div`
   display: grid;
@@ -34,9 +37,9 @@ const HolidayOptions = styled.header`
 
 //MAIN
 const HolidayMain = styled.main`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  row-gap: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 
   background-color: var(--color-grey-100);
   box-shadow: var(--shadow-md);
@@ -46,85 +49,6 @@ const HolidayMain = styled.main`
   border-radius: 9px;
   height: 50rem;
 `;
-
-// const HeadingMain = styled.h3`
-//   margin-bottom: 2rem;
-// `;
-
-// const AuthorizationCard = styled.div`
-//   background-color: var(--color-grey-0);
-//   padding: 2rem;
-//   grid-column: 1 /3;
-//   border-radius: 9px;
-//   box-shadow: var(--shadow-sm);
-// `;
-
-// const StateColor = styled.div`
-//   background-color: #03682a;
-//   padding: 1.6rem;
-//   height: 0.6rem;
-//   width: 0.6rem;
-//   align-self: center;
-// `;
-
-// const ColumnContainer = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   gap: 1.2rem;
-// `;
-
-// const AuthorizationButtons = styled.div`
-//   background-color: transparent;
-//   display: flex;
-//   justify-content: center;
-//   margin-bottom: 1.8rem;
-//   gap: 4rem;
-// `;
-
-// const Button = styled.button`
-//   background-color: transparent;
-//   border: none;
-//   font-weight: bold;
-
-//   display: flex;
-//   align-items: center;
-//   text-transform: uppercase;
-
-//   & svg {
-//     height: 2rem;
-//     width: 2rem;
-//   }
-
-//   &:hover {
-//   }
-// `;
-
-// const TitleBold = styled.span`
-//   font-weight: bold;
-// `;
-
-// const SubTitle = styled.span`
-//   color: var(--color-red-800);
-//   font-weight: bold;
-// `;
-
-// const RowMain = styled.div`
-//   display: flex;
-//   gap: 1.8rem;
-// `;
-
-// const ObservationField = styled.textarea`
-//   background-color: var(--color-grey-0);
-//   border: 1px solid var(--color-grey-400);
-//   resize: none;
-//   box-shadow: var(--shadow-sm);
-// `;
-
-// const RowComponents = styled.div`
-//   display: flex;
-//   padding: 0 3.2rem;
-//   justify-content: space-between;
-// `;
 
 const PeriodComponent = styled.div`
   display: flex;
@@ -253,9 +177,51 @@ const Stats = styled.div`
 `;
 
 const HolidayManagement = () => {
+  const [searchParams] = useSearchParams();
+  const history = searchParams.get('history');
+  const [isClicked, setClicked] = useState(false);
+
   const { user } = useUser();
 
-  const [isClicked, setClicked] = useState(false);
+
+  if (!user) return null;
+  const { holidays } = user;
+
+  let holidaysFilter: HolidayInfo[] = [];
+
+  //FILTERS
+  switch (history) {
+    case 'request':
+      holidaysFilter = holidays.filter((holiday: HolidayInfo) => {
+        console.log(holiday.authorizationAdmin, holiday.authorizationManager);
+
+        return (
+          holiday.authorizationAdmin === 'pending' ||
+          holiday.authorizationManager === 'pending'
+        );
+      });
+      break;
+    case 'successfull':
+      holidaysFilter = holidays.filter((holiday: HolidayInfo) => {
+        return (
+          holiday.authorizationAdmin === 'approved' &&
+          holiday.authorizationManager === 'approved'
+        );
+      });
+      break;
+    case 'rejected':
+      holidaysFilter = holidays.filter((holiday: HolidayInfo) => {
+        return (
+          holiday.authorizationAdmin === 'rejected' ||
+          holiday.authorizationManager === 'rejected'
+        );
+      });
+      break;
+    case 'all':
+      holidaysFilter = holidays;
+      break;
+  }
+
 
   return (
     <Row>
@@ -344,13 +310,18 @@ const HolidayManagement = () => {
           )}
         </Filters>
 
-        {/* HOLIDAY MAIN */}
         <HolidayMain>
-          {isClicked ? <CreateHoliday /> : <AuthorizationCard />}
+          {holidaysFilter.length === 0 && <ContentEmpty />}
 
-          {/*  */}
-
-          {/*  */}
+          {isClicked ? (
+            <CreateHoliday onClose={setClicked} />
+          ) : (
+            <>
+              {holidaysFilter.map((holiday: HolidayInfo) => {
+                return <AuthorizationCard holiday={holiday} key={holiday._id} />;
+              })}
+            </>
+          )}
         </HolidayMain>
       </HolidayInfoStyles>
     </Row>

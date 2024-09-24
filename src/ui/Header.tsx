@@ -105,7 +105,6 @@ function Header() {
     const switchDark = document.querySelector('html');
 
     switchDark?.classList.toggle('dark-mode');
-    // switchDark?.classList.replace('light-mode', 'dark-mode');
   }, [isDark]);
 
   return (
@@ -130,7 +129,7 @@ function Header() {
           <Notification>5</Notification>
           <HiOutlineBell></HiOutlineBell>
         </Bell>
-        {isClicked ? <FloatFeat /> : null}
+        {isClicked ? <FloatFeat onClose={() => setClicked(false)} /> : null}
         <LogOff title="Cerrar Sesión">
           <HiOutlineArrowRightOnRectangle />
         </LogOff>
