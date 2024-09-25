@@ -46,7 +46,7 @@ const TableCell = styled.td`
   border: 1px solid #dee2e6;
   background-color: #f9f9f9;
   text-align: center;
-  position: relative; // Para el mensaje de arrastre
+  position: relative;
 `;
 
 const ImagePreview = styled.img`
@@ -207,6 +207,8 @@ const LoginSettings = () => {
   const handleDragEnd = (result: DropResult) => {
     setDraggingOverIndex(null); // Resetear el índice al finalizar el drag
     if (!result.destination) return;
+
+    // Reordenar imágenes
     const reorderedImages = Array.from(images);
     const [removed] = reorderedImages.splice(result.source.index, 1);
     reorderedImages.splice(result.destination.index, 0, removed);

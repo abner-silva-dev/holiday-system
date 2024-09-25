@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import UserPhoto from '../features/users/UserPhoto';
 import FileButton from '../ui/FileButton';
 import Heading from '../ui/Heading';
 import Row from '../ui/Row';
@@ -8,7 +7,7 @@ import { useState } from 'react';
 import Button from '../ui/Button';
 import { useForm } from 'react-hook-form';
 
-//Account Settings
+// Account Settings
 
 const AccountSection = styled.section`
   display: flex;
@@ -68,7 +67,6 @@ const TextFieldContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  /* border-bottom: 3px solid var(--color-grey-400); */
   padding-right: 1.5rem;
   background-color: var(--color-grey-100);
   border-radius: 3px;
@@ -90,7 +88,6 @@ const Form = styled.form`
 
 const SubmitButton = styled(Button)`
   margin-top: 2.8rem;
-  /* width: 30%; */
   align-self: center;
 `;
 
@@ -111,34 +108,85 @@ const BorderMarker = styled.div`
   border-bottom: 1px solid var(--color-grey-200);
 `;
 
-//TEMPORAL INTERFACE
+const DropArea = styled.div`
+  width: 200px;
+  height: 200px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
+const DragOverlay = styled.div<{ isDragging: boolean }>`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: ${({ isDragging }) =>
+    isDragging ? 'rgba(0, 0, 0, 0.3)' : 'transparent'};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: ${({ isDragging }) => (isDragging ? 1 : 0)};
+  transition: opacity 0.3s;
+  color: white;
+  font-size: 1.2rem;
+`;
+
+const UserImage = styled.img`
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover; /* Asegura que la imagen se ajuste correctamente */
+`;
+
+// TEMPORAL INTERFACE
 interface TempFormInfo {
   user: string;
   email: string;
 }
 
-// interface TempFormPasswords {
-//   currentPass: string;
-//   newPass: string;
-//   confirmPass: string;
-// }
-
 const Account = () => {
   const [isClicked, setClicked] = useState(false);
+  const [imageSrc, setImageSrc] = useState(
+    'https://www.shutterstock.com/image-vector/avatar-man-icon-profile-placeholder-600nw-1229859850.jpg'
+  );
+  const [isDragging, setIsDragging] = useState(false);
   const { register, handleSubmit } = useForm<TempFormInfo>({});
-  // const { register, handleSubmit } = useForm<TempFormPasswords>({});
 
   const onSubmitInfo = (data: TempFormInfo) => {
     console.log(`Usuario: ${data.user}`);
     console.log(`Email: ${data.email}`);
   };
 
-  // const onSubmitPasswords = (data: TempFormPasswords) => {
-  //   console.log(`Usuario: ${data.currentPass}`);
-  //   console.log(`Email: ${data.newPass}`);
-  //   console.log(`Email: ${data.confirmPass}`);
-  // };
+  // Función para actualizar la imagen
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setImageSrc(imageUrl);
+    }
+  };
+
+  // Funciones de arrastrar y soltar
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = () => {
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith('image/')) {
+      const imageUrl = URL.createObjectURL(file);
+      setImageSrc(imageUrl);
+    }
+  };
 
   return (
     <Row type="vertical">
@@ -146,11 +194,29 @@ const Account = () => {
       <AccountSection>
         <BorderMarker>
           <AccountContainer>
-            <UserPhoto
-              $size="large"
-              src="https://www.shutterstock.com/image-vector/avatar-man-icon-profile-placeholder-600nw-1229859850.jpg"
-            />
-            <FileImage>Actualizar Imagen...</FileImage>
+            {/* Área de arrastrar y soltar para actualizar la imagen */}
+            <DropArea
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+            >
+              <UserImage src={imageSrc} alt="Imagen de perfil" />
+              <DragOverlay isDragging={isDragging}>
+                {isDragging ? 'Suelta la imagen aquí' : ''}
+              </DragOverlay>
+            </DropArea>
+
+            {/* Botón para subir la imagen (opción alternativa) */}
+            <FileImage as="label">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                style={{ display: 'none' }}
+              />
+              Actualizar Imagen...
+            </FileImage>
+
             <Form onSubmit={handleSubmit(onSubmitInfo)}>
               <Field>
                 <Label>Nombre de Usuario</Label>
