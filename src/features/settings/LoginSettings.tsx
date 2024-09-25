@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Button from '../../ui/Button';
 import Heading from '../../ui/Heading';
-import FileButton from '../../ui/FileButton';
+import Table from '../../ui/Table';
+import LoginSettingsTable from './LoginSettingsTable';
+// import FileButton from '../../ui/FileButton';
 
 const LoginSetSection = styled.section`
   display: flex;
@@ -137,6 +139,9 @@ const LoginSettings = () => {
             <Option>6 segundos</Option>
           </SelectBox>
         </TimeContainer>
+
+        <LoginSettingsTable></LoginSettingsTable>
+
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
           {images.map((image, index) => (
             <ImageSet key={index}>
