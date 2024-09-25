@@ -175,7 +175,7 @@ export default function App() {
     <>
       <LoginContainer>
         <SectionsContainerLeft>
-          <Image src="logo-dai.png" />
+          <Image src="Logo-dai.png" />
           <Slogan>¡ Tu Soporte en el Camino !</Slogan>
           <Title>¡Bienvenido!</Title>
         </SectionsContainerLeft>

@@ -12,7 +12,6 @@ const Enterprise = () => {
     <>
       <Row>
         <Heading as="h1">Empresas</Heading>
-
         <Row type="horizontal">
           <Search
             width="60%"
