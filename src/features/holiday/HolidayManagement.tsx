@@ -20,7 +20,6 @@ import CreateHoliday from './CreateHoliday';
 import { useState } from 'react';
 import AuthorizationCard from './AuthorizationCard';
 import { HolidayInfo } from './type';
-import { QueryClient, useQueryClient } from '@tanstack/react-query';
 import ContentEmpty from '../../ui/ContentEmpty';
 
 const HolidayInfoStyles = styled.div`
@@ -47,7 +46,7 @@ const HolidayMain = styled.main`
 
   overflow-y: scroll;
   border-radius: 9px;
-  height: 50rem;
+  height: 55rem;
 `;
 
 const PeriodComponent = styled.div`

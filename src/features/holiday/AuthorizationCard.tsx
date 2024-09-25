@@ -197,7 +197,8 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
           </div>
           <Authorization>
             <RowMain>
-              <SubTitle>Observación empleado</SubTitle>
+              <SubTitle>Observación</SubTitle>
+              <span>Empleado</span>
             </RowMain>
             <ObservationField defaultValue={holiday?.observation} disabled={true} />
           </Authorization>

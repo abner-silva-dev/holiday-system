@@ -16,7 +16,7 @@ const StyledUserCard = styled.aside`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
 
   gap: 5rem;
   grid-row: 1/-1;
