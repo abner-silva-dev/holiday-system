@@ -7,18 +7,18 @@ import {
   DropResult,
   DraggableProvided,
 } from 'react-beautiful-dnd';
+import Heading from '../../ui/Heading';
 
 const LoginSetSection = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #ffffff;
+  background-color: var(--color-grey-0);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  padding: 2rem;
-  border-radius: 16px;
-  max-width: 800px;
-  margin: auto;
+  padding: 5rem 4rem;
+  border-radius: 9px;
+  width: 100%;
 `;
 
 const LoginContainer = styled.div`
@@ -27,32 +27,42 @@ const LoginContainer = styled.div`
   width: 100%;
 `;
 
-const Table = styled.table`
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 2rem;
+const Table = styled.div`
+  margin: 4rem 0;
+  border-radius: 10px; /* Esquinas redondeadas */
+  overflow: hidden; /* Para evitar que los bordes de las celdas sobresalgan */
+  border: 1px solid var(--color-grey-200);
+  /* width: 50%; */
 `;
 
-const TableHeader = styled.th`
+const TableHeader = styled.div`
   padding: 1rem;
-  background-color: #007bff;
-  color: #ffffff;
+  background-color: var(--color-grey-50);
+  color: var(--color-grey-800);
   text-align: left;
   font-weight: bold;
+  padding: 1.6rem 2.4rem;
 `;
 
-const TableCell = styled.td`
+const TableCell = styled.div`
   padding: 1rem;
-  border: 1px solid #dee2e6;
-  background-color: #f9f9f9;
+  border: 1px solid var(--color-grey-100);
+  background-color: var(--color-grey-0);
   text-align: center;
+<<<<<<< HEAD
   position: relative;
+=======
+  position: relative; // Para el mensaje de arrastre
+  display: flex;
+  align-items: center;
+  justify-content: center;
+>>>>>>> 9a22f64bdffa87bbbd91ef81427952aa8b77d10e
 `;
 
 const ImagePreview = styled.img`
-  height: 15rem;
+  height: 12rem;
   object-fit: cover;
-  border: 2px solid #007bff;
+  border: 2px solid var(--color-brand-700);
   border-radius: 10px;
   margin-top: 1rem;
 `;
@@ -64,7 +74,7 @@ const UploadButton = styled.input`
 const LabelButton = styled.label`
   cursor: pointer;
   background-color: #007bff;
-  color: #ffffff;
+  color: var(--color-grey-0);
   padding: 10px 15px;
   border-radius: 5px;
   text-align: center;
@@ -73,7 +83,7 @@ const LabelButton = styled.label`
 
 const ActionButton = styled.button`
   background-color: #28a745;
-  color: white;
+  color: var(--color-grey-0);
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -114,6 +124,35 @@ const WarningMessage = styled.div`
   margin-top: 1rem;
 `;
 
+const TimeContainer = styled.div`
+  font-size: 1.6rem;
+  font-weight: 700;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3rem;
+  display: flex;
+  gap: 2rem;
+`;
+
+const SelectBox = styled.select`
+  border: none;
+  border-radius: 9px;
+  padding: 0.5rem 1rem;
+  color: var(--color-grey-0);
+  background: linear-gradient(
+    to bottom,
+    var(--color-grey-600) 0%,
+    var(--color-grey-700) 50%,
+    var(--color-grey-800) 51%,
+    var(--color-grey-900) 100%
+  );
+  width: 14rem;
+`;
+
+const Option = styled.option`
+  background-color: var(--color-grey-0);
+  color: var(--color-grey-800);
+`;
 const LoginSettings = () => {
   const [images, setImages] = useState<string[]>([]);
   const [draggingOverIndex, setDraggingOverIndex] = useState<number | null>(null);
@@ -215,31 +254,55 @@ const LoginSettings = () => {
     setImages(reorderedImages);
   };
 
+  const TableHead = styled.div`
+    display: grid;
+
+    grid-template-columns: 0.5fr 1fr 2fr;
+  `;
+
+  const ButtonsContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  `;
+
   return (
     <LoginSetSection>
       <LoginContainer>
+        <Heading as="h2">Pantalla de Inicio de Sesión</Heading>
+        <TimeContainer>
+          <label>Tiempo de Transición: </label>
+          <SelectBox>
+            <Option>3 segundos</Option>
+            <Option>4 segundos</Option>
+            <Option>5 segundos</Option>
+            <Option>6 segundos</Option>
+          </SelectBox>
+        </TimeContainer>
+
+        {/* TABLE */}
         <DragDropContext onDragEnd={handleDragEnd}>
           <Droppable droppableId="images">
             {(provided) => (
               <Table {...provided.droppableProps} ref={provided.innerRef}>
-                <thead>
-                  <tr>
-                    <TableHeader>Índice</TableHeader>
-                    <TableHeader>Imagen</TableHeader>
-                    <TableHeader>Acciones</TableHeader>
-                  </tr>
-                </thead>
-                <tbody>
-                  {images.map((image, index) => (
-                    <Draggable key={index} draggableId={`image-${index}`} index={index}>
-                      {(provided: DraggableProvided) => (
-                        <tr
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                          onDrop={handleDrop(index)}
-                          onDragOver={handleDragOver(index)}
-                        >
+                <TableHead>
+                  <TableHeader>Índice</TableHeader>
+                  <TableHeader>Imagen</TableHeader>
+                  <TableHeader>Acciones</TableHeader>
+                </TableHead>
+                {images.map((image, index) => (
+                  <Draggable key={index} draggableId={`image-${index}`} index={index}>
+                    {(provided: DraggableProvided) => (
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        onDrop={handleDrop(index)}
+                        onDragOver={handleDragOver(index)}
+                      >
+                        <TableHead>
                           <TableCell>{index + 1}</TableCell>
                           <TableCell>
                             {draggingOverIndex === index && (
@@ -252,30 +315,32 @@ const LoginSettings = () => {
                             )}
                           </TableCell>
                           <TableCell>
-                            <UploadButton
-                              type="file"
-                              accept="image/*"
-                              id={`file-input-${index}`}
-                              onChange={handleImageChange(index)}
-                            />
-                            <LabelButton htmlFor={`file-input-${index}`}>
-                              Subir Imagen...
-                            </LabelButton>
-                            {image && (
-                              <ActionButton
-                                onClick={handleDeleteImage(index)}
-                                style={{ background: 'red' }}
-                              >
-                                Eliminar Imagen
-                              </ActionButton>
-                            )}
+                            <ButtonsContainer>
+                              <UploadButton
+                                type="file"
+                                accept="image/*"
+                                id={`file-input-${index}`}
+                                onChange={handleImageChange(index)}
+                              />
+                              <LabelButton htmlFor={`file-input-${index}`}>
+                                Subir Imagen...
+                              </LabelButton>
+                              {image && (
+                                <ActionButton
+                                  onClick={handleDeleteImage(index)}
+                                  style={{ background: 'red' }}
+                                >
+                                  Eliminar Imagen
+                                </ActionButton>
+                              )}
+                            </ButtonsContainer>
                           </TableCell>
-                        </tr>
-                      )}
-                    </Draggable>
-                  ))}
-                  {provided.placeholder}
-                </tbody>
+                        </TableHead>
+                      </div>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
               </Table>
             )}
           </Droppable>
