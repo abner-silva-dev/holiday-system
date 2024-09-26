@@ -8,6 +8,12 @@ import {
   DraggableProvided,
 } from 'react-beautiful-dnd';
 import Heading from '../../ui/Heading';
+import {
+  HiOutlineArrowUpTray,
+  HiOutlineMinusSmall,
+  HiOutlinePlus,
+} from 'react-icons/hi2';
+import Button from '../../ui/Button';
 
 const LoginSetSection = styled.section`
   display: flex;
@@ -32,7 +38,6 @@ const Table = styled.div`
   border-radius: 10px; /* Esquinas redondeadas */
   overflow: hidden; /* Para evitar que los bordes de las celdas sobresalgan */
   border: 1px solid var(--color-grey-200);
-  /* width: 50%; */
 `;
 
 const TableHeader = styled.div`
@@ -49,14 +54,11 @@ const TableCell = styled.div`
   border: 1px solid var(--color-grey-100);
   background-color: var(--color-grey-0);
   text-align: center;
-<<<<<<< HEAD
-  position: relative;
-=======
+
   position: relative; // Para el mensaje de arrastre
   display: flex;
   align-items: center;
   justify-content: center;
->>>>>>> 9a22f64bdffa87bbbd91ef81427952aa8b77d10e
 `;
 
 const ImagePreview = styled.img`
@@ -67,39 +69,37 @@ const ImagePreview = styled.img`
   margin-top: 1rem;
 `;
 
-const UploadButton = styled.input`
-  display: none;
-`;
-
 const LabelButton = styled.label`
-  cursor: pointer;
-  background-color: #007bff;
-  color: var(--color-grey-0);
-  padding: 10px 15px;
-  border-radius: 5px;
-  text-align: center;
-  margin-top: 0.5rem;
+  display: flex;
+  gap: 0.6rem;
 `;
 
-const ActionButton = styled.button`
-  background-color: #28a745;
-  color: var(--color-grey-0);
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  margin-top: 1rem;
-  transition: background-color 0.3s;
-
-  &:hover {
-    background-color: #218838;
+const ActionButton = styled(Button)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  & svg {
+    height: 2rem;
+    width: 2rem;
+    stroke: var(--color-grey-800);
   }
 `;
 
-const RemoveLastEmptySpaceButton = styled(ActionButton)`
-  background-color: #dc3545;
+const RemoveLastEmptySpaceButton = styled(Button)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  & svg {
+    height: 2rem;
+    width: 2rem;
+    stroke: var(--color-grey-800);
+  }
+  /* background-color: #dc3545; */
 
   &:hover {
-    background-color: #c82333;
+    /* background-color: #c82333; */
   }
 `;
 
@@ -127,11 +127,16 @@ const WarningMessage = styled.div`
 const TimeContainer = styled.div`
   font-size: 1.6rem;
   font-weight: 700;
-  align-items: center;
-  justify-content: center;
-  margin-top: 3rem;
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 3rem;
   gap: 2rem;
+
+  & div {
+    display: flex;
+    gap: 2rem;
+  }
 `;
 
 const SelectBox = styled.select`
@@ -149,10 +154,51 @@ const SelectBox = styled.select`
   width: 14rem;
 `;
 
+const TableHead = styled.div`
+  display: grid;
+
+  grid-template-columns: 0.5fr 1fr 2fr;
+`;
+
+const ButtonsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+`;
+
+const FileImage = styled.label`
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+
+  font-weight: 700;
+  padding: 1rem 1.8rem;
+  background-color: #0b7285;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.6rem;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #0c8599;
+  }
+
+  & svg {
+    height: 2rem;
+    width: 2rem;
+  }
+`;
+
 const Option = styled.option`
   background-color: var(--color-grey-0);
   color: var(--color-grey-800);
 `;
+
+//CODING
 const LoginSettings = () => {
   const [images, setImages] = useState<string[]>([]);
   const [draggingOverIndex, setDraggingOverIndex] = useState<number | null>(null);
@@ -254,32 +300,33 @@ const LoginSettings = () => {
     setImages(reorderedImages);
   };
 
-  const TableHead = styled.div`
-    display: grid;
-
-    grid-template-columns: 0.5fr 1fr 2fr;
-  `;
-
-  const ButtonsContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-  `;
-
   return (
     <LoginSetSection>
       <LoginContainer>
         <Heading as="h2">Pantalla de Inicio de Sesión</Heading>
         <TimeContainer>
-          <label>Tiempo de Transición: </label>
-          <SelectBox>
-            <Option>3 segundos</Option>
-            <Option>4 segundos</Option>
-            <Option>5 segundos</Option>
-            <Option>6 segundos</Option>
-          </SelectBox>
+          <div>
+            <label>Tiempo de Transición: </label>
+            <SelectBox>
+              <Option>3 segundos</Option>
+              <Option>4 segundos</Option>
+              <Option>5 segundos</Option>
+              <Option>6 segundos</Option>
+            </SelectBox>
+          </div>
+          <div>
+            <ActionButton $variation="secondary" onClick={handleAddImage}>
+              <HiOutlinePlus />
+              Agregar Espacio
+            </ActionButton>
+            <RemoveLastEmptySpaceButton
+              $variation="secondary"
+              onClick={handleRemoveLastEmptySpace}
+            >
+              <HiOutlineMinusSmall />
+              Quitar Espacio
+            </RemoveLastEmptySpaceButton>
+          </div>
         </TimeContainer>
 
         {/* TABLE */}
@@ -316,19 +363,23 @@ const LoginSettings = () => {
                           </TableCell>
                           <TableCell>
                             <ButtonsContainer>
-                              <UploadButton
-                                type="file"
-                                accept="image/*"
-                                id={`file-input-${index}`}
-                                onChange={handleImageChange(index)}
-                              />
-                              <LabelButton htmlFor={`file-input-${index}`}>
-                                Subir Imagen...
-                              </LabelButton>
+                              <FileImage as="label">
+                                <input
+                                  type="file"
+                                  accept="image/*"
+                                  id={`file-input-${index}`}
+                                  onChange={handleImageChange(index)}
+                                  style={{ display: 'none' }}
+                                />
+                                <LabelButton htmlFor={`file-input-${index}`}>
+                                  <HiOutlineArrowUpTray />
+                                  Subir Imagen...
+                                </LabelButton>
+                              </FileImage>
                               {image && (
                                 <ActionButton
                                   onClick={handleDeleteImage(index)}
-                                  style={{ background: 'red' }}
+                                  style={{ background: '#dc2626', color: '#f3f4f6' }}
                                 >
                                   Eliminar Imagen
                                 </ActionButton>
@@ -346,11 +397,13 @@ const LoginSettings = () => {
           </Droppable>
         </DragDropContext>
         {warning && <WarningMessage>{warning}</WarningMessage>}
-        <ActionButton onClick={handleAddImage}>Agregar Otra Imagen</ActionButton>
-        <RemoveLastEmptySpaceButton onClick={handleRemoveLastEmptySpace}>
-          Quitar Último Espacio Vacío
-        </RemoveLastEmptySpaceButton>
-        <ActionButton onClick={handleSaveChanges}>GUARDAR CAMBIOS</ActionButton>
+        <ActionButton
+          $variation="confirm"
+          onClick={handleSaveChanges}
+          style={{ alignSelf: 'center' }}
+        >
+          GUARDAR CAMBIOS
+        </ActionButton>
       </LoginContainer>
     </LoginSetSection>
   );

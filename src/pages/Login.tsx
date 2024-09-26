@@ -22,6 +22,8 @@ import { useForm } from 'react-hook-form';
 
 const StyledSwiper = styled(Swiper)`
   position: relative;
+  pointer-events: none;
+  user-select: none;
   & img {
     filter: brightness(50%);
     display: block;
@@ -56,7 +58,7 @@ const LoginContainer = styled.div`
     #9b1313
   ); */
 
-  background-color: var(--color-grey-300);
+  background-color: #d1d5db;
 
   color: black;
 
@@ -105,13 +107,13 @@ const TextFieldContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 3px solid var(--color-grey-400);
+  border-bottom: 3px solid #9ca3af;
   margin-bottom: 2rem;
 
   & svg {
     width: 3rem;
     height: 3rem;
-    color: var(--color-grey-500);
+    color: #6b7280;
     transition: all 0.2s;
   }
 `;
@@ -120,7 +122,7 @@ const EyeContainer = styled.div`
   cursor: pointer;
 
   & svg:hover {
-    color: var(--color-grey-700);
+    color: #374151;
   }
 `;
 
@@ -135,13 +137,13 @@ const Labels = styled.label`
 
 const ButtonSubmit = styled.button`
   margin-top: 2rem;
-  background-color: var(--color-red-700);
-  color: var(--color-grey-200);
+  background-color: #b91c1c;
+  color: #e5e7eb;
   border: none;
   padding: 0.7rem;
 
   &:hover {
-    background-color: var(--color-red-800);
+    background-color: #991b1b;
   }
 `;
 
@@ -175,7 +177,7 @@ export default function App() {
     <>
       <LoginContainer>
         <SectionsContainerLeft>
-          <Image src="Logo-dai.png" />
+          <Image src="logo-dai.png" />
           <Slogan>¡ Tu Soporte en el Camino !</Slogan>
           <Title>¡Bienvenido!</Title>
         </SectionsContainerLeft>
@@ -220,6 +222,7 @@ export default function App() {
         spaceBetween={30}
         effect={'fade'}
         navigation={false}
+        allowTouchMove={false}
         // pagination={{
         //   clickable: false,
         // }}

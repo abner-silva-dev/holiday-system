@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import FileButton from '../ui/FileButton';
+// import FileButton from '../ui/FileButton';
 import Heading from '../ui/Heading';
 import Row from '../ui/Row';
-import { HiOutlineEye, HiOutlineEyeSlash } from 'react-icons/hi2';
+import { HiOutlineArrowUpTray, HiOutlineEye, HiOutlineEyeSlash } from 'react-icons/hi2';
 import { useState } from 'react';
 import Button from '../ui/Button';
 import { useForm } from 'react-hook-form';
@@ -102,7 +102,30 @@ const Label = styled.label`
   color: var(--color-grey-600);
 `;
 
-const FileImage = styled(FileButton)``;
+const FileImage = styled.label`
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+
+  font-weight: 700;
+  padding: 1rem 1.8rem;
+  background-color: #0b7285;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.6rem;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #0c8599;
+  }
+
+  & svg {
+    height: 2rem;
+    width: 2rem;
+  }
+`;
 
 const BorderMarker = styled.div`
   border-bottom: 1px solid var(--color-grey-200);
@@ -214,6 +237,7 @@ const Account = () => {
                 onChange={handleImageChange}
                 style={{ display: 'none' }}
               />
+              <HiOutlineArrowUpTray />
               Actualizar Imagen...
             </FileImage>
 
