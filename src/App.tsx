@@ -13,6 +13,7 @@ import HolidayManagement from './features/holiday/HolidayManagement';
 import Login from './pages/Login';
 import Settings from './pages/Settings';
 import Account from './pages/Account';
+import ProtectedRoute from './ui/ProtectedRoute';
 
 const queryClient = new QueryClient();
 
@@ -25,7 +26,13 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="login" element={<Login />} />
-            <Route element={<AppLayout />}>
+            <Route
+              element={
+                <ProtectedRoute>
+                  <AppLayout />
+                </ProtectedRoute>
+              }
+            >
               <Route index element={<Navigate replace to="holidays" />} />
               <Route path="holidays" element={<Holiday />} />
               <Route path="holidays/:holidayId" element={<HolidayManagement />} />

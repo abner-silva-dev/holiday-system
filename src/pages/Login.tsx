@@ -19,6 +19,7 @@ import styled from 'styled-components';
 import { useState } from 'react';
 // import { UserInfo } from '../features/users/types';
 import { useForm } from 'react-hook-form';
+import { useLogin } from '../features/authentication/useLogin';
 
 const StyledSwiper = styled(Swiper)`
   position: relative;
@@ -160,17 +161,18 @@ const Title = styled.h1`
 //TEMPORAL INTERFACE
 
 interface TempForm {
-  user: string;
-  pass: string;
+  employNumber: string;
+  password: string;
 }
 
 export default function App() {
   const [isClicked, setClicked] = useState(false);
   const { register, handleSubmit } = useForm<TempForm>({});
+  const { login } = useLogin();
 
   const onSubmit = (data: TempForm) => {
-    console.log(`Usuario: ${data.user}`);
-    console.log(`Contraseña: ${data.pass}`);
+    console.log(data);
+    login(data);
   };
 
   return (
@@ -191,8 +193,8 @@ export default function App() {
                 title="Completa este campo"
                 type="text"
                 placeholder="Ingrese su usuario"
-                id="user"
-                {...register('user')}
+                id="employNumber"
+                {...register('employNumber')}
                 required
               ></TextBox>
               <HiOutlineUserCircle />
@@ -203,7 +205,7 @@ export default function App() {
                 title="Completa este campo"
                 type={isClicked ? 'text' : 'password'}
                 id="password"
-                {...register('pass')}
+                {...register('password')}
                 placeholder="Ingrese su contraseña"
                 required
               ></TextBox>

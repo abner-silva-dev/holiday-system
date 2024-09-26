@@ -1,6 +1,8 @@
 import React, { createContext, ReactNode, useContext, useReducer } from 'react';
+import { UserInfo } from '../features/users/types';
 
 type State = {
+  userAuthenticated: null | UserInfo;
   queryUser: string;
   queryDepartment: string;
   queryEnterprise: string;
@@ -12,6 +14,7 @@ type State = {
 type ActionsName = 'user' | 'department' | 'enterprise' | 'holiday';
 
 type Action =
+  | { type: 'user/me'; payload: UserInfo | null }
   | { type: 'user/search'; payload: string }
   | { type: 'department/search'; payload: string }
   | { type: 'enterprise/search'; payload: string }
@@ -27,12 +30,14 @@ const stateAppContext = createContext<
       handleSearch: (type: ActionsName, query: string) => void;
       handleFilter: (type: 'department' | 'enterprise', filter: string) => void;
       resetGlobalState: () => void;
+      setCurrentUser: (user: UserInfo | null) => void;
     }
   | undefined
 >(undefined);
 
 // 2) Create Initial state
 const initalState: State = {
+  userAuthenticated: null,
   queryUser: '',
   queryDepartment: '',
   queryEnterprise: '',
@@ -44,6 +49,8 @@ const initalState: State = {
 // 3) Create Reducer
 function reducer(state: State, action: Action): State {
   switch (action.type) {
+    case 'user/me':
+      return { ...state, userAuthenticated: action.payload };
     case 'user/search':
       return { ...state, queryUser: action.payload };
     case 'department/search':
@@ -78,9 +85,13 @@ function StateAppProvider({ children }: { children: ReactNode }) {
     handleSearch('holiday', '');
   }
 
+  function setCurrentUser(user: UserInfo | null) {
+    dispatch({ type: `user/me`, payload: user });
+  }
+
   return (
     <stateAppContext.Provider
-      value={{ state, handleSearch, handleFilter, resetGlobalState }}
+      value={{ state, handleSearch, handleFilter, resetGlobalState, setCurrentUser }}
     >
       {children}
     </stateAppContext.Provider>

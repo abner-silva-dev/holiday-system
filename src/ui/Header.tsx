@@ -1,4 +1,3 @@
-// import { HiBell } from 'react-icons/hi2';
 import { HiOutlineBell } from 'react-icons/hi2';
 import { HiOutlineMoon } from 'react-icons/hi2';
 import { HiOutlineSun } from 'react-icons/hi2';
@@ -9,6 +8,9 @@ import UserPhoto from './../../src/features/users/UserPhoto';
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useLogout } from '../features/authentication/useLogout';
+import { useStateApp } from '../context/stateAppContext';
+import { API_DAI_BASE } from '../config';
 
 const StyledHeader = styled.header`
   position: relative;
@@ -101,6 +103,11 @@ const IconSpacing = styled.div`
 function Header() {
   const [isDark, setIsDark] = useState(false);
   const [isClicked, setClicked] = useState(false);
+  const { logout } = useLogout();
+
+  const {
+    state: { userAuthenticated },
+  } = useStateApp();
 
   useEffect(() => {
     const switchDark = document.querySelector('html');
@@ -113,12 +120,12 @@ function Header() {
       <UserView to="/me" title="Configuración de Usuario">
         <ImageContainer>
           <UserPhoto
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBrDpzWSWvT8WQKdSxpdEaoev3e0uixuPvdw&s"
+            src={`${API_DAI_BASE}/img/user/${userAuthenticated?.photo}`}
             alt="user photo"
             $border={true}
           />
         </ImageContainer>
-        <span>José Armando</span>
+        <span>{userAuthenticated?.name}</span>
       </UserView>
 
       <IconSpacing>
@@ -131,7 +138,12 @@ function Header() {
           <HiOutlineBell></HiOutlineBell>
         </Bell>
         {isClicked ? <FloatFeat onClose={() => setClicked(false)} /> : null}
-        <LogOff title="Cerrar Sesión">
+        <LogOff
+          title="Cerrar Sesión"
+          onClick={() => {
+            logout();
+          }}
+        >
           <HiOutlineArrowRightOnRectangle />
         </LogOff>
       </IconSpacing>
