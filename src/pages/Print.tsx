@@ -1,28 +1,6 @@
 import styled from 'styled-components';
 import html2pdf from 'html2pdf.js';
 
-// const PrintContainer = styled.div`
-//   margin: 0 auto;
-//   margin-top: 5rem;
-//   border: 2px solid black;
-
-//   /* background-image: url('membretado.png');
-//   background-size: cover; */
-//   & header {
-//     display: grid;
-//     grid-template-columns: 1fr 1fr 1fr;
-//   }
-// `;
-
-// const Page = styled.div`
-//   /* @media print {
-//     @media page {
-//       size: letter;
-//       margin: 20mm;
-//     }
-//   } */
-// `;
-
 const Logo = styled.img`
   width: 14rem;
   align-self: center;
@@ -31,7 +9,6 @@ const Logo = styled.img`
 
 const HeadingContainer = styled.div`
   text-align: center;
-
   & h1 {
     font-size: 2.4rem;
     width: 350px;
@@ -39,18 +16,15 @@ const HeadingContainer = styled.div`
 `;
 
 const PrintContainer = styled.div`
-  /* font-size: 1.5rem; */
   width: 210mm;
-  padding: 2rem 10rem;
+  padding: 1rem 5rem;
   border: 2px solid #b3b3b3;
   margin: auto;
   margin-top: 2rem;
   background-image: url('membretado.png');
   background-position: -60px center;
   background-size: cover;
-  background-size: 112%;
-
-  /* background-position: center; */
+  background-size: 115%;
 
   & header {
     display: grid;
@@ -59,36 +33,27 @@ const PrintContainer = styled.div`
   }
 `;
 
-// const Form = styled.div`
-//   /* padding: 1rem 2rem; */
-
-//   display: grid;
-//   grid-template-columns: 1fr 2fr 1fr 2fr;
-
-//   & :last-child {
-//     grid-column: 2/-1;
-//   }
-// `;
-
 const Group = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-
-  gap: 1rem;
 
   & textarea {
     width: 100%;
     resize: none;
     border: none;
     background-color: #f3f4f6;
-    padding: 0.5rem 0.8rem;
+    /* padding: 0.5rem 0.8rem; */
   }
+`;
+
+const GroupSpanAll = styled.div`
+  grid-column: 1/-1;
 `;
 
 const GroupGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+  column-gap: 3rem;
   align-items: center;
 
   & :first-child {
@@ -99,29 +64,38 @@ const GroupGrid = styled.div`
     grid-column: 1/-1;
   }
 
+  & :nth-child(3) {
+    grid-column: 1/-1;
+  }
+
   & input {
     align-self: center;
     border: none;
     background-color: #f3f4f6;
-    padding: 0 0.8rem;
+    padding: 1rem;
   }
+`;
+const Subtitle = styled.h1`
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #6d6d6d;
 `;
 
 const Section = styled.section`
-  margin: 3rem 0;
+  margin: 2rem 0;
 
   & h1 {
     font-size: 2rem;
     width: 350px;
-    margin-bottom: 1.4rem;
   }
 `;
 
-// const Form = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   gap: 1rem;
-// `;
+const GroupTwo = styled.div`
+  display: flex;
+  gap: 2rem;
+  grid-column: 1/-1;
+`;
 
 const Print = () => {
   // Función para generar el PDF
@@ -152,38 +126,35 @@ const Print = () => {
             <h1>Autorización de Vacaciones</h1>
           </HeadingContainer>
         </header>
-        {/* CONTENT */}
-        <Section>
-          <h1>Datos del Solicitante</h1>
 
+        {/* CONTENT */}
+        <Subtitle>Datos del Solicitante</Subtitle>
+        <Section>
           <GroupGrid>
             <Group>
               <label>Nombre</label>
-              <input type="text"></input>
+              <input type="text" />
             </Group>
 
-            <Group>
-              <label>No. de Empleado</label>
-              <input type="text"></input>
-            </Group>
-            <Group>
-              <label>Departamento</label>
-              <input type="text"></input>
-            </Group>
+            <GroupTwo>
+              <Group>
+                <label>No. de Empleado</label>
+                <input type="text" />
+              </Group>
+              <Group>
+                <label>Departamento</label>
+                <input type="text" />
+              </Group>
+
+              <Group>
+                <label>Numero de días pedidos</label>
+                <input type="text" />
+              </Group>
+            </GroupTwo>
 
             <Group>
-              <label>Fecha de Inicio</label>
-              <input type="text"></input>
-            </Group>
-
-            <Group>
-              <label>Fecha de Término</label>
-              <input type="text"></input>
-            </Group>
-
-            <Group>
-              <label>Días Pedidos</label>
-              <input type="text"></input>
+              <label>Días pedidos</label>
+              <input type="text" />
             </Group>
 
             <Group>
@@ -192,7 +163,6 @@ const Print = () => {
             </Group>
           </GroupGrid>
         </Section>
-        {/* <img src="https://via.placeholder.com/150" alt="Imagen de ejemplo" /> */}
       </PrintContainer>
       {/* Botón para generar el PDF */}
       <button
