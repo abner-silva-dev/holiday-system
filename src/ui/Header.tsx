@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import { useLogout } from '../features/authentication/useLogout';
 import { useStateApp } from '../context/stateAppContext';
 import { API_DAI_BASE } from '../config';
+import { useMe } from '../features/authentication/useMe';
 
 const StyledHeader = styled.header`
   position: relative;
@@ -104,10 +105,7 @@ function Header() {
   const [isDark, setIsDark] = useState(false);
   const [isClicked, setClicked] = useState(false);
   const { logout } = useLogout();
-
-  const {
-    state: { userAuthenticated },
-  } = useStateApp();
+  const { userAuthenticated } = useMe();
 
   useEffect(() => {
     const switchDark = document.querySelector('html');
