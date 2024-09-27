@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import html2pdf from 'html2pdf.js';
+import { HiOutlineCheck } from 'react-icons/hi2';
 
 const Logo = styled.img`
   width: 14rem;
@@ -22,9 +23,9 @@ const PrintContainer = styled.div`
   margin: auto;
   margin-top: 2rem;
   background-image: url('membretado.png');
-  background-position: -60px center;
+  background-position: center -25px;
   background-size: cover;
-  background-size: 115%;
+  background-size: 119%;
 
   & header {
     display: grid;
@@ -34,45 +35,37 @@ const PrintContainer = styled.div`
 `;
 
 const Group = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.6rem;
 
   & textarea {
     width: 100%;
+    padding: 1rem;
     resize: none;
     border: none;
     background-color: #f3f4f6;
-    /* padding: 0.5rem 0.8rem; */
   }
-`;
-
-const GroupSpanAll = styled.div`
-  grid-column: 1/-1;
 `;
 
 const GroupGrid = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   column-gap: 3rem;
   align-items: center;
+  row-gap: 0.8rem;
 
   & :first-child {
     grid-column: 1/-1;
   }
 
-  & :last-child {
+  & :nth-child(5) {
     grid-column: 1/-1;
   }
 
-  & :nth-child(3) {
+  & :nth-child(6) {
     grid-column: 1/-1;
-  }
-
-  & input {
-    align-self: center;
-    border: none;
-    background-color: #f3f4f6;
-    padding: 1rem;
   }
 `;
 const Subtitle = styled.h1`
@@ -91,10 +84,50 @@ const Section = styled.section`
   }
 `;
 
-const GroupTwo = styled.div`
+const Input = styled.input`
+  align-self: center;
+  border: none;
+  background-color: #f3f4f6;
+  padding: 1rem;
+  width: 100%;
+`;
+
+const Label = styled.label`
+  font-weight: 700;
+`;
+
+const ApprovalsContainer = styled.div`
+  text-align: center;
+  font-size: 1.4rem;
   display: flex;
-  gap: 2rem;
-  grid-column: 1/-1;
+  flex-direction: column;
+  gap: 0.8rem;
+
+  & span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+  }
+
+  & svg {
+    color: green;
+    height: 2rem;
+    width: 2rem;
+  }
+`;
+
+const EmployeerFirmContainer = styled.div`
+  text-align: center;
+  font-size: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+
+  & div {
+    height: 6rem;
+    border-bottom: 1.7px solid black;
+  }
 `;
 
 const Print = () => {
@@ -132,35 +165,58 @@ const Print = () => {
         <Section>
           <GroupGrid>
             <Group>
-              <label>Nombre</label>
-              <input type="text" />
+              <Label>Nombre</Label>
+              <Input type="text" />
             </Group>
 
-            <GroupTwo>
-              <Group>
-                <label>No. de Empleado</label>
-                <input type="text" />
-              </Group>
-              <Group>
-                <label>Departamento</label>
-                <input type="text" />
-              </Group>
-
-              <Group>
-                <label>Numero de días pedidos</label>
-                <input type="text" />
-              </Group>
-            </GroupTwo>
-
+            {/* <GroupTwo> */}
             <Group>
-              <label>Días pedidos</label>
-              <input type="text" />
+              <Label>No. de Empleado</Label>
+              <Input type="text" />
+            </Group>
+            <Group>
+              <Label>Departamento</Label>
+              <Input type="text" />
             </Group>
 
             <Group>
-              <label>Observación</label>
+              <Label>No. de días pedidos</Label>
+              <Input type="text" />
+            </Group>
+            {/* </GroupTwo> */}
+
+            <Group>
+              <Label>Días pedidos</Label>
+              <Input type="text" />
+            </Group>
+
+            <Group>
+              <Label>Observación</Label>
               <textarea></textarea>
             </Group>
+
+            <ApprovalsContainer>
+              <label>Cristobal Gonzalez Bocanegra</label>
+              <label>Jefe Directo</label>
+              <span>
+                <HiOutlineCheck />
+                Aprobado
+              </span>
+            </ApprovalsContainer>
+
+            <ApprovalsContainer>
+              <label>Jose Luis Crisóstomo Cortés</label>
+              <label>Administrador - R.H</label>
+              <span>
+                <HiOutlineCheck />
+                Aprobado
+              </span>
+            </ApprovalsContainer>
+
+            <EmployeerFirmContainer>
+              <div></div>
+              <label>Firma del Empleado</label>
+            </EmployeerFirmContainer>
           </GroupGrid>
         </Section>
       </PrintContainer>
