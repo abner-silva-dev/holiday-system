@@ -9,17 +9,29 @@ import { useUpdateHoliday } from './useUpdateHoliday';
 import { useForm } from 'react-hook-form';
 import { useQueryClient } from '@tanstack/react-query';
 import { useUser } from '../users/useUser';
+import html2pdf from 'html2pdf.js';
 
 import Row from '../../ui/Row';
 import Heading from '../../ui/Heading';
+import { useSearchParams } from 'react-router-dom';
+import { FaFilePdf } from 'react-icons/fa6';
+import Print from '../../pages/Print';
+import ReactDOMServer from 'react-dom/server';
 
-const AuthorizationCardStyled = styled.form`
+const AuthorizationCardStyled = styled.div`
   background-color: var(--color-grey-0);
   padding: 3rem;
   grid-column: 1 /3;
   border-radius: 9px;
   box-shadow: var(--shadow-sm);
 `;
+
+const OptionsAuthorization = styled.div`
+  display: flex;
+  justify-content: start;
+`;
+
+const Form = styled.form``;
 
 const Status = styled.div`
   display: flex;
@@ -99,8 +111,26 @@ const Button = styled.button`
     height: 2rem;
     width: 2rem;
   }
+`;
 
-  &:hover {
+const ButtonPDF = styled.button`
+  background-color: #c92a2a;
+  color: #fff;
+  padding: 1rem 1.2rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  border-radius: 11px;
+  border: none;
+  box-shadow: var(--shadow-md);
+  text-transform: uppercase;
+
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  & svg {
+    width: 2.5rem;
+    height: 2.5rem;
   }
 `;
 
@@ -149,6 +179,8 @@ interface PropsAuthorizationCard {
 
 const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
   const queryClient = useQueryClient();
+  const [searchParams] = useSearchParams();
+  const history = searchParams.get('history');
 
   const { register, handleSubmit, setValue } = useForm<HolidayInfo>({
     defaultValues: {
@@ -165,7 +197,6 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
   const { updateHoliday } = useUpdateHoliday();
 
   const onSubmit = (data: HolidayInfo) => {
-    console.log(data);
     updateHoliday(
       { id: holiday._id || '', newHoliday: data },
       {
@@ -176,58 +207,91 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
     );
   };
 
+  const printHandler = () => {
+    const printElement = ReactDOMServer.renderToString(Print({ holiday }));
+
+    // Configuración del PDF
+    const options = {
+      margin: 0, // Márgenes en mm
+      filename: 'mi-documento.pdf', // Nombre del archivo
+      image: { type: 'jpeg', quality: 1 }, // Tipo y calidad de la imagen
+      html2canvas: { scale: 4 }, // Escala para mejorar la calidad de renderizado
+      jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }, // Formato del documento
+    };
+
+    html2pdf().set(options).from(printElement).save();
+  };
+
+  // const generatePDF = () => {
+  //   // Seleccionamos el elemento que queremos convertir en PDF
+  //   const element = document.getElementById('pdf-content');
+
+  //   // Configuración del PDF
+  //   const options = {
+  //     margin: 0, // Márgenes en mm
+  //     filename: 'mi-documento.pdf', // Nombre del archivo
+  //     image: { type: 'jpeg', quality: 1 }, // Tipo y calidad de la imagen
+  //     html2canvas: { scale: 4 }, // Escala para mejorar la calidad de renderizado
+  //     jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }, // Formato del documento
+  //   };
+
+  //   // Generar el PDF
+  //   html2pdf().set(options).from(element).save();
+  // };
+
   return (
-    <AuthorizationCardStyled onSubmit={handleSubmit(onSubmit)}>
-      <Row>
-        <Heading as="h2">Solicitud: {formatDate(holiday?.createdAt || '')}</Heading>
+    <AuthorizationCardStyled>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <Row>
+          <Heading as="h2">Solicitud: {formatDate(holiday?.createdAt || '')}</Heading>
 
-        {/* CLAIMAND */}
-        <EmployedItem>
-          <div>
-            <TextTitle>Días solicitados</TextTitle>
-            <RequestListContainer>
-              {holiday?.days?.map((day) => {
-                return (
-                  <RequestListCard>
-                    <TextCreation>{formatDate(day.toString())}</TextCreation>
-                  </RequestListCard>
-                );
-              })}
-            </RequestListContainer>
-          </div>
-          <Authorization>
-            <RowMain>
-              <SubTitle>Observación</SubTitle>
-              <span>Empleado</span>
-            </RowMain>
-            <ObservationField defaultValue={holiday?.observation} disabled={true} />
-          </Authorization>
-        </EmployedItem>
-
-        {/* MANAGER */}
-        <AuthorizationItem>
-          <Status>
-            <Title>Jefe Directo</Title>
-            <StateHoliday state={holiday?.authorizationManager || 'pending'} />
-          </Status>
-
-          <Authorization>
-            <RowMain>
-              <SubTitle>Observación</SubTitle>
-              <span>
-                {joinName({
-                  name: holiday?.manager?.name || '',
-                  paternSurname: holiday?.manager?.paternSurname || '',
-                  motherSurname: holiday?.manager?.motherSurname || '',
+          {/* CLAIMAND */}
+          <EmployedItem>
+            <div>
+              <TextTitle>Días solicitados</TextTitle>
+              <RequestListContainer>
+                {holiday?.days?.map((day) => {
+                  return (
+                    <RequestListCard>
+                      <TextCreation>{formatDate(day.toString())}</TextCreation>
+                    </RequestListCard>
+                  );
                 })}
-              </span>
-            </RowMain>
-            <ObservationField
-              defaultValue={holiday?.observationManager}
-              {...register('observationManager')}
-              disabled={true}
-            />
-            {/* <AuthorizationButtons>
+              </RequestListContainer>
+            </div>
+            <Authorization>
+              <RowMain>
+                <SubTitle>Observación</SubTitle>
+                <span>Empleado</span>
+              </RowMain>
+              <ObservationField defaultValue={holiday?.observation} disabled={true} />
+            </Authorization>
+          </EmployedItem>
+
+          {/* MANAGER */}
+          <AuthorizationItem>
+            <Status>
+              <Title>Jefe Directo</Title>
+              <StateHoliday state={holiday?.authorizationManager || 'pending'} />
+            </Status>
+
+            <Authorization>
+              <RowMain>
+                <SubTitle>Observación</SubTitle>
+                <span>
+                  {joinName({
+                    name: holiday?.manager?.name || '',
+                    paternSurname: holiday?.manager?.paternSurname || '',
+                    motherSurname: holiday?.manager?.motherSurname || '',
+                  })}
+                </span>
+              </RowMain>
+              <ObservationField
+                defaultValue={holiday?.observationManager}
+                {...register('observationManager')}
+                disabled={true}
+              />
+              {/* <AuthorizationButtons>
               <Button onClick={() => setValue('authorizationManager', 'approved')}>
                 <HiOutlineCheck />
                 Aceptar
@@ -237,44 +301,53 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
                 Rechazar
               </Button>
             </AuthorizationButtons> */}
-          </Authorization>
-        </AuthorizationItem>
+            </Authorization>
+          </AuthorizationItem>
 
-        {/* ADMIN */}
-        <AuthorizationItem>
-          <Status>
-            <Title>Administrador</Title>
-            <StateHoliday state={holiday?.authorizationAdmin || 'pending'} />
-          </Status>
+          {/* ADMIN */}
+          <AuthorizationItem>
+            <Status>
+              <Title>Administrador</Title>
+              <StateHoliday state={holiday?.authorizationAdmin || 'pending'} />
+            </Status>
 
-          <Authorization>
-            <RowMain>
-              <SubTitle>Observación</SubTitle>
-              <span>
-                {joinName({
-                  name: holiday?.admin?.name || '',
-                  paternSurname: holiday?.admin?.paternSurname || '',
-                  motherSurname: holiday?.admin?.motherSurname || '',
-                })}
-              </span>
-            </RowMain>
-            <ObservationField
-              defaultValue={holiday.observationAdmin}
-              {...register('observationAdmin')}
-            />
-            <AuthorizationButtons>
-              <Button onClick={() => setValue('authorizationAdmin', 'approved')}>
-                <HiOutlineCheck />
-                Aceptar
-              </Button>
-              <Button onClick={() => setValue('authorizationAdmin', 'rejected')}>
-                <HiOutlineXMark />
-                Rechazar
-              </Button>
-            </AuthorizationButtons>
-          </Authorization>
-        </AuthorizationItem>
-      </Row>
+            <Authorization>
+              <RowMain>
+                <SubTitle>Observación</SubTitle>
+                <span>
+                  {joinName({
+                    name: holiday?.admin?.name || '',
+                    paternSurname: holiday?.admin?.paternSurname || '',
+                    motherSurname: holiday?.admin?.motherSurname || '',
+                  })}
+                </span>
+              </RowMain>
+              <ObservationField
+                defaultValue={holiday.observationAdmin}
+                {...register('observationAdmin')}
+              />
+              <AuthorizationButtons>
+                <Button onClick={() => setValue('authorizationAdmin', 'approved')}>
+                  <HiOutlineCheck />
+                  Aceptar
+                </Button>
+                <Button onClick={() => setValue('authorizationAdmin', 'rejected')}>
+                  <HiOutlineXMark />
+                  Rechazar
+                </Button>
+              </AuthorizationButtons>
+            </Authorization>
+          </AuthorizationItem>
+        </Row>
+      </Form>
+      {history === 'successfull' && (
+        <OptionsAuthorization>
+          <ButtonPDF onClick={printHandler}>
+            <FaFilePdf />
+            <span>Descargar</span>
+          </ButtonPDF>
+        </OptionsAuthorization>
+      )}
     </AuthorizationCardStyled>
   );
 };

@@ -191,8 +191,6 @@ const HolidayManagement = () => {
   switch (history) {
     case 'request':
       holidaysFilter = holidays.filter((holiday: HolidayInfo) => {
-        console.log(holiday.authorizationAdmin, holiday.authorizationManager);
-
         return (
           holiday.authorizationAdmin === 'pending' ||
           holiday.authorizationManager === 'pending'
@@ -308,12 +306,11 @@ const HolidayManagement = () => {
         </Filters>
 
         <HolidayMain>
-          {holidaysFilter.length === 0 && <ContentEmpty />}
-
           {isClicked ? (
             <CreateHoliday onClose={setClicked} />
           ) : (
             <>
+              {holidaysFilter.length === 0 && <ContentEmpty />}
               {holidaysFilter.map((holiday: HolidayInfo) => {
                 return <AuthorizationCard holiday={holiday} key={holiday._id} />;
               })}
