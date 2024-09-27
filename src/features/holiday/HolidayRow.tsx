@@ -154,7 +154,7 @@ const HolidayRow: React.FC<PropsHolidayRow> = ({ user }) => {
         <RequestListContainer>
           {holidaysPending?.map((holiday, i) => {
             return (
-              <RequestListCard>
+              <RequestListCard key={holiday._id}>
                 <TitleCreation>Solicitud {i + 1}</TitleCreation>
                 <TextCreation>
                   Creada: <span>{holiday.createdAt} hrs</span>
