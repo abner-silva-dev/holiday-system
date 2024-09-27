@@ -65,7 +65,7 @@ const LoginContainer = styled.div`
 
   z-index: 99;
 
-  /* @media (max-width: 37.5em) {
+  @media (max-width: 37.5em) {
     width: 100%;
     height: 100%;
     border-radius: 0;
@@ -73,7 +73,7 @@ const LoginContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     overflow-y: scroll;
-  } */
+  }
 `;
 
 const SectionsContainerLeft = styled.div`
