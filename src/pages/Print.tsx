@@ -22,6 +22,7 @@ const HeadingContainer = styled.div`
 `;
 
 const PrintContainer = styled.div`
+  color: #000 !important;
   width: 210mm;
   padding: 1rem 5rem;
   border: 2px solid #b3b3b3;
@@ -73,12 +74,12 @@ const GroupGrid = styled.div`
     grid-column: 1/-1;
   }
 `;
-const Subtitle = styled.h1`
-  text-align: center;
-  font-size: 2rem;
-  font-weight: 600;
-  color: #6d6d6d;
-`;
+// const Subtitle = styled.h1`
+//   text-align: center;
+//   font-size: 2rem;
+//   font-weight: 600;
+//   color: #6d6d6d;
+// `;
 
 const Section = styled.section`
   margin: 2rem 0;
@@ -143,12 +144,11 @@ const Print: React.FC<{ holiday: HolidayInfo }> = ({ holiday }) => {
       <header>
         <Logo src={logo} />
         <HeadingContainer>
-          <h1>Autorización de Vacaciones</h1>
+          <h1>Solicitud de Vacaciones</h1>
         </HeadingContainer>
       </header>
 
       {/* CONTENT */}
-      <Subtitle>Datos del Solicitante</Subtitle>
       <Section>
         <GroupGrid>
           <Group>
@@ -180,7 +180,7 @@ const Print: React.FC<{ holiday: HolidayInfo }> = ({ holiday }) => {
           {/* </GroupTwo> */}
 
           <Group>
-            <Label>Días pedidos</Label>
+            <Label>Fechas</Label>
             <Input
               type="text"
               defaultValue={holiday?.days?.map((day) => formatDate(day + '')).join(', ')}
