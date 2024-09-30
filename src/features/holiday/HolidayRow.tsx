@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { HolidayInfo } from './type';
-import { joinName } from '../../utils/helpers';
+import { formatDate, joinName } from '../../utils/helpers';
 import { API_DAI_BASE } from '../../config';
 import UserPhoto from '../users/UserPhoto';
 import { UserInfo } from '../users/types';
@@ -54,13 +54,13 @@ const TextContainer = styled.div`
 
 const TextTitle = styled.span`
   color: var(--color-grey-600);
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   font-weight: 700;
 `;
 
 const TextCont = styled.span`
   color: var(--color-grey-500);
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   font-weight: 500;
 `;
 
@@ -157,7 +157,8 @@ const HolidayRow: React.FC<PropsHolidayRow> = ({ user }) => {
               <RequestListCard key={holiday._id}>
                 <TitleCreation>Solicitud {i + 1}</TitleCreation>
                 <TextCreation>
-                  Creada: <span>{holiday.createdAt} hrs</span>
+                  Creada:{' '}
+                  <span>{formatDate(holiday.createdAt || '', { monthsName: true })}</span>
                 </TextCreation>
               </RequestListCard>
             );

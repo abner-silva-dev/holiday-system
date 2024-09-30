@@ -3,7 +3,6 @@ import html2pdf from 'html2pdf.js';
 import { HiOutlineCheck } from 'react-icons/hi2';
 
 import logo from './../../public/logo-dai.png';
-import membretado from './../../public/membretado.png';
 import { HolidayInfo } from '../features/holiday/type';
 import { formatDate, joinName } from '../utils/helpers';
 
@@ -183,7 +182,15 @@ const Print: React.FC<{ holiday: HolidayInfo }> = ({ holiday }) => {
             <Label>Días pedidos</Label>
             <Input
               type="text"
-              defaultValue={holiday?.days?.map((day) => formatDate(day + '')).join(', ')}
+              defaultValue={holiday?.days
+                ?.map((day) =>
+                  formatDate(day + '', {
+                    monthsName: true,
+                    spaces: false,
+                    separationBy: '-',
+                  })
+                )
+                .join(', ')}
             />
           </Group>
 

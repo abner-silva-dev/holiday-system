@@ -173,6 +173,47 @@ const TextCreation = styled.span`
   align-items: center;
 `;
 
+const CreatedAt = styled.span`
+  color: var(--color-grey-500);
+  /* letter-spacing: 2px; */
+  font-size: 1.6rem;
+`;
+
+const TotalDays = styled.div`
+  color: var(--color-grey-500);
+
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  /* gap: 1rem; */
+  font-size: 2rem;
+  /* color: #fff; */
+  padding: 1rem 0.5rem;
+  border-radius: 11px;
+  text-align: center;
+`;
+
+const DaysRequest = styled.div`
+  /* display: flex;
+  align-items: center; */
+`;
+
+const DaysRequestInfo = styled.div`
+  display: flex;
+  gap: 1rem;
+  /* justify-content: center; */
+  align-items: center;
+`;
+
+const DaysNumber = styled.span`
+  font-size: 2rem;
+  font-weight: 800;
+  /* color: #fff; */
+  /* background-color: #0b7285; */
+  /* padding: 0.2rem 2rem; */
+  border-radius: 11px;
+`;
+
 interface PropsAuthorizationCard {
   holiday: HolidayInfo;
 }
@@ -212,53 +253,47 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
 
     // Configuración del PDF
     const options = {
-      margin: 0, // Márgenes en mm
-      filename: 'mi-documento.pdf', // Nombre del archivo
-      image: { type: 'jpeg', quality: 1 }, // Tipo y calidad de la imagen
-      html2canvas: { scale: 4 }, // Escala para mejorar la calidad de renderizado
-      jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }, // Formato del documento
+      margin: 0,
+      filename: `holiday-${holiday._id}.pdf`,
+      image: { type: 'jpeg', quality: 1 },
+      html2canvas: { scale: 4 },
+      jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' },
     };
-
     html2pdf().set(options).from(printElement).save();
   };
-
-  // const generatePDF = () => {
-  //   // Seleccionamos el elemento que queremos convertir en PDF
-  //   const element = document.getElementById('pdf-content');
-
-  //   // Configuración del PDF
-  //   const options = {
-  //     margin: 0, // Márgenes en mm
-  //     filename: 'mi-documento.pdf', // Nombre del archivo
-  //     image: { type: 'jpeg', quality: 1 }, // Tipo y calidad de la imagen
-  //     html2canvas: { scale: 4 }, // Escala para mejorar la calidad de renderizado
-  //     jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }, // Formato del documento
-  //   };
-
-  //   // Generar el PDF
-  //   html2pdf().set(options).from(element).save();
-  // };
 
   return (
     <AuthorizationCardStyled>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Row>
-          <Heading as="h2">Solicitud: {formatDate(holiday?.createdAt || '')}</Heading>
+          <Heading as="h2">
+            Solicitud:{' '}
+            <CreatedAt>
+              {formatDate(holiday?.createdAt || '', {
+                monthsName: true,
+              })}
+            </CreatedAt>
+          </Heading>
 
           {/* CLAIMAND */}
           <EmployedItem>
-            <div>
-              <TextTitle>Días solicitados</TextTitle>
+            <DaysRequest>
+              <DaysRequestInfo>
+                <TextTitle>Días solicitados: </TextTitle>
+                <DaysNumber>{holiday?.days?.length}</DaysNumber>
+              </DaysRequestInfo>
               <RequestListContainer>
-                {holiday?.days?.map((day) => {
+                {holiday?.days?.map((day, i) => {
                   return (
-                    <RequestListCard>
-                      <TextCreation>{formatDate(day.toString())}</TextCreation>
+                    <RequestListCard key={i}>
+                      <TextCreation>
+                        {formatDate(day.toString(), { monthsName: true })}
+                      </TextCreation>
                     </RequestListCard>
                   );
                 })}
               </RequestListContainer>
-            </div>
+            </DaysRequest>
             <Authorization>
               <RowMain>
                 <SubTitle>Observación</SubTitle>

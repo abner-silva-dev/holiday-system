@@ -9,9 +9,9 @@ import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLogout } from '../features/authentication/useLogout';
-import { useStateApp } from '../context/stateAppContext';
 import { API_DAI_BASE } from '../config';
 import { useMe } from '../features/authentication/useMe';
+import { useLocalStorageState } from '../hooks/useLocalStorageState';
 
 const StyledHeader = styled.header`
   position: relative;
@@ -41,8 +41,8 @@ const Bell = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 2.8rem;
-    width: 3rem;
+    height: 3.5rem;
+    width: 3.5rem;
     stroke: var(--color-grey-600);
   }
   position: relative;
@@ -50,14 +50,17 @@ const Bell = styled.div`
 
 const Notification = styled.div`
   position: absolute;
-  top: -0.3rem;
-  right: 0.1rem;
+  top: -0.7rem;
+  right: -0.5rem;
+  padding: 0.9rem;
   width: 1.5rem;
   height: 1.5rem;
-  font-size: 1rem;
-  background-color: var(--color-red-500);
+  font-size: 1.6rem;
+  font-weight: 500;
+
+  background-color: #ef4444;
   border: 1px solid var(--color-red-600);
-  color: var(--color-grey-0);
+  color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -75,8 +78,8 @@ const DarkMode = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 2.8rem;
-    width: 3rem;
+    height: 3.5rem;
+    width: 3.5rem;
     stroke: var(--color-grey-600);
   }
 
@@ -90,27 +93,35 @@ const LogOff = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 2.8rem;
-    width: 3rem;
+    height: 3.5rem;
+    width: 3.5rem;
     stroke: var(--color-grey-600);
   }
 `;
 
 const IconSpacing = styled.div`
   display: flex;
-  gap: 1.2rem;
+  gap: 2rem;
 `;
 
 function Header() {
-  const [isDark, setIsDark] = useState(false);
+  // const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useLocalStorageState(
+    window.matchMedia('(prefers-color-sc|heme: dark)').matches,
+    'isDarkMode'
+  );
+
   const [isClicked, setClicked] = useState(false);
   const { logout } = useLogout();
   const { userAuthenticated } = useMe();
 
+  console.log(isDark);
+
   useEffect(() => {
     const switchDark = document.querySelector('html');
 
-    switchDark?.classList.toggle('dark-mode');
+    if (isDark) switchDark?.classList.add('dark-mode');
+    else switchDark?.classList.remove('dark-mode');
   }, [isDark]);
 
   return (
@@ -133,7 +144,7 @@ function Header() {
 
         <Bell title="Notificaciones" onClick={() => setClicked(!isClicked)}>
           <Notification>5</Notification>
-          <HiOutlineBell></HiOutlineBell>
+          <HiOutlineBell />
         </Bell>
         {isClicked ? <FloatFeat onClose={() => setClicked(false)} /> : null}
         <LogOff
