@@ -14,7 +14,8 @@ import Login from './pages/Login';
 import Settings from './pages/Settings';
 import Account from './pages/Account';
 import ProtectedRoute from './ui/ProtectedRoute';
-import Print from './pages/Print';
+import UserAccess from './pages/UserAccess';
+// import Print from './pages/Print';
 
 const queryClient = new QueryClient();
 
@@ -26,7 +27,8 @@ function App() {
         <ReactQueryDevtools />
         <BrowserRouter>
           <Routes>
-            <Route path="print" element={<Print />} />
+            {/* <Route path="print" element={<Print />} /> */}
+            <Route path="access" element={<UserAccess />} />
             <Route path="login" element={<Login />} />
             <Route
               element={

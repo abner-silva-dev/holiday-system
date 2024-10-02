@@ -2,12 +2,12 @@ import { ReactNode, createContext, useContext } from 'react';
 import styled from 'styled-components';
 
 type TableProps = {
-  columns?: string;
+  columns: string;
   children: ReactNode;
 };
 
 type CommonRowProps = {
-  columns: string;
+  $columns: string;
 };
 
 const StyledTable = styled.div`
@@ -105,8 +105,7 @@ type BodyProps<T> = {
 };
 
 function Body<T>({ data = [], render }: BodyProps<T>) {
-  if (!data.length)
-    return <Empty>No hay datos para mostrar en este momento.</Empty>;
+  if (!data.length) return <Empty>No hay datos para mostrar en este momento.</Empty>;
 
   return <StyledBody>{data.map(render)}</StyledBody>;
 }
