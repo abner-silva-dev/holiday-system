@@ -2,7 +2,12 @@ import { useState } from 'react';
 import { HiOutlineArrowUpTray } from 'react-icons/hi2';
 import styled from 'styled-components';
 
-const ImageDragStyled = styled.input``;
+const ImageDragStyled = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+`;
 
 const DropArea = styled.div`
   width: 200px;
@@ -11,19 +16,20 @@ const DropArea = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  /* background-color: red; */
 `;
 
-const DragOverlay = styled.div<{ isDragging: boolean }>`
+const DragOverlay = styled.div<{ $isDragging: boolean }>`
   position: absolute;
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background-color: ${({ isDragging }) =>
-    isDragging ? 'rgba(0, 0, 0, 0.3)' : 'transparent'};
+  background-color: ${({ $isDragging }) =>
+    $isDragging ? 'rgba(0, 0, 0, 0.3)' : 'transparent'};
   display: flex;
   justify-content: center;
   align-items: center;
-  opacity: ${({ isDragging }) => (isDragging ? 1 : 0)};
+  opacity: ${({ $isDragging }) => ($isDragging ? 1 : 0)};
   transition: opacity 0.3s;
   color: white;
   font-size: 1.2rem;
@@ -33,7 +39,7 @@ const UserImage = styled.img`
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  object-fit: cover; /* Asegura que la imagen se ajuste correctamente */
+  object-fit: cover;
 `;
 
 const FileImage = styled.label`
@@ -41,14 +47,14 @@ const FileImage = styled.label`
   justify-content: center;
   gap: 1rem;
 
-  font-weight: 700;
+  font-weight: 500;
   padding: 1rem 1.8rem;
   background-color: #0b7285;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   transition: background-color 0.3s;
 
   &:hover {
@@ -61,11 +67,16 @@ const FileImage = styled.label`
   }
 `;
 
-const InputImageDrag = () => {
-  const [imageSrc, setImageSrc] = useState(
-    'https://www.shutterstock.com/image-vector/avatar-man-icon-profile-placeholder-600nw-1229859850.jpg'
-  );
+interface PropsInputImageDrag {
+  defaultImage: string;
+  onChangeFile: (file: File | null) => void;
+}
 
+const InputImageDrag: React.FC<PropsInputImageDrag> = ({
+  onChangeFile,
+  defaultImage,
+}) => {
+  const [imageSrc, setImageSrc] = useState(defaultImage);
   const [isDragging, setIsDragging] = useState(false);
 
   // UPDATE IMAGE
@@ -74,6 +85,9 @@ const InputImageDrag = () => {
     if (file) {
       const imageUrl = URL.createObjectURL(file);
       setImageSrc(imageUrl);
+      onChangeFile(file);
+    } else {
+      onChangeFile(null);
     }
   };
 
@@ -105,7 +119,7 @@ const InputImageDrag = () => {
         onDrop={handleDrop}
       >
         <UserImage src={imageSrc} alt="Imagen de perfil" />
-        <DragOverlay isDragging={isDragging}>
+        <DragOverlay $isDragging={isDragging}>
           {isDragging ? 'Suelta la imagen aquí' : ''}
         </DragOverlay>
       </DropArea>

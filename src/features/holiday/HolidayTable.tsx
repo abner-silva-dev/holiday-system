@@ -1,19 +1,10 @@
-import styled from 'styled-components';
 import HolidayRow from './HolidayRow';
 import { useUsers } from '../users/useUsers';
 import { UserInfo } from '../users/types';
 import { useStateApp } from '../../context/stateAppContext';
 import Spinner from '../../ui/Spinner';
 import { formatText } from '../../utils/helpers';
-// import { HolidayInfo } from './type';
-// import { useHolidays } from './useHolidays';
-
-const HolidayTableStyled = styled.div`
-  border-radius: 9px;
-  display: flex;
-  flex-direction: column;
-  border: 1px solid var(--color-grey-200);
-`;
+import Table from '../../ui/Table';
 
 const HolidayTable = () => {
   const { users, isPending, error } = useUsers();
@@ -34,11 +25,20 @@ const HolidayTable = () => {
   });
 
   return (
-    <HolidayTableStyled>
-      {dataSearch?.map((user: UserInfo) => {
-        return <HolidayRow key={user.id} user={user} />;
-      })}
-    </HolidayTableStyled>
+    <Table columns=".4fr .7fr 1fr 1fr  1fr 1.2fr">
+      <Table.Header>
+        <span></span>
+        <span>N° Empleado</span>
+        <span>Nombre</span>
+        <span>Puesto</span>
+        <span>Departamento</span>
+        <span>Solicitudes</span>
+      </Table.Header>
+      <Table.Body
+        data={dataSearch}
+        render={(user: UserInfo) => <HolidayRow user={user} key={user.id} />}
+      />
+    </Table>
   );
 };
 

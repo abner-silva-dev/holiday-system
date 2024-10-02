@@ -79,7 +79,7 @@ function Table({ columns, children }: TableProps) {
   );
 }
 
-function Header({ children }: TableProps) {
+function Header({ children }: Omit<TableProps, 'columns'>) {
   const { columns } = useContext(TableContext);
 
   return (

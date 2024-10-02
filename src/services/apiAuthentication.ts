@@ -1,4 +1,6 @@
 import { API_DAI_SYSTEM } from '../config';
+import { UserInfo } from '../features/users/types';
+import { updateOne } from '../utils/apiFactory';
 
 export const login = async ({
   employNumber,
@@ -34,6 +36,25 @@ export const logout = async () => {
   const data = await res.json();
 
   if (!res.ok) throw new Error(data.message);
+
+  return data;
+};
+
+// interface AuthUser {
+//   photo: string;
+// }
+
+export const updateMe = async (newData) => {
+  console.log(newData);
+  const res = await fetch(`${API_DAI_SYSTEM}/users/updateMe`, {
+    method: 'PATCH',
+    credentials: 'include',
+    body: newData,
+  });
+
+  if (!res.ok) throw new Error(`El usuario no se pudo actualizar`);
+
+  const { data } = await res.json();
 
   return data;
 };

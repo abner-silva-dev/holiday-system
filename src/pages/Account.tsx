@@ -2,13 +2,17 @@ import styled from 'styled-components';
 // import FileButton from '../ui/FileButton';
 import Heading from '../ui/Heading';
 import Row from '../ui/Row';
-import { HiOutlineArrowUpTray, HiOutlineEye, HiOutlineEyeSlash } from 'react-icons/hi2';
-import { useState } from 'react';
+import { HiOutlineEye, HiOutlineEyeSlash } from 'react-icons/hi2';
+import { useEffect, useState } from 'react';
 import Button from '../ui/Button';
 import { useForm } from 'react-hook-form';
+import InputImageDrag from '../ui/InputImageDrag';
+import { useMe } from '../features/authentication/useMe';
+import { useUpdateMe } from '../features/authentication/useUpdateMe';
+import Spinner from '../ui/Spinner';
+import { API_DAI_BASE } from '../config';
 
 // Account Settings
-
 const AccountSection = styled.section`
   display: flex;
   flex-direction: column;
@@ -102,65 +106,8 @@ const Label = styled.label`
   color: var(--color-grey-600);
 `;
 
-const FileImage = styled.label`
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-
-  font-weight: 700;
-  padding: 1rem 1.8rem;
-  background-color: #0b7285;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1.6rem;
-  transition: background-color 0.3s;
-
-  &:hover {
-    background-color: #0c8599;
-  }
-
-  & svg {
-    height: 2rem;
-    width: 2rem;
-  }
-`;
-
 const BorderMarker = styled.div`
   border-bottom: 1px solid var(--color-grey-200);
-`;
-
-const DropArea = styled.div`
-  width: 200px;
-  height: 200px;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const DragOverlay = styled.div<{ isDragging: boolean }>`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background-color: ${({ isDragging }) =>
-    isDragging ? 'rgba(0, 0, 0, 0.3)' : 'transparent'};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  opacity: ${({ isDragging }) => (isDragging ? 1 : 0)};
-  transition: opacity 0.3s;
-  color: white;
-  font-size: 1.2rem;
-`;
-
-const UserImage = styled.img`
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover; /* Asegura que la imagen se ajuste correctamente */
 `;
 
 // TEMPORAL INTERFACE
@@ -171,80 +118,45 @@ interface TempFormInfo {
 
 const Account = () => {
   const [isClicked, setClicked] = useState(false);
-  const [imageSrc, setImageSrc] = useState(
-    'https://www.shutterstock.com/image-vector/avatar-man-icon-profile-placeholder-600nw-1229859850.jpg'
-  );
-  const [isDragging, setIsDragging] = useState(false);
-  const { register, handleSubmit } = useForm<TempFormInfo>({});
 
-  const onSubmitInfo = (data: TempFormInfo) => {
-    console.log(`Usuario: ${data.user}`);
-    console.log(`Email: ${data.email}`);
-  };
+  const { userAuthenticated, isPending } = useMe();
 
-  // Función para actualizar la imagen
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setImageSrc(imageUrl);
+  const { register, handleSubmit, reset } = useForm<TempFormInfo>();
+  const [fileImg, setFileImg] = useState<File | null>(null);
+  const { updateMe } = useUpdateMe();
+
+  useEffect(() => {
+    if (userAuthenticated) {
+      reset({
+        email: userAuthenticated.email,
+        user: userAuthenticated.name,
+      });
     }
+  }, [userAuthenticated, reset]);
+
+  const onSubmitInfo = () => {
+    const formData = new FormData();
+    if (fileImg) formData.append('photo', fileImg);
+    updateMe(formData);
   };
 
-  // Funciones de arrastrar y soltar
-  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setIsDragging(true);
-  };
-
-  const handleDragLeave = () => {
-    setIsDragging(false);
-  };
-
-  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setIsDragging(false);
-    const file = e.dataTransfer.files[0];
-    if (file && file.type.startsWith('image/')) {
-      const imageUrl = URL.createObjectURL(file);
-      setImageSrc(imageUrl);
-    }
-  };
+  if (isPending) return <Spinner />;
 
   return (
     <Row type="vertical">
       <Heading as="h1">Configuración de Cuenta</Heading>
       <AccountSection>
+        <InputImageDrag
+          defaultImage={`${API_DAI_BASE}/img/user/${userAuthenticated?.photo}`}
+          onChangeFile={setFileImg}
+        />
+
         <BorderMarker>
           <AccountContainer>
-            {/* Área de arrastrar y soltar para actualizar la imagen */}
-            <DropArea
-              onDragOver={handleDragOver}
-              onDragLeave={handleDragLeave}
-              onDrop={handleDrop}
-            >
-              <UserImage src={imageSrc} alt="Imagen de perfil" />
-              <DragOverlay isDragging={isDragging}>
-                {isDragging ? 'Suelta la imagen aquí' : ''}
-              </DragOverlay>
-            </DropArea>
-
-            {/* Botón para subir la imagen (opción alternativa) */}
-            <FileImage as="label">
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-                style={{ display: 'none' }}
-              />
-              <HiOutlineArrowUpTray />
-              Actualizar Imagen...
-            </FileImage>
-
             <Form onSubmit={handleSubmit(onSubmitInfo)}>
               <Field>
                 <Label>Nombre de Usuario</Label>
-                <TextBox type="text" id="user" {...register('user')} required></TextBox>
+                <TextBox type="text" id="user" {...register('user')} required />
               </Field>
               <Field>
                 <Label>Correo Electrónico</Label>
