@@ -109,7 +109,6 @@ const IconSpacing = styled.div`
 `;
 
 function Header() {
-  // const [isDark, setIsDark] = useState(false);
   const [isDark, setIsDark] = useLocalStorageState(
     window.matchMedia('(prefers-color-sc|heme: dark)').matches,
     'isDarkMode'
@@ -118,8 +117,6 @@ function Header() {
   const [isClicked, setClicked] = useState(false);
   const { logout } = useLogout();
   const { userAuthenticated } = useMe();
-
-  console.log(isDark);
 
   useEffect(() => {
     const switchDark = document.querySelector('html');

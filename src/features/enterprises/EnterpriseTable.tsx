@@ -14,8 +14,6 @@ const EnterpriseTable = () => {
     state: { queryEnterprise },
   } = useStateApp();
 
-  // console.log(filterDepartment, filterEnterprise);
-
   if (isPending) return <Spinner />;
   if (error) return <h1>{error.message}</h1>;
 
@@ -41,7 +39,7 @@ const EnterpriseTable = () => {
           <Table.Body
             data={dataSearch}
             render={(enterprise: EnterpriseInfo) => (
-              <EnterpriseRow enterprise={enterprise} key={enterprises._id} />
+              <EnterpriseRow enterprise={enterprise} key={enterprises?._id} />
             )}
           ></Table.Body>
         </Table>

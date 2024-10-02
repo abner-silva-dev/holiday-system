@@ -52,11 +52,6 @@ export function formatDate(date: string, options: OptionsFormatDate = {}): strin
     month = months[parseInt(month) - 1];
   }
 
-  console.log(
-    `${day}${spaces ? ' ' : ''}${separationBy}${spaces ? ' ' : ''}${month}${
-      spaces ? ' ' : ''
-    }${separationBy}${spaces ? ' ' : ''}${year}`
-  );
   switch (formatDate) {
     case 'dd-mm-yyyy':
       return `${day}${spaces ? ' ' : ''}${separationBy}${spaces ? ' ' : ''}${month}${
