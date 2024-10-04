@@ -1,15 +1,12 @@
 import styled from 'styled-components';
 import Header from '../features/user-app/Header';
+import Home from '../features/user-app/Home';
 
 const Order = styled.div`
   display: flex;
   flex-direction: column;
 
   height: 100vh;
-  // Media query para pantallas pequeñas
-  @media (max-width: 48em) {
-    flex-direction: column-reverse;
-  }
 `;
 
 const HeaderMain = styled(Header)``;
@@ -19,7 +16,7 @@ const UserAccess = () => {
     <>
       <Order>
         <HeaderMain />
-        <div>CONTENT</div>
+        <Home />
       </Order>
     </>
   );
