@@ -127,7 +127,7 @@ function Header() {
 
   return (
     <StyledHeader>
-      <UserView to="/me" title="Configuración de Usuario">
+      <UserView to="/admin/me" title="Configuración de Usuario">
         <ImageContainer>
           <UserPhoto
             src={`${API_DAI_BASE}/img/user/${userAuthenticated?.photo}`}

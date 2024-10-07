@@ -76,7 +76,10 @@ const RequestVacation: React.FC<PropsRequestVacation> = ({ holiday, onClose }) =
           })}
         </ContentInfo>
       </GroupText>
-      <ShowMoreAnchor to={`/holidays/${holiday?.user?.id}?history=all`} onClick={onClose}>
+      <ShowMoreAnchor
+        to={`/admin/holidays/${holiday?.user?.id}?history=all`}
+        onClick={onClose}
+      >
         Ver
       </ShowMoreAnchor>
     </RequestCard>

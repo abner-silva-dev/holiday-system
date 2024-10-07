@@ -159,22 +159,21 @@ const GlobalStyles = createGlobalStyle`
 html {
   font-size: 62.5%;
 
-  @media ${media.desktop} {
-    font-size: 70%;
-  }
-
   @media ${media.laptop} {
     font-size: 50%;
   }
 
   @media ${media.tablet} {
-    font-size: 40%;
+    font-size: 43.75%;
   }
 
   @media ${media.mobile} {
-    font-size: 30%;
+    font-size: 37.5%;
   }
-  
+
+  /* @media ${media.bigDesktop} {
+    font-size: 90%;
+  } */
 }
 
 body {

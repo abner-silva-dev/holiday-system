@@ -21,17 +21,12 @@ import { useState } from 'react';
 import AuthorizationCard from './AuthorizationCard';
 import { HolidayInfo } from './type';
 import ContentEmpty from '../../ui/ContentEmpty';
-import { media } from '../../style/media';
 
 const HolidayInfoStyles = styled.div`
   display: grid;
-  grid-template-columns: 50rem 1fr;
+  grid-template-columns: 1fr;
   grid-template-rows: auto auto 1fr;
   gap: 2rem;
-
-  @media (${media.desktop}) {
-    grid-template-columns: 1fr;
-  }
 `;
 
 const HolidayOptions = styled.header`
@@ -180,7 +175,7 @@ const Stats = styled.div`
   grid-template-columns: repeat(2, 1fr);
 `;
 
-const HolidayManagement = () => {
+const HolidayManagementUser = () => {
   const [searchParams] = useSearchParams();
   const history = searchParams.get('history');
   const [isClicked, setClicked] = useState(false);
@@ -328,4 +323,4 @@ const HolidayManagement = () => {
   );
 };
 
-export default HolidayManagement;
+export default HolidayManagementUser;

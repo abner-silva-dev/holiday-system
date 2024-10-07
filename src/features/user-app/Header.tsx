@@ -11,6 +11,8 @@ import { useLocalStorageState } from '../../hooks/useLocalStorageState';
 import { NavLink } from 'react-router-dom';
 import logo from './../../../public/logo-dai.png';
 import { useMe } from '../authentication/useMe';
+import { API_DAI_BASE } from '../../config';
+import UserPhoto from '../users/UserPhoto';
 
 const HeaderContainer = styled.div`
   background-color: #000;
@@ -30,10 +32,11 @@ const Logo = styled.img`
   width: 12rem;
 `;
 
-const UserIcon = styled.img`
+const UserIcon = styled(UserPhoto)`
   width: 5rem;
   height: 5rem;
   border-radius: 50%;
+  border: none;
 `;
 
 const NavList = styled.ul`
@@ -149,7 +152,11 @@ const Header = () => {
           <DarkMode title="Modo Oscuro / Modo Claro" onClick={() => setIsDark(!isDark)}>
             {isDark ? <HiOutlineSun /> : <HiOutlineMoon />}
           </DarkMode>
-          <UserIcon src="https://static.vecteezy.com/system/resources/previews/036/594/092/non_2x/man-empty-avatar-photo-placeholder-for-social-networks-resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-user-profile-free-vector.jpg"></UserIcon>
+          <UserIcon
+            src={`${API_DAI_BASE}/img/user/${userAuthenticated?.photo}`}
+            alt="user photo"
+            $border={true}
+          ></UserIcon>
         </HeaderRightSide>
       </HeaderContent>
     </HeaderContainer>

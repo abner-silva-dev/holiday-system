@@ -19,6 +19,7 @@ import RestrictRoute from './ui/RestrictRoute';
 import RedirectRole from './ui/RedirectRole';
 import Header from './features/user-app/Header';
 import AppLayoutUser from './ui/AppLayoutUser';
+import HolidayManagementUser from './features/holiday/HolidayManagementUser';
 
 const queryClient = new QueryClient();
 
