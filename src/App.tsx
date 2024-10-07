@@ -17,6 +17,8 @@ import ProtectedRoute from './ui/ProtectedRoute';
 import UserAccess from './pages/UserAccess';
 import RestrictRoute from './ui/RestrictRoute';
 import RedirectRole from './ui/RedirectRole';
+import Header from './features/user-app/Header';
+import AppLayoutUser from './ui/AppLayoutUser';
 
 const queryClient = new QueryClient();
 
@@ -28,7 +30,6 @@ function App() {
         <ReactQueryDevtools />
         <BrowserRouter>
           <Routes>
-            <Route path="access" element={<UserAccess />} />
             <Route path="login" element={<Login />} />
 
             {/* AUTHENTICATION */}
@@ -48,13 +49,19 @@ function App() {
                 path="user"
                 element={
                   <RestrictRoute restrictTo={['admin', 'manager']}>
-                    <Outlet />
+                    <>
+                      <Header />
+                      <Outlet />
+                    </>
                   </RestrictRoute>
                 }
               >
-                {/* <Route index element={<RedirectRole />} /> */}
-                <Route index element={<Navigate replace to="home" />} />
                 <Route path="home" element={<UserAccess />} />
+                <Route element={<AppLayoutUser />}>
+                  {/* <Route index element={<RedirectRole />} /> */}
+                  <Route index element={<Navigate replace to="home" />} />
+                  <Route path="holidays/:holidayId" element={<HolidayManagement />} />
+                </Route>
               </Route>
 
               {/* ADMIN ROUTES */}

@@ -24,13 +24,6 @@ const Form = styled.form`
   gap: 2rem;
 `;
 
-// const Input = styled.input`
-//   background-color: var(--color-grey-0);
-//   padding: 0.5rem;
-//   border: 1px solid var(--color-grey-400);
-//   border-radius: var(--border-radius-md);
-// `;
-
 const TextArea = styled.textarea`
   padding: 1rem 1.4rem;
   resize: none;
@@ -161,13 +154,9 @@ const CreateHoliday: React.FC<PropsCreateDepartment> = ({ edit = {}, onClose }) 
 
   locale('es');
 
-  //MIN DATE
-  const today = new Date();
-  const month = today.getMonth();
-  const prevMonth = month === 0 ? 11 : month;
-
+  // Configurar el mínimo de fecha para habilitar dos meses atrás
   const minDate = new Date();
-  minDate.setMonth(prevMonth);
+  minDate.setMonth(minDate.getMonth() - 2); // Permitir seleccionar desde 2 meses atrás
 
   return (
     <>
@@ -185,8 +174,9 @@ const CreateHoliday: React.FC<PropsCreateDepartment> = ({ edit = {}, onClose }) 
                 dateFormat="dd/mm/yy"
                 showIcon
                 className="p-inputtext p-component p-inputtext p-component"
-                variant="filled"
-                minDate={minDate}
+                minDate={minDate} // Habilitar fechas desde dos meses atrás
+                disabledDates={[]} // En este caso no se usa disabledDates directamente
+                disabledDays={[0]} // Deshabilitar solo domingos (0)
               />
             </StyledCalendarInput>
           </FieldContainer>

@@ -52,10 +52,75 @@ const Button = styled.button`
 `;
 
 const HomeMain = styled.main`
-  overflow-y: scroll;
+  background-color: var(--color-grey-0);
 `;
 
-const HowToSection = styled.section``;
+const HowToSection = styled.section`
+  max-width: 130rem;
+  margin: 0 auto;
+  padding: 7.2rem 0;
+`;
+
+const HowToHeading = styled(Heading)`
+  font-size: 8rem;
+  color: #2980b9;
+`;
+
+const HowToContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  column-gap: 4.8rem;
+  row-gap: 6.4rem;
+`;
+
+const StepContainer = styled.div``;
+
+const ImageStepContainer = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &::before {
+    content: '';
+    display: block;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 60%;
+    padding-bottom: 60%;
+    background-color: #c5f6fa;
+    z-index: 0;
+  }
+
+  &::after {
+    content: '';
+    display: block;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 45%;
+    padding-bottom: 45%;
+    background-color: #99e9f2;
+    z-index: 1;
+  }
+`;
+
+const StepImage = styled.img`
+  z-index: 10;
+`;
+
+const SubHeading = styled(Heading)`
+  font-size: 3rem;
+  margin-bottom: 3rem;
+`;
 
 const Home = () => {
   return (
@@ -73,26 +138,76 @@ const Home = () => {
         </HeroSection>
 
         <HowToSection>
-          <Heading as="h1">¿Cómo Solicitar Vacaciones?</Heading>
-          <Heading as="h2">01</Heading>
-          <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Atque sapiente
-            accusantium officiis tempora impedit deleniti animi fugiat quasi harum quas
-            non praesentium aut corrupti corporis, nihil porro ipsa exercitationem sed?
-          </p>
-          <Heading as="h2">02</Heading>
-          <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quisquam vero
-            aspernatur suscipit asperiores temporibus, consequatur nemo, impedit quae
-            debitis repellat officia modi maxime illum recusandae vel laboriosam deserunt
-            cum a.
-          </p>
-          <Heading as="h2">03</Heading>
-          <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Neque natus alias
-            nam veniam fuga facilis vel qui officiis. Laboriosam dicta reiciendis dolore
-            ipsam dolorem quod ipsa aliquid tempora! Quisquam, veritatis.
-          </p>
+          <SubHeading as="h1">¿Cómo Solicitar Vacaciones?</SubHeading>
+
+          <HowToContainer>
+            {/* <Heading as="h1">¿Cómo Solicitar Vacaciones?</Heading> */}
+
+            <StepContainer>
+              <HowToHeading as="h2">01</HowToHeading>
+              <Heading as="h1">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit
+              </Heading>
+              <p>
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Atque sapiente
+                accusantium officiis tempora impedit deleniti animi fugiat quasi harum
+                quas non praesentium aut corrupti corporis, nihil porro ipsa
+                exercitationem sed?
+              </p>
+            </StepContainer>
+
+            <ImageStepContainer>
+              <StepImage src="https://png.pngtree.com/png-clipart/20220821/ourmid/pngtree-mockup-vector-iphone-6-background-transparent-png-image_6120221.png" />
+            </ImageStepContainer>
+
+            <ImageStepContainer>
+              <StepImage src="https://png.pngtree.com/png-clipart/20220821/ourmid/pngtree-mockup-vector-iphone-6-background-transparent-png-image_6120221.png" />
+            </ImageStepContainer>
+
+            <StepContainer>
+              <HowToHeading as="h2">02</HowToHeading>
+              <Heading as="h1">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit
+              </Heading>
+              <p>
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quisquam vero
+                aspernatur suscipit asperiores temporibus, consequatur nemo, impedit quae
+                debitis repellat officia modi maxime illum recusandae vel laboriosam
+                deserunt cum a.
+              </p>
+            </StepContainer>
+            <StepContainer>
+              <HowToHeading as="h2">03</HowToHeading>
+              <Heading as="h1">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit
+              </Heading>
+              <p>
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quisquam vero
+                aspernatur suscipit asperiores temporibus, consequatur nemo, impedit quae
+                debitis repellat officia modi maxime illum recusandae vel laboriosam
+                deserunt cum a.
+              </p>
+            </StepContainer>
+            <ImageStepContainer>
+              <StepImage src="https://png.pngtree.com/png-clipart/20220821/ourmid/pngtree-mockup-vector-iphone-6-background-transparent-png-image_6120221.png" />
+            </ImageStepContainer>
+
+            <ImageStepContainer>
+              <StepImage src="https://png.pngtree.com/png-clipart/20220821/ourmid/pngtree-mockup-vector-iphone-6-background-transparent-png-image_6120221.png" />
+            </ImageStepContainer>
+            <StepContainer>
+              <HowToHeading as="h2">04</HowToHeading>
+              <Heading as="h1">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit
+              </Heading>
+              <p>
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quisquam vero
+                aspernatur suscipit asperiores temporibus, consequatur nemo, impedit quae
+                debitis repellat officia modi maxime illum recusandae vel laboriosam
+                deserunt cum a.
+              </p>
+            </StepContainer>
+          </HowToContainer>
         </HowToSection>
       </HomeMain>
     </>

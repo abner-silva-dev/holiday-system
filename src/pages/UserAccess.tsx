@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Header from '../features/user-app/Header';
+// import Header from '../features/user-app/Header';
 import Home from '../features/user-app/Home';
 
 const Order = styled.div`
@@ -9,13 +9,10 @@ const Order = styled.div`
   height: 100vh;
 `;
 
-const HeaderMain = styled(Header)``;
-
 const UserAccess = () => {
   return (
     <>
       <Order>
-        <HeaderMain />
         <Home />
       </Order>
     </>

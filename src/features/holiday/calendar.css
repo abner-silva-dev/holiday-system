@@ -99,6 +99,16 @@ td span {
   }
 }
 
+tbody tr td:last-child {
+  color: var(--color-red-700);
+  font-style: italic;
+  font-weight: 700;
+}
+
+thead {
+  text-align: left;
+}
+
 .p-yearpicker,
 .p-monthpicker {
   background-color: var(--color-grey-0);

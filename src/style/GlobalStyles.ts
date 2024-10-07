@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import { media } from './media';
 
 /* Colors adapted from https://tailwindcss.com/docs/customizing-colors */
 const GlobalStyles = createGlobalStyle`
@@ -157,6 +158,23 @@ const GlobalStyles = createGlobalStyle`
 
 html {
   font-size: 62.5%;
+
+  @media ${media.desktop} {
+    font-size: 70%;
+  }
+
+  @media ${media.laptop} {
+    font-size: 50%;
+  }
+
+  @media ${media.tablet} {
+    font-size: 40%;
+  }
+
+  @media ${media.mobile} {
+    font-size: 30%;
+  }
+  
 }
 
 body {
