@@ -23,6 +23,8 @@ export interface UserInfo {
   enterprise: EnterpriseInfo;
   department: DepartmentInfo;
   holidays?: HolidayInfo[];
+  daysGrantedBySeniority?: number;
+  credit?: number;
 }
 // export interface UserInfo {
 //   employNumber: string;

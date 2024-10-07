@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import { getUser } from '../../services/apiUsers';
+import { UserInfo } from './types';
 
 export function useUser() {
   const { holidayId } = useParams();
@@ -9,7 +10,7 @@ export function useUser() {
     isPending,
     data: user,
     error,
-  } = useQuery({
+  } = useQuery<UserInfo>({
     queryKey: ['user', holidayId],
     queryFn: () => getUser(holidayId || ''),
     retry: false,

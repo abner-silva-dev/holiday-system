@@ -8,6 +8,7 @@ import {
 } from 'react-icons/hi2';
 
 import styled from 'styled-components';
+import RestrictRoute from './RestrictRoute';
 
 const NavList = styled.ul`
   display: flex;
@@ -80,33 +81,39 @@ function MainNav() {
             <span>Vacaciones</span>
           </StyledNavLink>
         </li>
-        <li title="Administrar Usuarios">
-          <StyledNavLink to="users">
-            <HiOutlineUsers />
-            <span>Empleados</span>
-          </StyledNavLink>
-        </li>
-        <li title="Administrar Empresas">
-          <StyledNavLink to="enterprise">
-            <HiOutlineBuildingOffice2 />
-            <span>Empresas</span>
-          </StyledNavLink>
-        </li>
-        <li title="Administrar Departamentos">
-          <StyledNavLink to="departments">
-            <HiOutlineFolder />
-            <span>Departamentos</span>
-          </StyledNavLink>
-        </li>
+        <RestrictRoute restrictTo={['manager']}>
+          <>
+            <li title="Administrar Usuarios">
+              <StyledNavLink to="users">
+                <HiOutlineUsers />
+                <span>Empleados</span>
+              </StyledNavLink>
+            </li>
+            <li title="Administrar Empresas">
+              <StyledNavLink to="enterprise">
+                <HiOutlineBuildingOffice2 />
+                <span>Empresas</span>
+              </StyledNavLink>
+            </li>
+            <li title="Administrar Departamentos">
+              <StyledNavLink to="departments">
+                <HiOutlineFolder />
+                <span>Departamentos</span>
+              </StyledNavLink>
+            </li>
+          </>
+        </RestrictRoute>
       </NavList>
-      <NavigationBottom>
-        <li title="Configuración">
-          <StyledNavLink to="settings">
-            <HiOutlineCog8Tooth />
-            <span>Configuración</span>
-          </StyledNavLink>
-        </li>
-      </NavigationBottom>
+      <RestrictRoute restrictTo={['manager']}>
+        <NavigationBottom>
+          <li title="Configuración">
+            <StyledNavLink to="settings">
+              <HiOutlineCog8Tooth />
+              <span>Configuración</span>
+            </StyledNavLink>
+          </li>
+        </NavigationBottom>
+      </RestrictRoute>
     </Navigation>
   );
 }

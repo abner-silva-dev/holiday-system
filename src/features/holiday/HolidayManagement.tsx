@@ -184,6 +184,7 @@ const HolidayManagement = () => {
 
   if (!user) return null;
   const { holidays } = user;
+  if (!holidays) return null;
 
   let holidaysFilter: HolidayInfo[] = [];
 
@@ -233,7 +234,7 @@ const HolidayManagement = () => {
               color="red"
               icon={<HiCalendarDays />}
               title="Días Restantes"
-              value="2 de 12"
+              value={`${user.credit} de ${user.daysGrantedBySeniority}`}
             />
 
             <Stat

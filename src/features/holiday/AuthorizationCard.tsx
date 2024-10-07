@@ -257,11 +257,13 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
 
   const { user: curUser } = useUser();
   const { updateHoliday } = useUpdateHoliday();
-  const [showDates, setShowDates] = useState(false); // Estado para controlar la visibilidad de fechas
+  const [showDates, setShowDates] = useState(false);
+
+  if (!curUser) return null;
 
   const onSubmit = (data: HolidayInfo) => {
     updateHoliday(
-      { id: holiday._id || '', newHoliday: data },
+      { id: holiday._id || '', newHoliday: { ...data } },
       {
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: ['user', curUser.id] });
