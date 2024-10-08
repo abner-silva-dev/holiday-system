@@ -153,6 +153,10 @@ const EyeContainer = styled.div`
 const Image = styled.img`
   width: 20rem;
   filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.459));
+
+  @media ${media.mobile} {
+    width: 30rem;
+  }
 `;
 
 const Labels = styled.label`
@@ -174,6 +178,10 @@ const ButtonSubmit = styled.button`
 const Slogan = styled.blockquote`
   font-family: 'Brunshscn', sans-serif;
   font-size: 2rem;
+
+  @media ${media.mobile} {
+    font-size: 3rem;
+  }
 `;
 
 const Title = styled.h1`

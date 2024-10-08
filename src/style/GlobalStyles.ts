@@ -159,7 +159,11 @@ const GlobalStyles = createGlobalStyle`
 html {
   font-size: 62.5%;
 
-  @media ${media.laptop} {
+  @media ${media.smallTablet} {
+    font-size: 54%;
+  }
+
+  @media ${media.landscape} {
     font-size: 50%;
   }
 
