@@ -1,10 +1,10 @@
 type SizeKeys = 'mobile' | 'tablet' | 'laptop' | 'desktop' | 'bigDesktop';
 
 const sizes: Record<SizeKeys, string> = {
-  mobile: '30em', // 480px / 16
+  mobile: '35em', // 560px / 16
   tablet: '48em', // 768px / 16
-  laptop: '64em', // 1024px / 16
-  desktop: '75em', // 1200px / 16 = 1200
+  laptop: '90em', // 1400px / 16
+  desktop: '120em', // 1920px / 16 = 120
   bigDesktop: '160em', // 1200px / 16 = 1200
 };
 

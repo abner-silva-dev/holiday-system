@@ -20,6 +20,7 @@ import { useState } from 'react';
 // import { UserInfo } from '../features/users/types';
 import { useForm } from 'react-hook-form';
 import { useLogin } from '../features/authentication/useLogin';
+import { media } from '../style/media';
 
 const StyledSwiper = styled(Swiper)`
   position: relative;
@@ -44,7 +45,8 @@ const LoginContainer = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  min-width: 60rem;
+  /* min-width: 60rem; */
+  width: 56rem;
 
   border-radius: 12px;
   padding: 5rem;
@@ -65,14 +67,20 @@ const LoginContainer = styled.div`
 
   z-index: 99;
 
-  @media (max-width: 37.5em) {
+  // MOBILE
+  @media (${media.mobile}) {
     width: 100%;
-    height: 100%;
+    height: 100vh;
     border-radius: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    overflow-y: scroll;
+
+    font-size: 4rem;
+
+    & h2 {
+      font-size: 4.6rem;
+    }
   }
 `;
 
@@ -82,12 +90,20 @@ const SectionsContainerLeft = styled.div`
   gap: 1.4rem;
   align-items: center;
   justify-content: space-around;
+
+  & :last-child {
+    margin: 2rem 0;
+  }
 `;
 
 const SectionsContainerRight = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.4rem;
+
+  & h2 {
+    text-align: center;
+  }
 `;
 
 const TextBox = styled.input`
@@ -116,6 +132,13 @@ const TextFieldContainer = styled.div`
     height: 3rem;
     color: #6b7280;
     transition: all 0.2s;
+  }
+
+  @media (${media.mobile}) {
+    & svg {
+      height: 4.6rem;
+      width: 4.6rem;
+    }
   }
 `;
 
@@ -155,7 +178,11 @@ const Slogan = styled.blockquote`
 
 const Title = styled.h1`
   margin-bottom: 2rem;
-  font-size: 5rem;
+  font-size: 4rem;
+
+  @media (${media.mobile}) {
+    font-size: 5.4rem;
+  }
 `;
 
 //TEMPORAL INTERFACE
