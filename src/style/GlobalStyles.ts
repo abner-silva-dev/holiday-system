@@ -160,19 +160,19 @@ html {
   font-size: 62.5%;
 
   @media ${media.smallTablet} {
-    font-size: 54%;
-  }
-
-  @media ${media.landscape} {
     font-size: 50%;
   }
 
+  @media ${media.landscape} {
+    font-size: 43.7%;
+  }
+
   @media ${media.tablet} {
-    font-size: 43.75%;
+    font-size: 37.5%;
   }
 
   @media ${media.mobile} {
-    font-size: 37.5%;
+    font-size: 25%;
   }
 /* 
   @media ${media.desktop} {
