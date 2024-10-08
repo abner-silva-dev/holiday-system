@@ -29,7 +29,7 @@ const HolidayInfoStyles = styled.div`
   grid-template-rows: auto auto 1fr;
   gap: 2rem;
 
-  @media (${media.desktop}) {
+  @media (${media.tablet}) {
     grid-template-columns: 1fr;
   }
 `;
@@ -270,7 +270,13 @@ const HolidayManagement = () => {
             color="green"
             icon={<HiOutlineClipboardDocumentList />}
             title="Solicitudes pendientes"
-            value={`${holidays?.length} solicitudes`}
+            value={`${
+              holidays.filter(
+                (holiday) =>
+                  holiday.authorizationAdmin !== 'approved' ||
+                  holiday.authorizationManager !== 'approved'
+              ).length
+            } solicitudes`}
           />
 
           <PeriodComponent>

@@ -149,7 +149,7 @@ const Header = () => {
                 </NavButton>
               </li>
               <li>
-                <NavButton to={`/user/holidays/${userAuthenticated.id}`}>
+                <NavButton to={`/user/holidays/${userAuthenticated.id}?history=request`}>
                   <HiCalendarDays />
                   <span>Solicitar Vacaciones</span>
                 </NavButton>

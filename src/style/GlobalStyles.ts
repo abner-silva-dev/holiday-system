@@ -157,19 +157,29 @@ const GlobalStyles = createGlobalStyle`
 }
 
 html {
+  
   font-size: 62.5%;
 
-  @media ${media.laptop} {
-    font-size: 50%;
+  @media ${media.smallTablet} {
+    font-size: 54%;
+  }
+
+  @media ${media.landscape} {
+    font-size: 47%;
   }
 
   @media ${media.tablet} {
-    font-size: 43.75%;
+    font-size: 43.7%;
   }
 
   @media ${media.mobile} {
-    font-size: 37.5%;
+    font-size: 37.5%
   }
+
+/* 
+  @media ${media.desktop} {
+    font-size: 7%;
+  } */
 }
 
 body {

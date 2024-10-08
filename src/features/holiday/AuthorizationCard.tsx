@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import {
   HiOutlineCalendarDays,
   HiOutlineCheck,
-  HiOutlineChevronDoubleDown,
   HiOutlineChevronDown,
 } from 'react-icons/hi2';
 import { HiOutlineXMark } from 'react-icons/hi2';
