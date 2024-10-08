@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Toaster } from 'react-hot-toast';
 import { BrowserRouter, Navigate, Outlet, Route, Routes } from 'react-router-dom';
+
 import AppLayout from './ui/AppLayout';
 import GlobalStyles from './style/GlobalStyles';
 import User from './pages/Users';
@@ -19,9 +20,15 @@ import RestrictRoute from './ui/RestrictRoute';
 import RedirectRole from './ui/RedirectRole';
 import Header from './features/user-app/Header';
 import AppLayoutUser from './ui/AppLayoutUser';
-import HolidayManagementUser from './features/holiday/HolidayManagementUser';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      // staleTime: 60 * 1000,
+      staleTime: 0,
+    },
+  },
+});
 
 function App() {
   return (
@@ -32,48 +39,35 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="login" element={<Login />} />
-
-            {/* AUTHENTICATION */}
             <Route
+              path="/"
               element={
                 <ProtectedRoute>
                   <Outlet />
                 </ProtectedRoute>
               }
-              path="/"
             >
-              {/* REDIRECTION DEPEND OF ROLE */}
               <Route index element={<RedirectRole />} />
 
               {/* USER ROUTES */}
               <Route
                 path="user"
                 element={
-                  <RestrictRoute restrictTo={['admin', 'manager']}>
-                    <>
-                      <Header />
-                      <Outlet />
-                    </>
-                  </RestrictRoute>
+                  <>
+                    <Header />
+                    <Outlet />
+                  </>
                 }
               >
                 <Route path="home" element={<UserAccess />} />
                 <Route element={<AppLayoutUser />}>
-                  {/* <Route index element={<RedirectRole />} /> */}
                   <Route index element={<Navigate replace to="home" />} />
                   <Route path="holidays/:holidayId" element={<HolidayManagement />} />
                 </Route>
               </Route>
 
               {/* ADMIN ROUTES */}
-              <Route
-                path="admin"
-                element={
-                  <RestrictRoute restrictTo={['user']}>
-                    <AppLayout />
-                  </RestrictRoute>
-                }
-              >
+              <Route path="admin" element={<AppLayout />}>
                 <Route index element={<Navigate replace to="holidays" />} />
                 <Route path="holidays" element={<Holiday />} />
                 <Route path="holidays/:holidayId" element={<HolidayManagement />} />

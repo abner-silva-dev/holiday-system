@@ -170,10 +170,6 @@ html {
   @media ${media.mobile} {
     font-size: 37.5%;
   }
-
-  /* @media ${media.bigDesktop} {
-    font-size: 90%;
-  } */
 }
 
 body {

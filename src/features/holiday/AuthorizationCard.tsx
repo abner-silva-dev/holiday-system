@@ -21,6 +21,7 @@ import { FaFilePdf } from 'react-icons/fa6';
 import Print from '../../pages/Print';
 import ReactDOMServer from 'react-dom/server';
 import { useState } from 'react'; // Importa useState
+import { useMe } from '../authentication/useMe';
 
 const AuthorizationCardStyled = styled.div`
   background-color: var(--color-grey-0);
@@ -33,6 +34,8 @@ const AuthorizationCardStyled = styled.div`
 const OptionsAuthorization = styled.div`
   display: flex;
   justify-content: start;
+  padding: 2rem 0rem 0;
+  border-top: 2px solid var(--color-grey-100);
 `;
 
 const Form = styled.form``;
@@ -259,7 +262,15 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
   const { updateHoliday } = useUpdateHoliday();
   const [showDates, setShowDates] = useState(false);
 
+  const { userAuthenticated } = useMe();
+
+  if (!userAuthenticated) return null;
   if (!curUser) return null;
+
+  const isAdminManager =
+    userAuthenticated.role === 'admin' || userAuthenticated.role === 'manager';
+  console.log(userAuthenticated.role);
+  console.log(isAdminManager);
 
   const onSubmit = (data: HolidayInfo) => {
     updateHoliday(
@@ -360,8 +371,24 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
               <ObservationField
                 defaultValue={holiday?.observationManager}
                 {...register('observationManager')}
-                disabled={true}
+                disabled={
+                  userAuthenticated.role !== 'manager' ||
+                  holiday.authorizationManager === 'approved'
+                }
               />
+              {userAuthenticated.role === 'manager' &&
+                holiday.authorizationManager !== 'approved' && (
+                  <AuthorizationButtons>
+                    <Button onClick={() => setValue('authorizationManager', 'approved')}>
+                      <HiOutlineCheck />
+                      Aceptar
+                    </Button>
+                    <Button onClick={() => setValue('authorizationManager', 'rejected')}>
+                      <HiOutlineXMark />
+                      Rechazar
+                    </Button>
+                  </AuthorizationButtons>
+                )}
             </Authorization>
           </AuthorizationItem>
 
@@ -385,30 +412,35 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
               </RowMain>
               <ObservationField
                 defaultValue={holiday.observationAdmin}
+                disabled={userAuthenticated.role !== 'admin'}
                 {...register('observationAdmin')}
               />
-              <AuthorizationButtons>
-                <Button onClick={() => setValue('authorizationAdmin', 'approved')}>
-                  <HiOutlineCheck />
-                  Aceptar
-                </Button>
-                <Button onClick={() => setValue('authorizationAdmin', 'rejected')}>
-                  <HiOutlineXMark />
-                  Rechazar
-                </Button>
-              </AuthorizationButtons>
+              {userAuthenticated.role === 'admin' && (
+                <AuthorizationButtons>
+                  <Button onClick={() => setValue('authorizationAdmin', 'approved')}>
+                    <HiOutlineCheck />
+                    Aceptar
+                  </Button>
+                  <Button onClick={() => setValue('authorizationAdmin', 'rejected')}>
+                    <HiOutlineXMark />
+                    Rechazar
+                  </Button>
+                </AuthorizationButtons>
+              )}
             </Authorization>
           </AuthorizationItem>
         </Row>
       </Form>
-      {history === 'successfull' && (
-        <OptionsAuthorization>
-          <ButtonPDF onClick={printHandler}>
-            <FaFilePdf />
-            <span>Descargar</span>
-          </ButtonPDF>
-        </OptionsAuthorization>
-      )}
+      {userAuthenticated.role === 'admin' &&
+        holiday.authorizationAdmin === 'approved' &&
+        holiday.authorizationManager === 'approved' && (
+          <OptionsAuthorization>
+            <ButtonPDF onClick={printHandler}>
+              <FaFilePdf />
+              <span>Descargar</span>
+            </ButtonPDF>
+          </OptionsAuthorization>
+        )}
     </AuthorizationCardStyled>
   );
 };

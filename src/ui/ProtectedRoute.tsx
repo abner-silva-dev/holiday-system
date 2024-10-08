@@ -1,18 +1,37 @@
-import { Navigate, Outlet, useNavigate } from 'react-router-dom';
-import { Children, ReactElement, useEffect } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { ReactElement, useEffect } from 'react';
 import { useMe } from '../features/authentication/useMe';
+import styled from 'styled-components';
+import Spinner from './Spinner';
+
+const FullPage = styled.div`
+  height: 100vh;
+  background-color: var(--color-grey-50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 const ProtectedRoute = ({ children }: { children: ReactElement }) => {
   const navigate = useNavigate();
-  const { isAuthenticathed, userAuthenticated } = useMe();
 
-  // 1. If there is NO authenticated user, redirect to the /login
+  // 1. Load the autenticated user
+  const { isAuthenticated, isPending } = useMe();
+
+  // 2. If there is NO authenticated user, redirect to the /login
   useEffect(() => {
-    if (!isAuthenticathed) navigate('/login');
-  }, [isAuthenticathed, navigate]);
+    if (!isAuthenticated && !isPending) navigate('/login');
+  }, [isAuthenticated, isPending, navigate]);
 
-  if (!userAuthenticated) return null;
+  // 3. While loading, show a spinner
+  if (isPending)
+    return (
+      <FullPage>
+        <Spinner />;
+      </FullPage>
+    );
 
+  // 4. If there IS a user, render the app
   return children;
 };
 

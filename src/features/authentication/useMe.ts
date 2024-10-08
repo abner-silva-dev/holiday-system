@@ -16,6 +16,6 @@ export const useMe = () => {
     isPending,
     error,
     userAuthenticated,
-    isAuthenticathed: userAuthenticated !== null,
+    isAuthenticated: userAuthenticated ? true : false,
   };
 };

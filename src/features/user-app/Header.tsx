@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import {
   HiCalendarDays,
   HiMiniClipboardDocumentCheck,
+  HiOutlineArrowRightOnRectangle,
   HiOutlineMoon,
   HiOutlineSun,
 } from 'react-icons/hi2';
@@ -13,6 +14,7 @@ import logo from './../../../public/logo-dai.png';
 import { useMe } from '../authentication/useMe';
 import { API_DAI_BASE } from '../../config';
 import UserPhoto from '../users/UserPhoto';
+import { useLogout } from '../authentication/useLogout';
 
 const HeaderContainer = styled.div`
   background-color: #000;
@@ -101,12 +103,27 @@ const HeaderRightSide = styled.div`
   gap: 1.6rem;
 `;
 
+const LogOff = styled.div`
+  cursor: pointer;
+
+  & svg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 2.8rem;
+    width: 2.8rem;
+    stroke: var(--color-grey-600);
+  }
+`;
+
 const Header = () => {
   const { userAuthenticated } = useMe();
   const [isDark, setIsDark] = useLocalStorageState(
     window.matchMedia('(prefers-color-sc|heme: dark)').matches,
     'isDarkMode'
   );
+  const { logout } = useLogout();
+
   useEffect(() => {
     const switchDark = document.querySelector('html');
 
@@ -126,7 +143,7 @@ const Header = () => {
           <nav>
             <NavList>
               <li>
-                <NavButton to="/">
+                <NavButton to="/user/home">
                   <FaHouse />
                   <span>Inicio</span>
                 </NavButton>
@@ -157,6 +174,14 @@ const Header = () => {
             alt="user photo"
             $border={true}
           ></UserIcon>
+          <LogOff
+            title="Cerrar Sesión"
+            onClick={() => {
+              logout();
+            }}
+          >
+            <HiOutlineArrowRightOnRectangle />
+          </LogOff>
         </HeaderRightSide>
       </HeaderContent>
     </HeaderContainer>

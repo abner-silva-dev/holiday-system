@@ -1,15 +1,11 @@
 import { Navigate } from 'react-router-dom';
 import { useMe } from '../features/authentication/useMe';
+// import { useEffect, useState } from 'react';
 
 const RedirectRole = () => {
-  console.log('*******');
-  const { userAuthenticated } = useMe();
-  console.log(userAuthenticated);
+  const { userAuthenticated, isAuthenticated } = useMe();
 
-  if (!userAuthenticated) return null;
-
-  console.log(userAuthenticated.role);
-
+  if (!isAuthenticated || !userAuthenticated) return <Navigate to="login" />;
   if (userAuthenticated.role === 'user') return <Navigate to="user" />;
   if (userAuthenticated.role === 'admin' || userAuthenticated.role === 'manager')
     return <Navigate to="admin" />;
