@@ -63,6 +63,7 @@ function App() {
                 <Route element={<AppLayoutUser />}>
                   <Route index element={<Navigate replace to="home" />} />
                   <Route path="holidays/:holidayId" element={<HolidayManagement />} />
+                  <Route path="me" element={<Account />} />
                 </Route>
               </Route>
 
