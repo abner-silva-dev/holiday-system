@@ -49,6 +49,7 @@ const Text = styled.p`
   font-size: 1.6rem;
   font-weight: 500;
   text-transform: lowercase;
+  text-align: center;
 `;
 const PhotoContainer = styled.div`
   height: 15rem;
