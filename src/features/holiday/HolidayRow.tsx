@@ -63,7 +63,7 @@ const RequestListCard = styled.div`
 const TextCreation = styled.span`
   font-size: 1.6rem;
   text-align: center;
-  font-weight: 700;
+  font-weight: 600;
   align-self: center;
 `;
 
