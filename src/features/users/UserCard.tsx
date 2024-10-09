@@ -32,8 +32,9 @@ const Group = styled.div`
 const UserData = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  column-gap: 3rem;
   row-gap: 3rem;
+  column-gap: 2rem;
+  padding: 0rem 4rem;
 `;
 
 const TextTitle = styled.p`
