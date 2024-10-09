@@ -12,8 +12,6 @@ import { HolidayInfo } from './type';
 import './calendar.css';
 import { useCreateHoliday } from './useCreateHoliday';
 import { useUser } from '../users/useUser';
-import { useUsers } from '../users/useUsers';
-import { UserInfo } from '../users/types';
 import { useQueryClient } from '@tanstack/react-query';
 
 const StyledCalendarInput = styled.div``;
@@ -83,28 +81,18 @@ const CreateHoliday: React.FC<PropsCreateDepartment> = ({ edit = {}, onClose }) 
   });
 
   const { user: curUser } = useUser();
-  const { users } = useUsers();
-
   const { createHoliday } = useCreateHoliday();
-
-  const manager = users?.find(
-    (user: UserInfo) =>
-      user?.role === 'manager' && user?.department?._id === curUser?.department?._id
-  );
-
-  const admin = users?.find((user: UserInfo) => user?.role === 'admin');
-
   const [dates, setDates] = useState<Date[]>([]);
+
+  if (!curUser) return null;
 
   const onSubmit = (data: HolidayInfo) => {
     createHoliday(
       {
         ...data,
         days: dates,
-        createdAt: new Date() + '',
-        admin: admin.id,
-        manager: manager.id,
-        user: curUser.id,
+        createdAt: new Date().toISOString(),
+        user: curUser?.id || '',
       },
       {
         onSuccess: () => {

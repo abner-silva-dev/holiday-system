@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { API_DAI_SYSTEM } from '../config';
 
 type SourceName = 'users' | 'department' | 'enterprise' | 'holiday';
@@ -28,18 +29,22 @@ export const getOne = (sourceName: SourceName) => async (id: string) => {
 
 export function createOne<Model>(sourceName: SourceName) {
   return async (newData: Model) => {
-    const res = await fetch(`${API_DAI_SYSTEM}/${sourceName}`, {
-      method: 'POST',
-      headers: { 'Content-type': 'application/json' },
-      credentials: 'include',
-      body: JSON.stringify(newData),
-    });
+    try {
+      const { data } = await axios.post(`${API_DAI_SYSTEM}/${sourceName}`, newData, {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+      });
 
-    if (!res.ok) throw new Error('Users does not was created');
-
-    const { data } = await res.json();
-
-    return data;
+      return data;
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        const errorMessage =
+          error.response.data.error.message || 'An unknown error occurred';
+        throw new Error(errorMessage);
+      } else {
+        throw new Error('An unknown error occurred');
+      }
+    }
   };
 }
 

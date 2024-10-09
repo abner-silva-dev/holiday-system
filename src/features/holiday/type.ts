@@ -11,7 +11,7 @@ export interface HolidayInfo {
   observationManager?: string;
   observationAdmin?: string;
   createdAt?: string;
-  admin?: UserInfo;
-  manager?: UserInfo;
-  user?: UserInfo;
+  admin?: UserInfo | string;
+  manager?: UserInfo | string;
+  user?: UserInfo | string;
 }

@@ -15,12 +15,12 @@ import { useUser } from '../users/useUser';
 import html2pdf from 'html2pdf.js';
 import Row from '../../ui/Row';
 import Heading from '../../ui/Heading';
-import { useSearchParams } from 'react-router-dom';
 import { FaFilePdf } from 'react-icons/fa6';
 import Print from '../../pages/Print';
 import ReactDOMServer from 'react-dom/server';
 import { useState } from 'react'; // Importa useState
 import { useMe } from '../authentication/useMe';
+import { UserInfo } from '../users/types';
 
 const AuthorizationCardStyled = styled.div`
   background-color: var(--color-grey-0);
@@ -49,7 +49,6 @@ const Status = styled.div`
 const AuthorizationItem = styled.div`
   display: grid;
   grid-template-columns: 0.7fr 1fr;
-  /* align-items: start; */
   justify-items: center;
   gap: 5rem;
 `;
@@ -142,16 +141,16 @@ const ShowDatesButton = styled.button`
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  background-color: var(--color-brand-500); // Cambia esto al color que desees
-  color: #fff; // Texto en blanco
-  padding: 1rem; // Espaciado
+  background-color: var(--color-brand-500);
+  color: #fff;
+  padding: 1rem;
   border: none;
-  border-radius: 5px; // Bordes redondeados
-  cursor: pointer; // Cambia el cursor a mano
-  font-weight: 700; // Texto en negrita
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 700;
 
   &:hover {
-    background-color: #4338ca; // Color al pasar el mouse
+    background-color: #4338ca;
   }
 
   & svg {
@@ -162,16 +161,15 @@ const ShowDatesButton = styled.button`
 `;
 
 // COMPONENT DAYS
-
 const RequestListContainer = styled.div`
   background-color: var(--color-grey-0);
   display: flex;
-  flex-direction: column; // Cambiado a columna
+  flex-direction: column;
   gap: 0.5rem;
   padding: 0.8rem;
   border-radius: 11px;
-  overflow-y: auto; // Solo scroll vertical
-  max-height: 15rem; // Establece una altura máxima
+  overflow-y: auto;
+  max-height: 15rem;
 `;
 
 const TextTitle = styled.span`
@@ -197,7 +195,7 @@ const TextCreation = styled.span`
   align-items: center;
   justify-content: space-between;
   padding: 0 1rem;
-  width: 100%; // Asegura que ocupe todo el espacio
+  width: 100%;
 `;
 
 const CreatedAt = styled.span`
@@ -234,7 +232,7 @@ const DatesModal = styled.div`
   border-radius: 8px;
   padding: 1rem;
   margin-top: 1rem;
-  width: 100%; // Asegúrate de que el ancho coincida
+  width: 100%;
   z-index: 10;
 `;
 
@@ -244,8 +242,6 @@ interface PropsAuthorizationCard {
 
 const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
   const queryClient = useQueryClient();
-  const [searchParams] = useSearchParams();
-  const history = searchParams.get('history');
 
   const { register, handleSubmit, setValue } = useForm<HolidayInfo>({
     defaultValues: {
@@ -266,14 +262,17 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
   if (!userAuthenticated) return null;
   if (!curUser) return null;
 
-  const isAdminManager =
-    userAuthenticated.role === 'admin' || userAuthenticated.role === 'manager';
-  console.log(userAuthenticated.role);
-  console.log(isAdminManager);
+  const manager = holiday.manager as UserInfo | undefined;
+  const admin = holiday.admin as UserInfo | undefined;
 
   const onSubmit = (data: HolidayInfo) => {
+    const acceptedBy =
+      userAuthenticated.role === 'admin'
+        ? { admin: userAuthenticated.id }
+        : { manager: userAuthenticated.id };
+
     updateHoliday(
-      { id: holiday._id || '', newHoliday: { ...data } },
+      { id: holiday._id || '', newHoliday: { ...data, ...acceptedBy } },
       {
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: ['user', curUser.id] });
@@ -360,11 +359,13 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
               <RowMain>
                 <SubTitle>Observación</SubTitle>
                 <span>
-                  {joinName({
-                    name: holiday?.manager?.name || '',
-                    paternSurname: holiday?.manager?.paternSurname || '',
-                    motherSurname: holiday?.manager?.motherSurname || '',
-                  })}
+                  {manager
+                    ? joinName({
+                        name: manager?.name || '',
+                        paternSurname: manager?.paternSurname || '',
+                        motherSurname: manager?.motherSurname || '',
+                      })
+                    : 'En proceso...'}
                 </span>
               </RowMain>
               <ObservationField
@@ -402,11 +403,13 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
               <RowMain>
                 <SubTitle>Observación</SubTitle>
                 <span>
-                  {joinName({
-                    name: holiday?.admin?.name || '',
-                    paternSurname: holiday?.admin?.paternSurname || '',
-                    motherSurname: holiday?.admin?.motherSurname || '',
-                  })}
+                  {admin
+                    ? joinName({
+                        name: admin?.name || '',
+                        paternSurname: admin?.paternSurname || '',
+                        motherSurname: admin?.motherSurname || '',
+                      })
+                    : 'En proceso...'}
                 </span>
               </RowMain>
               <ObservationField
