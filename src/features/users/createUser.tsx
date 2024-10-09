@@ -30,11 +30,6 @@ const Input = styled.input`
   width: 100%;
 `;
 
-// interface HandleSubmit extends UserInfo {
-//   paternSurname?: string;
-//   motherSurname?: string;
-// }
-
 interface PropsCreateUSer {
   userToUpdate?: UserInfo;
   onCloseModal?: () => void;

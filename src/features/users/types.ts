@@ -26,16 +26,3 @@ export interface UserInfo {
   daysGrantedBySeniority?: number;
   credit?: number;
 }
-// export interface UserInfo {
-//   employNumber: string;
-//   id?: string;
-//   name: string;
-//   paternSurname?: string;
-//   motherSurname?: string;
-//   dateHiring: string;
-//   seniority?: Seniority;
-//   email: string;
-//   phoneNumber: string;
-//   enterprise: EnterpriseInfo | string;
-//   department: DepartmentInfo | string;
-// }

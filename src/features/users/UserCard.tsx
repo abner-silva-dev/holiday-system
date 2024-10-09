@@ -26,25 +26,28 @@ const Group = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  /* gap: 0.5rem; */
 `;
 
 const UserData = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  column-gap: 2rem;
-  row-gap: 2rem;
+  column-gap: 3rem;
+  row-gap: 3rem;
 `;
 
 const TextTitle = styled.p`
   color: var(--color-grey-700);
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 `;
 
 const Text = styled.p`
   color: var(--color-grey-500);
-  font-size: 1.4rem;
-  font-weight: 600;
+  font-size: 1.6rem;
+  font-weight: 500;
   text-transform: lowercase;
 `;
 const PhotoContainer = styled.div`
@@ -77,7 +80,6 @@ const UserCard: React.FC<{ user: UserInfo; children?: ReactNode }> = ({
   return (
     <StyledUserCard>
       <PhotoContainer>
-        {/* <Heading as="h2">Informacion de usuario</Heading> */}
         <UserPhoto
           src={`${API_DAI_BASE}/img/user/${user?.photo}`}
           $size="large"

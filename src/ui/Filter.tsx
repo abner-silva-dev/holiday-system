@@ -11,22 +11,14 @@ type PropsFilter = {
   searchField: string;
 };
 
-/****** Styles *********/
-
 const StyledFilter = styled.nav`
-  display: flex;
-  gap: 1rem;
-
-  background-color: var(--color-grey-0);
   border: 1px solid var(--color-grey-200);
+  background-color: var(--color-grey-0);
   box-shadow: var(--shadow-sm);
-
+  border-radius: var(--border-radius-sm);
   padding: 0.4rem;
-  border-radius: 7px;
-  align-items: center;
-  gap: 2rem;
-
-  align-self: center;
+  gap: 0.4rem;
+  display: flex;
 `;
 
 interface PropsButton {
@@ -36,8 +28,6 @@ interface PropsButton {
 const Button = styled.button<PropsButton>`
   background-color: var(--color-grey-0);
   border: none;
-  padding: 0.4rem 0.6rem;
-  border-radius: 7px;
 
   ${(props) =>
     props.$active &&
@@ -45,6 +35,11 @@ const Button = styled.button<PropsButton>`
       background-color: var(--color-green-700);
       color: #fff;
     `}
+
+  /* padding: 0.4rem 0.6rem; */
+  /* border-radius: 7px; */
+
+
 
   border-radius: var(--border-radius-sm);
   font-weight: 500;
@@ -67,8 +62,6 @@ function Filter({ searchField, options }: PropsFilter) {
     searchParams.set('history', value);
     setSearchParams(searchParams);
   }
-
-  // handleClick('request');
 
   return (
     <StyledFilter>
