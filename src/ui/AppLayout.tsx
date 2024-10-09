@@ -20,7 +20,7 @@ const Main = styled.main`
 `;
 
 const Container = styled.div`
-  max-width: 130rem;
+  max-width: 140rem;
   margin: 0 auto;
 `;
 

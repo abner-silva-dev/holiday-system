@@ -22,6 +22,7 @@ import AuthorizationCard from './AuthorizationCard';
 import { HolidayInfo } from './type';
 import ContentEmpty from '../../ui/ContentEmpty';
 import { media } from '../../style/media';
+import Button from '../../ui/Button';
 
 const HolidayInfoStyles = styled.div`
   display: grid;
@@ -138,24 +139,26 @@ const Filters = styled.div`
 `;
 
 const BtnIcon = styled.button`
-  padding: 0.7rem 1rem;
+  padding: 1.2rem;
   font-weight: 600;
-  font-size: 1.3rem;
+  font-size: 1.6rem;
   gap: 1rem;
+  /* text-transform: uppercase; */
 
   display: flex;
   align-items: center;
   align-self: center;
 
-  color: var(--color-grey-900);
-  background-color: var(--color-grey-0);
+  color: #fff;
+  background: linear-gradient(to right top, #862e9c, #8031a6, #7834b0, #6d38ba, #5f3dc4);
+  /* background-color: #862e9c; */
   box-shadow: var(--shadow-sm);
   border-radius: var(--border-radius-lg);
   border: 1px solid var(--color-grey-200);
+  transition: all 0.2s ease-in;
 
   &:hover {
-    background-color: var(--color-green-100);
-    color: black;
+    animation: gradientShift 0.5s ease-in-out forwards;
   }
 
   & svg {
@@ -301,7 +304,7 @@ const HolidayManagement = () => {
         <Filters>
           <BtnIcon onClick={() => setClicked(!isClicked)} title="Crear vacaciones">
             <HiOutlineDocumentCheck />
-            Registrar Vacaciones
+            Solicitar
           </BtnIcon>
 
           {isClicked ? null : (
