@@ -30,7 +30,7 @@ const DepartmentTable = () => {
         <Table columns="1fr 1fr 1fr .2fr">
           <Table.Header>
             <span>Nombre</span>
-            <span>Abreviación</span>
+            <span>Abreviatura</span>
             <span>Empresa Asociada</span>
             <span></span>
           </Table.Header>

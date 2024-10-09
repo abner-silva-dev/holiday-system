@@ -113,7 +113,7 @@ const UserCard: React.FC<{ user: UserInfo; children?: ReactNode }> = ({
           <Text>Ricardo Anaya Obrador</Text>
         </Group>
         <Group>
-          <TextTitle>Antiguedad</TextTitle>
+          <TextTitle>Antigüedad</TextTitle>
           <Text>
             {yearMothDay(
               user?.seniority?.years,

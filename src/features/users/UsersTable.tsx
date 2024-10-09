@@ -54,9 +54,9 @@ const UsersTable = () => {
           <Table.Header>
             <span>N° Empleado</span>
             <span>Nombre</span>
-            <span>Fecha de egreso</span>
-            <span>Antiguedad</span>
-            <span>Area</span>
+            <span>Fecha de ingreso</span>
+            <span>Antigüedad</span>
+            <span>Departamento</span>
             <span></span>
           </Table.Header>
           <Table.Body
