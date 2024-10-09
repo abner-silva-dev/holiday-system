@@ -6,7 +6,7 @@ const ImageDragStyled = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
+  gap: 1.2rem;
 `;
 
 const DropArea = styled.div`
@@ -16,7 +16,6 @@ const DropArea = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* background-color: red; */
 `;
 
 const DragOverlay = styled.div<{ $isDragging: boolean }>`
@@ -36,9 +35,9 @@ const DragOverlay = styled.div<{ $isDragging: boolean }>`
 `;
 
 const UserImage = styled.img`
+  border-radius: 50%;
   width: 100%;
   height: 100%;
-  border-radius: 50%;
   object-fit: cover;
 `;
 
@@ -46,9 +45,10 @@ const FileImage = styled.label`
   display: flex;
   justify-content: center;
   gap: 1rem;
+  width: 18rem;
 
   font-weight: 500;
-  padding: 1rem 1.8rem;
+  padding: 1rem;
   background-color: #0b7285;
   color: white;
   border: none;
@@ -57,41 +57,57 @@ const FileImage = styled.label`
   font-size: 1.4rem;
   transition: background-color 0.3s;
 
-  &:hover {
-    background-color: #0c8599;
+  & span {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.8rem;
   }
-
   & svg {
     height: 2rem;
     width: 2rem;
   }
+  &:hover {
+    background-color: #0c8599;
+  }
+`;
+
+const ImageTitle = styled.p`
+  font-size: 1.2rem;
+  font-weight: 500;
+  text-align: center;
+  width: 20rem;
 `;
 
 interface PropsInputImageDrag {
   defaultImage: string;
   onChangeFile: (file: File | null) => void;
+  showPreview?: boolean; // Nueva prop para controlar la vista previa
 }
 
 const InputImageDrag: React.FC<PropsInputImageDrag> = ({
   onChangeFile,
   defaultImage,
+  showPreview = true, // Valor por defecto: mostrar la vista previa
 }) => {
   const [imageSrc, setImageSrc] = useState(defaultImage);
+  const [imageName, setImageName] = useState('');
   const [isDragging, setIsDragging] = useState(false);
 
-  // UPDATE IMAGE
+  // Actualización de la imagen
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       const imageUrl = URL.createObjectURL(file);
       setImageSrc(imageUrl);
+      setImageName(file.name);
       onChangeFile(file);
     } else {
       onChangeFile(null);
     }
   };
 
-  //  FUNCTION DRAGG AND OVER
+  // Manejo de eventos drag
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(true);
@@ -108,21 +124,26 @@ const InputImageDrag: React.FC<PropsInputImageDrag> = ({
     if (file && file.type.startsWith('image/')) {
       const imageUrl = URL.createObjectURL(file);
       setImageSrc(imageUrl);
+      setImageName(file.name);
     }
   };
 
   return (
     <ImageDragStyled>
-      <DropArea
-        onDragOver={handleDragOver}
-        onDragLeave={handleDragLeave}
-        onDrop={handleDrop}
-      >
-        <UserImage src={imageSrc} alt="Imagen de perfil" />
-        <DragOverlay $isDragging={isDragging}>
-          {isDragging ? 'Suelta la imagen aquí' : ''}
-        </DragOverlay>
-      </DropArea>
+      {showPreview ? (
+        <DropArea
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+        >
+          <UserImage src={imageSrc} alt="Imagen de perfil" />
+          <DragOverlay $isDragging={isDragging}>
+            {isDragging ? 'Suelta la imagen aquí' : ''}
+          </DragOverlay>
+        </DropArea>
+      ) : (
+        <ImageTitle>{imageName || 'No se ha subido ninguna imagen'}</ImageTitle>
+      )}
 
       <FileImage as="label">
         <input
@@ -132,7 +153,7 @@ const InputImageDrag: React.FC<PropsInputImageDrag> = ({
           style={{ display: 'none' }}
         />
         <HiOutlineArrowUpTray />
-        Actualizar Imagen...
+        <span>Actualizar Imagen...</span>
       </FileImage>
     </ImageDragStyled>
   );

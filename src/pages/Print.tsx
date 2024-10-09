@@ -195,7 +195,7 @@ const Print: React.FC<{ holiday: HolidayInfo }> = ({ holiday }) => {
           </Group>
 
           <Group>
-            <Label>Observación</Label>
+            <Label>Notas del Empleado</Label>
             <textarea defaultValue={holiday?.observation}></textarea>
           </Group>
 

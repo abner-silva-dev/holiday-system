@@ -1,5 +1,4 @@
 import { useForm } from 'react-hook-form';
-
 import styled from 'styled-components';
 import Button from '../../ui/Button';
 import FormRow from '../../ui/FormRow';
@@ -13,6 +12,12 @@ import { useDepartments } from '../departments/useDepartment';
 import { DepartmentInfo } from '../departments/types';
 import { EnterpriseInfo } from '../enterprises/types';
 import { useUpdateUser } from './useUpdateUser';
+import { API_DAI_BASE } from '../../config';
+import { useState } from 'react';
+import { useMe } from '../authentication/useMe';
+import InputImageDrag from '../../ui/InputImageDrag';
+import { updateMe } from '../../services/apiAuthentication';
+import Spinner from '../../ui/Spinner';
 
 const Form = styled.form`
   display: grid;
@@ -20,6 +25,16 @@ const Form = styled.form`
   align-items: center;
   justify-content: center;
   gap: 4rem;
+
+  & :first-child {
+    border-radius: 2px;
+    gap: 0;
+
+    & div {
+      width: 8rem;
+      height: 8rem;
+    }
+  }
 `;
 
 const Input = styled.input`
@@ -84,13 +99,31 @@ const CreateUser: React.FC<PropsCreateUSer> = ({ userToUpdate = {}, onCloseModal
       });
   };
 
+  const { userAuthenticated, isPending } = useMe();
+  const [fileImg, setFileImg] = useState<File | null>(null);
+
+  const onSubmitInfo = () => {
+    const formData = new FormData();
+    if (fileImg) formData.append('photo', fileImg);
+    updateMe(formData);
+  };
+
+  if (isPending) return <Spinner />;
+
   return (
     <Row>
       <Heading as="h2">
         {isEditSession ? 'Modificar usuario' : 'Registro de empleado'}
       </Heading>
 
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      <Form onSubmit={handleSubmit(onSubmit, onSubmitInfo)}>
+        <FormRow label="Imagen">
+          <InputImageDrag
+            defaultImage={`${API_DAI_BASE}/img/user/${userAuthenticated?.photo}`}
+            onChangeFile={setFileImg}
+            showPreview={false}
+          />
+        </FormRow>
         <FormRow label="Numero de Empleado">
           <Input
             type="number"

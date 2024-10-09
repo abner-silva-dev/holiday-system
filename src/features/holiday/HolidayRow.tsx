@@ -42,8 +42,7 @@ const RequestListContainer = styled.div`
 
   display: flex;
   flex-direction: column;
-
-  gap: 0.5rem;
+  gap: 1.2rem;
 
   height: 7.5rem;
   border-radius: 11px;
@@ -56,6 +55,7 @@ const RequestListCard = styled.div`
   color: var(--color-brand-800);
   border-radius: 11px;
 
+  padding: 0.5rem 0.2rem;
   display: flex;
   flex-direction: column;
 `;
