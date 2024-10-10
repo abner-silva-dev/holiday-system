@@ -24,7 +24,6 @@ import { UserInfo } from '../users/types';
 
 const AuthorizationCardStyled = styled.div`
   background-color: var(--color-grey-0);
-  /* height: 100%; */
   padding: 3rem;
   grid-column: 1 /3;
   border-radius: 9px;
@@ -102,7 +101,7 @@ const AuthorizationButtons = styled.div`
 `;
 
 interface PropsButton {
-  $color: string;
+  $color?: string;
 }
 
 const Button = styled.button<PropsButton>`
@@ -433,11 +432,17 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
               />
               {userAuthenticated.role === 'admin' && (
                 <AuthorizationButtons>
-                  <Button onClick={() => setValue('authorizationAdmin', 'approved')}>
+                  <Button
+                    onClick={() => setValue('authorizationAdmin', 'approved')}
+                    $color="#087f5b"
+                  >
                     <HiOutlineCheck />
                     Aceptar
                   </Button>
-                  <Button onClick={() => setValue('authorizationAdmin', 'rejected')}>
+                  <Button
+                    onClick={() => setValue('authorizationAdmin', 'rejected')}
+                    $color="#a61e4d"
+                  >
                     <HiOutlineXMark />
                     Rechazar
                   </Button>

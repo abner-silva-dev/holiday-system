@@ -1,6 +1,4 @@
 import { API_DAI_SYSTEM } from '../config';
-import { UserInfo } from '../features/users/types';
-import { updateOne } from '../utils/apiFactory';
 
 export const login = async ({
   employNumber,
@@ -39,10 +37,6 @@ export const logout = async () => {
 
   return data;
 };
-
-// interface AuthUser {
-//   photo: string;
-// }
 
 export const updateMe = async (newData) => {
   console.log(newData);
