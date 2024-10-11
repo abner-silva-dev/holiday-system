@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 import Heading from '../../ui/Heading';
 import Header from './Header';
+import { Link } from 'react-router-dom';
+import { useMe } from '../authentication/useMe';
+import { media } from '../../style/media';
 
 const HeroSection = styled.section`
   background-image: linear-gradient(rgba(34, 34, 34, 0.7), rgba(0, 0, 0, 0.7)),
@@ -36,7 +39,7 @@ const Description = styled.p`
   font-size: 2.4rem;
 `;
 
-const Button = styled.button`
+const Button = styled(Link)`
   background-color: #3498db;
   color: #fff;
   padding: 1rem 2rem;
@@ -122,7 +125,24 @@ const SubHeading = styled(Heading)`
   margin-bottom: 3rem;
 `;
 
+const ButtonGroup = styled.div`
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  justify-content: center;
+
+  & :last-child {
+    background-color: #f59f00;
+
+    &:hover {
+      background-color: #f08c00;
+    }
+  }
+`;
+
 const Home = () => {
+  const { userAuthenticated } = useMe();
+  if (!userAuthenticated) return null;
   return (
     <>
       <HomeMain>
@@ -133,7 +153,12 @@ const Home = () => {
               Portal de vacaciones, diseñado para hacer más fácil la gestión de vacaciones
               de los empleados. Solicita tus vacaciones sin complicaciones.
             </Description>
-            <Button>Solicitar vacaciones ahora</Button>
+            <ButtonGroup>
+              <Button to={`/user/holidays/${userAuthenticated.id}?history=request`}>
+                Solicitar vacaciones ahora
+              </Button>
+              <Button to="ht-section">¿Cómo solicitar vacaciones?</Button>
+            </ButtonGroup>
           </TextContainer>
         </HeroSection>
 

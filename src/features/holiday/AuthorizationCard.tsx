@@ -101,15 +101,22 @@ const AuthorizationButtons = styled.div`
   gap: 4rem;
 `;
 
-const Button = styled.button`
-  background-color: transparent;
+interface PropsButton {
+  $color: string;
+}
+
+const Button = styled.button<PropsButton>`
+  background-color: ${(props) => props.$color};
   border: none;
   text-transform: uppercase;
   font-weight: 700;
-  padding: 1rem 2rem;
+  padding: 1rem 1.5rem;
+  border-radius: var(--border-radius-sm);
+  color: #fff;
   display: flex;
   align-items: center;
   text-transform: uppercase;
+  gap: 1rem;
 
   & svg {
     height: 2rem;
@@ -129,7 +136,7 @@ const ButtonPDF = styled.button`
   text-transform: uppercase;
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 2rem;
 
   & svg {
     width: 2.5rem;
@@ -380,11 +387,17 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
               {userAuthenticated.role === 'manager' &&
                 holiday.authorizationManager !== 'approved' && (
                   <AuthorizationButtons>
-                    <Button onClick={() => setValue('authorizationManager', 'approved')}>
+                    <Button
+                      onClick={() => setValue('authorizationManager', 'approved')}
+                      $color="#087f5b"
+                    >
                       <HiOutlineCheck />
                       Aceptar
                     </Button>
-                    <Button onClick={() => setValue('authorizationManager', 'rejected')}>
+                    <Button
+                      onClick={() => setValue('authorizationManager', 'rejected')}
+                      $color="#a61e4d"
+                    >
                       <HiOutlineXMark />
                       Rechazar
                     </Button>

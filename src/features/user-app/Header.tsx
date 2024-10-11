@@ -112,7 +112,7 @@ const LogOff = styled.div`
     justify-content: center;
     height: 2.8rem;
     width: 2.8rem;
-    stroke: var(--color-grey-600);
+    stroke: #e5e7eb;
   }
 `;
 

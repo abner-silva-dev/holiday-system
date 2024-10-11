@@ -22,7 +22,7 @@ import AuthorizationCard from './AuthorizationCard';
 import { HolidayInfo } from './type';
 import ContentEmpty from '../../ui/ContentEmpty';
 import { media } from '../../style/media';
-import Button from '../../ui/Button';
+// import Button from '../../ui/Button';
 
 const HolidayInfoStyles = styled.div`
   display: grid;
@@ -155,10 +155,16 @@ const BtnIcon = styled.button`
   box-shadow: var(--shadow-sm);
   border-radius: var(--border-radius-lg);
   border: 1px solid var(--color-grey-200);
-  transition: all 0.2s ease-in;
+  /* transition: all 0.2s ease-in; */
+
+  transition: all 0.5s;
+  background-size: auto 210%;
+  background-position: 0 100%;
 
   &:hover {
-    animation: gradientShift 0.5s ease-in-out forwards;
+    background-position: 50% 0;
+
+    /* animation: gradientShift 0.5s ease-in-out forwards; */
   }
 
   & svg {
