@@ -12,12 +12,8 @@ import { useDepartments } from '../departments/useDepartment';
 import { DepartmentInfo } from '../departments/types';
 import { EnterpriseInfo } from '../enterprises/types';
 import { useUpdateUser } from './useUpdateUser';
-import { API_DAI_BASE } from '../../config';
 import { useState } from 'react';
-import { useMe } from '../authentication/useMe';
 import InputImageDrag from '../../ui/InputImageDrag';
-import { updateMe } from '../../services/apiAuthentication';
-import Spinner from '../../ui/Spinner';
 
 const Form = styled.form`
   display: grid;
@@ -70,9 +66,18 @@ const CreateUser: React.FC<PropsCreateUSer> = ({ userToUpdate = {}, onCloseModal
 
   // Get Current data after to submit
   const onSubmit = (data: UserInfo) => {
+    const formData = new FormData();
+
+    if (isEditSession && data.photo) delete data.photo;
+    if (fileImg) formData.append('photo', fileImg);
+
+    Object.entries(data).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
+
     if (isEditSession)
       updateUser(
-        { newUser: data, id: userId },
+        { newUser: formData, id: userId },
         {
           onSuccess: () => {
             reset();
@@ -81,7 +86,7 @@ const CreateUser: React.FC<PropsCreateUSer> = ({ userToUpdate = {}, onCloseModal
         }
       );
     else
-      createUser(data, {
+      createUser(formData, {
         onSuccess: () => {
           reset();
           onCloseModal?.();
@@ -89,16 +94,8 @@ const CreateUser: React.FC<PropsCreateUSer> = ({ userToUpdate = {}, onCloseModal
       });
   };
 
-  const { userAuthenticated, isPending } = useMe();
+  // handle file photo
   const [fileImg, setFileImg] = useState<File | null>(null);
-
-  const onSubmitInfo = () => {
-    const formData = new FormData();
-    if (fileImg) formData.append('photo', fileImg);
-    updateMe(formData);
-  };
-
-  if (isPending) return <Spinner />;
 
   return (
     <Row>
@@ -106,10 +103,10 @@ const CreateUser: React.FC<PropsCreateUSer> = ({ userToUpdate = {}, onCloseModal
         {isEditSession ? 'Modificar usuario' : 'Registro de empleado'}
       </Heading>
 
-      <Form onSubmit={handleSubmit(onSubmit, onSubmitInfo)}>
+      <Form onSubmit={handleSubmit(onSubmit)}>
         <FormRow label="Imagen">
           <InputImageDrag
-            defaultImage={`${API_DAI_BASE}/img/user/${userAuthenticated?.photo}`}
+            defaultName={editValues.photo || ''}
             onChangeFile={setFileImg}
             showPreview={false}
           />

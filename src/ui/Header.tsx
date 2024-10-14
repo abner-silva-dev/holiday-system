@@ -12,6 +12,8 @@ import { useLogout } from '../features/authentication/useLogout';
 import { API_DAI_BASE } from '../config';
 import { useMe } from '../features/authentication/useMe';
 import { useLocalStorageState } from '../hooks/useLocalStorageState';
+import { useHolidays } from '../features/holiday/useHolidays';
+import { getStatusHoliday } from '../utils/holidayUtils';
 
 const StyledHeader = styled.header`
   position: relative;
@@ -118,6 +120,9 @@ function Header() {
   const { logout } = useLogout();
   const { userAuthenticated } = useMe();
 
+  const { holidays } = useHolidays();
+  const { pendingHolidays } = getStatusHoliday(holidays);
+
   useEffect(() => {
     const switchDark = document.querySelector('html');
 
@@ -144,9 +149,12 @@ function Header() {
         </DarkMode>
 
         <Bell title="Notificaciones" onClick={() => setClicked(!isClicked)}>
-          <Notification>5</Notification>
+          {pendingHolidays?.length !== 0 ? (
+            <Notification>{pendingHolidays.length}</Notification>
+          ) : null}
           <HiOutlineBell />
         </Bell>
+
         {isClicked ? <FloatFeat onClose={() => setClicked(false)} /> : null}
         <LogOff
           title="Cerrar Sesión"

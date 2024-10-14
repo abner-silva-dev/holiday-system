@@ -1,9 +1,8 @@
 import styled from 'styled-components';
 import Heading from '../../ui/Heading';
-import Header from './Header';
+
 import { Link } from 'react-router-dom';
 import { useMe } from '../authentication/useMe';
-import { media } from '../../style/media';
 
 const HeroSection = styled.section`
   background-image: linear-gradient(rgba(34, 34, 34, 0.7), rgba(0, 0, 0, 0.7)),

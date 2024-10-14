@@ -27,11 +27,13 @@ const UserRow: React.FC<Props> = ({ user }) => {
     phoneNumber,
     enterprise,
     department,
+    photo,
   } = user;
 
   const dateHiringFormat = formatDate(dateHiring, {
     formatDate: 'yyyy-mm-dd',
     separationBy: '-',
+    spaces: false,
   });
 
   const userId = user.id || '';
@@ -92,6 +94,7 @@ const UserRow: React.FC<Props> = ({ user }) => {
                     department: { _id: departmentId },
                     paternSurname,
                     motherSurname,
+                    photo,
                   }}
                 />
               </Modal.Window>

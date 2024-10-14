@@ -81,18 +81,20 @@ const ImageTitle = styled.p`
 `;
 
 interface PropsInputImageDrag {
-  defaultImage: string;
+  defaultImage?: string;
   onChangeFile: (file: File | null) => void;
   showPreview?: boolean; // Nueva prop para controlar la vista previa
+  defaultName?: string;
 }
 
 const InputImageDrag: React.FC<PropsInputImageDrag> = ({
   onChangeFile,
-  defaultImage,
+  defaultImage = '',
   showPreview = true, // Valor por defecto: mostrar la vista previa
+  defaultName = '',
 }) => {
   const [imageSrc, setImageSrc] = useState(defaultImage);
-  const [imageName, setImageName] = useState('');
+  const [imageName, setImageName] = useState(defaultName);
   const [isDragging, setIsDragging] = useState(false);
 
   // Actualización de la imagen
