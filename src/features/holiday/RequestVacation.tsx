@@ -5,6 +5,7 @@ import { HolidayInfo } from './type';
 import { joinName } from '../../utils/helpers';
 import { API_DAI_BASE } from '../../config';
 import React from 'react';
+import { UserInfo } from '../users/types';
 
 const RequestCard = styled.div`
   display: flex;
@@ -55,29 +56,31 @@ interface PropsRequestVacation {
 }
 
 const RequestVacation: React.FC<PropsRequestVacation> = ({ holiday, onClose }) => {
+  const user = holiday.user as UserInfo | undefined;
+
   return (
     <RequestCard>
       <UserPhoto
-        src={`${API_DAI_BASE}/img/user/${holiday?.user?.photo}`}
+        src={`${API_DAI_BASE}/img/user/${user?.photo}`}
         alt="User Photo"
         $size="medium"
       />
       <GroupText>
         <TitleInfo>No. de Empleado:</TitleInfo>
-        <ContentInfo>{holiday?.user?.employNumber}</ContentInfo>
+        <ContentInfo>{user?.employNumber}</ContentInfo>
       </GroupText>
       <GroupText>
         <TitleInfo>Nombre:</TitleInfo>
         <ContentInfo>
           {joinName({
-            motherSurname: holiday?.user?.motherSurname || '',
-            name: holiday?.user?.name || '',
-            paternSurname: holiday?.user?.paternSurname || '',
+            motherSurname: user?.motherSurname || '',
+            name: user?.name || '',
+            paternSurname: user?.paternSurname || '',
           })}
         </ContentInfo>
       </GroupText>
       <ShowMoreAnchor
-        to={`/admin/holidays/${holiday?.user?.id}?history=all`}
+        to={`/admin/holidays/${user?.id}?history=request`}
         onClick={onClose}
       >
         Ver

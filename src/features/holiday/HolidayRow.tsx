@@ -6,6 +6,7 @@ import { API_DAI_BASE } from '../../config';
 import UserPhoto from '../users/UserPhoto';
 import { UserInfo } from '../users/types';
 import Table from '../../ui/Table';
+import { getStatusHoliday } from '../../utils/holidayUtils';
 
 const HolidayRowStyled = styled.div`
   border-bottom: 1px solid var(--color-grey-100) !important;
@@ -77,21 +78,14 @@ const HolidayRow: React.FC<{ user: UserInfo }> = ({ user }) => {
   const { holidays } = user;
   const navigate = useNavigate();
 
-  const holidaysPending = holidays?.filter((holiday: HolidayInfo) => {
-    return (
-      holiday.authorizationAdmin === 'pending' ||
-      holiday.authorizationManager === 'pending'
-    );
-  });
+  const { pendingHolidays } = getStatusHoliday(holidays);
 
   return (
     <HolidayRowStyled onClick={() => navigate(`${user.id}?history=request`)}>
       <Table.Row columns=".3fr 1fr 1fr 1fr  1fr 2fr">
-        {holidaysPending?.length ? (
-          <Notification>{holidaysPending.length}</Notification>
-        ) : (
-          ''
-        )}
+        {pendingHolidays?.length ? (
+          <Notification>{pendingHolidays?.length}</Notification>
+        ) : null}
 
         <UserPhoto
           $type="circle"
@@ -109,18 +103,22 @@ const HolidayRow: React.FC<{ user: UserInfo }> = ({ user }) => {
         <span>Hombre de Negocios</span>
         <span>{user?.department?.name}</span>
         <RequestListContainer>
-          {holidaysPending?.map((holiday, i) => {
-            return (
-              <RequestListCard key={holiday._id}>
-                <TitleCreation>Solicitud {i + 1}</TitleCreation>
-                <TextCreation>
-                  Creada:{' '}
-                  <span>{formatDate(holiday.createdAt || '', { monthsName: true })}</span>
-                </TextCreation>
-              </RequestListCard>
-            );
-          })}
-          {!user.holidays?.length && <TextCont>No hay solicitudes</TextCont>}
+          {pendingHolidays.length !== 0 ? (
+            pendingHolidays?.map((holiday, i) => {
+              return (
+                <RequestListCard key={holiday._id}>
+                  <TitleCreation>Solicitud {i + 1}</TitleCreation>
+                  <TextCreation>
+                    <span>
+                      Creada: {formatDate(holiday.createdAt || '', { monthsName: true })}
+                    </span>
+                  </TextCreation>
+                </RequestListCard>
+              );
+            })
+          ) : (
+            <TextCont>No hay solicitudes</TextCont>
+          )}
         </RequestListContainer>
       </Table.Row>
     </HolidayRowStyled>

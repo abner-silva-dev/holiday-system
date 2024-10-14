@@ -39,7 +39,6 @@ export const logout = async () => {
 };
 
 export const updateMe = async (newData) => {
-  console.log(newData);
   const res = await fetch(`${API_DAI_SYSTEM}/users/updateMe`, {
     method: 'PATCH',
     credentials: 'include',

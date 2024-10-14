@@ -165,6 +165,7 @@ const CreateHoliday: React.FC<PropsCreateDepartment> = ({ edit = {}, onClose }) 
                 minDate={minDate} // Habilitar fechas desde dos meses atrás
                 disabledDates={[]} // En este caso no se usa disabledDates directamente
                 disabledDays={[0]} // Deshabilitar solo domingos (0)
+                required={true}
               />
             </StyledCalendarInput>
           </FieldContainer>
@@ -179,7 +180,13 @@ const CreateHoliday: React.FC<PropsCreateDepartment> = ({ edit = {}, onClose }) 
           </FieldContainer>
           <ButtonRow>
             <SubmitButton $variation="confirm">Crear Registro</SubmitButton>
-            <CancelButton $variation="secondary">Cancelar</CancelButton>
+            <CancelButton
+              $variation="secondary"
+              type="button"
+              onClick={() => onClose(false)}
+            >
+              Cancelar
+            </CancelButton>
           </ButtonRow>
         </Form>
       </RegContainer>

@@ -59,7 +59,7 @@ export function formatDate(date: string, options: OptionsFormatDate = {}): strin
       }${separationBy}${spaces ? ' ' : ''}${year}`;
     case 'yyyy-mm-dd':
       return `${year}${spaces ? ' ' : ''}${separationBy}${spaces ? ' ' : ''}${month}${
-        spaces && ' '
+        spaces ? ' ' : ''
       }${separationBy}${spaces ? ' ' : ''}${day}`;
     default:
       return '';

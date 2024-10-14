@@ -27,23 +27,26 @@ export const getOne = (sourceName: SourceName) => async (id: string) => {
   return data;
 };
 
-export function createOne<Model>(sourceName: SourceName) {
-  return async (newData: Model) => {
+export function createOne<Model>(sourceName: string) {
+  return async (newData: Model | FormData) => {
     try {
+      const isFormData = newData instanceof FormData;
+
       const { data } = await axios.post(`${API_DAI_SYSTEM}/${sourceName}`, newData, {
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': isFormData ? 'multipart/form-data' : 'application/json',
+        },
         withCredentials: true,
       });
 
       return data;
     } catch (error) {
-      if (axios.isAxiosError(error) && error.response) {
-        const errorMessage =
-          error.response.data.error.message || 'An unknown error occurred';
-        throw new Error(errorMessage);
-      } else {
-        throw new Error('An unknown error occurred');
-      }
+      const errorMessage =
+        axios.isAxiosError(error) && error.response
+          ? error.response.data.error.message || 'An unknown error occurred'
+          : 'An unknown error occurred';
+
+      throw new Error(errorMessage);
     }
   };
 }
@@ -65,18 +68,29 @@ export function deleteOne(sourceName: SourceName) {
 }
 
 export function updateOne<Model>(sourceName: SourceName) {
-  return async (id: string, newData: Model) => {
-    const res = await fetch(`${API_DAI_SYSTEM}/${sourceName}/${id}`, {
-      method: 'PATCH',
-      credentials: 'include',
-      headers: { 'Content-type': 'application/json' },
-      body: JSON.stringify(newData),
-    });
+  return async (id: string, newData: Model | FormData) => {
+    try {
+      const isFormData = newData instanceof FormData;
 
-    if (!res.ok) throw new Error(`${sourceName} does not was deleted`);
+      const { data } = await axios.patch(
+        `${API_DAI_SYSTEM}/${sourceName}/${id}`,
+        newData,
+        {
+          headers: {
+            'Content-Type': isFormData ? 'multipart/form-data' : 'application/json',
+          },
+          withCredentials: true,
+        }
+      );
 
-    const { data } = await res.json();
+      return data;
+    } catch (error) {
+      const errorMessage =
+        axios.isAxiosError(error) && error.response
+          ? error.response.data.error.message || 'An unknown error occurred'
+          : 'An unknown error occurred';
 
-    return data;
+      throw new Error(errorMessage);
+    }
   };
 }

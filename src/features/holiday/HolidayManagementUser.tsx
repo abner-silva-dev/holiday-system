@@ -193,8 +193,8 @@ const HolidayManagementUser = () => {
     case 'request':
       holidaysFilter = holidays.filter((holiday: HolidayInfo) => {
         return (
-          holiday.authorizationAdmin === 'pending' ||
-          holiday.authorizationManager === 'pending'
+          holiday.authorizationAdmin !== 'approved' &&
+          holiday.authorizationAdmin !== 'rejected'
         );
       });
       break;
@@ -206,6 +206,7 @@ const HolidayManagementUser = () => {
         );
       });
       break;
+
     case 'rejected':
       holidaysFilter = holidays.filter((holiday: HolidayInfo) => {
         return (

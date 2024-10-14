@@ -6,6 +6,8 @@ import { useHolidays } from '../features/holiday/useHolidays';
 import { HolidayInfo } from '../features/holiday/type';
 import { Link } from 'react-router-dom';
 import ContentEmpty from './ContentEmpty';
+import { getStatusHoliday } from '../utils/holidayUtils';
+import { Spinner } from 'react-bootstrap';
 
 const FloatFeatStyled = styled.div`
   display: flex;
@@ -97,14 +99,11 @@ interface PropsFloatFeat {
 }
 
 const FloatFeat: React.FC<PropsFloatFeat> = ({ onClose }) => {
-  const { holidays } = useHolidays();
-  const holidaysPending = holidays?.filter((holiday: HolidayInfo) => {
-    return (
-      holiday.authorizationAdmin === 'pending' ||
-      holiday.authorizationManager === 'pending'
-    );
-  });
+  const { holidays, isPending } = useHolidays();
 
+  const { pendingHolidays } = getStatusHoliday(holidays);
+
+  if (isPending) return <Spinner />;
   const isEmpty = holidays?.length === 0;
 
   return (
@@ -113,7 +112,7 @@ const FloatFeat: React.FC<PropsFloatFeat> = ({ onClose }) => {
         <FloatTitle>Notificaciones</FloatTitle>
       </FloatHeader>
       <Main>
-        {holidaysPending?.map((holiday: HolidayInfo) => (
+        {pendingHolidays?.map((holiday: HolidayInfo) => (
           <RequestVacation key={holiday._id} holiday={holiday} onClose={onClose} />
         ))}
 

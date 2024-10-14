@@ -5,6 +5,8 @@ import { useStateApp } from '../../context/stateAppContext';
 import Spinner from '../../ui/Spinner';
 import { formatText } from '../../utils/helpers';
 import Table from '../../ui/Table';
+import { HolidayInfo } from './type';
+import { getStatusHoliday } from '../../utils/holidayUtils';
 
 const HolidayTable = () => {
   const { users, isPending, error } = useUsers();
@@ -24,6 +26,22 @@ const HolidayTable = () => {
     );
   });
 
+  // ORDER PER PENDING HOLIDAYS
+  const sortedData = dataSearch.sort((a: UserInfo, b: UserInfo) => {
+    const { pendingHolidays: pendingHolidaysA } = getStatusHoliday(a.holidays);
+    const { pendingHolidays: pendingHolidaysB } = getStatusHoliday(b.holidays);
+
+    const hasPendingA = pendingHolidaysA.length !== 0;
+    const hasPendingB = pendingHolidaysB.length !== 0;
+
+    // if 'a' have pending request and 'b' not, 'a' go first
+    if (hasPendingA && !hasPendingB) return -1;
+    // if 'b' have pending request and 'a' not, 'b' go first
+    if (!hasPendingA && hasPendingB) return 1;
+    // if both or anything have pending request, not change the order
+    return 0;
+  });
+
   return (
     <Table columns=".4fr .7fr 1fr 1fr  1fr 1.2fr">
       <Table.Header>
@@ -35,7 +53,7 @@ const HolidayTable = () => {
         <span>Solicitudes</span>
       </Table.Header>
       <Table.Body
-        data={dataSearch}
+        data={sortedData}
         render={(user: UserInfo) => <HolidayRow user={user} key={user.id} />}
       />
     </Table>

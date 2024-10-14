@@ -22,7 +22,6 @@ import AuthorizationCard from './AuthorizationCard';
 import { HolidayInfo } from './type';
 import ContentEmpty from '../../ui/ContentEmpty';
 import { media } from '../../style/media';
-import Button from '../../ui/Button';
 
 const HolidayInfoStyles = styled.div`
   display: grid;
@@ -201,8 +200,8 @@ const HolidayManagement = () => {
     case 'request':
       holidaysFilter = holidays.filter((holiday: HolidayInfo) => {
         return (
-          holiday.authorizationAdmin === 'pending' ||
-          holiday.authorizationManager === 'pending'
+          holiday.authorizationAdmin !== 'approved' &&
+          holiday.authorizationAdmin !== 'rejected'
         );
       });
       break;
