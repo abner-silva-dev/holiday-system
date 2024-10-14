@@ -45,7 +45,7 @@ const FileImage = styled.label`
   display: flex;
   justify-content: center;
   gap: 1rem;
-  width: 18rem;
+  width: 100%;
 
   font-weight: 500;
   padding: 1rem;
@@ -62,6 +62,7 @@ const FileImage = styled.label`
     align-items: center;
     justify-content: space-between;
     gap: 0.8rem;
+    font-size: 1.4rem;
   }
   & svg {
     height: 2rem;

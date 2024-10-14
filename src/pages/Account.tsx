@@ -110,6 +110,11 @@ const BorderMarker = styled.div`
   border-bottom: 1px solid var(--color-grey-200);
 `;
 
+const Group = styled.div`
+  width: 22rem;
+  margin: 0 auto;
+`;
+
 // TEMPORAL INTERFACE
 interface TempFormInfo {
   user: string;
@@ -146,11 +151,12 @@ const Account = () => {
     <Row type="vertical">
       <Heading as="h1">Configuración de Cuenta</Heading>
       <AccountSection>
-        <InputImageDrag
-          defaultImage={`${API_DAI_BASE}/img/user/${userAuthenticated?.photo}`}
-          onChangeFile={setFileImg}
-        />
-
+        <Group>
+          <InputImageDrag
+            defaultImage={`${API_DAI_BASE}/img/user/${userAuthenticated?.photo}`}
+            onChangeFile={setFileImg}
+          />
+        </Group>
         <BorderMarker>
           <AccountContainer>
             <Form onSubmit={handleSubmit(onSubmitInfo)}>

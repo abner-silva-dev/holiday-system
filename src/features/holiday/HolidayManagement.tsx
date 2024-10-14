@@ -138,7 +138,7 @@ const Filters = styled.div`
   align-items: center;
 `;
 
-const BtnIcon = styled.button`
+const BtnIcon = styled.button<{ $isReturned: boolean }>`
   padding: 1.2rem;
   font-weight: 600;
   font-size: 1.6rem;
@@ -150,7 +150,11 @@ const BtnIcon = styled.button`
   align-self: center;
 
   color: #fff;
-  background: linear-gradient(to right top, #862e9c, #8031a6, #7834b0, #6d38ba, #5f3dc4);
+  background: ${(props) =>
+    props.$isReturned
+      ? 'linear-gradient(to bottom, #a61e4d, #bc2950, #d13652, #e64353, #fa5252);'
+      : 'linear-gradient(to right top, #862e9c, #8031a6, #7834b0, #6d38ba, #5f3dc4);'};
+
   /* background-color: #862e9c; */
   box-shadow: var(--shadow-sm);
   border-radius: var(--border-radius-lg);
@@ -162,8 +166,8 @@ const BtnIcon = styled.button`
   background-position: 0 100%;
 
   &:hover {
-    background-position: 50% 0;
-
+    background-position: 50% 0%;
+    filter: saturate(130%);
     /* animation: gradientShift 0.5s ease-in-out forwards; */
   }
 
@@ -308,9 +312,13 @@ const HolidayManagement = () => {
         </HolidayOptions>
 
         <Filters>
-          <BtnIcon onClick={() => setClicked(!isClicked)} title="Crear vacaciones">
-            <HiOutlineDocumentCheck />
-            Solicitar
+          <BtnIcon
+            onClick={() => setClicked(!isClicked)}
+            title="Crear vacaciones"
+            $isReturned={isClicked}
+          >
+            {isClicked ? <HiArrowLeft /> : <HiOutlineDocumentCheck />}{' '}
+            {isClicked ? 'Regresar' : 'Solicitar'}
           </BtnIcon>
 
           {isClicked ? null : (

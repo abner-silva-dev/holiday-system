@@ -154,13 +154,6 @@ const Header = () => {
                   <span>Solicitar Vacaciones</span>
                 </NavButton>
               </li>
-              <li>
-                <NavButton to="">
-                  <HiMiniClipboardDocumentCheck />
-
-                  <span>Consultar Vacaciones</span>
-                </NavButton>
-              </li>
             </NavList>
           </nav>
         </div>

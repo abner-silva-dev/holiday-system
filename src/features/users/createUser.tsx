@@ -29,11 +29,6 @@ const Form = styled.form`
   & :first-child {
     border-radius: 2px;
     gap: 0;
-
-    & div {
-      width: 8rem;
-      height: 8rem;
-    }
   }
 `;
 

@@ -7,6 +7,8 @@ import Search from '../ui/Search';
 import { formatText } from '../utils/helpers';
 import Heading from './../ui/Heading';
 
+// import Gantt from '../features/holiday/Gantt';
+
 const Holiday = () => {
   const { handleSearch } = useStateApp();
 
@@ -14,9 +16,7 @@ const Holiday = () => {
     <>
       <Row type="vertical">
         <Heading as="h1">Vacaciones</Heading>
-
         <Heading as="h2">Solicitudes</Heading>
-
         <Row type="horizontal">
           <Search
             width="60%"
@@ -27,6 +27,7 @@ const Holiday = () => {
           <HolidayOptions />
         </Row>
         <HolidayTable />
+        <div>{/* <Gantt /> */}</div>
       </Row>
     </>
   );
