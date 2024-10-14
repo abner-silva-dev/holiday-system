@@ -22,6 +22,7 @@ import AuthorizationCard from './AuthorizationCard';
 import { HolidayInfo } from './type';
 import ContentEmpty from '../../ui/ContentEmpty';
 import { media } from '../../style/media';
+import { getStatusHoliday } from '../../utils/holidayUtils';
 
 const HolidayInfoStyles = styled.div`
   display: grid;
@@ -194,6 +195,7 @@ const HolidayManagement = () => {
   if (!holidays) return null;
 
   let holidaysFilter: HolidayInfo[] = [];
+  const { pendingHolidays } = getStatusHoliday();
 
   //FILTERS
   switch (history) {
@@ -272,13 +274,7 @@ const HolidayManagement = () => {
             color="green"
             icon={<HiOutlineClipboardDocumentList />}
             title="Solicitudes pendientes"
-            value={`${
-              holidays.filter(
-                (holiday) =>
-                  holiday.authorizationAdmin !== 'approved' ||
-                  holiday.authorizationManager !== 'approved'
-              ).length
-            } solicitudes`}
+            value={`${pendingHolidays.length} solicitudes`}
           />
 
           <PeriodComponent>
