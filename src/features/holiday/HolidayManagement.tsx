@@ -211,10 +211,21 @@ const HolidayManagement = () => {
   switch (history) {
     case 'request':
       holidaysFilter = holidays.filter((holiday: HolidayInfo) => {
-        return (
-          holiday.authorizationAdmin !== 'approved' &&
-          holiday.authorizationAdmin !== 'rejected'
-        );
+        if (
+          holiday.authorizationAdmin === 'approved' &&
+          holiday.authorizationManager === 'approved'
+        )
+          return false;
+        else if (
+          holiday.authorizationAdmin === 'rejected' ||
+          holiday.authorizationManager === 'rejected'
+        )
+          return false;
+        else if (
+          holiday.authorizationAdmin === 'pending' ||
+          holiday.authorizationManager === 'pending'
+        )
+          return true;
       });
       break;
     case 'successfull':

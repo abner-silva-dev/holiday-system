@@ -4,6 +4,13 @@ import { useState, useCallback } from 'react';
 import isBetween from 'dayjs/plugin/isBetween';
 import styled from 'styled-components';
 import enDayjsTranslations from 'dayjs/locale/en';
+import { useUsers } from '../users/useUsers';
+import { Spinner } from 'react-bootstrap';
+import { UserInfo } from '../users/types';
+import { API_DAI_BASE } from '../../config';
+import { joinName } from '../../utils/helpers';
+import Holiday from '../../pages/Holiday';
+import { HolidayInfo } from './type';
 
 const Section = styled.section`
   position: relative;
@@ -63,6 +70,71 @@ export default function Gantt() {
     setRange(range);
   }, []);
 
+  const { users, isPending } = useUsers();
+  if (isPending) return <Spinner />;
+
+  // create new array.
+  const mockedSchedulerData: SchedulerData[] = users.map((user: UserInfo) => {
+    return {
+      id: user.id,
+      label: {
+        icon: `${API_DAI_BASE}/img/user/${user.photo}`,
+        title: joinName({
+          name: user.name || '',
+          paternSurname: user.paternSurname || '',
+          motherSurname: user.motherSurname || '',
+        }),
+        subtitle: user.department.name,
+      },
+      data: user?.holidays?.map((holiday: HolidayInfo) => {
+        return { id: holiday._id, startDate };
+      }),
+      // data: [
+      //   {
+      //     id: '8b71a8a5-33dd-4fc8-9caa-b4a584ba3762',
+      //     startDate: new Date('2023-04-13T15:31:24.272Z'),
+      //     endDate: new Date('2023-08-28T10:28:22.649Z'),
+      //     occupancy: 3600,
+      //     title: 'Project A',
+      //     subtitle: 'Subtitle A',
+      //     description: 'array indexing Salad West Account',
+      //     bgColor: '#862e9c',
+      //   },
+      //   {
+      //     id: '22fbe237-6344-4c8e-affb-64a1750f33bd',
+      //     startDate: new Date('2023-10-07T08:16:31.123Z'),
+      //     endDate: new Date('2023-11-15T21:55:23.582Z'),
+      //     occupancy: 2852,
+      //     title: 'Project B',
+      //     subtitle: 'Subtitle B',
+      //     description: 'Tuna Home pascal IP drive',
+      //     bgColor: '#862e9c',
+      //   },
+      //   {
+      //     id: '3601c1cd-f4b5-46bc-8564-8c983919e3f5',
+      //     startDate: new Date('2023-03-30T22:25:14.377Z'),
+      //     endDate: new Date('2023-09-01T07:20:50.526Z'),
+      //     occupancy: 1800,
+      //     title: 'Project C',
+      //     subtitle: 'Subtitle C',
+      //     bgColor: '#862e9c',
+      //   },
+      //   {
+      //     id: 'b088e4ac-9911-426f-aef3-843d75e714c2',
+      //     startDate: new Date('2023-10-28T10:08:22.986Z'),
+      //     endDate: new Date('2023-10-30T12:30:30.150Z'),
+      //     occupancy: 11111,
+      //     title: 'Project D',
+      //     subtitle: 'Subtitle D',
+      //     description: 'Garden heavy an software Metal',
+      //     bgColor: '#862e9c',
+      //   },
+      // ],
+    };
+  });
+
+  console.log(mockedSchedulerData);
+
   // Filtering events that are included in current date range
   const filteredMockedSchedulerData = mockedSchedulerData.map((person) => ({
     ...person,
@@ -100,7 +172,6 @@ export default function Gantt() {
     },
   ];
 
-  console.log(langs);
   return (
     <Section>
       <Scheduler
@@ -127,104 +198,104 @@ export default function Gantt() {
   );
 }
 
-const mockedSchedulerData: SchedulerData = [
-  {
-    id: '070ac5b5-8369-4cd2-8ba2-0a209130cc60',
-    label: {
-      icon: 'https://picsum.photos/24',
-      title: 'Joe Doe',
-      subtitle: 'Frontend Developer',
-    },
-    data: [
-      {
-        id: '8b71a8a5-33dd-4fc8-9caa-b4a584ba3762',
-        startDate: new Date('2023-04-13T15:31:24.272Z'),
-        endDate: new Date('2023-08-28T10:28:22.649Z'),
-        occupancy: 3600,
-        title: 'Project A',
-        subtitle: 'Subtitle A',
-        description: 'array indexing Salad West Account',
-        bgColor: 'hsl(351.91011235955057, 97.80219780219781%, 82.15686274509804%)',
-      },
-      {
-        id: '22fbe237-6344-4c8e-affb-64a1750f33bd',
-        startDate: new Date('2023-10-07T08:16:31.123Z'),
-        endDate: new Date('2023-11-15T21:55:23.582Z'),
-        occupancy: 2852,
-        title: 'Project B',
-        subtitle: 'Subtitle B',
-        description: 'Tuna Home pascal IP drive',
-        bgColor: 'rgb(254,165,177)',
-      },
-      {
-        id: '3601c1cd-f4b5-46bc-8564-8c983919e3f5',
-        startDate: new Date('2023-03-30T22:25:14.377Z'),
-        endDate: new Date('2023-09-01T07:20:50.526Z'),
-        occupancy: 1800,
-        title: 'Project C',
-        subtitle: 'Subtitle C',
-        bgColor: 'rgb(254,165,177)',
-      },
-      {
-        id: 'b088e4ac-9911-426f-aef3-843d75e714c2',
-        startDate: new Date('2023-10-28T10:08:22.986Z'),
-        endDate: new Date('2023-10-30T12:30:30.150Z'),
-        occupancy: 11111,
-        title: 'Project D',
-        subtitle: 'Subtitle D',
-        description: 'Garden heavy an software Metal',
-        bgColor: 'rgb(254,165,177)',
-      },
-    ],
-  },
+// const mockedSchedulerData: SchedulerData = [
+//   {
+//     id: '070ac5b5-8369-4cd2-8ba2-0a209130cc60',
+//     label: {
+//       icon: 'https://picsum.photos/24',
+//       title: 'Joe Doe',
+//       subtitle: 'Frontend Developer',
+//     },
+//     data: [
+//       {
+//         id: '8b71a8a5-33dd-4fc8-9caa-b4a584ba3762',
+//         startDate: new Date('2023-04-13T15:31:24.272Z'),
+//         endDate: new Date('2023-08-28T10:28:22.649Z'),
+//         occupancy: 3600,
+//         title: 'Project A',
+//         subtitle: 'Subtitle A',
+//         description: 'array indexing Salad West Account',
+//         bgColor: 'hsl(351.91011235955057, 97.80219780219781%, 82.15686274509804%)',
+//       },
+//       {
+//         id: '22fbe237-6344-4c8e-affb-64a1750f33bd',
+//         startDate: new Date('2023-10-07T08:16:31.123Z'),
+//         endDate: new Date('2023-11-15T21:55:23.582Z'),
+//         occupancy: 2852,
+//         title: 'Project B',
+//         subtitle: 'Subtitle B',
+//         description: 'Tuna Home pascal IP drive',
+//         bgColor: 'rgb(254,165,177)',
+//       },
+//       {
+//         id: '3601c1cd-f4b5-46bc-8564-8c983919e3f5',
+//         startDate: new Date('2023-03-30T22:25:14.377Z'),
+//         endDate: new Date('2023-09-01T07:20:50.526Z'),
+//         occupancy: 1800,
+//         title: 'Project C',
+//         subtitle: 'Subtitle C',
+//         bgColor: 'rgb(254,165,177)',
+//       },
+//       {
+//         id: 'b088e4ac-9911-426f-aef3-843d75e714c2',
+//         startDate: new Date('2023-10-28T10:08:22.986Z'),
+//         endDate: new Date('2023-10-30T12:30:30.150Z'),
+//         occupancy: 11111,
+//         title: 'Project D',
+//         subtitle: 'Subtitle D',
+//         description: 'Garden heavy an software Metal',
+//         bgColor: 'rgb(254,165,177)',
+//       },
+//     ],
+//   },
 
-  {
-    id: '070ac5b5-8369-4cd2-8ba2-0a209130cc60',
-    label: {
-      icon: 'https://picsum.photos/24',
-      title: 'Dylan Abner',
-      subtitle: 'Backend Developer',
-    },
-    data: [
-      {
-        id: '8b71a8a5-33dd-4fc8-9caa-b4a584ba3762',
-        startDate: new Date('2023-04-13T15:31:24.272Z'),
-        endDate: new Date('2023-08-28T10:28:22.649Z'),
-        occupancy: 3600,
-        title: 'Project A',
-        subtitle: 'Subtitle A',
-        description: 'array indexing Salad West Account',
-        bgColor: '#992d2d',
-      },
-      {
-        id: '22fbe237-6344-4c8e-affb-64a1750f33bd',
-        startDate: new Date('2023-10-07T08:16:31.123Z'),
-        endDate: new Date('2023-11-15T21:55:23.582Z'),
-        occupancy: 2852,
-        title: 'Project B',
-        subtitle: 'Subtitle B',
-        description: 'Tuna Home pascal IP drive',
-        bgColor: 'rgb(254,165,177)',
-      },
-      {
-        id: '3601c1cd-f4b5-46bc-8564-8c983919e3f5',
-        startDate: new Date('2023-03-30T22:25:14.377Z'),
-        endDate: new Date('2023-09-01T07:20:50.526Z'),
-        occupancy: 1800,
-        title: 'Project C',
-        subtitle: 'Subtitle C',
-        bgColor: 'rgb(254,165,177)',
-      },
-      {
-        id: 'b088e4ac-9911-426f-aef3-843d75e714c2',
-        startDate: new Date('2023-10-28T10:08:22.986Z'),
-        endDate: new Date('2023-10-30T12:30:30.150Z'),
-        occupancy: 11111,
-        title: 'Project D',
-        subtitle: 'Subtitle D',
-        description: 'Garden heavy an software Metal',
-        bgColor: 'rgb(254,165,177)',
-      },
-    ],
-  },
-];
+//   {
+//     id: '070ac5b5-8369-4cd2-8ba2-0a209130cc60',
+//     label: {
+//       icon: 'https://picsum.photos/24',
+//       title: 'Dylan Abner',
+//       subtitle: 'Backend Developer',
+//     },
+//     data: [
+//       {
+//         id: '8b71a8a5-33dd-4fc8-9caa-b4a584ba3762',
+//         startDate: new Date('2023-04-13T15:31:24.272Z'),
+//         endDate: new Date('2023-08-28T10:28:22.649Z'),
+//         occupancy: 3600,
+//         title: 'Project A',
+//         subtitle: 'Subtitle A',
+//         description: 'array indexing Salad West Account',
+//         bgColor: '#992d2d',
+//       },
+//       {
+//         id: '22fbe237-6344-4c8e-affb-64a1750f33bd',
+//         startDate: new Date('2023-10-07T08:16:31.123Z'),
+//         endDate: new Date('2023-11-15T21:55:23.582Z'),
+//         occupancy: 2852,
+//         title: 'Project B',
+//         subtitle: 'Subtitle B',
+//         description: 'Tuna Home pascal IP drive',
+//         bgColor: 'rgb(254,165,177)',
+//       },
+//       {
+//         id: '3601c1cd-f4b5-46bc-8564-8c983919e3f5',
+//         startDate: new Date('2023-03-30T22:25:14.377Z'),
+//         endDate: new Date('2023-09-01T07:20:50.526Z'),
+//         occupancy: 1800,
+//         title: 'Project C',
+//         subtitle: 'Subtitle C',
+//         bgColor: 'rgb(254,165,177)',
+//       },
+//       {
+//         id: 'b088e4ac-9911-426f-aef3-843d75e714c2',
+//         startDate: new Date('2023-10-28T10:08:22.986Z'),
+//         endDate: new Date('2023-10-30T12:30:30.150Z'),
+//         occupancy: 11111,
+//         title: 'Project D',
+//         subtitle: 'Subtitle D',
+//         description: 'Garden heavy an software Metal',
+//         bgColor: 'rgb(254,165,177)',
+//       },
+//     ],
+//   },
+// ];
