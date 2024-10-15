@@ -94,6 +94,7 @@ export default function Gantt() {
         },
         search: 'Buscar',
         week: 'Semana',
+        month: 'Mes',
       },
       translateCode: 'es-ES', // Cambia a español
       dayjsTranslations: enDayjsTranslations, // Asegúrate de estar usando las traducciones de dayjs en español
