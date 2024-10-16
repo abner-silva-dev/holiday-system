@@ -5,7 +5,6 @@ import toast from 'react-hot-toast';
 import { useStateApp } from '../../context/stateAppContext';
 
 export function useLogin() {
-  // const queryCliente = useQueryClient();
   const navigate = useNavigate();
   const { setCurrentUser } = useStateApp();
 

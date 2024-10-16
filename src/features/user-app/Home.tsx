@@ -141,7 +141,16 @@ const ButtonGroup = styled.div`
 
 const Home = () => {
   const { userAuthenticated } = useMe();
+
+  const handleScrollToHowToSection = () => {
+    const howToSection = document.getElementById('ht-section');
+    if (howToSection) {
+      howToSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   if (!userAuthenticated) return null;
+
   return (
     <>
       <HomeMain>
@@ -156,12 +165,14 @@ const Home = () => {
               <Button to={`/user/holidays/${userAuthenticated.id}?history=request`}>
                 Solicitar vacaciones ahora
               </Button>
-              <Button to="ht-section">¿Cómo solicitar vacaciones?</Button>
+              <Button to={''} onClick={handleScrollToHowToSection}>
+                ¿Cómo solicitar vacaciones?
+              </Button>
             </ButtonGroup>
           </TextContainer>
         </HeroSection>
 
-        <HowToSection>
+        <HowToSection id="ht-section">
           <SubHeading as="h1">¿Cómo Solicitar Vacaciones?</SubHeading>
 
           <HowToContainer>

@@ -11,7 +11,6 @@ import Holiday from './pages/Holiday';
 import Seniority from './pages/Seniority';
 import Enterprise from './pages/Enterprise';
 import HolidayManagement from './features/holiday/HolidayManagement';
-import Login from './pages/Login';
 import Settings from './pages/Settings';
 import Account from './pages/Account';
 import ProtectedRoute from './ui/ProtectedRoute';
@@ -20,6 +19,7 @@ import RestrictRoute from './ui/RestrictRoute';
 import RedirectRole from './ui/RedirectRole';
 import Header from './features/user-app/Header';
 import AppLayoutUser from './ui/AppLayoutUser';
+import Authentication from './pages/Authentication';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -38,7 +38,7 @@ function App() {
         <ReactQueryDevtools />
         <BrowserRouter>
           <Routes>
-            <Route path="login" element={<Login />} />
+            <Route path="login" element={<Authentication />} />
             <Route
               path="/"
               element={
