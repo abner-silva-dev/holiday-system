@@ -236,7 +236,7 @@ const HolidayManagement = () => {
               color="red"
               icon={<HiCalendarDays />}
               title="Días Restantes"
-              value={`${user.credit} de ${user.daysGrantedBySeniority}`}
+              value={`${user.credit?.balance} de ${user.daysGrantedBySeniority}`}
             />
 
             <Stat

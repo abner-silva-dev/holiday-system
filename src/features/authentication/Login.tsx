@@ -12,6 +12,8 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useLogin } from './useLogin';
 import { media } from '../../style/media';
+import Logo from '../../ui/Logo';
+import logoImg from '../../../public/logo-dai.png';
 
 const LoginContainer = styled.div`
   gap: 5rem;
@@ -116,7 +118,7 @@ const EyeContainer = styled.div`
   }
 `;
 
-const Image = styled.img`
+const Image = styled(Logo)`
   width: 20rem;
   filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.459));
 
@@ -179,7 +181,7 @@ export default function Login() {
     <>
       <LoginContainer>
         <SectionsContainerLeft>
-          <Image src="logo-dai.png" />
+          <Image src={logoImg} />
           <Slogan>¡ Tu Soporte en el Camino !</Slogan>
           <Title>¡Bienvenido!</Title>
         </SectionsContainerLeft>
