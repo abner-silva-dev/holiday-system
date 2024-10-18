@@ -36,11 +36,6 @@ const Button = styled.button<PropsButton>`
       color: #fff;
     `}
 
-  /* padding: 0.4rem 0.6rem; */
-  /* border-radius: 7px; */
-
-
-
   border-radius: var(--border-radius-sm);
   font-weight: 500;
   font-size: 1.4rem;

@@ -1,65 +1,31 @@
-// Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react';
-
-// Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/effect-fade';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import '../style/fonts.css';
+import '../../style/fonts.css';
 import { HiOutlineUserCircle } from 'react-icons/hi2';
 import { HiOutlineEye } from 'react-icons/hi2';
 import { HiOutlineEyeSlash } from 'react-icons/hi2';
 
-// import './styles.css';
-
-// import required modules
-import { Autoplay, EffectFade, Navigation, Pagination } from 'swiper/modules';
 import styled from 'styled-components';
 import { useState } from 'react';
-// import { UserInfo } from '../features/users/types';
 import { useForm } from 'react-hook-form';
-import { useLogin } from '../features/authentication/useLogin';
-import { media } from '../style/media';
-
-const StyledSwiper = styled(Swiper)`
-  position: relative;
-  pointer-events: none;
-  user-select: none;
-  & img {
-    filter: brightness(50%);
-    display: block;
-    width: 100%;
-    height: 100vh;
-  }
-`;
+import { useLogin } from './useLogin';
+import { media } from '../../style/media';
 
 const LoginContainer = styled.div`
-  /* display: flex;
-  justify-content: space-between; */
   gap: 5rem;
   font-size: 2rem;
-  /* width: 70rem; */
 
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   min-width: 60rem;
-  /* width: 56rem; */
 
   border-radius: 12px;
   padding: 5rem;
   box-shadow: var(--shadow-md);
-  /* background: linear-gradient(to right top, #572121, #82292a, #92292a, #a32929, #b32828); */
-  /* background-image: linear-gradient(
-    to right top,
-    #2e2424,
-    #4b2424,
-    #672222,
-    #811d1d,
-    #9b1313
-  ); */
 
   background-color: #d1d5db;
 
@@ -194,13 +160,12 @@ const Title = styled.h1`
 `;
 
 //TEMPORAL INTERFACE
-
 interface TempForm {
   employNumber: string;
   password: string;
 }
 
-export default function App() {
+export default function Login() {
   const [isClicked, setClicked] = useState(false);
   const { register, handleSubmit } = useForm<TempForm>({});
   const { login } = useLogin();
@@ -255,53 +220,6 @@ export default function App() {
           </SectionsContainerRight>
         </form>
       </LoginContainer>
-      <StyledSwiper
-        spaceBetween={30}
-        effect={'fade'}
-        navigation={false}
-        allowTouchMove={false}
-        // pagination={{
-        //   clickable: false,
-        // }}
-        modules={[EffectFade, Autoplay, Navigation, Pagination]}
-        autoplay={{
-          delay: 3000,
-          disableOnInteraction: true,
-        }}
-        className="mySwiper"
-      >
-        <SwiperSlide>
-          <img src="./daiphotos/photo1.jpeg" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="./daiphotos/photo2.jpeg" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="./daiphotos/photo3.jpeg" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="./daiphotos/photo4.jpeg" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="./daiphotos/photo5.jpeg" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="./daiphotos/photo6.jpeg" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="./daiphotos/photo7.jpeg" />
-        </SwiperSlide>
-      </StyledSwiper>
     </>
   );
 }
-
-// const Login = () => {
-//   return (
-//     <div>
-//       <h1>login</h1>
-//     </div>
-//   );
-// };
-
-// export default Login;

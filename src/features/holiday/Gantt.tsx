@@ -9,7 +9,7 @@ import { Spinner } from 'react-bootstrap';
 import { UserInfo } from '../users/types';
 import { API_DAI_BASE } from '../../config';
 import { joinName } from '../../utils/helpers';
-import Holiday from '../../pages/Holiday';
+// import Holiday from '../../pages/Holiday';
 import { HolidayInfo } from './type';
 
 const Section = styled.section`
@@ -166,6 +166,7 @@ export default function Gantt() {
         },
         search: 'Buscar',
         week: 'Semana',
+        month: 'Mes',
       },
       translateCode: 'es-ES', // Cambia a español
       dayjsTranslations: enDayjsTranslations, // Asegúrate de estar usando las traducciones de dayjs en español

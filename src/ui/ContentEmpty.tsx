@@ -24,10 +24,6 @@ const ContentEmptyStyled = styled.span`
   }
 `;
 
-// interface PropsContentEmpty {
-//   // children: string;
-// }
-
 const ContentEmpty: React.FC = () => {
   return (
     <ContentEmptyStyled>

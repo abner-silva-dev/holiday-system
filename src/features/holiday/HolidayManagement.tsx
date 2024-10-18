@@ -143,7 +143,6 @@ const BtnIcon = styled.button<{ $isReturned: boolean }>`
   font-weight: 600;
   font-size: 1.6rem;
   gap: 1rem;
-  /* text-transform: uppercase; */
 
   display: flex;
   align-items: center;
@@ -155,11 +154,9 @@ const BtnIcon = styled.button<{ $isReturned: boolean }>`
       ? 'linear-gradient(to bottom, #a61e4d, #bc2950, #d13652, #e64353, #fa5252);'
       : 'linear-gradient(to right top, #862e9c, #8031a6, #7834b0, #6d38ba, #5f3dc4);'};
 
-  /* background-color: #862e9c; */
   box-shadow: var(--shadow-sm);
   border-radius: var(--border-radius-lg);
   border: 1px solid var(--color-grey-200);
-  /* transition: all 0.2s ease-in; */
 
   transition: all 0.5s;
   background-size: auto 210%;
@@ -168,7 +165,6 @@ const BtnIcon = styled.button<{ $isReturned: boolean }>`
   &:hover {
     background-position: 50% 0%;
     filter: saturate(130%);
-    /* animation: gradientShift 0.5s ease-in-out forwards; */
   }
 
   & svg {

@@ -143,8 +143,8 @@ const CreateHoliday: React.FC<PropsCreateDepartment> = ({ edit = {}, onClose }) 
   locale('es');
 
   // Configurar el mínimo de fecha para habilitar dos meses atrás
-  const minDate = new Date();
-  minDate.setMonth(minDate.getMonth() - 2); // Permitir seleccionar desde 2 meses atrás
+  // const minDate = new Date();
+  // minDate.setMonth(minDate.getMonth() - 2); // Permitir seleccionar desde 2 meses atrás
 
   return (
     <>
@@ -162,7 +162,7 @@ const CreateHoliday: React.FC<PropsCreateDepartment> = ({ edit = {}, onClose }) 
                 dateFormat="dd/mm/yy"
                 showIcon
                 className="p-inputtext p-component p-inputtext p-component"
-                minDate={minDate} // Habilitar fechas desde dos meses atrás
+                // minDate={minDate} // Habilitar fechas desde dos meses atrás
                 disabledDates={[]} // En este caso no se usa disabledDates directamente
                 disabledDays={[0]} // Deshabilitar solo domingos (0)
                 required={true}
@@ -176,7 +176,7 @@ const CreateHoliday: React.FC<PropsCreateDepartment> = ({ edit = {}, onClose }) 
           </FieldContainer>
 
           <FieldContainer>
-            <Message>Aún no se han seleccionado fechas.</Message>
+            {dates.length === 0 && <Message>Aún no se han seleccionado fechas.</Message>}
           </FieldContainer>
           <ButtonRow>
             <SubmitButton $variation="confirm">Crear Registro</SubmitButton>
