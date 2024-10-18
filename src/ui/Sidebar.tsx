@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import MainNav from './MainNav';
+import logoImg from '../../public/logo-dai.png';
 import Logo from './Logo';
 
 const StyleSidebar = styled.aside`
@@ -17,7 +18,7 @@ const StyleSidebar = styled.aside`
 function Sidebar() {
   return (
     <StyleSidebar>
-      <Logo src="/logo-dai.png" />
+      <Logo src={logoImg} />
       <MainNav />
     </StyleSidebar>
   );
