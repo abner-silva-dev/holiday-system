@@ -250,14 +250,14 @@ const HolidayManagement = () => {
               color="green"
               icon={<HiCalendarDays />}
               title="Vacaciones del periodo"
-              value="2023 - 0/12"
+              value={`2023 - ${user.creditPast?.balance}/${user.daysGrantedBySeniorityPast}`}
             />
 
             <Stat
               color="blue"
               icon={<HiCalendarDays />}
               title="Vacaciones del periodo"
-              value="2025 - 15/15"
+              value={`2025 - ${user.creditFuture?.balance}/${user.daysGrantedBySeniorityFuture}`}
             />
           </Stats>
         </UserCard>
