@@ -7,13 +7,24 @@ export const getStatusHoliday = (holidays: HolidayInfo[] = []) => {
       holiday.authorizationManager === 'approved'
   );
 
-  const pendingHolidays = holidays.filter(
-    (holiday) =>
-      (holiday.authorizationAdmin === 'pending' ||
-        holiday.authorizationManager === 'pending') &&
-      holiday.authorizationAdmin !== 'rejected' &&
-      holiday.authorizationManager !== 'rejected'
-  );
+  const pendingHolidays = holidays.filter((holiday) => {
+    const { authorizationAdmin, authorizationManager } = holiday;
 
-  return { approvedHolidays, pendingHolidays };
+    if (authorizationAdmin === 'approved' && authorizationManager === 'approved')
+      return false;
+
+    if (authorizationAdmin === 'rejected' || authorizationManager === 'rejected')
+      return false;
+
+    return authorizationAdmin === 'approved' || authorizationManager === 'pending';
+  });
+
+  const rejectedHolidays = holidays.filter((holiday: HolidayInfo) => {
+    return (
+      holiday.authorizationAdmin === 'rejected' ||
+      holiday.authorizationManager === 'rejected'
+    );
+  });
+
+  return { approvedHolidays, pendingHolidays, rejectedHolidays };
 };
