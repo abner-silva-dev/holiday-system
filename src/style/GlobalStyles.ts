@@ -16,7 +16,9 @@ const GlobalStyles = createGlobalStyle`
   --color-brand-800: #3730a3;
   --color-brand-900: #312e81;
 
-
+    --color-blue-100: #e7f5ff;
+    --color-blue-300: #175691;
+  
 
   /* Grey */
   --color-grey-0: #fff;
@@ -126,7 +128,8 @@ const GlobalStyles = createGlobalStyle`
   --color-brand-800: #e0e7ff;
   --color-brand-900: #eef2ff;
   
-
+  --color-blue-300: #9bcae9;
+  
     --backdrop-color: rgba(0, 0, 0, 0.3);
 
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
@@ -245,7 +248,7 @@ h4,
 h5,
 h6 {
   overflow-wrap: break-word;
-  hyphens: auto;
+  hyphens: none;
 }
 
 img {

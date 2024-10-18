@@ -13,8 +13,15 @@ import './calendar.css';
 import { useCreateHoliday } from './useCreateHoliday';
 import { useUser } from '../users/useUser';
 import { useQueryClient } from '@tanstack/react-query';
+import { media } from '../../style/media';
 
-const StyledCalendarInput = styled.div``;
+const StyledCalendarInput = styled.div`
+  @media (${media.tablet}) {
+    th {
+      text-align: start;
+    }
+  }
+`;
 
 const Form = styled.form`
   display: flex;

@@ -35,7 +35,7 @@ function App() {
     <>
       <GlobalStyles />
       <QueryClientProvider client={queryClient}>
-        <ReactQueryDevtools />
+        {/* <ReactQueryDevtools /> */}
         <BrowserRouter>
           <Routes>
             <Route path="login" element={<Authentication />} />

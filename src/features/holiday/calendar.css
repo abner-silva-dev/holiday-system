@@ -21,6 +21,15 @@ td {
   color: var(--color-grey-100);
 }
 
+td span {
+  width: 4rem;
+  height: 4rem;
+}
+
+th {
+  text-align: center;
+}
+
 .p-datepicker-prev {
   &:hover {
     background-color: var(--color-brand-700);

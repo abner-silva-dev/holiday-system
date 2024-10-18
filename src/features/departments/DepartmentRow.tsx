@@ -25,7 +25,7 @@ const DepartmentRow: React.FC<Props> = ({ department }) => {
       <Table.Row key={department.id} columns="1fr 1fr 1fr 1fr 1fr 1fr 1fr">
         <span>{department.name}</span>
         <span>{department.nameAbreviate}</span>
-        <span>{department.enterprise.name}</span>
+        <span>{department.enterprise?.name}</span>
         <div>
           <Modal>
             <Menus.Menu>
