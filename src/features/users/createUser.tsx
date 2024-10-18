@@ -71,9 +71,7 @@ const CreateUser: React.FC<PropsCreateUSer> = ({ userToUpdate = {}, onCloseModal
     if (isEditSession && data.photo) delete data.photo;
     if (fileImg) formData.append('photo', fileImg);
 
-    Object.entries(data).forEach(([key, value]) => {
-      formData.append(key, value);
-    });
+    Object.entries(data).forEach(([key, value]) => formData.append(key, value));
 
     if (isEditSession)
       updateUser(

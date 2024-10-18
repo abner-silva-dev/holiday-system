@@ -27,7 +27,9 @@ const Holiday = () => {
           <HolidayOptions />
         </Row>
         <HolidayTable />
-        <div>{/* <Gantt /> */}</div>
+        {/* <div>
+          <Gantt />
+        </div> */}
       </Row>
     </>
   );

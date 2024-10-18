@@ -201,44 +201,20 @@ const HolidayManagement = () => {
   if (!holidays) return null;
 
   let holidaysFilter: HolidayInfo[] = [];
-  const { pendingHolidays } = getStatusHoliday();
+
+  const { pendingHolidays, approvedHolidays, rejectedHolidays } =
+    getStatusHoliday(holidays);
 
   //FILTERS
   switch (history) {
     case 'request':
-      holidaysFilter = holidays.filter((holiday: HolidayInfo) => {
-        if (
-          holiday.authorizationAdmin === 'approved' &&
-          holiday.authorizationManager === 'approved'
-        )
-          return false;
-        else if (
-          holiday.authorizationAdmin === 'rejected' ||
-          holiday.authorizationManager === 'rejected'
-        )
-          return false;
-        else if (
-          holiday.authorizationAdmin === 'pending' ||
-          holiday.authorizationManager === 'pending'
-        )
-          return true;
-      });
+      holidaysFilter = pendingHolidays;
       break;
     case 'successfull':
-      holidaysFilter = holidays.filter((holiday: HolidayInfo) => {
-        return (
-          holiday.authorizationAdmin === 'approved' &&
-          holiday.authorizationManager === 'approved'
-        );
-      });
+      holidaysFilter = approvedHolidays;
       break;
     case 'rejected':
-      holidaysFilter = holidays.filter((holiday: HolidayInfo) => {
-        return (
-          holiday.authorizationAdmin === 'rejected' ||
-          holiday.authorizationManager === 'rejected'
-        );
-      });
+      holidaysFilter = rejectedHolidays;
       break;
     case 'all':
       holidaysFilter = holidays;
