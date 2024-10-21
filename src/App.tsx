@@ -20,6 +20,7 @@ import RedirectRole from './ui/RedirectRole';
 import Header from './features/user-app/Header';
 import AppLayoutUser from './ui/AppLayoutUser';
 import Authentication from './pages/Authentication';
+import Request from './pages/Request';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -38,6 +39,9 @@ function App() {
         {/* <ReactQueryDevtools /> */}
         <BrowserRouter>
           <Routes>
+            {/* PERSONNEL MANAGEMENT APP */}
+            <Route path="request" element={<Request />} />
+
             <Route path="login" element={<Authentication />} />
             <Route
               path="/"

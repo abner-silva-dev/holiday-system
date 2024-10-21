@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 const StyledStat = styled.div`
   /* Box */
+  position: relative;
   background-color: var(--color-grey-0);
   border: 1px solid var(--color-grey-100);
   border-radius: var(--border-radius-md);
@@ -46,16 +47,32 @@ const Value = styled.p`
   font-weight: 500;
 `;
 
+const Tag = styled.label`
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #862e9c;
+  color: #fff;
+  padding: 0.2rem 0.6rem;
+  font-size: 1.4rem;
+  border-bottom-left-radius: 9px;
+  border-top-right-radius: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+`;
+
 interface Props {
   icon: JSX.Element;
   title: string;
   value: string;
   color: string;
+  tag?: string;
 }
 
-function Stat({ icon, title, value, color }: Props) {
+function Stat({ icon, title, value, color, tag }: Props) {
   return (
     <StyledStat>
+      {tag && <Tag>{tag}</Tag>}
       <Icon color={color}>{icon}</Icon>
       <Title>{title}</Title>
       <Value>{value}</Value>

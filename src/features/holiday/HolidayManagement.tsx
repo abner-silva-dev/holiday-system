@@ -233,10 +233,13 @@ const HolidayManagement = () => {
         <UserCard user={user}>
           <Stats>
             <Stat
+              tag="Actual"
               color="red"
               icon={<HiCalendarDays />}
               title="Días Restantes"
-              value={`${user.credit?.balance} de ${user.daysGrantedBySeniority}`}
+              value={`${user.credit?.balance ? user.credit?.balance : 0} de ${
+                user.daysGrantedBySeniority ? user.daysGrantedBySeniority : 0
+              }`}
             />
 
             <Stat
@@ -250,7 +253,9 @@ const HolidayManagement = () => {
               color="green"
               icon={<HiCalendarDays />}
               title="Vacaciones del periodo"
-              value={`2023 - ${user.creditPast?.balance}/${user.daysGrantedBySeniorityPast}`}
+              value={`2023 - ${user.creditPast?.balance ? user.creditPast?.balance : 0}/${
+                user.daysGrantedBySeniorityPast ? user.daysGrantedBySeniorityPast : 0
+              }`}
             />
 
             <Stat
