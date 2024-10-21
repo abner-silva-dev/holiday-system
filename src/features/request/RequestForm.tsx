@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const FormSection = styled.section`
   width: 90rem;
   margin: 0 auto;
-  padding: 20px;
+  padding: 2rem;
   border: 1px solid #ccc;
   border-radius: 10px;
   background-color: #f9f9f9;
@@ -12,22 +12,22 @@ const FormSection = styled.section`
 
 const Title = styled.h2`
   text-align: center;
-  font-size: 24px;
+  font-size: 2.4rem;
   color: #d32f2f;
 `;
 
-const InputGroup = styled.div`
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  margin-bottom: 15px;
-`;
+// const InputGroup = styled.div`
+//   display: flex;
+//   justify-content: space-between;
+//   flex-wrap: wrap;
+//   margin-bottom: 15px;
+// `;
 
 const InputGroupColumn = styled.div`
   display: flex;
   flex-direction: column;
-
-  margin-bottom: 15px;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
 `;
 
 const InputGroupRow = styled.div`
@@ -35,7 +35,7 @@ const InputGroupRow = styled.div`
   justify-content: space-between;
   gap: 2rem;
   width: 100%;
-  margin-bottom: 15px;
+  margin-bottom: 1.5rem;
 `;
 
 const Input = styled.input`
@@ -48,17 +48,17 @@ const Input = styled.input`
 `;
 
 const Label = styled.label`
-  font-size: 14px;
+  font-size: 1.4rem;
   margin-bottom: 5px;
   color: #333;
 `;
 
 const SubmitButton = styled.button`
   width: 100%;
-  padding: 15px;
+  padding: 1.5rem;
   background-color: #d32f2f;
   color: white;
-  font-size: 16px;
+  font-size: 1.6rem;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -73,6 +73,12 @@ const Group = styled.div`
   gap: 2rem;
 `;
 
+const Section = styled.section`
+  /* display: flex;
+flex-direction: column;
+gap: 2rem; */
+`;
+
 const GroupPersonal = styled(Group)``;
 
 const GroupHead = styled(Group)``;
@@ -85,25 +91,26 @@ const RequestForm = () => {
       <Title>Distribuidora de Auto Industrias, S.A. de C.V.</Title>
 
       {/* Sección de Puesto Solicitado */}
-      <GroupHead>
-        <InputGroupColumn>
-          <Label>Puesto Solicitado</Label>
-          <Input type="text" />
-        </InputGroupColumn>
-        <InputGroupColumn>
-          <Label>Departamento</Label>
-          <Input type="text" />
-        </InputGroupColumn>
-        <InputGroupColumn>
-          <Label>Sueldo</Label>
-          <Input type="text" />
-        </InputGroupColumn>
-        <InputGroupColumn>
-          <Label>Fecha</Label>
-          <Input type="date" />
-        </InputGroupColumn>
-      </GroupHead>
-
+      <Section>
+        <GroupHead>
+          <InputGroupColumn>
+            <Label>Puesto Solicitado</Label>
+            <Input type="text" />
+          </InputGroupColumn>
+          <InputGroupColumn>
+            <Label>Departamento</Label>
+            <Input type="text" />
+          </InputGroupColumn>
+          <InputGroupColumn>
+            <Label>Sueldo</Label>
+            <Input type="text" />
+          </InputGroupColumn>
+          <InputGroupColumn>
+            <Label>Fecha</Label>
+            <Input type="date" />
+          </InputGroupColumn>
+        </GroupHead>
+      </Section>
       {/* Datos Personales */}
       <h4>Datos Personales</h4>
       <GroupPersonal>
@@ -189,36 +196,33 @@ const RequestForm = () => {
           <Input type="checkbox" />
         </InputGroupColumn>
         <InputGroupColumn>
+          <Label>¿Por qué medio se enteró del puesto?</Label>
+          <Input type="text" />
+        </InputGroupColumn>
+        <InputGroupColumn>
           <Label>¿Ha trabajado en DAI?</Label>
           <Input type="text" />
         </InputGroupColumn>
-      </GroupComplement>
-
-      <InputGroupRow></InputGroupRow>
-
-      <InputGroupRow>
+        <InputGroupColumn>
+          <Label>¿En qué fecha?</Label>
+          <Input type="date" />
+        </InputGroupColumn>
         <InputGroupColumn>
           <Label>¿En qué Departamento?</Label>
           <Input type="text" />
         </InputGroupColumn>
-      </InputGroupRow>
-
-      <InputGroupRow>
         <InputGroupColumn>
           <Label>¿Con quién vive actualmente?</Label>
           <Input type="text" />
         </InputGroupColumn>
         <InputGroupColumn>
-          <Label>¿Contribuye con el gasto familiar?</Label>
-          <Input type="checkbox" />
-        </InputGroupColumn>
-        <InputGroupColumn>
           <Label>¿Dependen personas económicamente de Ud.?</Label>
           <Input type="checkbox" />
         </InputGroupColumn>
-      </InputGroupRow>
-
-      <InputGroupRow>
+        <InputGroupColumn>
+          <Label>¿Contribuye con el gasto familiar?</Label>
+          <Input type="checkbox" />
+        </InputGroupColumn>
         <InputGroupColumn>
           <Label>¿Posee Automóvil propio?</Label>
           <Input type="checkbox" />
@@ -227,7 +231,13 @@ const RequestForm = () => {
           <Label>Marca y Modelo</Label>
           <Input type="text" />
         </InputGroupColumn>
-      </InputGroupRow>
+      </GroupComplement>
+
+      <InputGroupRow></InputGroupRow>
+
+      <InputGroupRow></InputGroupRow>
+
+      <InputGroupRow></InputGroupRow>
 
       {/* Botón de envío */}
       <SubmitButton>Enviar Solicitud</SubmitButton>

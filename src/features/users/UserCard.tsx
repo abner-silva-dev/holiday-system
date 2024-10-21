@@ -6,6 +6,7 @@ import UserPhoto from './UserPhoto';
 import { API_DAI_BASE } from '../../config';
 import { HiChevronLeft } from 'react-icons/hi2';
 import Button from '../../ui/Button';
+import { useForm } from 'react-hook-form';
 
 const StyledUserCard = styled.aside`
   position: relative;
@@ -142,11 +143,20 @@ const Form = styled.form`
   gap: 0.5rem;
 `;
 
+// interface CreditEdit {
+//   credit: number;
+//   pastCredit: number;
+//   futureCredit: number;
+// }
+
 const UserCard: React.FC<{ user: UserInfo; children?: ReactNode }> = ({
   user,
   children,
 }) => {
   const [showEdit, setShowEdit] = useState(false);
+  // const { update, handleSubmit } = useForm<CreditEdit>({});
+
+  // const onSubmit = () => {};
   return (
     <StyledUserCard>
       <EditButton onClick={() => setShowEdit(!showEdit)} type="button">

@@ -1,10 +1,7 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 import { HiCalendarDays, HiArrowLeft } from 'react-icons/hi2';
 
-import { HiOutlineClock } from 'react-icons/hi2';
-import { HiOutlineChevronRight } from 'react-icons/hi2';
-import { HiOutlineChevronLeft } from 'react-icons/hi2';
 import { HiOutlineClipboardDocumentList } from 'react-icons/hi2';
 import { HiOutlineDocumentCheck } from 'react-icons/hi2';
 
@@ -23,6 +20,7 @@ import { HolidayInfo } from './type';
 import ContentEmpty from '../../ui/ContentEmpty';
 import { media } from '../../style/media';
 import { getStatusHoliday } from '../../utils/holidayUtils';
+import PeriodComponent from './PeriodComponent';
 
 const HolidayInfoStyles = styled.div`
   display: grid;
@@ -53,83 +51,6 @@ const HolidayMain = styled.main`
   overflow-y: scroll;
   border-radius: 9px;
   height: 55rem;
-`;
-
-const PeriodComponent = styled.div`
-  display: flex;
-  position: relative;
-  align-items: center;
-  gap: 1rem;
-`;
-
-const PeriodTag = styled.div`
-  background-color: var(--color-brand-50);
-  color: var(--color-brand-900);
-  font-size: 1.8rem;
-  display: grid;
-  align-items: center;
-  justify-items: center;
-  gap: 1.2rem;
-
-  grid-template-columns: 1fr 1fr;
-  border: 1px solid var(--color-brand-200);
-  padding: 1.6rem 3.2rem 1.6rem 1.2rem;
-  border-radius: 9px;
-  box-shadow: var(--shadow-md);
-
-  & svg {
-    height: 4rem;
-    width: 4rem;
-  }
-`;
-
-const TagTextContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-`;
-
-const periodBtn = css`
-  background-color: var(--color-brand-900);
-  border: none;
-  border-radius: 50%;
-  height: 3rem;
-  width: 3rem;
-
-  position: absolute;
-  transform: translateY(-50%);
-  top: 50%;
-
-  box-shadow: var(--shadow-md);
-  transform: all 0.2s;
-  & svg {
-    height: 2rem;
-    width: 2rem;
-    stroke: var(--color-grey-100);
-  }
-  &:hover {
-    background-color: var(--color-brand-800);
-  }
-`;
-
-const PeriodButtonLeft = styled.button`
-  ${periodBtn}
-
-  left: -1.3rem;
-`;
-const PeriodButtonRight = styled.button`
-  ${periodBtn}
-
-  right: -1.3rem;
-`;
-
-const TagTitle = styled.span`
-  font-weight: bold;
-`;
-
-const ClockContainer = styled.div`
-  display: flex;
-  align-items: center;
 `;
 
 const Filters = styled.div`
@@ -275,23 +196,7 @@ const HolidayManagement = () => {
             value={`${pendingHolidays.length} solicitudes`}
           />
 
-          <PeriodComponent>
-            <PeriodButtonLeft>
-              <HiOutlineChevronLeft />
-            </PeriodButtonLeft>
-            <PeriodTag>
-              <ClockContainer>
-                <HiOutlineClock />
-              </ClockContainer>
-              <TagTextContainer>
-                <TagTitle>Periodo</TagTitle>
-                <span>2024</span>
-              </TagTextContainer>
-            </PeriodTag>
-            <PeriodButtonRight>
-              <HiOutlineChevronRight />
-            </PeriodButtonRight>
-          </PeriodComponent>
+          <PeriodComponent initialPeriod={2024} />
         </HolidayOptions>
 
         <Filters>
