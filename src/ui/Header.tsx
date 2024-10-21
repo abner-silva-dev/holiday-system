@@ -121,6 +121,8 @@ function Header() {
   const { userAuthenticated } = useMe();
 
   const { holidays } = useHolidays();
+  console.log(holidays);
+
   const { pendingHolidays } = getStatusHoliday(holidays);
 
   useEffect(() => {
