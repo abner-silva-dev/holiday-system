@@ -14,6 +14,9 @@ import { useCreateHoliday } from './useCreateHoliday';
 import { useUser } from '../users/useUser';
 import { useQueryClient } from '@tanstack/react-query';
 import { media } from '../../style/media';
+import StateHoliday from './StateHoliday';
+import { getStatusHoliday } from '../../utils/holidayUtils';
+import Holiday from '../../pages/Holiday';
 
 const StyledCalendarInput = styled.div`
   @media (${media.tablet}) {
@@ -90,6 +93,17 @@ const CreateHoliday: React.FC<PropsCreateDepartment> = ({ edit = {}, onClose }) 
   const { user: curUser } = useUser();
   const { createHoliday } = useCreateHoliday();
   const [dates, setDates] = useState<Date[]>([]);
+
+  const { pendingHolidays } = getStatusHoliday(curUser?.holidays || []);
+  const tempPendingHolidays = pendingHolidays.reduce(
+    (acc, cur) => acc + (cur.days?.length || 0),
+    0
+  );
+
+  console.log(tempPendingHolidays);
+  console.log(curUser?.credit?.balance || 0);
+
+  console.log((curUser?.credit?.balance || 0) - tempPendingHolidays);
 
   if (!curUser) return null;
 
@@ -173,6 +187,7 @@ const CreateHoliday: React.FC<PropsCreateDepartment> = ({ edit = {}, onClose }) 
                 disabledDates={[]} // En este caso no se usa disabledDates directamente
                 disabledDays={[0]} // Deshabilitar solo domingos (0)
                 required={true}
+                maxDateCount={(curUser?.credit?.balance || 0) - tempPendingHolidays || -1}
               />
             </StyledCalendarInput>
           </FieldContainer>

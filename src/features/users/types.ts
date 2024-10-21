@@ -23,9 +23,21 @@ export interface UserInfo {
   enterprise: EnterpriseInfo;
   department: DepartmentInfo;
   holidays?: HolidayInfo[];
-  daysGrantedBySeniority?: number;
-  daysGrantedBySeniorityPast?: number;
-  daysGrantedBySeniorityFuture?: number;
+  daysGrantedBySeniority?: {
+    balance: number;
+    startDate: Date;
+    endDate: Date;
+  };
+  daysGrantedBySeniorityPast?: {
+    balance: number;
+    startDate: Date;
+    endDate: Date;
+  };
+  daysGrantedBySeniorityFuture?: {
+    balance: number;
+    startDate: Date;
+    endDate: Date;
+  };
   credit?: { balance: number; exp: string };
   creditFuture?: { balance: number };
   creditPast?: { balance: number; exp: string };
