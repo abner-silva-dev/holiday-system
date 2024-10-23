@@ -19,7 +19,6 @@ export interface UserInfo {
   dateHiring: string;
   seniority?: Seniority;
   email: string;
-  phoneNumber: string;
   enterprise: EnterpriseInfo;
   department: DepartmentInfo;
   holidays?: HolidayInfo[];

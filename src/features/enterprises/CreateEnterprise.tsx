@@ -9,6 +9,8 @@ import Row from '../../ui/Row';
 import Heading from '../../ui/Heading';
 
 import { EnterpriseInfo } from '../enterprises/types';
+import { upperCaseText } from '../../utils/helpers';
+// import InputImageDrag from '../../ui/InputImageDrag';
 
 const Form = styled.form`
   display: grid;
@@ -40,6 +42,9 @@ const CreateEnterprise: React.FC<PropsCreateEnterprise> = ({
   edit = {},
   onCloseModal,
 }) => {
+  // const { _id: enterpriseId = '', ...editValues } = enterpriseToUpdate as EnterpriseInfo;
+  // const isEditSession = Boolean(enterpriseId);
+
   const { register, handleSubmit, reset } = useForm<EnterpriseInfo>({
     defaultValues: edit,
   });
@@ -47,11 +52,14 @@ const CreateEnterprise: React.FC<PropsCreateEnterprise> = ({
   const { createEnterprise } = useCreateEnterprise();
 
   const onSubmit = (data: EnterpriseInfo) => {
+    // ****!! ANDREW ADDED THIS FUNCTIONALITY
+
     const { name, nameAbreviate, email, phoneNumber, logo } = data;
+    const capitalizedNameAbreviate = upperCaseText(nameAbreviate || '');
 
     createEnterprise({
       name,
-      nameAbreviate,
+      nameAbreviate: capitalizedNameAbreviate,
       email,
       phoneNumber,
       logo,
@@ -66,6 +74,16 @@ const CreateEnterprise: React.FC<PropsCreateEnterprise> = ({
       <Heading as="h2">Registro de empresa</Heading>
 
       <Form onSubmit={handleSubmit(onSubmit)}>
+        {/* <FormRow label="Logotipo">
+          <InputImageDrag
+            defaultName={logo || ''}
+            onChangeFile={setFileImg}
+            showPreview={false}
+            id="logo"
+            {...register('logo')}
+            required
+          />
+        </FormRow> */}
         <FormRow label="Logotipo">
           <Input type="text" id="logo" {...register('logo')} required />
         </FormRow>

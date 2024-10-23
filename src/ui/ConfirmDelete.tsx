@@ -33,6 +33,12 @@ function ConfirmDelete({
   disabled,
   onCloseModal,
 }: ConfirmDelete) {
+  // ****!! ANDREW MADE THIS FUNCTION: FIXES CLOSING MODAL WHEN YOU CLIC ON "DELETE"
+
+  const handleDelete = async () => {
+    await onConfirm();
+    onCloseModal?.();
+  };
   return (
     <StyledConfirmDelete>
       <Heading as="h3">Delete {resourceName}</Heading>
@@ -45,7 +51,8 @@ function ConfirmDelete({
         <Button $variation="secondary" disabled={disabled} onClick={onCloseModal}>
           Cancel
         </Button>
-        <Button $variation="danger" disabled={disabled} onClick={onConfirm}>
+        {/* ALSO I PUT "handleDelete" in the prop onClick Button "danger" */}
+        <Button $variation="danger" disabled={disabled} onClick={handleDelete}>
           Delete
         </Button>
       </div>

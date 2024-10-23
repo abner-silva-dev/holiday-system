@@ -9,6 +9,9 @@ import { DepartmentInfo } from './types';
 import { useCreateDepartment } from './useCreateDepartment';
 import Row from '../../ui/Row';
 import Heading from '../../ui/Heading';
+import { useEnterprises } from '../enterprises/useEnterprises';
+import { EnterpriseInfo } from '../enterprises/types';
+import { upperCaseText } from '../../utils/helpers';
 
 const Form = styled.form`
   display: grid;
@@ -26,8 +29,10 @@ const Input = styled.input`
 `;
 
 interface HandleSubmit extends DepartmentInfo {
-  paternSurname?: string;
-  motherSurname?: string;
+  // paternSurname?: string;
+  // motherSurname?: string;
+  name?: string;
+  nameAbreviate?: string;
 }
 
 interface PropsCreateDepartment {
@@ -44,15 +49,18 @@ const CreateDepartment: React.FC<PropsCreateDepartment> = ({
   });
 
   const { createDepartment } = useCreateDepartment();
+  const { enterprises } = useEnterprises();
 
   const onSubmit = (data: HandleSubmit) => {
     const { name, nameAbreviate, enterprise } = data;
 
+    const capitalizedName = upperCaseText(name || '');
+    const capitalizedNameAbreviate = upperCaseText(nameAbreviate || '');
+
     createDepartment({
-      name,
-      nameAbreviate,
+      name: capitalizedName,
+      nameAbreviate: capitalizedNameAbreviate,
       enterprise,
-      //   name: joinName({ name, paternSurname, motherSurname }),
     });
 
     reset();
@@ -83,13 +91,22 @@ const CreateDepartment: React.FC<PropsCreateDepartment> = ({
           />
         </FormRow>
         <FormRow label="Empresa">
-          <Input
+          {/* <Input
             type="text"
             id="enterprise"
             placeholder="DAI"
             {...register('enterprise')}
             required
-          />
+          /> */}
+          <Input id="enterprise" as="select" {...register('enterprise')} required>
+            {enterprises?.map((enterprise: EnterpriseInfo) => {
+              return (
+                <option value={enterprise._id} key={enterprise._id}>
+                  {enterprise.name}
+                </option>
+              );
+            })}
+          </Input>
         </FormRow>
         <Button $variation="confirm">Crear Departamento</Button>
       </Form>
