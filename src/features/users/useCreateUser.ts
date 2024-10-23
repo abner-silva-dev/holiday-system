@@ -12,6 +12,7 @@ export const useCreateUser = () => {
       queryClient.invalidateQueries({ queryKey: ['users'] });
     },
     onError: (err) => {
+      console.log(err);
       toast.error(err.message);
     },
   });
