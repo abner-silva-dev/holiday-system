@@ -86,3 +86,7 @@ export function formatText(text: string): string {
 
   return newText;
 }
+
+export function upperCaseText(txt: string) {
+  return txt.toUpperCase();
+}

@@ -24,7 +24,7 @@ const UserRow: React.FC<Props> = ({ user }) => {
     paternSurname,
     motherSurname,
     email,
-    phoneNumber,
+
     enterprise,
     department,
     photo,
@@ -89,7 +89,7 @@ const UserRow: React.FC<Props> = ({ user }) => {
                     dateHiring: dateHiringFormat,
                     name,
                     email,
-                    phoneNumber,
+
                     enterprise: { _id: enterpriseId },
                     department: { _id: departmentId },
                     paternSurname,

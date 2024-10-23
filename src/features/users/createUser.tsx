@@ -161,15 +161,6 @@ const CreateUser: React.FC<PropsCreateUSer> = ({ userToUpdate = {}, onCloseModal
             required
           />
         </FormRow>
-        <FormRow label="Telefono">
-          <Input
-            type="text"
-            id="phoneNumber"
-            placeholder="5523728112"
-            {...register('phoneNumber')}
-            required
-          />
-        </FormRow>
         <FormRow label="Fecha de ingreso">
           <Input type="date" id="dateHiring" {...register('dateHiring')} required />
         </FormRow>
