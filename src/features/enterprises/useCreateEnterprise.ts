@@ -9,7 +9,7 @@ export const useCreateEnterprise = () => {
     mutationFn: createEnterpriseApi,
     onSuccess: () => {
       toast.success('Empresa creada exitosamente');
-      queryClient.invalidateQueries({ queryKey: ['enterprise'] });
+      queryClient.invalidateQueries({ queryKey: ['enterprises'] });
     },
     onError: (err) => {
       toast.error(err.message);

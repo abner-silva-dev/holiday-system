@@ -41,9 +41,10 @@ export function createOne<Model>(sourceName: string) {
 
       return data;
     } catch (error) {
+      // console.log(error.response);
       const errorMessage =
         axios.isAxiosError(error) && error.response
-          ? error.response.data.error.message || 'An unknown error occurred'
+          ? error.response.data.message || 'An unknown error occurred'
           : 'An unknown error occurred';
 
       throw new Error(errorMessage);
@@ -71,6 +72,11 @@ export function updateOne<Model>(sourceName: SourceName) {
   return async (id: string, newData: Model | FormData) => {
     try {
       const isFormData = newData instanceof FormData;
+      if (isFormData) {
+        newData.forEach((value, key) => {
+          console.log(`${key}: ${value}`);
+        });
+      }
 
       const { data } = await axios.patch(
         `${API_DAI_SYSTEM}/${sourceName}/${id}`,

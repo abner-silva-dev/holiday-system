@@ -6,8 +6,8 @@ import { useState } from 'react';
 const FormContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  column-gap: 4rem;
-  row-gap: 3rem;
+  column-gap: 3rem;
+  row-gap: 4rem;
 
   margin-bottom: 4rem;
   padding-bottom: 4rem;
@@ -827,6 +827,88 @@ const RequestForm = () => {
               </Field>
             </FormContainer>
 
+            <Title as="h3">Hijo 1</Title>
+            <FormContainer>
+              <Field>
+                <Label>Nombre Completo</Label>
+                <Input type="text"></Input>
+              </Field>
+              <Field>
+                <Label>Sexo</Label>
+                <Select>
+                  <option>Seleccione una opción...</option>
+                  <option>Masculino</option>
+                  <option>Femenino</option>
+                </Select>
+              </Field>
+              <Field>
+                <Label>Edad</Label>
+                <Input type="number"></Input>
+              </Field>
+              <Field>
+                <Label>Ocupación</Label>
+                <Input type="text"></Input>
+              </Field>
+              <Field>
+                <Label>Domicilio</Label>
+                <Input type="text"></Input>
+              </Field>
+            </FormContainer>
+            <Title as="h3">Hijo 2</Title>
+            <FormContainer>
+              <Field>
+                <Label>Nombre Completo</Label>
+                <Input type="text"></Input>
+              </Field>
+              <Field>
+                <Label>Sexo</Label>
+                <Select>
+                  <option>Seleccione una opción...</option>
+                  <option>Masculino</option>
+                  <option>Femenino</option>
+                </Select>
+              </Field>
+              <Field>
+                <Label>Edad</Label>
+                <Input type="number"></Input>
+              </Field>
+              <Field>
+                <Label>Ocupación</Label>
+                <Input type="text"></Input>
+              </Field>
+              <Field>
+                <Label>Domicilio</Label>
+                <Input type="text"></Input>
+              </Field>
+            </FormContainer>
+            <Title as="h3">Hijo 3</Title>
+            <FormContainer>
+              <Field>
+                <Label>Nombre Completo</Label>
+                <Input type="text"></Input>
+              </Field>
+              <Field>
+                <Label>Sexo</Label>
+                <Select>
+                  <option>Seleccione una opción...</option>
+                  <option>Masculino</option>
+                  <option>Femenino</option>
+                </Select>
+              </Field>
+              <Field>
+                <Label>Edad</Label>
+                <Input type="number"></Input>
+              </Field>
+              <Field>
+                <Label>Ocupación</Label>
+                <Input type="text"></Input>
+              </Field>
+              <Field>
+                <Label>Domicilio</Label>
+                <Input type="text"></Input>
+              </Field>
+            </FormContainer>
+
             <PageChange>
               <Button $variation="primary" onClick={handleBack}>
                 Atrás
@@ -834,6 +916,168 @@ const RequestForm = () => {
 
               <Button $variation="confirm" onClick={handleNext}>
                 Siguiente
+              </Button>
+            </PageChange>
+          </Page>
+        )}
+        {page === 7 && (
+          <Page>
+            <Title as="h2">REFERENCIAS PERSONALES</Title>
+            <Title as="h4">
+              Favor de incluir los datos de 3 personas que lo conozcan bien, que no sean
+              familiares
+            </Title>
+
+            <Title as="h3">Persona 1</Title>
+            <FormContainer>
+              <Field>
+                <Label>Nombre Completo</Label>
+                <Input type="text"></Input>
+              </Field>
+              <Field>
+                <Label>Tiempo de Conocerle</Label>
+                <Input type="text"></Input>
+              </Field>
+              <Field>
+                <Label>Teléfono / Celular</Label>
+                <Input type="text"></Input>
+              </Field>
+              <Field>
+                <Label>Ocupación</Label>
+                <Input type="text"></Input>
+              </Field>
+            </FormContainer>
+
+            <Title as="h3">Persona 2</Title>
+            <FormContainer>
+              <Field>
+                <Label>Nombre Completo</Label>
+                <Input type="text"></Input>
+              </Field>
+              <Field>
+                <Label>Tiempo de Conocerle</Label>
+                <Input type="text"></Input>
+              </Field>
+              <Field>
+                <Label>Teléfono / Celular</Label>
+                <Input type="text"></Input>
+              </Field>
+              <Field>
+                <Label>Ocupación</Label>
+                <Input type="text"></Input>
+              </Field>
+            </FormContainer>
+
+            <Title as="h3">Persona 3</Title>
+            <FormContainer>
+              <Field>
+                <Label>Nombre Completo</Label>
+                <Input type="text"></Input>
+              </Field>
+              <Field>
+                <Label>Tiempo de Conocerle</Label>
+                <Input type="text"></Input>
+              </Field>
+              <Field>
+                <Label>Teléfono / Celular</Label>
+                <Input type="text"></Input>
+              </Field>
+              <Field>
+                <Label>Ocupación</Label>
+                <Input type="text"></Input>
+              </Field>
+            </FormContainer>
+            <PageChange>
+              <Button $variation="primary" onClick={handleBack}>
+                Atrás
+              </Button>
+
+              <Button $variation="confirm" onClick={handleNext}>
+                Siguiente
+              </Button>
+            </PageChange>
+          </Page>
+        )}
+        {page === 8 && (
+          <Page>
+            <Title as="h2">INFORMACIÓN CLÍNICA</Title>
+            <FormContainer>
+              <Field>
+                <Label>Escribe</Label>
+                <Percentage>
+                  <Input type="number"></Input>
+                  <span>cm</span>
+                </Percentage>
+              </Field>
+              <Field>
+                <Label>Peso</Label>
+                <Percentage>
+                  <Input type="number"></Input>
+                  <span>Kg</span>
+                </Percentage>
+              </Field>
+              <Field>
+                <Label>Tipo de Sangre</Label>
+                <Input type="text"></Input>
+              </Field>
+              <Field>
+                <Label>
+                  ¿Padece o padeció enfermedades que necesiten atención médica?
+                </Label>
+                <FieldRadio>
+                  <span>Sí</span>
+                  <Input type="radio" name="car"></Input>
+                  <span>No</span>
+                  <Input type="radio" name="car"></Input>
+                </FieldRadio>
+              </Field>
+              <Field>
+                <Label>¿Qué enfermedades?</Label>
+                <Input type="text"></Input>
+              </Field>
+              <Field>
+                <Label>
+                  ¿En el transcurso del último año ha tenido algún tipo de intervención
+                  quirúrgica?
+                </Label>
+                <FieldRadio>
+                  <span>Sí</span>
+                  <Input type="radio" name="car"></Input>
+                  <span>No</span>
+                  <Input type="radio" name="car"></Input>
+                </FieldRadio>
+              </Field>
+              <Field>
+                <Label>¿De qué tipo?</Label>
+                <Input type="text"></Input>
+              </Field>
+              <Field>
+                <Label>
+                  ¿Tiene algún inpedimento físico que lo limite en su trabajo?
+                </Label>
+                <FieldRadio>
+                  <span>Sí</span>
+                  <Input type="radio" name="car"></Input>
+                  <span>No</span>
+                  <Input type="radio" name="car"></Input>
+                </FieldRadio>
+              </Field>
+            </FormContainer>
+            <FieldCheck>
+              <Label>
+                Certifico que la información aquí proporcionada es verídica, por lo que
+                autorizo a Distribuidora de Auto Industrias, S.A de C.V, a corroborarla
+                cuestionando a las referencias señaladas tanto sobre mi conducta personal
+                como laboral, así como el uso de mis datos personales con base en el aviso
+                de privacidad de la empresa, el cual podré consultar en www.dai.com.mx,
+                reconociemdo que la presente solicitud no significa el establecimiento de
+                ninguna relación laboral, ni crea el compromiso de que ésta me otorgue.
+              </Label>
+              <Input type="checkbox"></Input>
+            </FieldCheck>
+            <PageChange>
+              <Button $variation="primary" onClick={handleBack}>
+                Atrás
               </Button>
             </PageChange>
           </Page>

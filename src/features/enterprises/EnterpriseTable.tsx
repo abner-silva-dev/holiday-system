@@ -39,7 +39,7 @@ const EnterpriseTable = () => {
           <Table.Body
             data={dataSearch}
             render={(enterprise: EnterpriseInfo) => (
-              <EnterpriseRow enterprise={enterprise} key={enterprises?._id} />
+              <EnterpriseRow enterprise={enterprise} key={enterprise?._id} />
             )}
           ></Table.Body>
         </Table>

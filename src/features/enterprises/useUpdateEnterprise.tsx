@@ -7,12 +7,11 @@ export const useUpdateEnterprise = () => {
   const queryClient = useQueryClient();
 
   const { mutate: updateEnterprises, isPending: isPending } = useMutation({
-    // mutationFn: updateEnterpriseApi,
-    mutationFn: ({ id, newData }: { id: string; newData: EnterpriseInfo | FormData }) =>
+    mutationFn: ({ newData, id }: { newData: EnterpriseInfo | FormData; id: string }) =>
       updateEnterpriseApi(id, newData),
     onSuccess: () => {
       toast.success('Empresa actualizada exitosamente');
-      queryClient.invalidateQueries({ queryKey: ['enterprise'] });
+      queryClient.invalidateQueries({ queryKey: ['enterprises'] });
     },
     onError: (err) => {
       toast.error(err.message);
