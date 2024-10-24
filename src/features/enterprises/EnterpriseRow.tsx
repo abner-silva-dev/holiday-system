@@ -18,7 +18,8 @@ const EnterpriseRow: React.FC<Props> = ({ enterprise }) => {
 
   const { name, nameAbreviate, email, phoneNumber, logo } = enterprise;
 
-  const enterpriseId = enterprise._id || '';
+  const enterpriseId =
+    typeof enterprise === 'object' && enterprise ? enterprise._id || '' : '';
 
   return (
     <Table.Row columns="1fr 1fr 1fr 1fr 1fr 1fr 1fr">
@@ -52,7 +53,8 @@ const EnterpriseRow: React.FC<Props> = ({ enterprise }) => {
 
             <Modal.Window name="edit">
               <CreateEnterprise
-                edit={{
+                enterpriseToUpdate={{
+                  _id: enterpriseId,
                   logo,
                   name,
                   nameAbreviate,

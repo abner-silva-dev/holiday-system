@@ -1,462 +1,845 @@
-import { useState } from 'react';
 import styled from 'styled-components';
-
-const FormSection = styled.section`
-  display: flex;
-  justify-content: center;
-  padding: 20px;
-  background-color: #f5f5f5;
-`;
+import Heading from '../../ui/Heading';
+import Button from '../../ui/Button';
+import { useState } from 'react';
 
 const FormContainer = styled.div`
-  width: 13in; /* Ancho de una hoja tamaño oficio */
-  border: 1px solid #b20000;
-  padding: 20px;
-  background-color: #fff;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  column-gap: 4rem;
+  row-gap: 3rem;
+
+  margin-bottom: 4rem;
+  padding-bottom: 4rem;
+  border-bottom: 1px solid var(--color-grey-200);
+  width: 100%;
 `;
 
-const Header = styled.div`
+const InitialContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 2rem;
   align-items: center;
-  margin-bottom: 20px;
-`;
-
-const CompanyName = styled.h2`
-  font-size: 18px;
-  color: #b20000;
-`;
-
-const PhotoUpload = styled.div`
-  width: 100px;
-  height: 120px;
-  border: 1px solid #b20000;
-  display: flex;
   justify-content: center;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-  img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: cover;
-    position: absolute;
-  }
-  input {
-    display: none;
-  }
+
+  position: absolute;
+  top: 50%;
+  left: 14%;
+  transform: translate(50%, -50%);
 `;
 
-const PhotoLabel = styled.label`
-  cursor: pointer;
-  font-size: 14px;
-  text-align: center;
-  padding: 5px;
-  z-index: 1;
-`;
+const Form = styled.form``;
 
-const FormTitle = styled.h1`
-  font-size: 20px;
-  color: #000;
-  margin-bottom: 20px;
-  text-align: center;
-`;
-
-const SectionTitle = styled.h2`
-  font-size: 14px;
-  color: white;
-  background-color: #b20000;
-  padding: 5px;
-  margin-bottom: 10px;
-  text-align: center;
-`;
-
-const FormGroupRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 15px;
-`;
-
-const FormGroup = styled.div`
-  flex: 1;
-  margin-right: 10px;
-  &:last-child {
-    margin-right: 0;
-  }
-`;
-
-const Label = styled.label`
-  display: block;
-  font-weight: bold;
-  margin-bottom: 5px;
-  color: #333;
-`;
+const Label = styled.label``;
 
 const Input = styled.input`
-  width: 90%; /* Cambiar a 90% para hacer los cuadros más delgados */
-  padding: 3px; /* Reducir el padding */
-  border: 1px solid #ccc;
-  border-radius: 4px;
-`;
-
-const SubmitButton = styled.button`
   width: 100%;
-  padding: 10px;
-  background-color: #b20000;
-  color: white;
-  font-weight: bold;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-top: 20px;
+  padding: 0.6rem;
+  border-radius: 9px;
+  border: 1px solid var(--color-grey-300);
 `;
 
-const SmallInput = styled.input`
-  width: 30px; /* Tamaño pequeño para Sí/No */
-  text-align: center;
+const Title = styled(Heading)`
+  margin-bottom: 3rem;
 `;
 
-const YesNoGroup = styled.div`
+const Field = styled.div`
   display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
+const Section = styled.div`
+  margin: 0 auto;
+  width: 120rem;
+`;
+
+const Select = styled.select`
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 9px;
+  border: 1px solid var(--color-grey-300);
+`;
+
+const FieldRadio = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  & input {
+    width: 20%;
+  }
+`;
+
+const FieldCheck = styled.div`
+  display: flex;
+  gap: 1rem;
   align-items: center;
-  margin-left: 10px;
+  justify-content: space-between;
+  & input {
+    width: 30%;
+    height: 1.6rem;
+  }
 `;
 
-const CheckboxLabel = styled.label`
-  margin-right: 10px; /* Espacio entre los checkboxes */
+const Page = styled.div`
+  padding: 4rem 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* overflow-y: scroll; */
 `;
 
-const DateInput = styled(Input)`
-  width: 100px; /* Tamaño más grande para el campo de fecha */
+const EmployControllers = styled.div`
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;
+`;
+
+const PageChange = styled.div`
+  display: flex;
+  gap: 2rem;
+`;
+
+const Percentage = styled.div`
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  & span {
+    font-size: 2rem;
+  }
 `;
 
 const RequestForm = () => {
-  const [photo, setPhoto] = useState<string | null>(null);
+  const [page, setPage] = useState(0);
+  const [employs, setEmploys] = useState([{}]); // Almacena los formularios de empleo (inicia con 1)
 
-  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const reader = new FileReader();
-      reader.onload = () => setPhoto(reader.result as string);
-      reader.readAsDataURL(e.target.files[0]);
+  const handleNext = () => setPage((prevPage) => prevPage + 1);
+  const handleBack = () => setPage((prevPage) => prevPage - 1);
+
+  // Función para agregar un formulario de empleo
+  const addEmploy = (e) => {
+    e.preventDefault(); // Evita que el formulario se envíe
+    if (employs.length < 3) {
+      setEmploys([...employs, {}]);
+    }
+  };
+
+  // Función para quitar un formulario de empleo
+  const removeEmploy = (e) => {
+    e.preventDefault(); // Evita que el formulario se envíe
+    if (employs.length > 1) {
+      setEmploys(employs.slice(0, -1));
     }
   };
 
   return (
-    <FormSection>
-      <FormContainer>
-        {/* Cabecera: Nombre de la empresa y espacio para la foto */}
-        <Header>
-          <CompanyName>DISTRIBUIDORA DE AUTO INDUSTRIAS, S.A. DE C.V.</CompanyName>
-          <PhotoUpload>
-            {photo ? (
-              <img src={photo} alt="Foto" />
-            ) : (
-              <PhotoLabel htmlFor="upload-photo">Subir Foto</PhotoLabel>
-            )}
-            <input type="file" id="upload-photo" onChange={handlePhotoChange} />
-          </PhotoUpload>
-        </Header>
+    <Section>
+      {page === 0 && (
+        <InitialContainer>
+          <Heading as="h1">Bienvenido</Heading>
+          <Heading as="h2">
+            Haga clic en continuar para comenzar a llenar la solicitud de empleo
+          </Heading>
+          <Button $variation="primary" onClick={handleNext}>
+            COMENZAR
+          </Button>
+        </InitialContainer>
+      )}
 
-        <FormTitle>Solicitud de Empleo</FormTitle>
+      <Form>
+        {page === 1 && (
+          <Page>
+            <Title as="h2">DATOS PERSONALES</Title>
+            <FormContainer>
+              <Field>
+                <Label>Nombre(s)</Label>
+                <Input type="text"></Input>
+              </Field>
 
-        {/* Primera fila: Puesto Solicitado, Departamento, Sueldo, Fecha */}
-        <FormGroupRow>
-          <FormGroup>
-            <Label>Puesto Solicitado</Label>
-            <Input type="text" />
-          </FormGroup>
-          <FormGroup>
-            <Label>Departamento</Label>
-            <Input type="text" />
-          </FormGroup>
-          <FormGroup>
-            <Label>Sueldo</Label>
-            <Input type="text" />
-          </FormGroup>
-          <FormGroup>
-            <Label>Fecha</Label>
-            <Input type="date" />
-          </FormGroup>
-        </FormGroupRow>
+              <Field>
+                <Label>Apellido Paterno</Label>
+                <Input type="text"></Input>
+              </Field>
 
-        {/* Título de la sección de Datos Personales */}
-        <SectionTitle>DATOS PERSONALES</SectionTitle>
+              <Field>
+                <Label>Apellido Materno</Label>
+                <Input type="text"></Input>
+              </Field>
 
-        {/* Fila 1: Nombre(s), Apellido Paterno, Apellido Materno, Edad, Sexo */}
-        <FormGroupRow>
-          <FormGroup>
-            <Label>Nombre(s)</Label>
-            <Input type="text" />
-          </FormGroup>
-          <FormGroup>
-            <Label>Apellido Paterno</Label>
-            <Input type="text" />
-          </FormGroup>
-          <FormGroup>
-            <Label>Apellido Materno</Label>
-            <Input type="text" />
-          </FormGroup>
-          <FormGroup>
-            <Label>Edad</Label>
-            <Input type="number" />
-          </FormGroup>
-          <FormGroup>
-            <Label>Sexo</Label>
-            <Input type="text" />
-          </FormGroup>
-        </FormGroupRow>
+              <Field>
+                <Label>Edad</Label>
+                <Input type="number"></Input>
+              </Field>
 
-        {/* Fila 2: Domicilio y C.P. */}
-        <FormGroupRow>
-          <FormGroup>
-            <Label>Domicilio: Calle, Número, Colonia, Delegación</Label>
-            <Input type="text" style={{ width: '100%', marginRight: '10px' }} />{' '}
-            {/* Hacer Domicilio más largo */}
-          </FormGroup>
-          <FormGroup style={{ width: '100px' }}>
-            {' '}
-            {/* Ajustar tamaño de C.P. */}
-            <Label>C.P.</Label>
-            <Input type="text" maxLength={5} /> {/* Limitar a 5 caracteres */}
-          </FormGroup>
-        </FormGroupRow>
+              <Field>
+                <Label>Sexo</Label>
+                <Select>
+                  <option>Seleccione una opción...</option>
+                  <option>Masculino</option>
+                  <option>Femenino</option>
+                  <option>Indefinido</option>
+                </Select>
+              </Field>
 
-        {/* Fila 3: E-Mail, Estado Civil, Tel. Particular, Celular */}
-        <FormGroupRow>
-          <FormGroup>
-            <Label>E-Mail</Label>
-            <Input type="email" />
-          </FormGroup>
-          <FormGroup>
-            <Label>Estado Civil</Label>
-            <Input type="text" />
-          </FormGroup>
-          <FormGroup>
-            <Label>Tel. Particular</Label>
-            <Input type="text" />
-          </FormGroup>
-          <FormGroup>
-            <Label>Celular</Label>
-            <Input type="text" />
-          </FormGroup>
-        </FormGroupRow>
+              <Field>
+                <Label>Domicilio: Calle, Número, Colonia y Delegación</Label>
+                <Input type="text"></Input>
+              </Field>
 
-        {/* Título de la sección de Datos Complementarios */}
-        <SectionTitle>DATOS COMPLEMENTARIOS</SectionTitle>
+              <Field>
+                <Label>Código Postal</Label>
+                <Input type="text"></Input>
+              </Field>
 
-        {/* Fila 1: RFC, No. Afil. IMSS */}
-        <FormGroupRow>
-          <FormGroup>
-            <Label>RFC</Label>
-            <Input type="text" />
-          </FormGroup>
-          <FormGroup>
-            <Label>No. Afil. IMSS</Label>
-            <Input type="text" />
-          </FormGroup>
-        </FormGroupRow>
+              <Field>
+                <Label>E-Mail</Label>
+                <Input type="text"></Input>
+              </Field>
 
-        {/* Fila 2: CURP, No. Crédito Infonavit, Afore */}
-        <FormGroupRow>
-          <FormGroup>
-            <Label>CURP</Label>
-            <Input type="text" />
-          </FormGroup>
-          <FormGroup>
-            <Label>No. Crédito Infonavit</Label>
-            <Input type="text" />
-          </FormGroup>
-          <FormGroup>
-            <Label>Afore</Label>
-            <Input type="text" />
-          </FormGroup>
-        </FormGroupRow>
+              <Field>
+                <Label>Estado Civil</Label>
+                <Input type="text"></Input>
+              </Field>
 
-        {/* Fila 3: Disponibilidad para Viajar, ¿Podría cambiar de residencia? y Licencia */}
-        <FormGroupRow>
-          <FormGroup style={{ display: 'flex', alignItems: 'center' }}>
-            <Label style={{ marginRight: '10px' }}>Disponibilidad para Viajar</Label>
-            <YesNoGroup>
-              <CheckboxLabel>
-                <SmallInput type="checkbox" />
-                Sí
-              </CheckboxLabel>
-              <CheckboxLabel>
-                <SmallInput type="checkbox" />
-                No
-              </CheckboxLabel>
-            </YesNoGroup>
-          </FormGroup>
-          <FormGroup style={{ display: 'flex', alignItems: 'center' }}>
-            <Label style={{ marginRight: '10px' }}>¿Cambiar de Residencia?</Label>
-            <YesNoGroup>
-              <CheckboxLabel>
-                <SmallInput type="checkbox" />
-                Sí
-              </CheckboxLabel>
-              <CheckboxLabel>
-                <SmallInput type="checkbox" />
-                No
-              </CheckboxLabel>
-            </YesNoGroup>
-          </FormGroup>
-          <FormGroup>
-            <Label>Licencia</Label>
-            <Input type="text" />
-          </FormGroup>
-        </FormGroupRow>
+              <Field>
+                <Label>Teléfono Particular</Label>
+                <Input type="text"></Input>
+              </Field>
 
-        {/* Fila: ¿Por qué medio se enteró del puesto?, ¿Ha trabajado en Dai?, ¿En qué fecha? */}
-        <FormGroupRow>
-          <FormGroup>
-            <Label>¿Por qué medio se enteró del puesto?</Label>
-            <Input type="text" />
-          </FormGroup>
-          <FormGroup style={{ display: 'flex', alignItems: 'center' }}>
-            <Label style={{ marginRight: '10px' }}>¿Ha trabajado en Dai?</Label>
-            <YesNoGroup>
-              <CheckboxLabel>
-                <SmallInput type="checkbox" />
-                Sí
-              </CheckboxLabel>
-              <CheckboxLabel>
-                <SmallInput type="checkbox" />
-                No
-              </CheckboxLabel>
-            </YesNoGroup>
-          </FormGroup>
-          <FormGroup>
-            <Label>¿En qué fecha?</Label>
-            <DateInput type="date" /> {/* Ajustar tamaño del campo de fecha */}
-          </FormGroup>
-        </FormGroupRow>
+              <Field>
+                <Label>Celular</Label>
+                <Input type="text"></Input>
+              </Field>
+            </FormContainer>
+            <PageChange>
+              <Button $variation="confirm" onClick={handleNext}>
+                Siguiente
+              </Button>
+            </PageChange>
+          </Page>
+        )}
 
-        {/* Fila: ¿En qué departamento?, ¿Con quién vive?, ¿Dependen personas económicamente de usted? */}
-        <FormGroupRow>
-          <FormGroup>
-            <Label>¿En qué departamento?</Label>
-            <Input type="text" />
-          </FormGroup>
-          <FormGroup>
-            <Label>¿Con quién vive?</Label>
-            <Input type="text" />
-          </FormGroup>
-          <FormGroup style={{ display: 'flex', alignItems: 'center' }}>
-            <Label style={{ marginRight: '10px' }}>
-              ¿Dependen personas económicamente de usted?
-            </Label>
-            <YesNoGroup>
-              <CheckboxLabel>
-                <SmallInput type="checkbox" />
-                Sí
-              </CheckboxLabel>
-              <CheckboxLabel>
-                <SmallInput type="checkbox" />
-                No
-              </CheckboxLabel>
-            </YesNoGroup>
-          </FormGroup>
-        </FormGroupRow>
+        {page === 2 && (
+          <Page>
+            <Title as="h2">DATOS COMPLEMENTARIOS</Title>
+            <FormContainer>
+              <Field>
+                <Label>R.F.C.</Label>
+                <Input type="text"></Input>
+              </Field>
 
-        {/* Fila: ¿Contribuye con el gasto familiar?, ¿Posee automóvil propio?, Marca y modelo */}
-        <FormGroupRow>
-          <FormGroup style={{ display: 'flex', alignItems: 'center' }}>
-            <Label style={{ marginRight: '10px' }}>
-              ¿Contribuye con el gasto familiar?
-            </Label>
-            <YesNoGroup>
-              <CheckboxLabel>
-                <SmallInput type="checkbox" />
-                Sí
-              </CheckboxLabel>
-              <CheckboxLabel>
-                <SmallInput type="checkbox" />
-                No
-              </CheckboxLabel>
-            </YesNoGroup>
-          </FormGroup>
-          <FormGroup style={{ display: 'flex', alignItems: 'center' }}>
-            <Label style={{ marginRight: '10px' }}>¿Posee automóvil propio?</Label>
-            <YesNoGroup>
-              <CheckboxLabel>
-                <SmallInput type="checkbox" />
-                Sí
-              </CheckboxLabel>
-              <CheckboxLabel>
-                <SmallInput type="checkbox" />
-                No
-              </CheckboxLabel>
-            </YesNoGroup>
-          </FormGroup>
-          <FormGroup>
-            <Label>Marca y modelo</Label>
-            <Input type="text" />
-          </FormGroup>
-        </FormGroupRow>
+              <Field>
+                <Label>No. Afiliación al IMSS</Label>
+                <Input type="text"></Input>
+              </Field>
 
-        <SectionTitle>DATOS DE EMPLEOS</SectionTitle>
+              <Field>
+                <Label>CURP</Label>
+                <Input type="text"></Input>
+              </Field>
 
-        <FormGroupRow>
-          <FormGroup>
-            <Label>Nombre de la compañia</Label>
-            <Input type="text" />
-          </FormGroup>
-          <FormGroup>
-            <Label>Giro</Label>
-            <Input type="text" />
-          </FormGroup>
-        </FormGroupRow>
-        <FormGroupRow>
-          <FormGroup>
-            <Label>Domicilio</Label>
-            <Input type="email" />
-          </FormGroup>
-          <FormGroup>
-            <Label>Telefono</Label>
-            <Input type="text" />
-          </FormGroup>
-          <FormGroup>
-            <Label>Fecha de Ingreso</Label>
-            <Input type="text" />
-          </FormGroup>
-        </FormGroupRow>
+              <Field>
+                <Label>No. Crédito Infonavit</Label>
+                <Input type="text"></Input>
+              </Field>
 
-        <FormGroupRow>
-          <FormGroup>
-            <Label>Fecha de salida</Label>
-            <Input type="text" />
-          </FormGroup>
-          <FormGroup>
-            <Label>Puesto desempeño</Label>
-            <Input type="text" />
-          </FormGroup>
-          <FormGroup>
-            <Label>Sueldo final</Label>
-            <Input type="text" />
-          </FormGroup>
-          <FormGroup>
-            <Label>Fecha de salida</Label>
-            <Input type="text" />
-          </FormGroup>
-        </FormGroupRow>
-        <FormGroupRow></FormGroupRow>
+              <Field>
+                <Label>Afore</Label>
+                <Input type="text"></Input>
+              </Field>
 
-        <FormGroupRow>
-          <FormGroup>
-            <Label>Nombre de su jefe Inmediato</Label>
-            <Input type="text" />
-          </FormGroup>
-          <FormGroup>
-            <Label>Motivo de separacion</Label>
-            <Input type="text" />
-          </FormGroup>
-        </FormGroupRow>
+              <Field>
+                <Label>¿Disponibilidad para viajar?</Label>
+                <FieldRadio>
+                  <span>Sí</span>
+                  <Input type="radio" name="travel"></Input>
+                  <span>No</span>
+                  <Input type="radio" name="travel"></Input>
+                </FieldRadio>
+              </Field>
 
-        {/* Botón de Enviar Solicitud */}
-        <SubmitButton type="submit">Enviar Solicitud</SubmitButton>
-      </FormContainer>
-    </FormSection>
+              <Field>
+                <Label>No. IMSS</Label>
+                <Input type="text"></Input>
+              </Field>
+
+              <Field>
+                <Label>No. Crédito Infonavit</Label>
+                <Input type="text"></Input>
+              </Field>
+
+              <Field>
+                <Label>¿Podría cambiar de residencia?</Label>
+                <FieldRadio>
+                  <span>Sí</span>
+                  <Input type="radio" name="residence"></Input>
+                  <span>No</span>
+                  <Input type="radio" name="residence"></Input>
+                </FieldRadio>
+              </Field>
+
+              <Field>
+                <Label>Licencia</Label>
+                <Input type="text"></Input>
+              </Field>
+
+              <Field>
+                <Label>¿Tiene familiares en DAI?</Label>
+                <FieldRadio>
+                  <span>Sí</span>
+                  <Input type="radio" name="family"></Input>
+                  <span>No</span>
+                  <Input type="radio" name="family"></Input>
+                </FieldRadio>
+              </Field>
+
+              <Field>
+                <Label>¿Por qué medio se enteró del puesto?</Label>
+                <Input type="text"></Input>
+              </Field>
+
+              <Field>
+                <Label>¿Ha trabajado en DAI?</Label>
+                <FieldRadio>
+                  <span>Sí</span>
+                  <Input type="radio" name="work-before"></Input>
+                  <span>No</span>
+                  <Input type="radio" name="work-before"></Input>
+                </FieldRadio>
+              </Field>
+
+              <Field>
+                <Label>¿En qué Fecha?</Label>
+                <Input type="date"></Input>
+              </Field>
+
+              <Field>
+                <Label>¿En qué Departamento?</Label>
+                <Input type="text"></Input>
+              </Field>
+
+              <Field>
+                <Label>¿Con quién vive actualmente?</Label>
+                <Input type="text"></Input>
+              </Field>
+
+              <Field>
+                <Label>¿Dependen personas económicamente de usted?</Label>
+                <FieldRadio>
+                  <span>Sí</span>
+                  <Input type="radio" name="depending"></Input>
+                  <span>No</span>
+                  <Input type="radio" name="depending"></Input>
+                </FieldRadio>
+              </Field>
+
+              <Field>
+                <Label>¿Contribuye con el gasto familiar?</Label>
+                <FieldRadio>
+                  <span>Sí</span>
+                  <Input type="radio" name="familiar-contribution"></Input>
+                  <span>No</span>
+                  <Input type="radio" name="familiar-contribution"></Input>
+                </FieldRadio>
+              </Field>
+
+              <Field>
+                <Label>¿Posee Automóvil propio?</Label>
+                <FieldRadio>
+                  <span>Sí</span>
+                  <Input type="radio" name="car"></Input>
+                  <span>No</span>
+                  <Input type="radio" name="car"></Input>
+                </FieldRadio>
+              </Field>
+
+              <Field>
+                <Label>Marca y Modelo</Label>
+                <Input type="text"></Input>
+              </Field>
+            </FormContainer>
+            <PageChange>
+              <Button $variation="primary" onClick={handleBack}>
+                Atrás
+              </Button>
+
+              <Button $variation="confirm" onClick={handleNext}>
+                Siguiente
+              </Button>
+            </PageChange>
+          </Page>
+        )}
+
+        {page === 3 && (
+          <Page>
+            <Title as="h2">DATOS DE EMPLEOS</Title>
+            {employs.map((_, index) => (
+              <FormContainer key={index}>
+                <Field>
+                  <Label>Nombre de la compañía</Label>
+                  <Input type="text"></Input>
+                </Field>
+                <Field>
+                  <Label>Giro</Label>
+                  <Input type="text"></Input>
+                </Field>
+                <Field>
+                  <Label>Domicilio</Label>
+                  <Input type="text"></Input>
+                </Field>
+                <Field>
+                  <Label>Teléfono</Label>
+                  <Input type="text"></Input>
+                </Field>
+                <Field>
+                  <Label>Fecha de Ingreso</Label>
+                  <Input type="date"></Input>
+                </Field>
+                <Field>
+                  <Label>Fecha de Salida</Label>
+                  <Input type="date"></Input>
+                </Field>
+                <Field>
+                  <Label>Puesto Desempeñado</Label>
+                  <Input type="text"></Input>
+                </Field>
+                <Field>
+                  <Label>Sueldo Final</Label>
+                  <Input type="text"></Input>
+                </Field>
+                <Field>
+                  <Label>Nombre de Jefe Inmediato</Label>
+                  <Input type="text"></Input>
+                </Field>
+                <Field>
+                  <Label>Motivo de Separación</Label>
+                  <Input type="text"></Input>
+                </Field>
+              </FormContainer>
+            ))}
+
+            <EmployControllers>
+              <Button
+                $variation="secondary"
+                type="button" // Añadir este atributo
+                onClick={removeEmploy}
+                disabled={employs.length === 1}
+              >
+                Quitar Empleo
+              </Button>
+
+              <Button
+                $variation="secondary"
+                type="button" // Añadir este atributo
+                onClick={addEmploy}
+                disabled={employs.length === 3}
+              >
+                Agregar Empleo
+              </Button>
+            </EmployControllers>
+
+            <PageChange>
+              <Button $variation="primary" onClick={handleBack}>
+                Atrás
+              </Button>
+
+              <Button $variation="confirm" onClick={handleNext}>
+                Siguiente
+              </Button>
+            </PageChange>
+          </Page>
+        )}
+
+        {page === 4 && (
+          <Page>
+            <Title as="h2">DATOS ESCOLARES</Title>
+            <Title as="h3">Secundaria</Title>
+            <FormContainer>
+              <Field>
+                <Label>Años Cursados</Label>
+                <Input type="number"></Input>
+              </Field>
+              <Field>
+                <Label>Nombre de la Escuela</Label>
+                <Input type="text"></Input>
+              </Field>
+              <Field>
+                <Label>Fecha de Inicio</Label>
+                <Input type="date"></Input>
+              </Field>
+              <Field>
+                <Label>Fecha de Término</Label>
+                <Input type="date"></Input>
+              </Field>
+              <Field>
+                <Label>Certificado o Título</Label>
+                <FieldRadio>
+                  <span>Sí</span>
+                  <Input type="radio" name="car"></Input>
+                  <span>No</span>
+                  <Input type="radio" name="car"></Input>
+                </FieldRadio>
+              </Field>
+            </FormContainer>
+
+            <Title as="h3">Bachillerato ó Carrera Técnica</Title>
+            <FormContainer>
+              <Field>
+                <Label>Años Cursados</Label>
+                <Input type="number"></Input>
+              </Field>
+              <Field>
+                <Label>Nombre de la Escuela</Label>
+                <Input type="text"></Input>
+              </Field>
+              <Field>
+                <Label>Fecha de Inicio</Label>
+                <Input type="date"></Input>
+              </Field>
+              <Field>
+                <Label>Fecha de Término</Label>
+                <Input type="date"></Input>
+              </Field>
+              <Field>
+                <Label>Certificado o Título</Label>
+                <FieldRadio>
+                  <span>Sí</span>
+                  <Input type="radio" name="car"></Input>
+                  <span>No</span>
+                  <Input type="radio" name="car"></Input>
+                </FieldRadio>
+              </Field>
+            </FormContainer>
+
+            <Title as="h3">Licenciatura</Title>
+            <FormContainer>
+              <Field>
+                <Label>Años Cursados</Label>
+                <Input type="number"></Input>
+              </Field>
+              <Field>
+                <Label>Nombre de la Escuela</Label>
+                <Input type="text"></Input>
+              </Field>
+              <Field>
+                <Label>Fecha de Inicio</Label>
+                <Input type="date"></Input>
+              </Field>
+              <Field>
+                <Label>Fecha de Término</Label>
+                <Input type="date"></Input>
+              </Field>
+              <Field>
+                <Label>Certificado o Título</Label>
+                <FieldRadio>
+                  <span>Sí</span>
+                  <Input type="radio" name="car"></Input>
+                  <span>No</span>
+                  <Input type="radio" name="car"></Input>
+                </FieldRadio>
+              </Field>
+            </FormContainer>
+
+            <Title as="h3">Especialidad y Otros</Title>
+            <FormContainer>
+              <Field>
+                <Label>Años Cursados</Label>
+                <Input type="number"></Input>
+              </Field>
+              <Field>
+                <Label>Nombre de la Escuela</Label>
+                <Input type="text"></Input>
+              </Field>
+              <Field>
+                <Label>Fecha de Inicio</Label>
+                <Input type="date"></Input>
+              </Field>
+              <Field>
+                <Label>Fecha de Término</Label>
+                <Input type="date"></Input>
+              </Field>
+              <Field>
+                <Label>Certificado o Título</Label>
+                <FieldRadio>
+                  <span>Sí</span>
+                  <Input type="radio" name="car"></Input>
+                  <span>No</span>
+                  <Input type="radio" name="car"></Input>
+                </FieldRadio>
+              </Field>
+              <Field>
+                <Label>Especifique Nombre de la Carrera</Label>
+                <Input type="text"></Input>
+              </Field>
+            </FormContainer>
+
+            <Title as="h3">Estudios Actuales</Title>
+            <FormContainer>
+              <Field>
+                <Label>¿Estudia Actualmente?</Label>
+                <FieldRadio>
+                  <span>Sí</span>
+                  <Input type="radio" name="car"></Input>
+                  <span>No</span>
+                  <Input type="radio" name="car"></Input>
+                </FieldRadio>
+              </Field>
+              <Field>
+                <Label>Horario</Label>
+                <Input type="text"></Input>
+              </Field>
+              <Field>
+                <Label>¿Qué Estudia?</Label>
+                <Input type="text"></Input>
+              </Field>
+              <Field>
+                <Label>Escuela</Label>
+                <Input type="text"></Input>
+              </Field>
+            </FormContainer>
+            <PageChange>
+              <Button $variation="primary" onClick={handleBack}>
+                Atrás
+              </Button>
+
+              <Button $variation="confirm" onClick={handleNext}>
+                Siguiente
+              </Button>
+            </PageChange>
+          </Page>
+        )}
+
+        {page === 5 && (
+          <Page>
+            <Title as="h2">CONOCIMIENTOS Y EXPERIENCIA</Title>
+            <Title as="h3">Idioma Inglés</Title>
+            <FormContainer>
+              <Field>
+                <Label>Habla</Label>
+                <Percentage>
+                  <Input type="number"></Input>
+                  <span>%</span>
+                </Percentage>
+              </Field>
+              <Field>
+                <Label>Escribe</Label>
+                <Percentage>
+                  <Input type="number"></Input>
+                  <span>%</span>
+                </Percentage>
+              </Field>
+            </FormContainer>
+
+            <Title as="h3">Otro Idioma</Title>
+            <FormContainer>
+              <Field>
+                <Label>Idioma</Label>
+                <Input type="text"></Input>
+              </Field>
+              <Field>
+                <Label>Habla</Label>
+                <Percentage>
+                  <Input type="number"></Input>
+                  <span>%</span>
+                </Percentage>
+              </Field>
+              <Field>
+                <Label>Escribe</Label>
+                <Percentage>
+                  <Input type="number"></Input>
+                  <span>%</span>
+                </Percentage>
+              </Field>
+            </FormContainer>
+
+            <Title as="h3">Experiencia en:</Title>
+            <FormContainer>
+              <FieldCheck>
+                <Label>Compras</Label>
+                <Input type="checkbox"></Input>
+              </FieldCheck>
+              <FieldCheck>
+                <Label>Cred. y Cob.</Label>
+                <Input type="checkbox"></Input>
+              </FieldCheck>
+              <FieldCheck>
+                <Label>Almacén</Label>
+                <Input type="checkbox"></Input>
+              </FieldCheck>
+              <FieldCheck>
+                <Label>Comer. Ext.</Label>
+                <Input type="checkbox"></Input>
+              </FieldCheck>
+              <FieldCheck>
+                <Label>Ventas</Label>
+                <Input type="checkbox"></Input>
+              </FieldCheck>
+              <FieldCheck>
+                <Label>Rel. Públicas</Label>
+                <Input type="checkbox"></Input>
+              </FieldCheck>
+              <FieldCheck>
+                <Label>Contabilidad</Label>
+                <Input type="checkbox"></Input>
+              </FieldCheck>
+              <FieldCheck>
+                <Label>Mecánico</Label>
+                <Input type="checkbox"></Input>
+              </FieldCheck>
+              <FieldCheck>
+                <Label>Compras</Label>
+                <Input type="checkbox"></Input>
+              </FieldCheck>
+              <FieldCheck>
+                <Label>Mercadotecnia</Label>
+                <Input type="checkbox"></Input>
+              </FieldCheck>
+              <FieldCheck>
+                <Label>Paquetes Software</Label>
+                <Input type="checkbox"></Input>
+              </FieldCheck>
+              <FieldCheck>
+                <Label>Publicidad</Label>
+                <Input type="checkbox"></Input>
+              </FieldCheck>
+              <FieldCheck>
+                <Label>Secretariado</Label>
+                <Input type="checkbox"></Input>
+              </FieldCheck>
+              <FieldCheck>
+                <Label>Promotora</Label>
+                <Input type="checkbox"></Input>
+              </FieldCheck>
+            </FormContainer>
+
+            <FormContainer>
+              <Field>
+                <Label>¿Tiene experiencia práctica en el puesto que solicita?</Label>
+                <FieldRadio>
+                  <span>Sí</span>
+                  <Input type="radio" name="car"></Input>
+                  <span>No</span>
+                  <Input type="radio" name="car"></Input>
+                </FieldRadio>
+              </Field>
+              <Field>
+                <Label>Especifique</Label>
+                <Input type="text"></Input>
+              </Field>
+            </FormContainer>
+            <PageChange>
+              <Button $variation="primary" onClick={handleBack}>
+                Atrás
+              </Button>
+
+              <Button $variation="confirm" onClick={handleNext}>
+                Siguiente
+              </Button>
+            </PageChange>
+          </Page>
+        )}
+        {page === 6 && (
+          <Page>
+            <Title as="h2">DATOS FAMILIARES</Title>
+            <Title as="h3">Padre</Title>
+            <FormContainer>
+              <Field>
+                <Label>Nombre Completo</Label>
+                <Input type="text"></Input>
+              </Field>
+              <Field>
+                <Label>¿Vive?</Label>
+                <FieldRadio>
+                  <span>Sí</span>
+                  <Input type="radio" name="car"></Input>
+                  <span>No</span>
+                  <Input type="radio" name="car"></Input>
+                </FieldRadio>
+              </Field>
+              <Field>
+                <Label>Edad</Label>
+                <Input type="number"></Input>
+              </Field>
+              <Field>
+                <Label>Ocupación</Label>
+                <Input type="text"></Input>
+              </Field>
+              <Field>
+                <Label>Domicilio</Label>
+                <Input type="text"></Input>
+              </Field>
+            </FormContainer>
+            <Title as="h3">Madre</Title>
+            <FormContainer>
+              <Field>
+                <Label>Nombre Completo</Label>
+                <Input type="text"></Input>
+              </Field>
+              <Field>
+                <Label>¿Vive?</Label>
+                <FieldRadio>
+                  <span>Sí</span>
+                  <Input type="radio" name="car"></Input>
+                  <span>No</span>
+                  <Input type="radio" name="car"></Input>
+                </FieldRadio>
+              </Field>
+              <Field>
+                <Label>Edad</Label>
+                <Input type="number"></Input>
+              </Field>
+              <Field>
+                <Label>Ocupación</Label>
+                <Input type="text"></Input>
+              </Field>
+              <Field>
+                <Label>Domicilio</Label>
+                <Input type="text"></Input>
+              </Field>
+            </FormContainer>
+            <Title as="h3">Esposo(a)</Title>
+            <FormContainer>
+              <Field>
+                <Label>Nombre Completo</Label>
+                <Input type="text"></Input>
+              </Field>
+              <Field>
+                <Label>¿Vive?</Label>
+                <FieldRadio>
+                  <span>Sí</span>
+                  <Input type="radio" name="car"></Input>
+                  <span>No</span>
+                  <Input type="radio" name="car"></Input>
+                </FieldRadio>
+              </Field>
+              <Field>
+                <Label>Edad</Label>
+                <Input type="number"></Input>
+              </Field>
+              <Field>
+                <Label>Ocupación</Label>
+                <Input type="text"></Input>
+              </Field>
+              <Field>
+                <Label>Domicilio</Label>
+                <Input type="text"></Input>
+              </Field>
+            </FormContainer>
+
+            <PageChange>
+              <Button $variation="primary" onClick={handleBack}>
+                Atrás
+              </Button>
+
+              <Button $variation="confirm" onClick={handleNext}>
+                Siguiente
+              </Button>
+            </PageChange>
+          </Page>
+        )}
+      </Form>
+    </Section>
   );
 };
 

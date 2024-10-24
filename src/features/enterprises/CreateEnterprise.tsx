@@ -10,6 +10,11 @@ import Heading from '../../ui/Heading';
 
 import { EnterpriseInfo } from '../enterprises/types';
 import { upperCaseText } from '../../utils/helpers';
+// import { createDepartments, ts } from '../../services/apiDepartments';
+
+import { useState } from 'react';
+import InputImageDrag from '../../ui/InputImageDrag';
+import { useUpdateEnterprise } from './useUpdateEnterprise';
 // import InputImageDrag from '../../ui/InputImageDrag';
 
 const Form = styled.form`
@@ -34,59 +39,93 @@ const Input = styled.input`
 // }
 
 interface PropsCreateEnterprise {
-  edit?: EnterpriseInfo;
+  enterpriseToUpdate?: EnterpriseInfo;
   onCloseModal?: () => void;
 }
 
 const CreateEnterprise: React.FC<PropsCreateEnterprise> = ({
-  edit = {},
+  enterpriseToUpdate = {},
   onCloseModal,
 }) => {
-  // const { _id: enterpriseId = '', ...editValues } = enterpriseToUpdate as EnterpriseInfo;
-  // const isEditSession = Boolean(enterpriseId);
+  console.log(enterpriseToUpdate);
+  const {
+    _id: enterpriseId = '',
+    logo = '',
+    ...editValues
+  } = enterpriseToUpdate as EnterpriseInfo;
+  const isEditSession = Boolean(enterpriseId);
 
   const { register, handleSubmit, reset } = useForm<EnterpriseInfo>({
-    defaultValues: edit,
+    defaultValues: isEditSession
+      ? {
+          ...editValues,
+        }
+      : {},
+    // defaultValues: edit,
   });
 
   const { createEnterprise } = useCreateEnterprise();
+  const { updateEnterprises } = useUpdateEnterprise();
 
   const onSubmit = (data: EnterpriseInfo) => {
     // ****!! ANDREW ADDED THIS FUNCTIONALITY
+    const formData = new FormData();
 
-    const { name, nameAbreviate, email, phoneNumber, logo } = data;
-    const capitalizedNameAbreviate = upperCaseText(nameAbreviate || '');
+    if (isEditSession && data.logo) delete data.logo;
+    if (fileImg) formData.append('logo', fileImg);
 
-    createEnterprise({
-      name,
-      nameAbreviate: capitalizedNameAbreviate,
-      email,
-      phoneNumber,
-      logo,
-    });
+    Object.entries(data).forEach(([key, value]) => formData.append(key, value));
 
-    reset();
-    onCloseModal?.();
+    if (isEditSession) {
+      updateEnterprises(
+        { newData: formData, id: enterpriseId },
+        {
+          onSuccess: () => {
+            reset();
+            onCloseModal?.();
+          },
+        }
+      );
+    } else {
+      createEnterprise(formData, {
+        onSuccess: () => {
+          reset();
+          onCloseModal?.();
+        },
+      });
+    }
+
+    // const { name, nameAbreviate, email, phoneNumber, logo } = data;
+    // const capitalizedNameAbreviate = upperCaseText(nameAbreviate || '');
+
+    // createEnterprise({
+    //   name,
+    //   nameAbreviate: capitalizedNameAbreviate,
+    //   email,
+    //   phoneNumber,
+    //   logo,
+    // });
+
+    // reset();
+    // onCloseModal?.();
   };
 
+  const [fileImg, setFileImg] = useState<File | null>(null);
   return (
     <Row>
       <Heading as="h2">Registro de empresa</Heading>
 
       <Form onSubmit={handleSubmit(onSubmit)}>
-        {/* <FormRow label="Logotipo">
+        <FormRow label="Logotipo">
           <InputImageDrag
             defaultName={logo || ''}
             onChangeFile={setFileImg}
             showPreview={false}
-            id="logo"
-            {...register('logo')}
-            required
           />
-        </FormRow> */}
-        <FormRow label="Logotipo">
-          <Input type="text" id="logo" {...register('logo')} required />
         </FormRow>
+        {/* <FormRow label="Logotipo">
+          <Input type="text" id="logo" {...register('logo')} required />
+        </FormRow> */}
         <FormRow label="Nombre de Empresa">
           <Input
             type="text"
