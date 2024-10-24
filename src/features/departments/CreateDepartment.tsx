@@ -97,7 +97,7 @@ const CreateDepartment: React.FC<PropsCreateDepartment> = ({
       </Heading>
 
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <FormRow label="Nombre de Empleado">
+        <FormRow label="Nombre de Departamento">
           <Input
             type="text"
             id="nameDepartment"

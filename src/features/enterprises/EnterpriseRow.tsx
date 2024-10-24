@@ -16,6 +16,8 @@ const Img = styled.img`
   aspect-ratio: 1 / 1;
 `;
 
+const ImgContainer = styled.div``;
+
 interface Props {
   enterprise: EnterpriseInfo;
 }
@@ -31,10 +33,12 @@ const EnterpriseRow: React.FC<Props> = ({ enterprise }) => {
 
   return (
     <Table.Row columns="1fr 1fr 1fr 1fr 1fr 1fr 1fr">
-      <Img
-        src={`${API_DAI_BASE}/img/enterprise/${enterprise.logo}`}
-        alt={`image of enterprise`}
-      />
+      <ImgContainer>
+        <Img
+          src={`${API_DAI_BASE}/img/enterprise/${enterprise.logo}`}
+          alt={`image of enterprise`}
+        />
+      </ImgContainer>
       <span>{enterprise.name}</span>
       <span>{enterprise.nameAbreviate}</span>
       <span>{enterprise.email}</span>

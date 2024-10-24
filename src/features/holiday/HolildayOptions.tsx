@@ -70,7 +70,7 @@ const HolidayOptions = () => {
       <AreaContainer>
         <ButtonSpacing>
           <ButtonOptionActive>Solicitudes</ButtonOptionActive>
-          <ButtonOption>Gantt</ButtonOption>
+          {/* <ButtonOption>Gantt</ButtonOption> */}
         </ButtonSpacing>
       </AreaContainer>
     </Row>
