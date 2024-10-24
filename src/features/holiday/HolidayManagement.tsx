@@ -121,6 +121,7 @@ const HolidayManagement = () => {
   const { user } = useUser();
 
   if (!user) return null;
+
   const {
     holidays,
     daysGrantedBySeniority,
@@ -128,6 +129,7 @@ const HolidayManagement = () => {
     daysGrantedBySeniorityPast,
   } = user;
 
+  console.log(user);
   if (
     !holidays ||
     !daysGrantedBySeniority ||

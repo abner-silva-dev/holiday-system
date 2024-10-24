@@ -36,7 +36,7 @@ function App() {
     <>
       <GlobalStyles />
       <QueryClientProvider client={queryClient}>
-        {/* <ReactQueryDevtools /> */}
+        <ReactQueryDevtools />
         <BrowserRouter>
           <Routes>
             {/* PERSONNEL MANAGEMENT APP */}
