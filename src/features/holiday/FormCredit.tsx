@@ -3,6 +3,8 @@ import Button from '../../ui/Button';
 import { HiChevronLeft } from 'react-icons/hi2';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
+import { UserInfo } from '../users/types';
+import { useUpdateUser } from '../users/useUpdateUser';
 
 //EDIT COMPONENT
 const EditButton = styled.button`
@@ -64,24 +66,86 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   padding: 1rem 4rem;
-  gap: 0.5rem;
+  gap: 1rem;
+`;
+
+const Group = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const ErrorMessage = styled.p`
+  font-size: 1.2rem;
+  color: #e03131;
 `;
 
 interface CreditEdit {
   credit: number;
-  pastCredit: number;
-  futureCredit: number;
+  creditPast: number;
+  creditFuture: number;
 }
 
-const FormCredit = () => {
-  const [showEdit, setShowEdit] = useState(false);
-  const { register, handleSubmit } = useForm<CreditEdit>({});
+interface PropsFormCredit {
+  user: UserInfo;
+}
 
-  const onSubmit = () => {};
+const FormCredit: React.FC<PropsFormCredit> = ({ user }) => {
+  const [showEdit, setShowEdit] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<CreditEdit>({
+    defaultValues: {
+      creditPast: user.creditPast?.balance,
+      credit: user.credit?.balance,
+      creditFuture: user.creditFuture?.balance,
+    },
+  });
+
+  const { updateUser } = useUpdateUser();
+
+  if (!user) return null;
+
+  const {
+    daysGrantedBySeniority,
+    daysGrantedBySeniorityPast,
+    daysGrantedBySeniorityFuture,
+    credit,
+    creditFuture,
+    creditPast,
+  } = user;
+
+  if (
+    !daysGrantedBySeniority ||
+    !daysGrantedBySeniorityPast ||
+    !daysGrantedBySeniorityFuture ||
+    !credit ||
+    !creditFuture ||
+    !creditPast
+  )
+    return null;
+
+  const onClose = () => {
+    setShowEdit(!showEdit);
+    reset();
+  };
+
+  const onSubmit = (data: CreditEdit) => {
+    updateUser({
+      newUser: {
+        creditPast: { ...creditPast, balance: data.creditPast || creditPast.balance },
+        credit: { ...credit, balance: data.credit },
+        creditFuture: { ...creditFuture, balance: data.creditFuture },
+      },
+      id: user?.id || '',
+    });
+  };
 
   return (
     <>
-      <EditButton onClick={() => setShowEdit(!showEdit)} type="button">
+      <EditButton onClick={onClose} type="button">
         Editar Crédito
         <HiChevronLeft
           style={{
@@ -95,20 +159,62 @@ const FormCredit = () => {
       {showEdit && (
         <EditModal>
           <Form onSubmit={handleSubmit(onSubmit)}>
-            <label>Crédito Pasado</label>
-            <CreditInput
-              type="number"
-              id="pastCredit"
-              {...register('pastCredit')}
-            ></CreditInput>
-            <label>Crédito Presente</label>
-            <CreditInput type="number" id="credit" {...register('credit')}></CreditInput>
-            <label>Crédito Futuro</label>
-            <CreditInput
-              type="number"
-              id="futureCredit"
-              {...register('futureCredit')}
-            ></CreditInput>
+            {daysGrantedBySeniorityPast.balance ? (
+              <Group>
+                <label>Crédito Pasado</label>
+                <CreditInput
+                  type="number"
+                  id="creditPast"
+                  {...register('creditPast', {
+                    required: 'Este campo es obligatorio',
+                    min: { value: 0, message: 'El crédito debe ser al menos 0' },
+                    max: {
+                      value: daysGrantedBySeniorityPast.balance,
+                      message: `El crédito no debe ser mayor que ${daysGrantedBySeniorityPast.balance}`,
+                    },
+                  })}
+                />
+                {errors.creditPast && (
+                  <ErrorMessage>{errors.creditPast.message}</ErrorMessage>
+                )}
+              </Group>
+            ) : null}
+
+            <Group>
+              <label>Crédito Presente</label>
+              <CreditInput
+                type="number"
+                id="credit"
+                {...register('credit', {
+                  required: 'Este campo es obligatorio',
+                  min: { value: 0, message: 'El crédito debe ser al menos 0' },
+                  max: {
+                    value: daysGrantedBySeniority.balance,
+                    message: `El crédito no debe ser mayor que ${daysGrantedBySeniority.balance}`,
+                  },
+                })}
+              />
+              {errors.credit && <ErrorMessage>{errors.credit.message}</ErrorMessage>}
+            </Group>
+
+            <Group>
+              <label>Crédito Futuro</label>
+              <CreditInput
+                type="number"
+                id="creditFuture"
+                {...register('creditFuture', {
+                  required: 'Este campo es obligatorio',
+                  min: { value: 0, message: 'El crédito debe ser al menos 0' },
+                  max: {
+                    value: daysGrantedBySeniorityFuture.balance,
+                    message: `El crédito no debe ser mayor que ${daysGrantedBySeniorityFuture.balance}`,
+                  },
+                })}
+              />
+              {errors.creditFuture && (
+                <ErrorMessage>{errors.creditFuture.message}</ErrorMessage>
+              )}
+            </Group>
             <SubmitButton $variation="confirm">Aceptar</SubmitButton>
           </Form>
         </EditModal>
