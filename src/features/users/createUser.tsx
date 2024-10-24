@@ -48,12 +48,7 @@ const CreateUser: React.FC<PropsCreateUSer> = ({ userToUpdate = {}, onCloseModal
   const isEditSession = Boolean(userId);
 
   // utilities hook form
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<UserInfo>({
+  const { register, handleSubmit, reset } = useForm<UserInfo>({
     defaultValues: isEditSession
       ? {
           ...editValues,
@@ -62,8 +57,6 @@ const CreateUser: React.FC<PropsCreateUSer> = ({ userToUpdate = {}, onCloseModal
         }
       : {},
   });
-
-  console.log(errors);
 
   const { departments } = useDepartments();
   const { enterprises } = useEnterprises();

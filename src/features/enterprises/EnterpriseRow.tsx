@@ -6,6 +6,15 @@ import { useDeleteEnterprise } from './useDeleteEnterprise';
 import Modal from '../../ui/Modal';
 import CreateEnterprise from './CreateEnterprise';
 import ConfirmDelete from '../../ui/ConfirmDelete';
+import { API_DAI_BASE } from '../../config';
+
+import styled from 'styled-components';
+
+const Img = styled.img`
+  width: 5rem;
+  height: 5rem;
+  aspect-ratio: 1 / 1;
+`;
 
 interface Props {
   enterprise: EnterpriseInfo;
@@ -19,10 +28,12 @@ const EnterpriseRow: React.FC<Props> = ({ enterprise }) => {
   const { name, nameAbreviate, email, phoneNumber, logo } = enterprise;
 
   const enterpriseId = enterprise._id || '';
-
   return (
     <Table.Row columns="1fr 1fr 1fr 1fr 1fr 1fr 1fr">
-      <span>{enterprise.logo}</span>
+      <Img
+        src={`${API_DAI_BASE}/img/enterprise/${enterprise.logo}`}
+        alt={`image of enterprise`}
+      />
       <span>{enterprise.name}</span>
       <span>{enterprise.nameAbreviate}</span>
       <span>{enterprise.email}</span>
@@ -52,7 +63,8 @@ const EnterpriseRow: React.FC<Props> = ({ enterprise }) => {
 
             <Modal.Window name="edit">
               <CreateEnterprise
-                edit={{
+                enterpriseToUpdate={{
+                  _id: enterpriseId,
                   logo,
                   name,
                   nameAbreviate,

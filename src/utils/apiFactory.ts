@@ -72,6 +72,11 @@ export function updateOne<Model>(sourceName: SourceName) {
   return async (id: string, newData: Model | FormData) => {
     try {
       const isFormData = newData instanceof FormData;
+      if (isFormData) {
+        newData.forEach((value, key) => {
+          console.log(`${key}: ${value}`);
+        });
+      }
 
       const { data } = await axios.patch(
         `${API_DAI_SYSTEM}/${sourceName}/${id}`,

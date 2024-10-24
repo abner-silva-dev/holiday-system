@@ -9,7 +9,7 @@ export const useDeleteEnterprise = () => {
     mutationFn: deleteEnterpriseApi,
     onSuccess: () => {
       toast.success('Empresa eliminada exitosamente');
-      queryClient.invalidateQueries({ queryKey: ['enterprise'] });
+      queryClient.invalidateQueries({ queryKey: ['enterprises'] });
     },
     onError: (err) => {
       toast.error(err.message);

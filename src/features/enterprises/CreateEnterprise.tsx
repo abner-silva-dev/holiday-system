@@ -9,8 +9,9 @@ import Row from '../../ui/Row';
 import Heading from '../../ui/Heading';
 
 import { EnterpriseInfo } from '../enterprises/types';
-import { upperCaseText } from '../../utils/helpers';
-// import InputImageDrag from '../../ui/InputImageDrag';
+import { useState } from 'react';
+import InputImageDrag from '../../ui/InputImageDrag';
+import { useUpdateEnterprise } from './useUpdateEnterprise';
 
 const Form = styled.form`
   display: grid;
@@ -28,65 +29,71 @@ const Input = styled.input`
   width: 100%;
 `;
 
-// interface HandleSubmit extends UserInfo {
-//   paternSurname?: string;
-//   motherSurname?: string;
-// }
-
 interface PropsCreateEnterprise {
-  edit?: EnterpriseInfo;
+  enterpriseToUpdate?: EnterpriseInfo;
   onCloseModal?: () => void;
 }
 
 const CreateEnterprise: React.FC<PropsCreateEnterprise> = ({
-  edit = {},
+  enterpriseToUpdate = {},
   onCloseModal,
 }) => {
-  // const { _id: enterpriseId = '', ...editValues } = enterpriseToUpdate as EnterpriseInfo;
-  // const isEditSession = Boolean(enterpriseId);
+  const { _id: enterpriseId = '', ...editValues } = enterpriseToUpdate as EnterpriseInfo;
+  const isEditSession = Boolean(enterpriseId);
 
+  // Check if is Edition or Create enterprise
   const { register, handleSubmit, reset } = useForm<EnterpriseInfo>({
-    defaultValues: edit,
+    defaultValues: isEditSession ? { ...editValues } : {},
   });
 
   const { createEnterprise } = useCreateEnterprise();
+  const { updateEnterprises } = useUpdateEnterprise();
 
   const onSubmit = (data: EnterpriseInfo) => {
-    // ****!! ANDREW ADDED THIS FUNCTIONALITY
+    const formData = new FormData();
 
-    const { name, nameAbreviate, email, phoneNumber, logo } = data;
-    const capitalizedNameAbreviate = upperCaseText(nameAbreviate || '');
+    if (isEditSession && data.logo) delete data.logo;
+    if (fileImg) formData.append('logo', fileImg);
 
-    createEnterprise({
-      name,
-      nameAbreviate: capitalizedNameAbreviate,
-      email,
-      phoneNumber,
-      logo,
-    });
+    Object.entries(data).forEach(([key, value]) => formData.append(key, value));
 
-    reset();
-    onCloseModal?.();
+    if (isEditSession)
+      updateEnterprises(
+        { newData: formData, id: enterpriseId },
+        {
+          onSuccess: () => {
+            reset();
+            onCloseModal?.();
+          },
+        }
+      );
+    else
+      createEnterprise(formData, {
+        onSuccess: () => {
+          reset();
+          onCloseModal?.();
+        },
+      });
   };
+
+  // handle file photo
+  const [fileImg, setFileImg] = useState<File | null>(null);
 
   return (
     <Row>
-      <Heading as="h2">Registro de empresa</Heading>
+      <Heading as="h2">
+        {isEditSession ? 'Modificar empresa' : 'Registro de empresa'}
+      </Heading>
 
       <Form onSubmit={handleSubmit(onSubmit)}>
-        {/* <FormRow label="Logotipo">
+        <FormRow label="Logotipo">
           <InputImageDrag
-            defaultName={logo || ''}
+            defaultName={editValues.logo || ''}
             onChangeFile={setFileImg}
             showPreview={false}
-            id="logo"
-            {...register('logo')}
-            required
           />
-        </FormRow> */}
-        <FormRow label="Logotipo">
-          <Input type="text" id="logo" {...register('logo')} required />
         </FormRow>
+
         <FormRow label="Nombre de Empresa">
           <Input
             type="text"
@@ -114,16 +121,6 @@ const CreateEnterprise: React.FC<PropsCreateEnterprise> = ({
             required
           />
         </FormRow>
-        <FormRow label="Número Telefónico">
-          <Input
-            type="text"
-            id="phoneNumber"
-            placeholder="Sulivan"
-            {...register('phoneNumber')}
-            required
-          />
-        </FormRow>
-
         <FormRow label="Telefono">
           <Input
             type="text"
@@ -134,7 +131,9 @@ const CreateEnterprise: React.FC<PropsCreateEnterprise> = ({
           />
         </FormRow>
 
-        <Button $variation="confirm">Crear Empresa</Button>
+        <Button $variation="confirm">
+          {isEditSession ? 'Guardar cambios' : 'Crear empresa'}
+        </Button>
       </Form>
     </Row>
   );
