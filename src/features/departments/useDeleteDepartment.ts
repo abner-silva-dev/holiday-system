@@ -9,7 +9,7 @@ export const useDeleteDepartment = () => {
     mutationFn: deleteDepartmentApi,
     onSuccess: () => {
       toast.success('Departamento eliminado exitosamente');
-      queryClient.invalidateQueries({ queryKey: ['department'] });
+      queryClient.invalidateQueries({ queryKey: ['departments'] });
     },
     onError: (err) => {
       toast.error(err.message);

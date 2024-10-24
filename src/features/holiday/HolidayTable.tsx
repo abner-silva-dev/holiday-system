@@ -5,7 +5,6 @@ import { useStateApp } from '../../context/stateAppContext';
 import Spinner from '../../ui/Spinner';
 import { formatText } from '../../utils/helpers';
 import Table from '../../ui/Table';
-import { HolidayInfo } from './type';
 import { getStatusHoliday } from '../../utils/holidayUtils';
 
 const HolidayTable = () => {

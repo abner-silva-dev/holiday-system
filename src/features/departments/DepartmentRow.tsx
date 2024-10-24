@@ -16,9 +16,12 @@ const DepartmentRow: React.FC<Props> = ({ department }) => {
 
   if (!department) return null;
 
+  console.log(department);
   const { name, nameAbreviate, enterprise } = department;
 
   const departmentId = department._id || '';
+  const enterpriseId =
+    typeof enterprise === 'object' && enterprise ? enterprise._id || '' : '';
 
   return (
     <>
@@ -57,10 +60,11 @@ const DepartmentRow: React.FC<Props> = ({ department }) => {
 
               <Modal.Window name="edit">
                 <CreateDepartment
-                  edit={{
+                  departmentToUpdate={{
+                    _id: departmentId,
                     name,
                     nameAbreviate,
-                    enterprise,
+                    enterprise: { _id: enterpriseId },
                   }}
                 />
               </Modal.Window>

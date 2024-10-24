@@ -12,6 +12,7 @@ import Heading from '../../ui/Heading';
 import { useEnterprises } from '../enterprises/useEnterprises';
 import { EnterpriseInfo } from '../enterprises/types';
 import { upperCaseText } from '../../utils/helpers';
+import { useUpdateDepartment } from './useUpdateDepartment';
 
 const Form = styled.form`
   display: grid;
@@ -28,48 +29,72 @@ const Input = styled.input`
   border-radius: var(--border-radius-md);
 `;
 
-interface HandleSubmit extends DepartmentInfo {
-  // paternSurname?: string;
-  // motherSurname?: string;
-  name?: string;
-  nameAbreviate?: string;
-}
-
 interface PropsCreateDepartment {
-  edit?: HandleSubmit;
+  departmentToUpdate?: DepartmentInfo;
   onCloseModal?: () => void;
 }
 
 const CreateDepartment: React.FC<PropsCreateDepartment> = ({
-  edit = {},
+  departmentToUpdate = {},
   onCloseModal,
 }) => {
-  const { register, handleSubmit, reset } = useForm<HandleSubmit>({
-    defaultValues: edit,
+  const { _id: departmentId = '', ...editValues } = departmentToUpdate as DepartmentInfo;
+
+  const isEditSession = Boolean(departmentId);
+
+  const { register, handleSubmit, reset } = useForm<DepartmentInfo>({
+    defaultValues: isEditSession
+      ? {
+          ...editValues,
+          enterprise: editValues?.enterprise?._id as unknown as EnterpriseInfo,
+        }
+      : {},
   });
 
   const { createDepartment } = useCreateDepartment();
+  const { updateDepartment } = useUpdateDepartment();
   const { enterprises } = useEnterprises();
 
-  const onSubmit = (data: HandleSubmit) => {
+  const onSubmit = (data: DepartmentInfo) => {
     const { name, nameAbreviate, enterprise } = data;
-
     const capitalizedName = upperCaseText(name || '');
     const capitalizedNameAbreviate = upperCaseText(nameAbreviate || '');
 
-    createDepartment({
-      name: capitalizedName,
-      nameAbreviate: capitalizedNameAbreviate,
-      enterprise,
-    });
-
-    reset();
-    onCloseModal?.();
+    if (isEditSession) {
+      updateDepartment(
+        {
+          newData: { name, nameAbreviate, enterprise },
+          id: departmentId,
+        },
+        {
+          onSuccess: () => {
+            reset();
+            onCloseModal?.();
+          },
+        }
+      );
+    } else {
+      createDepartment(
+        {
+          name: capitalizedName,
+          nameAbreviate: capitalizedNameAbreviate,
+          enterprise,
+        },
+        {
+          onSuccess: () => {
+            reset();
+            onCloseModal?.();
+          },
+        }
+      );
+    }
   };
 
   return (
     <Row>
-      <Heading as="h2">Registro de Departamento</Heading>
+      <Heading as="h2">
+        {isEditSession ? 'Actualizar departamento' : 'Registro de departamento'}
+      </Heading>
 
       <Form onSubmit={handleSubmit(onSubmit)}>
         <FormRow label="Nombre de Empleado">
@@ -91,14 +116,8 @@ const CreateDepartment: React.FC<PropsCreateDepartment> = ({
           />
         </FormRow>
         <FormRow label="Empresa">
-          {/* <Input
-            type="text"
-            id="enterprise"
-            placeholder="DAI"
-            {...register('enterprise')}
-            required
-          /> */}
           <Input id="enterprise" as="select" {...register('enterprise')} required>
+            <option value="">Selecciona una empresa</option>
             {enterprises?.map((enterprise: EnterpriseInfo) => {
               return (
                 <option value={enterprise._id} key={enterprise._id}>
@@ -108,7 +127,9 @@ const CreateDepartment: React.FC<PropsCreateDepartment> = ({
             })}
           </Input>
         </FormRow>
-        <Button $variation="confirm">Crear Departamento</Button>
+        <Button $variation="confirm">
+          {isEditSession ? 'Guardar cambios' : 'Crear Departamento'}
+        </Button>
       </Form>
     </Row>
   );

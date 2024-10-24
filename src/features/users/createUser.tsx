@@ -159,6 +159,7 @@ const CreateUser: React.FC<PropsCreateUSer> = ({ userToUpdate = {}, onCloseModal
         </FormRow>
         <FormRow label="Empresa">
           <Input id="enterprise" as="select" {...register('enterprise')} required>
+            <option value="">Selecciona una empresa</option>
             {enterprises?.map((enterprise: EnterpriseInfo) => {
               return (
                 <option value={enterprise._id} key={enterprise._id}>
@@ -170,6 +171,7 @@ const CreateUser: React.FC<PropsCreateUSer> = ({ userToUpdate = {}, onCloseModal
         </FormRow>
         <FormRow label="Departamento">
           <Input id="department" as="select" {...register('department')} required>
+            <option value="">Selecciona una departamento</option>
             {departments?.map((department: DepartmentInfo) => {
               return (
                 <option value={department._id} key={department._id}>
