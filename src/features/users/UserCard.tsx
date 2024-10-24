@@ -84,7 +84,7 @@ const UserCard: React.FC<{ user: UserInfo; children?: ReactNode }> = ({
 }) => {
   return (
     <StyledUserCard>
-      <FormCredit />
+      <FormCredit user={user} />
 
       <PhotoContainer>
         <UserPhoto
@@ -101,7 +101,7 @@ const UserCard: React.FC<{ user: UserInfo; children?: ReactNode }> = ({
         </Group>
         <Group>
           <TextTitle>Departamento</TextTitle>
-          <Text>{user?.department.name}</Text>
+          <Text>{user?.department?.name}</Text>
         </Group>
         <Group>
           <TextTitle>Nombre</TextTitle>

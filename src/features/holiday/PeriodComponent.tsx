@@ -3,40 +3,49 @@ import { HiOutlineClock } from 'react-icons/hi2';
 import { HiOutlineChevronRight } from 'react-icons/hi2';
 import { HiOutlineChevronLeft } from 'react-icons/hi2';
 import { useState } from 'react';
+import { UserInfo } from '../users/types';
+import { formatDate } from '../../utils/helpers';
 
 // Estilos de los componentes
 const Period = styled.div`
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8rem;
+
   position: relative;
   align-items: center;
-  gap: 1rem;
-`;
-
-const PeriodTag = styled.div`
   background-color: var(--color-brand-50);
   color: var(--color-brand-900);
   font-size: 1.8rem;
-  display: grid;
-  align-items: center;
-  justify-items: center;
-  gap: 1.2rem;
+  display: flex;
 
-  grid-template-columns: 1fr 1fr;
   border: 1px solid var(--color-brand-200);
-  padding: 1.6rem 3.2rem 1.6rem 1.2rem;
+  padding: 0rem 4rem;
   border-radius: 9px;
   box-shadow: var(--shadow-md);
+`;
+
+const PeriodTag = styled.div`
+  display: flex;
+  gap: 2rem;
+  align-items: center;
 
   & svg {
-    height: 4rem;
-    width: 4rem;
+    height: 3rem;
+    width: 3rem;
   }
 `;
 
 const TagTextContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  /* align-items: center; */
+  & span {
+    margin-top: -0.5rem;
+    /* font-size: 1.6rem; */
+  }
 `;
 
 const periodBtn = css`
@@ -53,8 +62,8 @@ const periodBtn = css`
   box-shadow: var(--shadow-md);
   transform: all 0.2s;
   & svg {
-    height: 2rem;
-    width: 2rem;
+    height: 3rem;
+    width: 3rem;
     stroke: var(--color-grey-100);
   }
   &:hover {
@@ -74,30 +83,54 @@ const PeriodButtonRight = styled.button`
 `;
 
 const TagTitle = styled.span`
-  font-weight: bold;
+  font-size: 2rem;
+  font-weight: 700;
 `;
 
-const ClockContainer = styled.div`
-  display: flex;
-  align-items: center;
+const TextDates = styled.p`
+  font-size: 1.2rem;
+  color: var(--color-grey-600);
 `;
 
 interface PeriodProps {
-  initialPeriod: number;
+  user: UserInfo;
 }
 
-const PeriodComponent: React.FC<PeriodProps> = ({ initialPeriod }) => {
-  const [period, setPeriod] = useState(initialPeriod);
+const PeriodComponent: React.FC<PeriodProps> = ({ user }) => {
+  const [periodNum, setPeriodNum] = useState(0);
 
   const incrementPeriod = () => {
-    if (period < initialPeriod + 1) {
-      setPeriod(period + 1);
-    }
+    if (periodNum >= 1) return;
+    setPeriodNum((periodNum) => periodNum + 1);
   };
 
   const decrementPeriod = () => {
-    if (period > initialPeriod - 1) {
-      setPeriod(period - 1);
+    if (periodNum <= -1) return;
+    setPeriodNum((periodNum) => periodNum - 1);
+  };
+
+  const getPeriodDate = (num: number) => {
+    switch (num) {
+      case -1:
+        return `${formatDate(user.daysGrantedBySeniorityPast?.startDate + '', {
+          spaces: false,
+        })} - ${formatDate(user.daysGrantedBySeniorityPast?.endDate + '', {
+          spaces: false,
+        })}`;
+
+      case 0:
+        return `${formatDate(user.daysGrantedBySeniority?.startDate + '', {
+          spaces: false,
+        })} - ${formatDate(user.daysGrantedBySeniority?.endDate + '', {
+          spaces: false,
+        })}`;
+
+      case 1:
+        return `${formatDate(user.daysGrantedBySeniorityFuture?.startDate + '', {
+          spaces: false,
+        })} - ${formatDate(user.daysGrantedBySeniorityFuture?.endDate + '', {
+          spaces: false,
+        })}`;
     }
   };
 
@@ -108,14 +141,13 @@ const PeriodComponent: React.FC<PeriodProps> = ({ initialPeriod }) => {
       </PeriodButtonLeft>
 
       <PeriodTag>
-        <ClockContainer>
-          <HiOutlineClock />
-        </ClockContainer>
+        <HiOutlineClock />
         <TagTextContainer>
           <TagTitle>Periodo</TagTitle>
-          <span>{period}</span>
         </TagTextContainer>
       </PeriodTag>
+
+      <TextDates>{getPeriodDate(periodNum)}</TextDates>
 
       <PeriodButtonRight onClick={incrementPeriod}>
         <HiOutlineChevronRight />

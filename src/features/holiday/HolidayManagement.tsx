@@ -221,7 +221,7 @@ const HolidayManagement = () => {
             value={`${pendingHolidays.length} solicitudes`}
           />
 
-          <PeriodComponent initialPeriod={2024} />
+          <PeriodComponent user={user} />
         </HolidayOptions>
 
         <Filters>

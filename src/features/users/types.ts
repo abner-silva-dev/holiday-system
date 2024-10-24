@@ -9,22 +9,22 @@ type Seniority = {
 };
 
 export interface UserInfo {
-  employNumber: string;
+  employNumber?: string;
   id?: string;
-  name: string;
+  name?: string;
   role?: string;
   paternSurname?: string;
   motherSurname?: string;
   photo?: string;
-  dateHiring: string;
+  dateHiring?: string;
   seniority?: Seniority;
-  email: string;
-  enterprise: EnterpriseInfo;
-  department: DepartmentInfo;
+  email?: string;
+  enterprise?: EnterpriseInfo;
+  department?: DepartmentInfo;
   holidays?: HolidayInfo[];
   daysGrantedBySeniority?: {
-    balance: number;
-    startDate: Date;
+    balance?: number;
+    startDate?: Date;
     endDate: Date;
   };
   daysGrantedBySeniorityPast?: {
@@ -37,7 +37,7 @@ export interface UserInfo {
     startDate: Date;
     endDate: Date;
   };
-  credit?: { balance: number; exp: string };
+  credit?: { balance: number; exp?: string };
   creditFuture?: { balance: number };
-  creditPast?: { balance: number; exp: string };
+  creditPast?: { balance: number; exp?: string };
 }
