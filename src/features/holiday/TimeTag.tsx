@@ -48,13 +48,13 @@ const TimeTag: React.FC<PropsTimeTag> = ({ $time }) => {
       periodName = 'pasado';
       break;
     case 'present':
-      periodName = 'present';
+      periodName = 'presente';
       break;
     case 'future':
       periodName = 'futuro';
       break;
     default:
-      periodName = 'present';
+      periodName = 'presente';
   }
   return <TimeTagStyled $time={$time}>{periodName}</TimeTagStyled>;
 };
