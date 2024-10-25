@@ -243,6 +243,29 @@ const DatesModal = styled.div`
   z-index: 10;
 `;
 
+const TimeTag = styled.label`
+  //COLORS
+  // Present:
+  /* color: #b91c1c;
+  border: 1px solid #ffd4d4;
+  background-color: #fee2e2; */
+  // Future:
+  /* color: #0369a1;
+  border: 1px solid #d1eeff;
+  background-color: #e0f2fe; */
+  // Past:
+  color: #15803d;
+  border: 1px solid #cbffde;
+  background-color: #dcfce7;
+
+  font-weight: 700;
+  font-size: 1.4rem;
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+  user-select: none;
+  text-transform: uppercase;
+`;
+
 interface PropsAuthorizationCard {
   holiday: HolidayInfo;
 }
@@ -304,14 +327,17 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
     <AuthorizationCardStyled>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Row>
-          <Heading as="h2">
-            Solicitud:{' '}
-            <CreatedAt>
-              {formatDate(holiday?.createdAt || '', {
-                monthsName: true,
-              })}
-            </CreatedAt>
-          </Heading>
+          <Row type="horizontal">
+            <Heading as="h2">
+              Solicitud:{' '}
+              <CreatedAt>
+                {formatDate(holiday?.createdAt || '', {
+                  monthsName: true,
+                })}
+              </CreatedAt>
+            </Heading>
+            <TimeTag>pasado</TimeTag>
+          </Row>
 
           <EmployedItem>
             <DaysRequest>

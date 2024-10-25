@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { UserInfo } from '../users/types';
 import { useUpdateUser } from '../users/useUpdateUser';
+import { useQueryClient } from '@tanstack/react-query';
 
 //EDIT COMPONENT
 const EditButton = styled.button`
@@ -76,7 +77,8 @@ const Group = styled.div`
 
 const ErrorMessage = styled.p`
   font-size: 1.2rem;
-  color: #e03131;
+  color: var(--color-red-500);
+  text-align: center;
 `;
 
 interface CreditEdit {
@@ -91,6 +93,8 @@ interface PropsFormCredit {
 
 const FormCredit: React.FC<PropsFormCredit> = ({ user }) => {
   const [showEdit, setShowEdit] = useState(false);
+  const queryClient = useQueryClient();
+
   const {
     register,
     handleSubmit,
@@ -133,14 +137,22 @@ const FormCredit: React.FC<PropsFormCredit> = ({ user }) => {
   };
 
   const onSubmit = (data: CreditEdit) => {
-    updateUser({
-      newUser: {
-        creditPast: { ...creditPast, balance: data.creditPast || creditPast.balance },
-        credit: { ...credit, balance: data.credit },
-        creditFuture: { ...creditFuture, balance: data.creditFuture },
+    updateUser(
+      {
+        newUser: {
+          creditPast: { ...creditPast, balance: data.creditPast || creditPast.balance },
+          credit: { ...credit, balance: data.credit },
+          creditFuture: { ...creditFuture, balance: data.creditFuture },
+        },
+        id: user?.id || '',
       },
-      id: user?.id || '',
-    });
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['user'] });
+          onClose();
+        },
+      }
+    );
   };
 
   return (

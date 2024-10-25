@@ -59,6 +59,7 @@ const Tag = styled.label`
   border-top-right-radius: 9px;
   font-weight: 700;
   letter-spacing: 1px;
+  user-select: none;
 `;
 
 interface Props {
