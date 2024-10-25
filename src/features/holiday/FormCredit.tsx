@@ -6,6 +6,8 @@ import { useState } from 'react';
 import { UserInfo } from '../users/types';
 import { useUpdateUser } from '../users/useUpdateUser';
 import { useQueryClient } from '@tanstack/react-query';
+import { getUser } from '../../services/apiUsers';
+import { useUser } from '../users/useUser';
 
 //EDIT COMPONENT
 const EditButton = styled.button`
@@ -98,13 +100,12 @@ const FormCredit: React.FC<PropsFormCredit> = ({ user }) => {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm<CreditEdit>({
     defaultValues: {
-      creditPast: user.creditPast?.balance,
-      credit: user.credit?.balance,
-      creditFuture: user.creditFuture?.balance,
+      creditPast: user?.creditPast?.balance,
+      credit: user?.credit?.balance,
+      creditFuture: user?.creditFuture?.balance,
     },
   });
 
@@ -132,8 +133,7 @@ const FormCredit: React.FC<PropsFormCredit> = ({ user }) => {
     return null;
 
   const onClose = () => {
-    setShowEdit(!showEdit);
-    reset();
+    setShowEdit(false);
   };
 
   const onSubmit = (data: CreditEdit) => {
@@ -149,15 +149,20 @@ const FormCredit: React.FC<PropsFormCredit> = ({ user }) => {
       {
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: ['user'] });
-          onClose();
         },
       }
     );
+    onClose();
   };
 
   return (
     <>
-      <EditButton onClick={onClose} type="button">
+      <EditButton
+        onClick={() => {
+          setShowEdit((show) => !show);
+        }}
+        type="button"
+      >
         Editar Crédito
         <HiChevronLeft
           style={{

@@ -1,11 +1,17 @@
 import styled from 'styled-components';
-const StyledStat = styled.div`
+import { useStateApp } from '../context/stateAppContext';
+
+interface PropsStats {
+  $selected: boolean;
+}
+
+const StyledStat = styled.div<PropsStats>`
   /* Box */
   position: relative;
   background-color: var(--color-grey-0);
   border: 1px solid var(--color-grey-100);
+  ${(props) => (props.$selected ? 'border-bottom: 3px solid #862e9c;' : '')};
   border-radius: var(--border-radius-md);
-
   padding: 1.6rem;
   display: grid;
   grid-template-columns: 6.4rem 1fr;
@@ -66,13 +72,19 @@ interface Props {
   title: string;
   value: string;
   color: string;
-  tag?: string;
+  periodNumber?: number;
 }
 
-function Stat({ icon, title, value, color, tag }: Props) {
+function Stat({ icon, title, value, color, periodNumber }: Props) {
+  const {
+    state: { period },
+  } = useStateApp();
+
+  const hasPeriod = periodNumber === period;
+
   return (
-    <StyledStat>
-      {tag && <Tag>{tag}</Tag>}
+    <StyledStat $selected={hasPeriod}>
+      {hasPeriod && <Tag>Actual</Tag>}
       <Icon color={color}>{icon}</Icon>
       <Title>{title}</Title>
       <Value>{value}</Value>

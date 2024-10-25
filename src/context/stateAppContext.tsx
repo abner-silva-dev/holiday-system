@@ -1,6 +1,8 @@
 import React, { createContext, ReactNode, useContext, useReducer } from 'react';
 import { UserInfo } from '../features/users/types';
 
+type Period = 'future' | 'past' | 'present';
+
 type State = {
   userAuthenticated: null | UserInfo;
   queryUser: string;
@@ -9,6 +11,7 @@ type State = {
   queryHoliday: string;
   filterDepartment: string;
   filterEnterprise: string;
+  period: Period;
 };
 
 type ActionsName = 'user' | 'department' | 'enterprise' | 'holiday';
@@ -16,6 +19,7 @@ type ActionsName = 'user' | 'department' | 'enterprise' | 'holiday';
 type Action =
   | { type: 'user/me'; payload: UserInfo | null }
   | { type: 'user/search'; payload: string }
+  | { type: 'user/period'; payload: Period }
   | { type: 'department/search'; payload: string }
   | { type: 'enterprise/search'; payload: string }
   | { type: 'holiday/search'; payload: string }
@@ -31,6 +35,7 @@ const stateAppContext = createContext<
       handleFilter: (type: 'department' | 'enterprise', filter: string) => void;
       resetGlobalState: () => void;
       setCurrentUser: (user: UserInfo | null) => void;
+      setPeriod: (period: Period) => void;
     }
   | undefined
 >(undefined);
@@ -44,6 +49,7 @@ const initalState: State = {
   queryHoliday: '',
   filterDepartment: '',
   filterEnterprise: '',
+  period: 'present',
 };
 
 // 3) Create Reducer
@@ -53,6 +59,8 @@ function reducer(state: State, action: Action): State {
       return { ...state, userAuthenticated: action.payload };
     case 'user/search':
       return { ...state, queryUser: action.payload };
+    case 'user/period':
+      return { ...state, period: action.payload };
     case 'department/search':
       return { ...state, queryDepartment: action.payload };
     case 'enterprise/search':
@@ -89,9 +97,20 @@ function StateAppProvider({ children }: { children: ReactNode }) {
     dispatch({ type: `user/me`, payload: user });
   }
 
+  function setPeriod(period: Period) {
+    dispatch({ type: `user/period`, payload: period });
+  }
+
   return (
     <stateAppContext.Provider
-      value={{ state, handleSearch, handleFilter, resetGlobalState, setCurrentUser }}
+      value={{
+        state,
+        handleSearch,
+        handleFilter,
+        resetGlobalState,
+        setCurrentUser,
+        setPeriod,
+      }}
     >
       {children}
     </stateAppContext.Provider>

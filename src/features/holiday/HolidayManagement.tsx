@@ -159,10 +159,18 @@ const HolidayManagement = () => {
       break;
   }
 
+  // ORDER BY DATE
+  holidaysFilter = holidaysFilter.sort((a: HolidayInfo, b: HolidayInfo) => {
+    if (a.createdAt && b.createdAt)
+      if (a?.createdAt > b?.createdAt) return -1;
+      else if (a.createdAt < b.createdAt) return 1;
+    return 0;
+  });
+
   return (
     <Row>
       <Row type="horizontal">
-        <GoBack to="/">
+        <GoBack to="../holidays">
           <HiArrowLeft />
         </GoBack>
         <Heading as="h1">Administración de Vacaciones</Heading>
@@ -171,7 +179,7 @@ const HolidayManagement = () => {
         <UserCard user={user}>
           <Stats>
             <Stat
-              tag="Actual"
+              periodNumber={0}
               color="red"
               icon={<HiCalendarDays />}
               title="Días Restantes"
@@ -179,21 +187,17 @@ const HolidayManagement = () => {
                 daysGrantedBySeniority.balance ?? 0
               }`}
             />
-
             <Stat
-              color="brand"
+              periodNumber={1}
+              color="blue"
               icon={<HiCalendarDays />}
-              title="Periodo Actual"
-              value={`${formatDate(daysGrantedBySeniority.startDate + '', {
-                spaces: false,
-                separationBy: '-',
-              })} ${','} ${formatDate(daysGrantedBySeniority.endDate + '', {
-                spaces: false,
-                separationBy: '-',
-              })}`}
+              title="Vacaciones del periodo futuro"
+              value={`${user.creditFuture?.balance ?? 0} de ${
+                daysGrantedBySeniorityFuture.balance ?? 0
+              } `}
             />
-
             <Stat
+              periodNumber={-1}
               color="green"
               icon={<HiCalendarDays />}
               title="Vacaciones del periodo anterior"
@@ -201,14 +205,19 @@ const HolidayManagement = () => {
                 daysGrantedBySeniorityPast.balance ?? 0
               }`}
             />
-
             <Stat
-              color="blue"
+              color="brand"
               icon={<HiCalendarDays />}
-              title="Vacaciones del periodo futuro"
-              value={`${user.creditFuture?.balance ?? 0} de ${
-                daysGrantedBySeniorityFuture.balance ?? 0
-              } `}
+              title="Periodo Actual"
+              value={`${formatDate(daysGrantedBySeniority.startDate + '', {
+                spaces: false,
+                separationBy: '-',
+                monthsName: true,
+              })} ${formatDate(daysGrantedBySeniority.endDate + '', {
+                spaces: false,
+                separationBy: '-',
+                monthsName: true,
+              })}`}
             />
           </Stats>
         </UserCard>

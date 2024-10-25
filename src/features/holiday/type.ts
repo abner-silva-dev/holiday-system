@@ -14,4 +14,5 @@ export interface HolidayInfo {
   admin?: UserInfo | string;
   manager?: UserInfo | string;
   user?: UserInfo | string;
+  period: 'past' | 'present' | 'future';
 }
