@@ -16,6 +16,8 @@ import { useQueryClient } from '@tanstack/react-query';
 import { media } from '../../style/media';
 // import StateHoliday from './StateHoliday';
 import { getStatusHoliday } from '../../utils/holidayUtils';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useStateApp } from '../../context/stateAppContext';
 // import Holiday from '../../pages/Holiday';
 
 const StyledCalendarInput = styled.div`
@@ -90,6 +92,9 @@ const CreateHoliday: React.FC<PropsCreateDepartment> = ({ edit = {}, onClose }) 
     defaultValues: edit,
   });
 
+  const {
+    state: { period },
+  } = useStateApp();
   const { user: curUser } = useUser();
   const { createHoliday } = useCreateHoliday();
   const [dates, setDates] = useState<Date[]>([]);
@@ -99,11 +104,8 @@ const CreateHoliday: React.FC<PropsCreateDepartment> = ({ edit = {}, onClose }) 
     (acc, cur) => acc + (cur.days?.length || 0),
     0
   );
-
-  console.log(tempPendingHolidays);
-  console.log(curUser?.credit?.balance || 0);
-
-  console.log((curUser?.credit?.balance || 0) - tempPendingHolidays);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   if (!curUser) return null;
 
@@ -112,6 +114,7 @@ const CreateHoliday: React.FC<PropsCreateDepartment> = ({ edit = {}, onClose }) 
       {
         ...data,
         days: dates,
+        period,
         createdAt: new Date().toISOString(),
         user: curUser?.id || '',
       },
@@ -119,6 +122,10 @@ const CreateHoliday: React.FC<PropsCreateDepartment> = ({ edit = {}, onClose }) 
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: ['user', curUser.id] });
           onClose(false);
+
+          const searchParams = new URLSearchParams(location.search);
+          searchParams.set('history', 'request');
+          navigate(`${location.pathname}?${searchParams.toString()}`, { replace: true });
         },
       }
     );
@@ -162,10 +169,6 @@ const CreateHoliday: React.FC<PropsCreateDepartment> = ({ edit = {}, onClose }) 
   });
 
   locale('es');
-
-  // Configurar el mínimo de fecha para habilitar dos meses atrás
-  // const minDate = new Date();
-  // minDate.setMonth(minDate.getMonth() - 2); // Permitir seleccionar desde 2 meses atrás
 
   return (
     <>

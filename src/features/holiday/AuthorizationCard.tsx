@@ -456,28 +456,30 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
                 disabled={userAuthenticated.role !== 'admin'}
                 {...register('observationAdmin')}
               />
-              {userAuthenticated.role === 'admin' && (
-                <AuthorizationButtons>
-                  <Button
-                    onClick={() => setValue('authorizationAdmin', 'approved')}
-                    $color="#087f5b"
-                  >
-                    <HiOutlineCheck />
-                    Aceptar
-                  </Button>
-                  <Button
-                    onClick={() => setValue('authorizationAdmin', 'rejected')}
-                    $color="#a61e4d"
-                  >
-                    <HiOutlineXMark />
-                    Rechazar
-                  </Button>
-                </AuthorizationButtons>
-              )}
+              {userAuthenticated.role === 'admin' &&
+                holiday.authorizationAdmin !== 'approved' && (
+                  <AuthorizationButtons>
+                    <Button
+                      onClick={() => setValue('authorizationAdmin', 'approved')}
+                      $color="#087f5b"
+                    >
+                      <HiOutlineCheck />
+                      Aceptar
+                    </Button>
+                    <Button
+                      onClick={() => setValue('authorizationAdmin', 'rejected')}
+                      $color="#a61e4d"
+                    >
+                      <HiOutlineXMark />
+                      Rechazar
+                    </Button>
+                  </AuthorizationButtons>
+                )}
             </Authorization>
           </AuthorizationItem>
         </Row>
       </Form>
+
       {userAuthenticated.role === 'admin' &&
         holiday.authorizationAdmin === 'approved' &&
         holiday.authorizationManager === 'approved' && (

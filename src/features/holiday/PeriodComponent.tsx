@@ -2,9 +2,9 @@ import styled, { css } from 'styled-components';
 import { HiOutlineClock } from 'react-icons/hi2';
 import { HiOutlineChevronRight } from 'react-icons/hi2';
 import { HiOutlineChevronLeft } from 'react-icons/hi2';
-import { useState } from 'react';
 import { UserInfo } from '../users/types';
 import { formatDate } from '../../utils/helpers';
+import { useStateApp } from '../../context/stateAppContext';
 
 // Estilos de los componentes
 const Period = styled.div`
@@ -97,17 +97,28 @@ interface PeriodProps {
 }
 
 const PeriodComponent: React.FC<PeriodProps> = ({ user }) => {
-  const [periodNum, setPeriodNum] = useState(0);
+  const {
+    state: { period },
+    setPeriod,
+  } = useStateApp();
 
+  const periodNum = period === 'past' ? -1 : period === 'present' ? 0 : 1;
+
+  // Incrementa el periodo si es "present" o "past"
   const incrementPeriod = () => {
-    if (periodNum >= 1) return;
-    setPeriodNum((periodNum) => periodNum + 1);
+    if (period === 'future') return; // No incrementar si ya estamos en "future"
+    const nextPeriod = period === 'past' ? 'present' : 'future';
+    setPeriod(nextPeriod);
   };
 
+  // Decrementa el periodo si es "present" o "future"
   const decrementPeriod = () => {
-    if (periodNum <= -1) return;
-    setPeriodNum((periodNum) => periodNum - 1);
+    if (period === 'past') return; // No decrementar si ya estamos en "past"
+    const prevPeriod = period === 'future' ? 'present' : 'past';
+    setPeriod(prevPeriod);
   };
+
+  // Obtener las fechas del periodo seleccionado
 
   const getPeriodDate = (num: number) => {
     switch (num) {
