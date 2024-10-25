@@ -94,6 +94,7 @@ const UserCard: React.FC<{ user: UserInfo; children?: ReactNode }> = ({
           src={`${API_DAI_BASE}/img/user/${user?.photo}`}
           $size="large"
           $type="circle"
+          $border={true}
         />
       </PhotoContainer>
 
