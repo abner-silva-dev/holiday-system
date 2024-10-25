@@ -179,7 +179,7 @@ const HolidayManagement = () => {
         <UserCard user={user}>
           <Stats>
             <Stat
-              periodNumber={0}
+              periodName="present"
               color="red"
               icon={<HiCalendarDays />}
               title="Días Restantes"
@@ -188,7 +188,7 @@ const HolidayManagement = () => {
               }`}
             />
             <Stat
-              periodNumber={1}
+              periodName="future"
               color="blue"
               icon={<HiCalendarDays />}
               title="Vacaciones del periodo futuro"
@@ -197,7 +197,7 @@ const HolidayManagement = () => {
               } `}
             />
             <Stat
-              periodNumber={-1}
+              periodName="past"
               color="green"
               icon={<HiCalendarDays />}
               title="Vacaciones del periodo anterior"
