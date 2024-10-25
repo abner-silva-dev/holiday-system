@@ -41,7 +41,6 @@ function App() {
           <Routes>
             {/* PERSONNEL MANAGEMENT APP */}
             <Route path="request" element={<Request />} />
-
             <Route path="login" element={<Authentication />} />
             <Route
               path="/"
