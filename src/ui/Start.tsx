@@ -73,15 +73,15 @@ interface Props {
   title: string;
   value: string;
   color: string;
-  periodNumber?: number;
+  periodName?: 'past' | 'present' | 'future';
 }
 
-function Stat({ icon, title, value, color, periodNumber }: Props) {
+function Stat({ icon, title, value, color, periodName }: Props) {
   const {
     state: { period },
   } = useStateApp();
 
-  const hasPeriod = periodNumber === period;
+  const hasPeriod = periodName === period;
 
   return (
     <StyledStat $selected={hasPeriod}>
