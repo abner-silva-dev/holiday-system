@@ -14,7 +14,7 @@ import { useUser } from '../users/useUser';
 import UserCard from '../users/UserCard';
 import { Link, useSearchParams } from 'react-router-dom';
 import CreateHoliday from './CreateHoliday';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AuthorizationCard from './AuthorizationCard';
 import { HolidayInfo } from './type';
 import ContentEmpty from '../../ui/ContentEmpty';
@@ -24,6 +24,8 @@ import { getStatusHoliday } from '../../utils/holidayUtils';
 import PeriodComponent from './PeriodComponent';
 
 import { formatDate } from '../../utils/helpers';
+import RestrictRoute from '../../ui/RestrictRoute';
+import { useStateApp } from '../../context/stateAppContext';
 
 const HolidayInfoStyles = styled.div`
   display: grid;
@@ -117,8 +119,12 @@ const HolidayManagement = () => {
   const [searchParams] = useSearchParams();
   const history = searchParams.get('history');
   const [isClicked, setClicked] = useState(false);
+  const { setPeriod } = useStateApp();
 
   const { user } = useUser();
+  useEffect(() => {
+    setPeriod('present');
+  }, []);
 
   if (!user) return null;
 
@@ -180,7 +186,7 @@ const HolidayManagement = () => {
           <Stats>
             <Stat
               periodName="present"
-              color="red"
+              color="green"
               icon={<HiCalendarDays />}
               title="Días Restantes"
               value={`${user.credit?.balance ?? 0} de ${
@@ -198,7 +204,7 @@ const HolidayManagement = () => {
             />
             <Stat
               periodName="past"
-              color="green"
+              color="red"
               icon={<HiCalendarDays />}
               title="Vacaciones del periodo anterior"
               value={`  ${user.creditPast?.balance ?? 0} de ${
@@ -229,8 +235,9 @@ const HolidayManagement = () => {
             title="Solicitudes pendientes"
             value={`${pendingHolidays.length} solicitudes`}
           />
-
-          <PeriodComponent user={user} />
+          <RestrictRoute restrictTo={['user']}>
+            <PeriodComponent user={user} />
+          </RestrictRoute>
         </HolidayOptions>
 
         <Filters>

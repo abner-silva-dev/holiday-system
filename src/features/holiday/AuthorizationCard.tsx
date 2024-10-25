@@ -253,15 +253,16 @@ const TimeTagStyled = styled.label<PropsTimeTag>`
     switch (props.$time) {
       case 'past':
         return `
-          color: #15803d;
-          border: 1px solid #cbffde;
-          background-color: #dcfce7;
-        `;
-      case 'present':
-        return `
           color: #b91c1c;
           border: 1px solid #ffd4d4;
           background-color: #fee2e2;
+          
+        `;
+      case 'present':
+        return `
+          color: #15803d;
+          border: 1px solid #cbffde;
+          background-color: #dcfce7;
         `;
       case 'future':
         return `

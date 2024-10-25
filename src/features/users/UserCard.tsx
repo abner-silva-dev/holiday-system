@@ -5,6 +5,7 @@ import { ReactNode } from 'react';
 import UserPhoto from './UserPhoto';
 import { API_DAI_BASE } from '../../config';
 import FormCredit from '../holiday/FormCredit';
+import RestrictRoute from '../../ui/RestrictRoute';
 
 const StyledUserCard = styled.aside`
   position: relative;
@@ -84,7 +85,9 @@ const UserCard: React.FC<{ user: UserInfo; children?: ReactNode }> = ({
 }) => {
   return (
     <StyledUserCard>
-      <FormCredit user={user} />
+      <RestrictRoute restrictTo={['user', 'manager']}>
+        <FormCredit user={user} />
+      </RestrictRoute>
 
       <PhotoContainer>
         <UserPhoto
