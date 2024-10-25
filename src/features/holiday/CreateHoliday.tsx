@@ -18,6 +18,8 @@ import { media } from '../../style/media';
 import { getStatusHoliday } from '../../utils/holidayUtils';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useStateApp } from '../../context/stateAppContext';
+import Row from '../../ui/Row';
+import TimeTag from './TimeTag';
 // import Holiday from '../../pages/Holiday';
 
 const StyledCalendarInput = styled.div`
@@ -173,7 +175,10 @@ const CreateHoliday: React.FC<PropsCreateDepartment> = ({ edit = {}, onClose }) 
   return (
     <>
       <RegContainer>
-        <Heading as="h2">Registro de Vacaciones</Heading>
+        <Row type="horizontal">
+          <Heading as="h2">Registro de Vacaciones</Heading>
+          <TimeTag $time={period} />
+        </Row>
 
         <Form onSubmit={handleSubmit(onSubmit)}>
           <FieldContainer>
