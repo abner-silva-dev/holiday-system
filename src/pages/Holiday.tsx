@@ -16,7 +16,6 @@ const Holiday = () => {
     <>
       <Row type="vertical">
         <Heading as="h1">Vacaciones</Heading>
-        <Heading as="h2">Solicitudes</Heading>
         <Row type="horizontal">
           <Search
             width="60%"

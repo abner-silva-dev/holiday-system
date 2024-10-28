@@ -2,8 +2,13 @@ import styled from 'styled-components';
 import MainNav from './MainNav';
 import logoImg from '../../public/logo-dai.png';
 import Logo from './Logo';
+import { media } from '../style/media';
 
-const StyleSidebar = styled.aside`
+interface PropsSidebar {
+  $isOpen?: boolean;
+}
+
+const StyleSidebar = styled.aside<PropsSidebar>`
   background-color: var(--color-grey-0);
   border-right: 1px solid var(--color-grey-100);
   padding: 2.4rem 2.4rem;
@@ -12,16 +17,33 @@ const StyleSidebar = styled.aside`
 
   display: flex;
   flex-direction: column;
+
   gap: 6rem;
+
+  transition: all 0.4s ease-out;
+
+  @media ${media.tablet} {
+    align-items: center;
+    gap: 15rem;
+    width: 100vw;
+    height: 100vh;
+
+    transform: translateY(-200%);
+    position: absolute;
+    z-index: 99;
+
+    ${(props) =>
+      props.$isOpen ? 'transform: translateY(0);' : 'transform: translateY(-100%)'}
+  }
 `;
 
-function Sidebar() {
+const Sidebar: React.FC<PropsSidebar> = ({ $isOpen }) => {
   return (
-    <StyleSidebar>
+    <StyleSidebar $isOpen={$isOpen}>
       <Logo src={logoImg} />
       <MainNav />
     </StyleSidebar>
   );
-}
+};
 
 export default Sidebar;

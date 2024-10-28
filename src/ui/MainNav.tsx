@@ -9,11 +9,16 @@ import {
 
 import styled from 'styled-components';
 import RestrictRoute from './RestrictRoute';
+import { media } from '../style/media';
 
 const NavList = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
+
+  @media ${media.tablet} {
+    gap: 6rem;
+  }
 `;
 
 const StyledNavLink = styled(NavLink)`
@@ -28,6 +33,10 @@ const StyledNavLink = styled(NavLink)`
     padding: 1.2rem 2.4rem;
     transition: all 0.3s;
     border: none;
+
+    @media ${media.tablet} {
+      font-size: 3rem;
+    }
   }
 
   /* This works because react-router places the active class on the active NavLink */
@@ -60,6 +69,15 @@ const StyledNavLink = styled(NavLink)`
   &.active:visited svg {
     color: var(--color-red-800);
   }
+
+  @media ${media.tablet} {
+    & svg {
+      width: 4rem;
+      height: 4rem;
+      color: var(--color-grey-400);
+      transition: all 0.3s;
+    }
+  }
 `;
 
 const NavigationBottom = styled(NavList)``;
@@ -69,6 +87,11 @@ const Navigation = styled.nav`
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+
+  @media ${media.tablet} {
+    justify-content: start;
+    gap: 6rem;
+  }
 `;
 
 function MainNav() {

@@ -83,6 +83,11 @@ const TextContainer = styled.div`
   border-radius: 8px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
   color: #fff;
+
+  @media ${media.mobile} {
+    width: 90vw;
+    height: 40vh;
+  }
 `;
 
 const HeroHeading = styled(Heading)`
@@ -119,6 +124,10 @@ const HowToSection = styled.section`
   max-width: 140rem;
   margin: 0 auto;
   padding: 7.2rem 0;
+
+  @media ${media.mobile} {
+    font-size: 2rem;
+  }
 `;
 
 const HowToNumber = styled(Heading)`
@@ -128,6 +137,10 @@ const HowToNumber = styled(Heading)`
 
 const HowToHeading = styled(Heading)`
   font-size: 2.4rem;
+
+  @media ${media.mobile} {
+    font-size: 2.6rem;
+  }
 `;
 
 const HowToContainer = styled.div`
@@ -156,6 +169,13 @@ const StepContainer = styled.div`
 
   &:hover {
     transform: scale(110%);
+  }
+
+  @media ${media.mobile} {
+    /* grid-column: 4rem; */
+    gap: 5rem;
+
+    grid-template-columns: 1fr;
   }
 `;
 
@@ -186,6 +206,11 @@ const SubHeading = styled(Heading)`
   font-size: 4rem;
   text-align: center;
   margin-bottom: 8rem;
+
+  @media ${media.mobile} {
+    font-size: 3rem;
+    margin-bottom: 5rem;
+  }
 `;
 
 const ButtonGroup = styled.div`

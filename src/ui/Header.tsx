@@ -29,6 +29,7 @@ const UserView = styled(Link)`
   display: flex;
   align-items: center;
   gap: 1.4rem;
+  margin-left: 4rem;
 `;
 
 const ImageContainer = styled.div`

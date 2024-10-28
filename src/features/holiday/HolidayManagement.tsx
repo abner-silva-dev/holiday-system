@@ -175,7 +175,7 @@ const HolidayManagement = () => {
   return (
     <Row>
       <Row type="horizontal">
-        <GoBack to="../holidays">
+        <GoBack to="/">
           <HiArrowLeft />
         </GoBack>
         <Heading as="h1">Administración de Vacaciones</Heading>
