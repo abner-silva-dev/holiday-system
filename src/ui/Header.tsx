@@ -138,7 +138,6 @@ function Header() {
           <UserPhoto
             src={`${API_DAI_BASE}/img/user/${userAuthenticated?.photo}`}
             alt="user photo"
-            $border={true}
           />
         </ImageContainer>
         <span>{userAuthenticated?.name}</span>

@@ -135,7 +135,6 @@ const HolidayManagement = () => {
     daysGrantedBySeniorityPast,
   } = user;
 
-  console.log(user);
   if (
     !holidays ||
     !daysGrantedBySeniority ||

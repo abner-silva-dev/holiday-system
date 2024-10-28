@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 import RequestVacation from '../features/holiday/RequestVacation';
-import { useState } from 'react';
-import { HiPuzzlePiece } from 'react-icons/hi2';
 import { useHolidays } from '../features/holiday/useHolidays';
 import { HolidayInfo } from '../features/holiday/type';
 import { Link } from 'react-router-dom';
@@ -21,8 +19,8 @@ const FloatFeatStyled = styled.div`
   border: 1px solid var(--color-grey-300);
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.08);
   border-radius: 9px;
-  height: 55rem;
-  width: 45rem;
+  height: 45rem;
+  width: 40rem;
   z-index: 999;
   cursor: auto;
 
@@ -56,25 +54,25 @@ const Main = styled.main`
   /* padding: 2rem 2.4rem; */
 `;
 
-const Message = styled.span`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  gap: 2.4rem;
-  line-height: 1.2;
-  font-weight: 600;
-  font-size: 2.5rem;
+// const Message = styled.span`
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+//   text-align: center;
+//   gap: 2.4rem;
+//   line-height: 1.2;
+//   font-weight: 600;
+//   font-size: 2.5rem;
 
-  color: var(--color-grey-400);
+//   color: var(--color-grey-400);
 
-  & svg {
-    height: 10rem !important;
-    width: 10rem !important;
-    fill: var(--color-grey-300);
-  }
-`;
+//   & svg {
+//     height: 10rem !important;
+//     width: 10rem !important;
+//     fill: var(--color-grey-300);
+//   }
+// `;
 
 const LinkShowMore = styled(Link)`
   display: flex;
@@ -103,6 +101,13 @@ const FloatFeat: React.FC<PropsFloatFeat> = ({ onClose }) => {
 
   const { pendingHolidays } = getStatusHoliday(holidays);
 
+  const holidaysFilter = pendingHolidays.sort((a: HolidayInfo, b: HolidayInfo) => {
+    if (a.createdAt && b.createdAt)
+      if (a?.createdAt > b?.createdAt) return -1;
+      else if (a.createdAt < b.createdAt) return 1;
+    return 0;
+  });
+
   if (isPending) return <Spinner />;
   const isEmpty = holidays?.length === 0;
 
@@ -112,7 +117,7 @@ const FloatFeat: React.FC<PropsFloatFeat> = ({ onClose }) => {
         <FloatTitle>Notificaciones</FloatTitle>
       </FloatHeader>
       <Main>
-        {pendingHolidays?.map((holiday: HolidayInfo) => (
+        {holidaysFilter?.map((holiday: HolidayInfo) => (
           <RequestVacation key={holiday._id} holiday={holiday} onClose={onClose} />
         ))}
 
@@ -120,7 +125,7 @@ const FloatFeat: React.FC<PropsFloatFeat> = ({ onClose }) => {
       </Main>
 
       <GoTo>
-        <LinkShowMore to="/holidays" onClick={onClose}>
+        <LinkShowMore to="holidays" onClick={onClose}>
           Ver Más
         </LinkShowMore>
       </GoTo>

@@ -91,6 +91,7 @@ const HolidayRow: React.FC<{ user: UserInfo }> = ({ user }) => {
           $type="circle"
           src={`${API_DAI_BASE}/img/user/${user?.photo}`}
           $size="medium"
+          $border={true}
         />
         <span>{user?.employNumber}</span>
         <span>

@@ -9,15 +9,19 @@ interface Props {
 const sizes = {
   small: css`
     width: 4rem;
+    height: 4rem;
   `,
   medium: css`
     width: 8rem;
+    height: 8rem;
   `,
   large: css`
     width: 16rem;
+    height: 16rem;
   `,
   adaptative: css`
     width: 100%;
+    height: 100%;
   `,
 };
 
@@ -32,11 +36,10 @@ const types = {
 
 const UserPhoto = styled.img<Props>`
   /* box-shadow: var(--shadow-sm); */
-  border: 9px solid var(--color-grey-0);
   ${(props) =>
     props.$border
       ? css`
-          border: 2px solid #991b1b;
+          border: 9px solid var(--color-grey-0);
         `
       : ''}
 

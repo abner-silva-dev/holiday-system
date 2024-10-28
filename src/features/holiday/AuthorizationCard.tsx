@@ -435,7 +435,8 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
                 {...register('observationAdmin')}
               />
               {userAuthenticated.role === 'admin' &&
-                holiday.authorizationAdmin !== 'approved' && (
+                holiday.authorizationAdmin !== 'approved' &&
+                holiday.authorizationAdmin !== 'rejected' && (
                   <AuthorizationButtons>
                     <Button
                       onClick={() => setValue('authorizationAdmin', 'approved')}

@@ -18,7 +18,7 @@ const StyledFilter = styled.nav`
   gap: 1rem;
 `;
 
-const Button = styled.button`
+const Button = styled.button<{ $active: boolean }>`
   background-color: var(--color-grey-0);
   border: none;
   padding: 0.4rem 0.6rem;

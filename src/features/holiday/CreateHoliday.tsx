@@ -3,7 +3,7 @@ import Heading from '../../ui/Heading';
 
 import { addLocale, locale } from 'primereact/api';
 import { Calendar } from 'primereact/calendar';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useForm } from 'react-hook-form';
 import Button from '../../ui/Button';
@@ -101,13 +101,33 @@ const CreateHoliday: React.FC<PropsCreateDepartment> = ({ edit = {}, onClose }) 
   const { createHoliday } = useCreateHoliday();
   const [dates, setDates] = useState<Date[]>([]);
 
-  const { pendingHolidays } = getStatusHoliday(curUser?.holidays || []);
+  const { pendingHolidays } = getStatusHoliday(
+    curUser?.holidays?.filter((holiday) => holiday.period === period) || []
+  );
   const tempPendingHolidays = pendingHolidays.reduce(
     (acc, cur) => acc + (cur.days?.length || 0),
     0
   );
   const navigate = useNavigate();
   const location = useLocation();
+
+  let periodCredit;
+
+  switch (period) {
+    case 'future':
+      periodCredit = curUser?.creditFuture?.balance;
+      break;
+    case 'present':
+      periodCredit = curUser?.credit?.balance;
+      break;
+    case 'past':
+      periodCredit = curUser?.creditPast?.balance;
+      break;
+  }
+
+  useEffect(() => {
+    setDates([]);
+  }, [period]);
 
   if (!curUser) return null;
 
@@ -195,7 +215,7 @@ const CreateHoliday: React.FC<PropsCreateDepartment> = ({ edit = {}, onClose }) 
                 disabledDates={[]} // En este caso no se usa disabledDates directamente
                 disabledDays={[0]} // Deshabilitar solo domingos (0)
                 required={true}
-                maxDateCount={(curUser?.credit?.balance || 0) - tempPendingHolidays || -1}
+                maxDateCount={(periodCredit || 0) - tempPendingHolidays || -1}
               />
             </StyledCalendarInput>
           </FieldContainer>
