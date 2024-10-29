@@ -22,6 +22,7 @@ import { useState } from 'react'; // Importa useState
 import { useMe } from '../authentication/useMe';
 import { UserInfo } from '../users/types';
 import TimeTag from './TimeTag';
+import { media } from '../../style/media';
 
 const AuthorizationCardStyled = styled.div`
   background-color: var(--color-grey-0);
@@ -76,6 +77,7 @@ const Authorization = styled.div`
 const RowMain = styled.div`
   display: flex;
   gap: 1.8rem;
+  flex-wrap: wrap;
 `;
 
 const SubTitle = styled.span`
@@ -148,6 +150,7 @@ const ButtonPDF = styled.button`
 const ShowDatesButton = styled.button`
   display: flex;
   align-items: center;
+  /* flex-wrap: wrap; */
   gap: 0.6rem;
   background-color: var(--color-brand-500);
   color: #fff;
@@ -165,6 +168,10 @@ const ShowDatesButton = styled.button`
     width: 2rem;
     height: 2rem;
     transform: rotate(180deg);
+  }
+
+  @media (${media.mobile}) {
+    padding: 0.5rem;
   }
 `;
 
@@ -242,6 +249,12 @@ const DatesModal = styled.div`
   margin-top: 1rem;
   width: 100%;
   z-index: 10;
+
+  @media (${media.mobile}) {
+    top: 70px;
+    left: 3px;
+    width: 25rem;
+  }
 `;
 
 interface PropsAuthorizationCard {

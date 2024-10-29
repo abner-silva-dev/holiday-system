@@ -1,12 +1,11 @@
 import styled from 'styled-components';
 import {
   HiCalendarDays,
-  HiMiniClipboardDocumentCheck,
   HiOutlineArrowRightOnRectangle,
   HiOutlineMoon,
   HiOutlineSun,
 } from 'react-icons/hi2';
-import { FaHouse } from 'react-icons/fa6';
+
 import { useEffect } from 'react';
 import { useLocalStorageState } from '../../hooks/useLocalStorageState';
 import { NavLink } from 'react-router-dom';
@@ -41,8 +40,26 @@ const UserIcon = styled(UserPhoto)`
   border: none;
 `;
 
-const NavList = styled.ul`
+const NavGroup = styled.div`
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  /* width: 20rem; */
+  padding: 1.2rem 0;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+  color: #d1d5db;
+
+  & span {
+    font-size: 1.2rem;
+  }
+
+  & svg {
+    height: 4rem;
+    width: 4rem;
+  }
 `;
 
 const NavButton = styled(NavLink)`
@@ -51,7 +68,7 @@ const NavButton = styled(NavLink)`
   align-items: center;
   justify-content: center;
   gap: 0.4rem;
-  width: 20rem;
+  /* width: 20rem; */
   padding: 1.2rem 0;
   border-bottom: 2px solid transparent;
   transition: all 0.2s;
@@ -95,23 +112,12 @@ const DarkMode = styled.div`
   position: relative;
 `;
 
-const HeaderRightSide = styled.div`
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-  gap: 1.6rem;
-`;
-
 const LogOff = styled.div`
   cursor: pointer;
 
   & svg {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 2.8rem;
-    width: 2.8rem;
+    height: 4rem;
+    width: 4rem;
     stroke: #e5e7eb;
   }
 `;
@@ -136,46 +142,37 @@ const Header = () => {
   return (
     <HeaderContainer>
       <HeaderContent>
-        <div>
-          <Logo src={logo}></Logo>
-        </div>
-        <div>
-          <nav>
-            <NavList>
-              <li>
-                <NavButton to="/user/home">
-                  <FaHouse />
-                  <span>Inicio</span>
-                </NavButton>
-              </li>
-              <li>
-                <NavButton to={`/user/holidays/${userAuthenticated.id}?history=request`}>
-                  <HiCalendarDays />
-                  <span>Solicitar Vacaciones</span>
-                </NavButton>
-              </li>
-            </NavList>
-          </nav>
-        </div>
+        <NavButton to="/user/home">
+          <div>
+            <Logo src={logo}></Logo>
+          </div>
+        </NavButton>
 
-        <HeaderRightSide>
-          <DarkMode title="Modo Oscuro / Modo Claro" onClick={() => setIsDark(!isDark)}>
-            {isDark ? <HiOutlineSun /> : <HiOutlineMoon />}
-          </DarkMode>
-          <UserIcon
+        <NavGroup>
+          <UserPhoto
             src={`${API_DAI_BASE}/img/user/${userAuthenticated?.photo}`}
             alt="user photo"
-            $border={true}
-          ></UserIcon>
-          <LogOff
-            title="Cerrar Sesión"
-            onClick={() => {
-              logout();
-            }}
-          >
-            <HiOutlineArrowRightOnRectangle />
-          </LogOff>
-        </HeaderRightSide>
+          />
+          <span>{userAuthenticated.name}</span>
+        </NavGroup>
+
+        <NavButton to={`/user/holidays/${userAuthenticated.id}?history=request`}>
+          <HiCalendarDays />
+          <span>Solicitar Vacaciones</span>
+        </NavButton>
+
+        <DarkMode title="Modo Oscuro / Modo Claro" onClick={() => setIsDark(!isDark)}>
+          {isDark ? <HiOutlineSun /> : <HiOutlineMoon />}
+        </DarkMode>
+
+        <LogOff
+          title="Cerrar Sesión"
+          onClick={() => {
+            logout();
+          }}
+        >
+          <HiOutlineArrowRightOnRectangle />
+        </LogOff>
       </HeaderContent>
     </HeaderContainer>
   );

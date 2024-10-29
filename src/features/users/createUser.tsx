@@ -12,7 +12,7 @@ import { useDepartments } from '../departments/useDepartment';
 import { DepartmentInfo } from '../departments/types';
 import { EnterpriseInfo } from '../enterprises/types';
 import { useUpdateUser } from './useUpdateUser';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import InputImageDrag from '../../ui/InputImageDrag';
 
 const Form = styled.form`
@@ -44,6 +44,8 @@ interface PropsCreateUSer {
 const CreateUser: React.FC<PropsCreateUSer> = ({ userToUpdate = {}, onCloseModal }) => {
   const { id: userId = '', ...editValues } = userToUpdate as UserInfo;
 
+  console.log(userToUpdate);
+
   // Check if is Edition or Create user
   const isEditSession = Boolean(userId);
 
@@ -63,6 +65,16 @@ const CreateUser: React.FC<PropsCreateUSer> = ({ userToUpdate = {}, onCloseModal
 
   const { createUser } = useCreateUser();
   const { updateUser } = useUpdateUser();
+
+  // useEffect(() => {
+  //   if (isEditSession && departments && enterprises) {
+  //     reset({
+  //       ...editValues,
+  //       department: editValues.department?._id ?? '',
+  //       enterprise: editValues.enterprise?._id ?? '',
+  //     });
+  //   }
+  // }, [editValues, departments, enterprises, isEditSession, reset]);
 
   // Get Current data after to submit
   const onSubmit = (data: UserInfo) => {
@@ -94,6 +106,8 @@ const CreateUser: React.FC<PropsCreateUSer> = ({ userToUpdate = {}, onCloseModal
 
   // handle file photo
   const [fileImg, setFileImg] = useState<File | null>(null);
+
+  if (!departments || !enterprises) return null;
 
   return (
     <Row>

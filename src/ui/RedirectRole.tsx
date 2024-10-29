@@ -5,6 +5,8 @@ import { useMe } from '../features/authentication/useMe';
 const RedirectRole = () => {
   const { userAuthenticated, isAuthenticated } = useMe();
 
+  console.log(userAuthenticated);
+
   if (!isAuthenticated || !userAuthenticated) return <Navigate to="login" />;
   if (userAuthenticated.role === 'user') return <Navigate to="user" />;
   if (userAuthenticated.role === 'admin' || userAuthenticated.role === 'manager')

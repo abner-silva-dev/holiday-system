@@ -65,6 +65,10 @@ const RegContainer = styled.div`
   background-color: var(--color-grey-0);
   grid-column: 1/-1;
   padding: 5rem 15rem;
+
+  @media (${media.mobile}) {
+    padding: 5rem 2rem;
+  }
 `;
 
 const ButtonRow = styled.div`
@@ -193,54 +197,52 @@ const CreateHoliday: React.FC<PropsCreateDepartment> = ({ edit = {}, onClose }) 
   locale('es');
 
   return (
-    <>
-      <RegContainer>
-        <Row type="horizontal">
-          <Heading as="h2">Registro de Vacaciones</Heading>
-          <TimeTag $time={period} />
-        </Row>
+    <RegContainer>
+      <Row type="horizontal">
+        <Heading as="h2">Registro de Vacaciones</Heading>
+        <TimeTag $time={period} />
+      </Row>
 
-        <Form onSubmit={handleSubmit(onSubmit)}>
-          <FieldContainer>
-            <Label>Seleccionar Días</Label>
-            <StyledCalendarInput>
-              <Calendar
-                value={dates}
-                onChange={(event) => setDates(event.value || [])}
-                selectionMode="multiple"
-                dateFormat="dd/mm/yy"
-                showIcon
-                className="p-inputtext p-component p-inputtext p-component"
-                // minDate={minDate} // Habilitar fechas desde dos meses atrás
-                disabledDates={[]} // En este caso no se usa disabledDates directamente
-                disabledDays={[0]} // Deshabilitar solo domingos (0)
-                required={true}
-                maxDateCount={(periodCredit || 0) - tempPendingHolidays || -1}
-              />
-            </StyledCalendarInput>
-          </FieldContainer>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <FieldContainer>
+          <Label>Seleccionar Días</Label>
+          <StyledCalendarInput>
+            <Calendar
+              value={dates}
+              onChange={(event) => setDates(event.value || [])}
+              selectionMode="multiple"
+              dateFormat="dd/mm/yy"
+              showIcon
+              className="p-inputtext p-component p-inputtext p-component"
+              // minDate={minDate} // Habilitar fechas desde dos meses atrás
+              disabledDates={[]} // En este caso no se usa disabledDates directamente
+              disabledDays={[0]} // Deshabilitar solo domingos (0)
+              required={true}
+              maxDateCount={(periodCredit || 0) - tempPendingHolidays || -1}
+            />
+          </StyledCalendarInput>
+        </FieldContainer>
 
-          <FieldContainer>
-            <Label>Notas</Label>
-            <TextArea id="observation" placeholder="" {...register('observation')} />
-          </FieldContainer>
+        <FieldContainer>
+          <Label>Notas</Label>
+          <TextArea id="observation" placeholder="" {...register('observation')} />
+        </FieldContainer>
 
-          <FieldContainer>
-            {dates.length === 0 && <Message>Aún no se han seleccionado fechas.</Message>}
-          </FieldContainer>
-          <ButtonRow>
-            <SubmitButton $variation="confirm">Crear Registro</SubmitButton>
-            <CancelButton
-              $variation="secondary"
-              type="button"
-              onClick={() => onClose(false)}
-            >
-              Cancelar
-            </CancelButton>
-          </ButtonRow>
-        </Form>
-      </RegContainer>
-    </>
+        <FieldContainer>
+          {dates.length === 0 && <Message>Aún no se han seleccionado fechas.</Message>}
+        </FieldContainer>
+        <ButtonRow>
+          <SubmitButton $variation="confirm">Crear Registro</SubmitButton>
+          <CancelButton
+            $variation="secondary"
+            type="button"
+            onClick={() => onClose(false)}
+          >
+            Cancelar
+          </CancelButton>
+        </ButtonRow>
+      </Form>
+    </RegContainer>
   );
 };
 

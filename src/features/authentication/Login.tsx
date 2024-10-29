@@ -30,24 +30,28 @@ const LoginContainer = styled.div`
   box-shadow: var(--shadow-md);
 
   background-color: #d1d5db;
-
-  color: black;
-
+  color: #000;
   z-index: 99;
 
-  // MOBILE
   @media (${media.mobile}) {
-    width: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #fff;
+
+    width: 100vw;
     height: 100vh;
     border-radius: 0;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
 
-    font-size: 4rem;
+    font-size: 2.5rem;
 
     & h2 {
-      font-size: 4.6rem;
+      font-size: 3.5rem;
+      color: var(--color-grey-700);
+      color: white;
+      font-weight: 600;
     }
   }
 `;
@@ -76,7 +80,6 @@ const SectionsContainerRight = styled.div`
 
 const TextBox = styled.input`
   border: none;
-
   background-color: transparent;
   color: black;
   letter-spacing: 0.7px;
@@ -85,6 +88,14 @@ const TextBox = styled.input`
 
   &:focus {
     outline: none;
+  }
+
+  @media (${media.mobile}) {
+    color: #fff;
+
+    &::placeholder {
+      color: #bbbfc5;
+    }
   }
 `;
 
@@ -123,7 +134,7 @@ const Image = styled(Logo)`
   filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.459));
 
   @media ${media.mobile} {
-    width: 30rem;
+    width: 25rem;
   }
 `;
 
@@ -155,10 +166,6 @@ const Slogan = styled.blockquote`
 const Title = styled.h1`
   margin-bottom: 2rem;
   font-size: 4rem;
-
-  @media (${media.mobile}) {
-    font-size: 5.4rem;
-  }
 `;
 
 //TEMPORAL INTERFACE
@@ -178,50 +185,48 @@ export default function Login() {
   };
 
   return (
-    <>
-      <LoginContainer>
-        <SectionsContainerLeft>
-          <Image src={logoImg} />
-          <Slogan>¡ Tu Soporte en el Camino !</Slogan>
-          <Title>¡Bienvenido!</Title>
-        </SectionsContainerLeft>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <SectionsContainerRight>
-            <h2>Iniciar Sesión</h2>
+    <LoginContainer>
+      <SectionsContainerLeft>
+        <Image src={logoImg} />
+        <Slogan>¡ Tu Soporte en el Camino !</Slogan>
+        <Title>¡Bienvenido!</Title>
+      </SectionsContainerLeft>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <SectionsContainerRight>
+          <h2>Iniciar Sesión</h2>
 
-            <Labels>Usuario</Labels>
-            <TextFieldContainer>
-              <TextBox
-                title="Completa este campo"
-                type="text"
-                placeholder="Ingrese su usuario"
-                id="employNumber"
-                {...register('employNumber')}
-                required
-              ></TextBox>
-              <HiOutlineUserCircle />
-            </TextFieldContainer>
-            <Labels>Contraseña</Labels>
-            <TextFieldContainer>
-              <TextBox
-                title="Completa este campo"
-                type={isClicked ? 'text' : 'password'}
-                id="password"
-                {...register('password')}
-                placeholder="Ingrese su contraseña"
-                required
-              ></TextBox>
-              <EyeContainer
-                title={isClicked ? 'Ocultar Contraseña' : 'Mostrar Contraseña'}
-                onClick={() => setClicked(!isClicked)}
-              >
-                {isClicked ? <HiOutlineEyeSlash /> : <HiOutlineEye />}
-              </EyeContainer>
-            </TextFieldContainer>
-            <ButtonSubmit>Ingresar</ButtonSubmit>
-          </SectionsContainerRight>
-        </form>
-      </LoginContainer>
-    </>
+          <Labels>Usuario</Labels>
+          <TextFieldContainer>
+            <TextBox
+              title="Completa este campo"
+              type="text"
+              placeholder="Ingrese su usuario"
+              id="employNumber"
+              {...register('employNumber')}
+              required
+            ></TextBox>
+            <HiOutlineUserCircle />
+          </TextFieldContainer>
+          <Labels>Contraseña</Labels>
+          <TextFieldContainer>
+            <TextBox
+              title="Completa este campo"
+              type={isClicked ? 'text' : 'password'}
+              id="password"
+              {...register('password')}
+              placeholder="Ingrese su contraseña"
+              required
+            ></TextBox>
+            <EyeContainer
+              title={isClicked ? 'Ocultar Contraseña' : 'Mostrar Contraseña'}
+              onClick={() => setClicked(!isClicked)}
+            >
+              {isClicked ? <HiOutlineEyeSlash /> : <HiOutlineEye />}
+            </EyeContainer>
+          </TextFieldContainer>
+          <ButtonSubmit>Ingresar</ButtonSubmit>
+        </SectionsContainerRight>
+      </form>
+    </LoginContainer>
   );
 }
