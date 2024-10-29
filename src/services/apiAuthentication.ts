@@ -1,29 +1,30 @@
+import axios from 'axios';
 import { API_DAI_SYSTEM } from '../config';
 
-export const login = async ({
-  employNumber,
-  password,
-}: {
+interface Login {
   employNumber: string;
   password: string;
-}) => {
-  const res = await fetch(`${API_DAI_SYSTEM}/users/login`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    credentials: 'include',
-    body: JSON.stringify({
-      employNumber,
-      password,
-    }),
-  });
+}
 
-  const data = await res.json();
+export const login = async (credents: Login) => {
+  console.log(`${API_DAI_SYSTEM}/users/login`);
+  try {
+    const { data } = await axios.post(`${API_DAI_SYSTEM}/users/login`, credents, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      withCredentials: true,
+    });
 
-  if (!res.ok) throw new Error(data.message);
+    return data;
+  } catch (error) {
+    const errorMessage =
+      axios.isAxiosError(error) && error.response
+        ? error.response.data.message || 'An unknown error occurred'
+        : 'An unknown error occurred';
 
-  return data;
+    throw new Error(errorMessage);
+  }
 };
 
 export const logout = async () => {
