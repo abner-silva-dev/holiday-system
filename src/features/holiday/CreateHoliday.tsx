@@ -15,11 +15,11 @@ import { useUser } from '../users/useUser';
 import { useQueryClient } from '@tanstack/react-query';
 import { media } from '../../style/media';
 // import StateHoliday from './StateHoliday';
-import { getStatusHoliday } from '../../utils/holidayUtils';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useStateApp } from '../../context/stateAppContext';
 import Row from '../../ui/Row';
 import TimeTag from './TimeTag';
+import InputCalendar from '../../ui/inputCalendar';
 // import Holiday from '../../pages/Holiday';
 
 const StyledCalendarInput = styled.div`
@@ -105,13 +105,14 @@ const CreateHoliday: React.FC<PropsCreateDepartment> = ({ edit = {}, onClose }) 
   const { createHoliday } = useCreateHoliday();
   const [dates, setDates] = useState<Date[]>([]);
 
-  const { pendingHolidays } = getStatusHoliday(
-    curUser?.holidays?.filter((holiday) => holiday.period === period) || []
-  );
-  const tempPendingHolidays = pendingHolidays.reduce(
+  const holidays =
+    curUser?.holidays?.filter((holiday) => holiday.period === period) || [];
+
+  const tempPendingHolidays = holidays.reduce(
     (acc, cur) => acc + (cur.days?.length || 0),
     0
   );
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -157,45 +158,6 @@ const CreateHoliday: React.FC<PropsCreateDepartment> = ({ edit = {}, onClose }) 
     );
   };
 
-  addLocale('es', {
-    firstDayOfWeek: 1,
-    dayNames: ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'],
-    dayNamesShort: ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'],
-    dayNamesMin: ['Do.', 'Lu.', 'Ma.', 'Mi.', 'Ju.', 'Vi.', 'Sa.'],
-    monthNames: [
-      'enero',
-      'febrero',
-      'marzo',
-      'abril',
-      'mayo',
-      'junio',
-      'julio',
-      'agosto',
-      'septiembre',
-      'octubre',
-      'noviembre',
-      'diciembre',
-    ],
-    monthNamesShort: [
-      'ene',
-      'feb',
-      'mar',
-      'abr',
-      'may',
-      'jun',
-      'jul',
-      'ago',
-      'sep',
-      'oct',
-      'nov',
-      'dic',
-    ],
-    today: 'Hoy',
-    clear: 'Limpiar',
-  });
-
-  locale('es');
-
   return (
     <RegContainer>
       <Row type="horizontal">
@@ -207,18 +169,10 @@ const CreateHoliday: React.FC<PropsCreateDepartment> = ({ edit = {}, onClose }) 
         <FieldContainer>
           <Label>Seleccionar Días</Label>
           <StyledCalendarInput>
-            <Calendar
-              value={dates}
-              onChange={(event) => setDates(event.value || [])}
-              selectionMode="multiple"
-              dateFormat="dd/mm/yy"
-              showIcon
-              className="p-inputtext p-component p-inputtext p-component"
-              // minDate={minDate} // Habilitar fechas desde dos meses atrás
-              disabledDates={[]} // En este caso no se usa disabledDates directamente
-              disabledDays={[0]} // Deshabilitar solo domingos (0)
-              required={true}
-              maxDateCount={(periodCredit || 0) - tempPendingHolidays || -1}
+            <InputCalendar
+              dates={dates}
+              setDates={setDates}
+              maxDateCount={periodCredit}
             />
           </StyledCalendarInput>
         </FieldContainer>
