@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import Heading from '../../ui/Heading';
 import InputFile from '../../ui/InputFile';
 import Button from '../../ui/Button';
+import { useState } from 'react';
 
 const State = styled.div`
   height: 1.2rem;
@@ -65,7 +66,7 @@ const Documents = () => {
                 <State />
                 <Label>Curriculum Vitae</Label>
               </Group>
-              <InputFile nameFile="namefile.pdf" />
+              <InputFile />
               <Button $variation="secondary">Ver</Button>
             </Field>
 
@@ -74,7 +75,7 @@ const Documents = () => {
                 <State />
                 <Label>Acta de Nacimiento</Label>
               </Group>
-              <InputFile nameFile="namefile.pdf" />
+              <InputFile />
               <Button $variation="secondary">Ver</Button>
             </Field>
 
@@ -83,7 +84,7 @@ const Documents = () => {
                 <State />
                 <Label>CURP</Label>
               </Group>
-              <InputFile nameFile="namefile.pdf" />
+              <InputFile />
               <Button $variation="secondary">Ver</Button>
             </Field>
 
@@ -92,7 +93,7 @@ const Documents = () => {
                 <State />
                 <Label>Comprobante de Domicilio</Label>
               </Group>
-              <InputFile nameFile="namefile.pdf" />
+              <InputFile />
               <Button $variation="secondary">Ver</Button>
             </Field>
           </FilesContainer>

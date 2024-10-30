@@ -1,5 +1,6 @@
 import { HiOutlineArrowUpTray } from 'react-icons/hi2';
 import styled from 'styled-components';
+import { useState } from 'react';
 
 const Input = styled.label`
   display: flex;
@@ -39,17 +40,31 @@ const Group = styled.div`
   align-items: center;
 `;
 
-interface PropsInputFile {
-  nameFile: string;
-}
+// interface PropsInputFile {
+//   nameFile: string;
+// }
 
-const InputFile: React.FC<PropsInputFile> = ({ nameFile }) => {
+const InputFile = () => {
+  const [fileName, setFileName] = useState('');
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setFileName(file.name); // Actualiza con el nombre del archivo seleccionado
+    }
+  };
+
   return (
     <>
       <Group>
-        <span>{nameFile}</span>
+        <span>{fileName || 'No se ha seleccionado ningún archivo'}</span>
         <Input as="label">
-          <input type="file" style={{ display: 'none' }} />
+          <input
+            type="file"
+            accept="application/pdf"
+            style={{ display: 'none' }}
+            onChange={handleFileChange} // Agrega el evento onChange
+          />
           <HiOutlineArrowUpTray />
           <span>Seleccionar Archivo...</span>
         </Input>
