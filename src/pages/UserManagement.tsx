@@ -67,6 +67,7 @@ const UserManagement = () => {
           <button>Actas Administrativas</button>
           <button>Contratos</button>
           <button>Consulta de Documentos</button>
+          <button>Recuperación de Contraseñas</button>
         </div>
         <UserSubMain>
           <Outlet />

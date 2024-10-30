@@ -24,6 +24,7 @@ import Request from './pages/Request';
 import UserManagement from './pages/UserManagement';
 import RequestForm from './features/request/RequestForm';
 import Documents from './features/users/Documents';
+import PassRecovery from './features/users/PassRecovery';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -90,6 +91,7 @@ function App() {
                 <Route path="users/:userId" element={<UserManagement />}>
                   <Route path="request" element={<RequestForm />} />
                   <Route path="documents" element={<Documents />} />
+                  <Route path="recovery" element={<PassRecovery />} />
                   <Route />
                 </Route>
 
