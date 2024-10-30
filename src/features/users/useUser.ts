@@ -18,3 +18,19 @@ export function useUser() {
 
   return { isPending, user, error };
 }
+
+export function useUser2() {
+  const { userId } = useParams();
+
+  const {
+    isPending,
+    data: user,
+    error,
+  } = useQuery<UserInfo>({
+    queryKey: ['user', userId],
+    queryFn: () => getUser(userId || ''),
+    retry: false,
+  });
+
+  return { isPending, user, error };
+}

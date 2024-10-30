@@ -21,11 +21,6 @@ const InitialContainer = styled.div`
   gap: 2rem;
   align-items: center;
   justify-content: center;
-
-  position: absolute;
-  top: 50%;
-  left: 14%;
-  transform: translate(50%, -50%);
 `;
 
 const Form = styled.form``;
@@ -50,8 +45,8 @@ const Field = styled.div`
 `;
 
 const Section = styled.div`
-  margin: 0 auto;
-  width: 120rem;
+  /* margin: 0 auto; */
+  /* width: 120rem; */
 `;
 
 const Select = styled.select`
@@ -1003,7 +998,7 @@ const RequestForm = () => {
             <Title as="h2">INFORMACIÓN CLÍNICA</Title>
             <FormContainer>
               <Field>
-                <Label>Escribe</Label>
+                <Label>Estatura</Label>
                 <Percentage>
                   <Input type="number"></Input>
                   <span>cm</span>

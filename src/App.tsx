@@ -21,6 +21,10 @@ import Header from './features/user-app/Header';
 import AppLayoutUser from './ui/AppLayoutUser';
 import Authentication from './pages/Authentication';
 import Request from './pages/Request';
+import UserManagement from './pages/UserManagement';
+import RequestForm from './features/request/RequestForm';
+import Documents from './features/users/Documents';
+import PassRecovery from './features/users/PassRecovery';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -41,7 +45,6 @@ function App() {
           <Routes>
             {/* PERSONNEL MANAGEMENT APP */}
             <Route path="request" element={<Request />} />
-
             <Route path="login" element={<Authentication />} />
             <Route
               path="/"
@@ -76,6 +79,7 @@ function App() {
                 <Route index element={<Navigate replace to="holidays" />} />
                 <Route path="holidays" element={<Holiday />} />
                 <Route path="holidays/:holidayId" element={<HolidayManagement />} />
+
                 <Route
                   path="users"
                   element={
@@ -84,6 +88,13 @@ function App() {
                     </RestrictRoute>
                   }
                 />
+                <Route path="users/:userId" element={<UserManagement />}>
+                  <Route path="request" element={<Request />} />
+                  <Route path="documents" element={<Documents />} />
+                  <Route path="recovery" element={<PassRecovery />} />
+                  <Route />
+                </Route>
+
                 <Route
                   path="enterprise"
                   element={

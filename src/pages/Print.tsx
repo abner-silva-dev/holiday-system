@@ -180,8 +180,7 @@ const Print: React.FC<{ holiday: HolidayInfo }> = ({ holiday }) => {
 
           <Group>
             <Label>Fechas</Label>
-            <Input
-              type="text"
+            <textarea
               defaultValue={holiday?.days
                 ?.map((day) =>
                   formatDate(day + '', {

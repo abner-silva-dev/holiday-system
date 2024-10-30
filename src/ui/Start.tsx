@@ -10,9 +10,12 @@ const StyledStat = styled.div<PropsStats>`
   position: relative;
   background-color: var(--color-grey-0);
   border: 1px solid var(--color-grey-100);
-  ${(props) => (props.$selected ? 'border-bottom: 3px solid #862e9c;' : '')};
+  ${(props) =>
+    props.$selected
+      ? 'border-bottom: 3px solid #862e9c;'
+      : 'border-bottom: 3px solid transparent;'};
   border-radius: var(--border-radius-md);
-  padding: 1.6rem;
+  padding: 2rem 1.6rem;
   display: grid;
   grid-template-columns: 6.4rem 1fr;
   grid-template-rows: auto auto;
@@ -60,7 +63,7 @@ const Tag = styled.label`
   background-color: #862e9c;
   color: #fff;
   padding: 0.2rem 0.6rem;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   border-bottom-left-radius: 9px;
   border-top-right-radius: 9px;
   font-weight: 700;

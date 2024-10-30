@@ -1,4 +1,4 @@
-import { HiMiniTrash, HiMiniPencil } from 'react-icons/hi2';
+import { HiMiniTrash, HiMiniPencil, HiEye } from 'react-icons/hi2';
 import Menus from '../../ui/Menus';
 import { UserInfo } from './types';
 import Table from '../../ui/Table';
@@ -7,6 +7,8 @@ import Modal from '../../ui/Modal';
 import CreateUser from './createUser';
 import ConfirmDelete from '../../ui/ConfirmDelete';
 import { formatDate, yearMothDay } from '../../utils/helpers';
+import { Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 interface Props {
   user: UserInfo;
@@ -30,6 +32,8 @@ const UserRow: React.FC<Props> = ({ user }) => {
     photo,
   } = user;
 
+  if (!dateHiring) return;
+
   const dateHiringFormat = formatDate(dateHiring, {
     formatDate: 'yyyy-mm-dd',
     separationBy: '-',
@@ -49,7 +53,7 @@ const UserRow: React.FC<Props> = ({ user }) => {
         <span>
           {user.name} {user.paternSurname} {user.motherSurname}
         </span>
-        <span>{formatDate(user.dateHiring)}</span>
+        <span>{formatDate(user.dateHiring + '')}</span>
         <span>
           {yearMothDay(
             user.seniority?.years,
@@ -71,6 +75,10 @@ const UserRow: React.FC<Props> = ({ user }) => {
                 <Modal.Open opens="edit">
                   <Menus.Button icon={<HiMiniPencil />}>Editar</Menus.Button>
                 </Modal.Open>
+
+                <Link to={userId}>
+                  <Menus.Button icon={<HiEye />}>Ver</Menus.Button>
+                </Link>
               </Menus.List>
 
               <Modal.Window name="delete">
