@@ -21,6 +21,9 @@ import Header from './features/user-app/Header';
 import AppLayoutUser from './ui/AppLayoutUser';
 import Authentication from './pages/Authentication';
 import Request from './pages/Request';
+import UserManagement from './pages/UserManagement';
+import RequestForm from './features/request/RequestForm';
+import Documents from './features/users/Documents';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -75,6 +78,7 @@ function App() {
                 <Route index element={<Navigate replace to="holidays" />} />
                 <Route path="holidays" element={<Holiday />} />
                 <Route path="holidays/:holidayId" element={<HolidayManagement />} />
+
                 <Route
                   path="users"
                   element={
@@ -83,6 +87,12 @@ function App() {
                     </RestrictRoute>
                   }
                 />
+                <Route path="users/:userId" element={<UserManagement />}>
+                  <Route path="request" element={<RequestForm />} />
+                  <Route path="documents" element={<Documents />} />
+                  <Route />
+                </Route>
+
                 <Route
                   path="enterprise"
                   element={
