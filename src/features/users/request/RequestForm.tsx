@@ -32,21 +32,19 @@ const RequestForm = () => {
         </InitialContainer>
       )}
       {page === 1 && <FormPersonalData handleNext={handleNext} />}
-      {page === 2 && (<FormComplementaryData handleNext={handleNext} handleBack={handleBack} />)}
-      {page === 3 && <FormJobsData handleNext={handleNext} handleBack={handleBack} />}
-      {page === 4 && (
-        <FormScholarData handleNext={handleNext} handleBack={handleBack} />
+      {page === 2 && (
+        <FormComplementaryData handleNext={handleNext} handleBack={handleBack} />
       )}
+      {page === 3 && <FormJobsData handleNext={handleNext} handleBack={handleBack} />}
+      {page === 4 && <FormScholarData handleNext={handleNext} handleBack={handleBack} />}
       {page === 5 && (
         <FormKnowledgeExperience handleNext={handleNext} handleBack={handleBack} />
       )}
-      {page === 6 && (
-        <FormFamiliarData handleNext={handleNext} handleBack={handleBack} />
-      )}        {page === 7 && (
-        <FormPersonalReference handleNext={handleNext} handleBack={handleBack}/>)}
-      {page === 8 && (
-        <FormClinicInformation handleBack={handleBack}/>
+      {page === 6 && <FormFamiliarData handleNext={handleNext} handleBack={handleBack} />}{' '}
+      {page === 7 && (
+        <FormPersonalReference handleNext={handleNext} handleBack={handleBack} />
       )}
+      {page === 8 && <FormClinicInformation handleBack={handleBack} />}
     </Section>
   );
 };
