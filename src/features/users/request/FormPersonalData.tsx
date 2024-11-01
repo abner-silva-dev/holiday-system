@@ -1,4 +1,4 @@
-import Button from '../../ui/Button';
+import Button from '../../../ui/Button';
 import {
   Field,
   Form,
@@ -9,7 +9,7 @@ import {
   PageChange,
   Select,
   Title,
-} from '../../ui/FormPieces';
+} from '../../../ui/FormPieces';
 
 function FormPersonalData({ handleNext }: { handleNext: () => void }) {
   return (

@@ -1,17 +1,25 @@
-import Button from '../../ui/Button';
+import Button from '../../../ui/Button';
 import {
   Field,
   FieldRadio,
+  Form,
   FormContainer,
   Input,
   Label,
   Page,
   PageChange,
   Title,
-} from '../../ui/FormPieces';
+} from '../../../ui/FormPieces';
 
-const ScholarData = () => {
+const FormScholarData = ({
+  handleNext,
+  handleBack,
+}: {
+  handleNext: () => void;
+  handleBack: () => void;
+}) => {
   return (
+    <Form>
     <Page>
       <Title as="h2">DATOS ESCOLARES</Title>
       <Title as="h3">Secundaria</Title>
@@ -168,7 +176,8 @@ const ScholarData = () => {
         </Button>
       </PageChange>
     </Page>
+    </Form>
   );
 };
 
-export default ScholarData;
+export default FormScholarData;
