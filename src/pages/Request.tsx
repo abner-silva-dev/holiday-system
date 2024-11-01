@@ -1,15 +1,14 @@
 import styled from 'styled-components';
-import Logo from '../ui/Logo';
-import logoImg from '../../public/logo-dai.png';
+
 import RequestForm from '../features/request/RequestForm';
-import ProcessBarRequest from '../features/users/processBarRequest';
+import ProcessBarRequest from '../features/users/ProcessBarRequest';
 
 const Header = styled.div`
   width: 100%;
   height: 10rem;
   padding: 0 2rem;
   border-bottom: 1px solid var(--color-grey-200);
-  background-color: white;
+  background-color: var(--color-grey-0);
 
   display: flex;
   justify-content: center;
@@ -27,7 +26,7 @@ const Request = () => {
   return (
     <Container>
       <Header>
-        <ProcessBarRequest />
+        <ProcessBarRequest numStates={9} progress={1} />
       </Header>
       <RequestForm />
     </Container>
