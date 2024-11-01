@@ -32,6 +32,7 @@ const Input = styled.input`
   padding: 0.6rem;
   border-radius: 9px;
   border: 1px solid var(--color-grey-300);
+  background-color: var(--color-grey-0);
 `;
 
 const Title = styled(Heading)`
@@ -54,6 +55,7 @@ const Select = styled.select`
   padding: 0.6rem;
   border-radius: 9px;
   border: 1px solid var(--color-grey-300);
+  background-color: var(--color-grey-0);
 `;
 
 const FieldRadio = styled.div`

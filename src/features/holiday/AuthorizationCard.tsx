@@ -23,6 +23,8 @@ import { useMe } from '../authentication/useMe';
 import { UserInfo } from '../users/types';
 import TimeTag from './TimeTag';
 import { media } from '../../style/media';
+import InputCalendar from '../../ui/inputCalendar';
+import { useStateApp } from '../../context/stateAppContext';
 
 const AuthorizationCardStyled = styled.div`
   background-color: var(--color-grey-0);
@@ -263,6 +265,10 @@ interface PropsAuthorizationCard {
 
 const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
   const queryClient = useQueryClient();
+  const {
+    state: { period },
+  } = useStateApp();
+  const [isEddit, setIsEddit] = useState(false);
 
   const { register, handleSubmit, setValue } = useForm<HolidayInfo>({
     defaultValues: {
@@ -278,6 +284,9 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
   const { updateHoliday } = useUpdateHoliday();
   const [showDates, setShowDates] = useState(false);
 
+  const formatDates = holiday?.days?.map((date) => new Date(date));
+
+  const [dates, setDates] = useState<Date[]>(formatDates || []);
   const { userAuthenticated } = useMe();
 
   if (!userAuthenticated) return null;
@@ -314,6 +323,20 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
     html2pdf().set(options).from(printElement).save();
   };
 
+  let periodCredit = 0;
+
+  switch (period) {
+    case 'future':
+      periodCredit = curUser?.creditFuture?.balance;
+      break;
+    case 'present':
+      periodCredit = curUser?.credit?.balance;
+      break;
+    case 'past':
+      periodCredit = curUser?.creditPast?.balance;
+      break;
+  }
+
   return (
     <AuthorizationCardStyled>
       <Form onSubmit={handleSubmit(onSubmit)}>
@@ -327,41 +350,54 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
                 })}
               </CreatedAt>
             </Heading>
+            {
+              <button onClick={() => setIsEddit((eddit) => !eddit)} type="button">
+                Editar
+              </button>
+            }
             <TimeTag $time={holiday?.period} />
           </Row>
 
           <EmployedItem>
-            <DaysRequest>
-              <DaysRequestInfo>
-                <TextTitle>Días solicitados: </TextTitle>
-                <DaysNumber>{holiday?.days?.length}</DaysNumber>
-              </DaysRequestInfo>
-              <ShowDatesButton onClick={() => setShowDates(!showDates)} type="button">
-                {showDates ? 'Ocultar Fechas' : 'Mostrar Fechas'}
-                <HiOutlineChevronDown
-                  style={{
-                    transform: showDates
-                      ? 'translate(0px, 0px) rotate(-180deg)'
-                      : 'translate(0px, 0px) rotate(0deg)',
-                    transition: 'transform 0.3s',
-                  }}
-                />
-              </ShowDatesButton>
-              {showDates && (
-                <DatesModal>
-                  <RequestListContainer>
-                    {holiday?.days?.map((day, i) => (
-                      <RequestListCard key={i}>
-                        <TextCreation>
-                          {formatDate(day.toString(), { monthsName: true })}
-                          <HiOutlineCalendarDays />
-                        </TextCreation>
-                      </RequestListCard>
-                    ))}
-                  </RequestListContainer>
-                </DatesModal>
-              )}
-            </DaysRequest>
+            {isEddit ? (
+              <InputCalendar
+                dates={dates}
+                setDates={setDates}
+                maxDateCount={periodCredit + (holiday?.days?.length || 0)}
+              />
+            ) : (
+              <DaysRequest>
+                <DaysRequestInfo>
+                  <TextTitle>Días solicitados: </TextTitle>
+                  <DaysNumber>{holiday?.days?.length}</DaysNumber>
+                </DaysRequestInfo>
+                <ShowDatesButton onClick={() => setShowDates(!showDates)} type="button">
+                  {showDates ? 'Ocultar Fechas' : 'Mostrar Fechas'}
+                  <HiOutlineChevronDown
+                    style={{
+                      transform: showDates
+                        ? 'translate(0px, 0px) rotate(-180deg)'
+                        : 'translate(0px, 0px) rotate(0deg)',
+                      transition: 'transform 0.3s',
+                    }}
+                  />
+                </ShowDatesButton>
+                {showDates && (
+                  <DatesModal>
+                    <RequestListContainer>
+                      {holiday?.days?.map((day, i) => (
+                        <RequestListCard key={i}>
+                          <TextCreation>
+                            {formatDate(day.toString(), { monthsName: true })}
+                            <HiOutlineCalendarDays />
+                          </TextCreation>
+                        </RequestListCard>
+                      ))}
+                    </RequestListContainer>
+                  </DatesModal>
+                )}
+              </DaysRequest>
+            )}
 
             <Authorization>
               <RowMain>

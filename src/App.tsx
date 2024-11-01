@@ -89,7 +89,7 @@ function App() {
                   }
                 />
                 <Route path="users/:userId" element={<UserManagement />}>
-                  <Route path="request" element={<RequestForm />} />
+                  <Route path="request" element={<Request />} />
                   <Route path="documents" element={<Documents />} />
                   <Route path="recovery" element={<PassRecovery />} />
                   <Route />

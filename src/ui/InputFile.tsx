@@ -1,12 +1,11 @@
+import React, { useState } from 'react';
 import { HiOutlineArrowUpTray } from 'react-icons/hi2';
 import styled from 'styled-components';
-import { useState } from 'react';
 
 const Input = styled.label`
   display: flex;
   justify-content: center;
   gap: 1rem;
-
   font-weight: 500;
   padding: 1rem;
   background-color: #339af0;
@@ -40,36 +39,45 @@ const Group = styled.div`
   align-items: center;
 `;
 
-// interface PropsInputFile {
-//   nameFile: string;
-// }
+interface PropsInputFile {
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
 
-const InputFile = () => {
-  const [fileName, setFileName] = useState('');
+const InputFile: React.FC<PropsInputFile> = ({ onChange }) => {
+  const [fileName, setFileName] = useState<string>('');
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      setFileName(file.name); // Actualiza con el nombre del archivo seleccionado
+      const name = file.name;
+      setFileName(name);
+      onChange(event); // Llama a la función onChange pasada como prop
     }
   };
 
+  // Función para acortar el nombre del archivo y dejar solo la extensión
+  const getShortName = (name: string) => {
+    const maxLength = 20; // Longitud máxima antes de truncar
+    if (name.length <= maxLength) return name;
+    return `${name.slice(0, maxLength - 4)}...${name.slice(-4)}`; // Mantiene los últimos 4 caracteres (ejemplo: .pdf)
+  };
+
   return (
-    <>
-      <Group>
-        <span>{fileName || 'No se ha seleccionado ningún archivo'}</span>
-        <Input as="label">
-          <input
-            type="file"
-            accept="application/pdf"
-            style={{ display: 'none' }}
-            onChange={handleFileChange} // Agrega el evento onChange
-          />
-          <HiOutlineArrowUpTray />
-          <span>Seleccionar Archivo...</span>
-        </Input>
-      </Group>
-    </>
+    <Group>
+      <span>
+        {fileName ? getShortName(fileName) : 'No se ha seleccionado ningún archivo.'}
+      </span>
+      <Input as="label">
+        <input
+          type="file"
+          style={{ display: 'none' }}
+          accept="application/pdf" // Puedes modificarlo si deseas aceptar otros tipos de archivo
+          onChange={handleFileChange}
+        />
+        <HiOutlineArrowUpTray />
+        <span>Seleccionar Archivo...</span>
+      </Input>
+    </Group>
   );
 };
 

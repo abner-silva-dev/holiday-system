@@ -6,6 +6,8 @@ import { HiArrowLeft } from 'react-icons/hi2';
 import { media } from '../style/media';
 // import UserCard from '../features/users/UserCard';
 import { useUser2 } from '../features/users/useUser';
+import Button from '../ui/Button';
+import UserMiniCard from '../ui/UserMiniCard';
 
 const GoBack = styled(Link)`
   border: none;
@@ -43,6 +45,11 @@ const UserSubMain = styled.main`
   /* height: 55rem; */
 `;
 
+const Options = styled.div`
+  display: flex;
+  gap: 2rem;
+`;
+
 // const Filters = styled.div`
 //   display: flex;
 //   justify-content: space-between;
@@ -56,19 +63,27 @@ const UserManagement = () => {
   return (
     <Row>
       <Row type="horizontal">
-        <GoBack to="/">
+        <GoBack to="../users">
           <HiArrowLeft />
         </GoBack>
+        <UserMiniCard />
         <Heading as="h1">Gestión de Personal</Heading>
       </Row>
+
       <UserMain>
-        <div>
-          <button>Formulario</button>
-          <button>Actas Administrativas</button>
-          <button>Contratos</button>
-          <button>Consulta de Documentos</button>
-          <button>Recuperación de Contraseñas</button>
-        </div>
+        <Options>
+          <Button $variation="confirm" as={Link} to="request">
+            Formulario
+          </Button>
+          <Button $variation="confirm" as={Link} to="documents">
+            Consulta de Documentos
+          </Button>
+          <Button $variation="confirm">Actas Administrativas</Button>
+          <Button $variation="confirm">Contratos</Button>
+          <Button $variation="confirm" as={Link} to="recovery">
+            Recuperación de Contraseñas
+          </Button>
+        </Options>
         <UserSubMain>
           <Outlet />
         </UserSubMain>
