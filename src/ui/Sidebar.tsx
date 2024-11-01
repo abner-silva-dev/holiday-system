@@ -20,9 +20,9 @@ const StyleSidebar = styled.aside<PropsSidebar>`
 
   gap: 6rem;
 
-  transition: all 0.4s ease-out;
-
   @media ${media.tablet} {
+    transition: all 0.4s ease-out;
+
     align-items: center;
     gap: 15rem;
     width: 100vw;
