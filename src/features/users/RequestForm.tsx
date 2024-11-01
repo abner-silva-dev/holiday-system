@@ -1,111 +1,25 @@
-import styled from 'styled-components';
 import Heading from '../../ui/Heading';
 import Button from '../../ui/Button';
 import { useState } from 'react';
 
-const FormContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  column-gap: 3rem;
-  row-gap: 4rem;
-
-  margin-bottom: 4rem;
-  padding-bottom: 4rem;
-  border-bottom: 1px solid var(--color-grey-200);
-  width: 100%;
-`;
-
-const InitialContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  align-items: center;
-  justify-content: center;
-`;
-
-const Form = styled.form``;
-
-const Label = styled.label``;
-
-const Input = styled.input`
-  width: 100%;
-  padding: 0.6rem;
-  border-radius: 9px;
-  border: 1px solid var(--color-grey-300);
-  background-color: var(--color-grey-0);
-`;
-
-const Title = styled(Heading)`
-  margin-bottom: 3rem;
-`;
-
-const Field = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-`;
-
-const Section = styled.div`
-  /* margin: 0 auto; */
-  /* width: 120rem; */
-`;
-
-const Select = styled.select`
-  width: 100%;
-  padding: 0.6rem;
-  border-radius: 9px;
-  border: 1px solid var(--color-grey-300);
-  background-color: var(--color-grey-0);
-`;
-
-const FieldRadio = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  & input {
-    width: 20%;
-  }
-`;
-
-const FieldCheck = styled.div`
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  justify-content: space-between;
-  & input {
-    width: 30%;
-    height: 1.6rem;
-  }
-`;
-
-const Page = styled.div`
-  padding: 4rem 4rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  /* overflow-y: scroll; */
-`;
-
-const EmployControllers = styled.div`
-  display: flex;
-  gap: 2rem;
-  margin-bottom: 2rem;
-`;
-
-const PageChange = styled.div`
-  display: flex;
-  gap: 2rem;
-`;
-
-const Percentage = styled.div`
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  & span {
-    font-size: 2rem;
-  }
-`;
+import {
+  EmployControllers,
+  Field,
+  FieldCheck,
+  FieldRadio,
+  Form,
+  FormContainer,
+  InitialContainer,
+  Input,
+  Label,
+  Page,
+  PageChange,
+  Percentage,
+  Section,
+  Select,
+  Title,
+} from '../../ui/FormPieces';
+import FormPersonalData from './FormPersonalData';
 
 const RequestForm = () => {
   const [page, setPage] = useState(0);
@@ -145,77 +59,7 @@ const RequestForm = () => {
       )}
 
       <Form>
-        {page === 1 && (
-          <Page>
-            <Title as="h2">DATOS PERSONALES</Title>
-            <FormContainer>
-              <Field>
-                <Label>Nombre(s)</Label>
-                <Input type="text"></Input>
-              </Field>
-
-              <Field>
-                <Label>Apellido Paterno</Label>
-                <Input type="text"></Input>
-              </Field>
-
-              <Field>
-                <Label>Apellido Materno</Label>
-                <Input type="text"></Input>
-              </Field>
-
-              <Field>
-                <Label>Edad</Label>
-                <Input type="number"></Input>
-              </Field>
-
-              <Field>
-                <Label>Sexo</Label>
-                <Select>
-                  <option>Seleccione una opción...</option>
-                  <option>Masculino</option>
-                  <option>Femenino</option>
-                  <option>Indefinido</option>
-                </Select>
-              </Field>
-
-              <Field>
-                <Label>Domicilio: Calle, Número, Colonia y Delegación</Label>
-                <Input type="text"></Input>
-              </Field>
-
-              <Field>
-                <Label>Código Postal</Label>
-                <Input type="text"></Input>
-              </Field>
-
-              <Field>
-                <Label>E-Mail</Label>
-                <Input type="text"></Input>
-              </Field>
-
-              <Field>
-                <Label>Estado Civil</Label>
-                <Input type="text"></Input>
-              </Field>
-
-              <Field>
-                <Label>Teléfono Particular</Label>
-                <Input type="text"></Input>
-              </Field>
-
-              <Field>
-                <Label>Celular</Label>
-                <Input type="text"></Input>
-              </Field>
-            </FormContainer>
-            <PageChange>
-              <Button $variation="confirm" onClick={handleNext}>
-                Siguiente
-              </Button>
-            </PageChange>
-          </Page>
-        )}
+        {page === 1 && <FormPersonalData handleNext={handleNext} />}
 
         {page === 2 && (
           <Page>

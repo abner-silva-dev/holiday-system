@@ -22,7 +22,7 @@ import AppLayoutUser from './ui/AppLayoutUser';
 import Authentication from './pages/Authentication';
 import Request from './pages/Request';
 import UserManagement from './pages/UserManagement';
-import RequestForm from './features/request/RequestForm';
+import RequestForm from './features/users/RequestForm';
 import Documents from './features/users/Documents';
 import PassRecovery from './features/users/PassRecovery';
 
