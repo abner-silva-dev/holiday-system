@@ -16,9 +16,10 @@ export const FormContainer = styled.div`
 export const InitialContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 2rem;
   align-items: center;
   justify-content: center;
+  gap: 2rem;
+  padding: 7rem 5rem;
 `;
 
 export const Form = styled.form``;
