@@ -1,5 +1,5 @@
-import Heading from '../../ui/Heading';
-import Button from '../../ui/Button';
+import Heading from '../../../ui/Heading';
+import Button from '../../../ui/Button';
 import { useState } from 'react';
 
 import {
@@ -18,7 +18,7 @@ import {
   Section,
   Select,
   Title,
-} from '../../ui/FormPieces';
+} from '../../../ui/FormPieces';
 import FormPersonalData from './FormPersonalData';
 
 const RequestForm = () => {

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import RequestForm from '../features/users/RequestForm';
+import RequestForm from '../features/users/request/RequestForm';
 import ProcessBarRequest from '../features/users/ProcessBarRequest';
 
 const Header = styled.div`
