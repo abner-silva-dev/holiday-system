@@ -16,21 +16,21 @@ import {
 interface IFormFamiliarData {
   father: {
     name: string;
-    lives: boolean;
+    lives: string;
     age: number;
     ocupation: string;
     address: string;
   };
   mother: {
     name: string;
-    lives: boolean;
+    lives: string;
     age: number;
     ocupation: string;
     address: string;
   };
   couple: {
     name: string;
-    lives: boolean;
+    lives: string;
     age: number;
     ocupation: string;
     address: string;
@@ -87,9 +87,9 @@ const FormFamiliarData = ({
             <Label>¿Vive?</Label>
             <FieldRadio>
               <span>Sí</span>
-              <Input type="radio" value="true" {...register('father.lives')} />
+              <Input type="radio" value="Sí" {...register('father.lives')} />
               <span>No</span>
-              <Input type="radio" value="false" {...register('father.lives')} />
+              <Input type="radio" value="No" {...register('father.lives')} />
             </FieldRadio>
           </Field>
           <Field>
@@ -117,9 +117,9 @@ const FormFamiliarData = ({
             <Label>¿Vive?</Label>
             <FieldRadio>
               <span>Sí</span>
-              <Input type="radio" value="true" {...register('mother.lives')} />
+              <Input type="radio" value="Sí" {...register('mother.lives')} />
               <span>No</span>
-              <Input type="radio" value="false" {...register('mother.lives')} />
+              <Input type="radio" value="No" {...register('mother.lives')} />
             </FieldRadio>
           </Field>
           <Field>
@@ -147,9 +147,9 @@ const FormFamiliarData = ({
             <Label>¿Vive?</Label>
             <FieldRadio>
               <span>Sí</span>
-              <Input type="radio" value="true" {...register('couple.lives')} />
+              <Input type="radio" value="Sí" {...register('couple.lives')} />
               <span>No</span>
-              <Input type="radio" value="false" {...register('couple.lives')} />
+              <Input type="radio" value="No" {...register('couple.lives')} />
             </FieldRadio>
           </Field>
           <Field>

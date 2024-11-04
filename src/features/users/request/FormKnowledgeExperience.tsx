@@ -30,7 +30,7 @@ interface IFormKnowledgeExperience {
   areas: string[];
 
   // PRACTICAL EXPERIENCE
-  hasPracticalExperience: boolean;
+  hasPracticalExperience: string;
   practicalExperience: string;
 }
 
@@ -158,13 +158,13 @@ const FormKnowledgeExperience = ({
               <span>Sí</span>
               <Input
                 type="radio"
-                value="true"
+                value="Sí"
                 {...register('hasPracticalExperience', { required: true })}
               />
               <span>No</span>
               <Input
                 type="radio"
-                value="false"
+                value="No"
                 {...register('hasPracticalExperience', { required: true })}
               />
             </FieldRadio>

@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import Button from "../../../ui/Button";
+import Button from '../../../ui/Button';
 import {
   Field,
   FieldCheck,
@@ -12,7 +12,7 @@ import {
   PageChange,
   Percentage,
   Title,
-} from "../../../ui/FormPieces";
+} from '../../../ui/FormPieces';
 
 interface IFormClinicInformation {
   height: number;
@@ -41,41 +41,80 @@ const FormClinicInformation = ({ handleBack }: { handleBack: () => void }) => {
           <Field>
             <Label htmlFor="height">Estatura</Label>
             <Percentage>
-              <Input id="height" type="number" {...register('height', { required: true })} />
+              <Input
+                id="height"
+                type="number"
+                {...register('height', { required: true })}
+              />
               <span>cm</span>
             </Percentage>
           </Field>
           <Field>
             <Label htmlFor="weight">Peso</Label>
             <Percentage>
-              <Input id="weight" type="number" {...register('weight', { required: true })} />
+              <Input
+                id="weight"
+                type="number"
+                {...register('weight', { required: true })}
+              />
               <span>Kg</span>
             </Percentage>
           </Field>
           <Field>
             <Label htmlFor="bloodType">Tipo de Sangre</Label>
-            <Input id="bloodType" type="text" {...register('bloodType', { required: true })} />
+            <Input
+              id="bloodType"
+              type="text"
+              {...register('bloodType', { required: true })}
+            />
           </Field>
           <Field>
             <Label>¿Padece o padeció enfermedades que necesiten atención médica?</Label>
             <FieldRadio>
               <span>Sí</span>
-              <Input id="hasMedicalConditionsYes" type="radio" value="Sí" {...register('hasMedicalConditions')} />
+              <Input
+                id="hasMedicalConditionsYes"
+                type="radio"
+                value="Sí"
+                {...register('hasMedicalConditions')}
+              />
               <span>No</span>
-              <Input id="hasMedicalConditionsNo" type="radio" value="No" {...register('hasMedicalConditions')} />
+              <Input
+                id="hasMedicalConditionsNo"
+                type="radio"
+                value="No"
+                {...register('hasMedicalConditions')}
+              />
             </FieldRadio>
           </Field>
           <Field>
             <Label htmlFor="medicalConditions">¿Qué enfermedades?</Label>
-            <Input id="medicalConditions" type="text" {...register('medicalConditions')} />
+            <Input
+              id="medicalConditions"
+              type="text"
+              {...register('medicalConditions')}
+            />
           </Field>
           <Field>
-            <Label>¿En el transcurso del último año ha tenido algún tipo de intervención quirúrgica?</Label>
+            <Label>
+              ¿En el transcurso del último año ha tenido algún tipo de intervención
+              quirúrgica?
+            </Label>
             <FieldRadio>
               <span>Sí</span>
-              <Input id="hasSurgeryYes" type="radio" value="Sí" {...register('hasSurgery')} />
+              <Input
+                id="hasSurgeryYes"
+                type="radio"
+                value="Sí"
+                {...register('hasSurgery')}
+              />
               <span>No</span>
-              <Input id="hasSurgeryNo" type="radio" value="No" {...register('hasSurgery')} />
+              <Input
+                id="hasSurgeryNo"
+                type="radio"
+                value="No"
+                {...register('hasSurgery')}
+              />
             </FieldRadio>
           </Field>
           <Field>
@@ -86,9 +125,19 @@ const FormClinicInformation = ({ handleBack }: { handleBack: () => void }) => {
             <Label>¿Tiene algún impedimento físico que lo limite en su trabajo?</Label>
             <FieldRadio>
               <span>Sí</span>
-              <Input id="hasPhysicalImpedimentYes" type="radio" value="Sí" {...register('hasPhysicalImpediment')} />
+              <Input
+                id="hasPhysicalImpedimentYes"
+                type="radio"
+                value="Sí"
+                {...register('hasPhysicalImpediment')}
+              />
               <span>No</span>
-              <Input id="hasPhysicalImpedimentNo" type="radio" value="No" {...register('hasPhysicalImpediment')} />
+              <Input
+                id="hasPhysicalImpedimentNo"
+                type="radio"
+                value="No"
+                {...register('hasPhysicalImpediment')}
+              />
             </FieldRadio>
           </Field>
         </FormContainer>
@@ -96,13 +145,17 @@ const FormClinicInformation = ({ handleBack }: { handleBack: () => void }) => {
           <Label>
             Certifico que la información aquí proporcionada es verídica, por lo que
             autorizo a Distribuidora de Auto Industrias, S.A de C.V, a corroborarla
-            cuestionando a las referencias señaladas tanto sobre mi conducta personal
-            como laboral, así como el uso de mis datos personales con base en el aviso
-            de privacidad de la empresa, el cual podré consultar en www.dai.com.mx,
+            cuestionando a las referencias señaladas tanto sobre mi conducta personal como
+            laboral, así como el uso de mis datos personales con base en el aviso de
+            privacidad de la empresa, el cual podré consultar en www.dai.com.mx,
             reconociendo que la presente solicitud no significa el establecimiento de
             ninguna relación laboral, ni crea el compromiso de que ésta me otorgue.
           </Label>
-          <Input id="certifyInformation" type="checkbox" {...register('certifyInformation', { required: true })} />
+          <Input
+            id="certifyInformation"
+            type="checkbox"
+            {...register('certifyInformation', { required: true })}
+          />
         </FieldCheck>
         <PageChange>
           <Button $variation="primary" type="submit">
@@ -115,6 +168,6 @@ const FormClinicInformation = ({ handleBack }: { handleBack: () => void }) => {
       </Page>
     </Form>
   );
-}
+};
 
 export default FormClinicInformation;

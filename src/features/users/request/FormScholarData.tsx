@@ -19,7 +19,7 @@ interface IFormScholarData {
     schoolName: string;
     startDate: string;
     endDate: string;
-    hasCertificate: boolean;
+    hasCertificate: string;
   };
   //HIGH SCHOOL
   highSchool: {
@@ -27,7 +27,7 @@ interface IFormScholarData {
     schoolName: string;
     startDate: string;
     endDate: string;
-    hasCertificate: boolean;
+    hasCertificate: string;
   };
 
   //UNIVERSITY
@@ -36,7 +36,7 @@ interface IFormScholarData {
     schoolName: string;
     startDate: string;
     endDate: string;
-    hasCertificate: boolean;
+    hasCertificate: string;
   };
 
   //DEGREE
@@ -45,11 +45,11 @@ interface IFormScholarData {
     schoolName: string;
     startDate: string;
     endDate: string;
-    hasCertificate: boolean;
+    hasCertificate: string;
     career: string;
   };
 
-  currentStudying: boolean;
+  currentStudying: string;
   currentStudySchedule: string;
   currentStudyName: string;
   currentSchool: string;
@@ -115,14 +115,14 @@ const FormScholarData = ({
               <Input
                 type="radio"
                 id="secHasCertificate"
-                value="true"
+                value="Sí"
                 {...register('secondary.hasCertificate', { required: true })}
               />
               <span>No</span>
               <Input
                 type="radio"
                 id="secondary.hasCertificate"
-                value="false"
+                value="No"
                 {...register('secondary.hasCertificate', { required: true })}
               />
             </FieldRadio>
@@ -171,14 +171,14 @@ const FormScholarData = ({
               <Input
                 type="radio"
                 id="highSchool.hasCertificate"
-                value="true"
+                value="Sí"
                 {...register('highSchool.hasCertificate', { required: true })}
               />
               <span>No</span>
               <Input
                 type="radio"
                 id="highSchool.hasCertificate"
-                value="false"
+                value="No"
                 {...register('highSchool.hasCertificate', { required: true })}
               />
             </FieldRadio>
@@ -227,14 +227,14 @@ const FormScholarData = ({
               <Input
                 type="radio"
                 id="university.hasCertificate"
-                value="true"
+                value="Sí"
                 {...register('university.hasCertificate', { required: true })}
               />
               <span>No</span>
               <Input
                 type="radio"
                 id="university.hasCertificate"
-                value="false"
+                value="No"
                 {...register('university.hasCertificate', { required: true })}
               />
             </FieldRadio>
@@ -275,14 +275,14 @@ const FormScholarData = ({
               <Input
                 type="radio"
                 id="degree.hasCertificate"
-                value="true"
+                value="Sí"
                 {...register('degree.hasCertificate', { required: true })}
               />
               <span>No</span>
               <Input
                 type="radio"
                 id="university.hasCertificate"
-                value="false"
+                value="No"
                 {...register('university.hasCertificate', { required: true })}
               />
             </FieldRadio>
@@ -302,14 +302,14 @@ const FormScholarData = ({
               <Input
                 type="radio"
                 id="currentStudying"
-                value="true"
+                value="Sí"
                 {...register('currentStudying', { required: true })}
               />
               <span>No</span>
               <Input
                 type="radio"
                 id="currentStudying"
-                value="false"
+                value="No"
                 {...register('currentStudying', { required: true })}
               />
             </FieldRadio>
