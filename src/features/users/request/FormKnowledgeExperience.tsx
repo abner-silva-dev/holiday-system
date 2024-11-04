@@ -1,3 +1,4 @@
+import { useForm } from 'react-hook-form';
 import Button from '../../../ui/Button';
 import {
   Field,
@@ -13,6 +14,26 @@ import {
   Form,
 } from '../../../ui/FormPieces';
 
+interface IFormKnowledgeExperience {
+  // LANGUAGES
+  english: {
+    speakingPer: number;
+    writtingPer: number;
+  };
+  secondLanguage: {
+    language: string;
+    speakingPer: number;
+    writtingPer: number;
+  };
+
+  // EXP AREAS
+  areas: string[];
+
+  // PRACTICAL EXPERIENCE
+  hasPracticalExperience: boolean;
+  practicalExperience: string;
+}
+
 const FormKnowledgeExperience = ({
   handleNext,
   handleBack,
@@ -20,8 +41,25 @@ const FormKnowledgeExperience = ({
   handleNext: () => void;
   handleBack: () => void;
 }) => {
+  const { register, handleSubmit, setValue, watch } = useForm<IFormKnowledgeExperience>();
+
+  // Observa el valor actual de areas
+  const areas = watch('areas') || [];
+
+  const handleCheckboxChange = (value: string) => {
+    const updatedAreas = areas.includes(value)
+      ? areas.filter((area: string) => area !== value)
+      : [...areas, value];
+
+    setValue('areas', updatedAreas);
+  };
+
+  const onSubmit = (data: IFormKnowledgeExperience) => {
+    console.log(data);
+  };
+
   return (
-    <Form>
+    <Form onSubmit={handleSubmit(onSubmit)}>
       <Page>
         <Title as="h2">CONOCIMIENTOS Y EXPERIENCIA</Title>
         <Title as="h3">Idioma Inglés</Title>
@@ -29,14 +67,22 @@ const FormKnowledgeExperience = ({
           <Field>
             <Label>Habla</Label>
             <Percentage>
-              <Input type="number"></Input>
+              <Input
+                type="number"
+                id="english.speakingPer"
+                {...register('english.speakingPer', { required: true })}
+              />
               <span>%</span>
             </Percentage>
           </Field>
           <Field>
             <Label>Escribe</Label>
             <Percentage>
-              <Input type="number"></Input>
+              <Input
+                type="number"
+                id="english.writtingPer"
+                {...register('english.writtingPer', { required: true })}
+              />
               <span>%</span>
             </Percentage>
           </Field>
@@ -46,19 +92,31 @@ const FormKnowledgeExperience = ({
         <FormContainer>
           <Field>
             <Label>Idioma</Label>
-            <Input type="text"></Input>
+            <Input
+              type="text"
+              id="secondLanguage.language"
+              {...register('secondLanguage.language')}
+            />
           </Field>
           <Field>
             <Label>Habla</Label>
             <Percentage>
-              <Input type="number"></Input>
+              <Input
+                type="number"
+                id="secondLanguage.speakingPer"
+                {...register('secondLanguage.speakingPer')}
+              />
               <span>%</span>
             </Percentage>
           </Field>
           <Field>
             <Label>Escribe</Label>
             <Percentage>
-              <Input type="number"></Input>
+              <Input
+                type="number"
+                id="secondLanguage.writtingPer"
+                {...register('secondLanguage.writtingPer')}
+              />
               <span>%</span>
             </Percentage>
           </Field>
@@ -66,62 +124,31 @@ const FormKnowledgeExperience = ({
 
         <Title as="h3">Experiencia en:</Title>
         <FormContainer>
-          <FieldCheck>
-            <Label>Compras</Label>
-            <Input type="checkbox"></Input>
-          </FieldCheck>
-          <FieldCheck>
-            <Label>Cred. y Cob.</Label>
-            <Input type="checkbox"></Input>
-          </FieldCheck>
-          <FieldCheck>
-            <Label>Almacén</Label>
-            <Input type="checkbox"></Input>
-          </FieldCheck>
-          <FieldCheck>
-            <Label>Comer. Ext.</Label>
-            <Input type="checkbox"></Input>
-          </FieldCheck>
-          <FieldCheck>
-            <Label>Ventas</Label>
-            <Input type="checkbox"></Input>
-          </FieldCheck>
-          <FieldCheck>
-            <Label>Rel. Públicas</Label>
-            <Input type="checkbox"></Input>
-          </FieldCheck>
-          <FieldCheck>
-            <Label>Contabilidad</Label>
-            <Input type="checkbox"></Input>
-          </FieldCheck>
-          <FieldCheck>
-            <Label>Mecánico</Label>
-            <Input type="checkbox"></Input>
-          </FieldCheck>
-          <FieldCheck>
-            <Label>Compras</Label>
-            <Input type="checkbox"></Input>
-          </FieldCheck>
-          <FieldCheck>
-            <Label>Mercadotecnia</Label>
-            <Input type="checkbox"></Input>
-          </FieldCheck>
-          <FieldCheck>
-            <Label>Paquetes Software</Label>
-            <Input type="checkbox"></Input>
-          </FieldCheck>
-          <FieldCheck>
-            <Label>Publicidad</Label>
-            <Input type="checkbox"></Input>
-          </FieldCheck>
-          <FieldCheck>
-            <Label>Secretariado</Label>
-            <Input type="checkbox"></Input>
-          </FieldCheck>
-          <FieldCheck>
-            <Label>Promotora</Label>
-            <Input type="checkbox"></Input>
-          </FieldCheck>
+          {[
+            'Compras',
+            'Cred. y Cob.',
+            'Almacén',
+            'Comercio Ext.',
+            'Ventas',
+            'Rel. Públicas',
+            'Contabilidad',
+            'Mecánico',
+            'Mercadotecnia',
+            'Paquetes Software',
+            'Publicidad',
+            'Secretariado',
+            'Promotora',
+          ].map((area) => (
+            <FieldCheck key={area}>
+              <Label>{area}</Label>
+              <Input
+                type="checkbox"
+                value={area}
+                checked={areas.includes(area)}
+                onChange={() => handleCheckboxChange(area)}
+              />
+            </FieldCheck>
+          ))}
         </FormContainer>
 
         <FormContainer>
@@ -129,21 +156,36 @@ const FormKnowledgeExperience = ({
             <Label>¿Tiene experiencia práctica en el puesto que solicita?</Label>
             <FieldRadio>
               <span>Sí</span>
-              <Input type="radio" name="car"></Input>
+              <Input
+                type="radio"
+                value="true"
+                {...register('hasPracticalExperience', { required: true })}
+              />
               <span>No</span>
-              <Input type="radio" name="car"></Input>
+              <Input
+                type="radio"
+                value="false"
+                {...register('hasPracticalExperience', { required: true })}
+              />
             </FieldRadio>
           </Field>
           <Field>
             <Label>Especifique</Label>
-            <Input type="text"></Input>
+            <Input
+              type="text"
+              id="practicalExperience"
+              {...register('practicalExperience')}
+            />
           </Field>
         </FormContainer>
+
         <PageChange>
           <Button $variation="primary" onClick={handleBack}>
             Atrás
           </Button>
-
+          <Button $variation="confirm" type="submit">
+            Guardar
+          </Button>
           <Button $variation="confirm" onClick={handleNext}>
             Siguiente
           </Button>
