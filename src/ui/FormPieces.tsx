@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import Heading from './Heading';
+import { HiChevronLeft, HiChevronRight } from 'react-icons/hi2';
+import { MouseEventHandler } from 'react';
 
 export const FormContainer = styled.div`
   display: grid;
@@ -93,8 +95,10 @@ export const EmployControllers = styled.div`
 `;
 
 export const PageChange = styled.div`
+  width: 100%;
   display: flex;
   gap: 2rem;
+  justify-content: space-between;
 `;
 
 export const Percentage = styled.div`
@@ -105,3 +109,33 @@ export const Percentage = styled.div`
     font-size: 2rem;
   }
 `;
+
+export const ErrorMessage = styled.span`
+  color: red;
+`;
+
+const ButtonMovement = styled.button`
+  background-color: var(--color-grey-0);
+  border: none;
+
+  & svg {
+    width: 4rem;
+    height: 4rem;
+  }
+`;
+
+export const ButtonNext = ({ onClick }: { onClick: () => void }) => {
+  return (
+    <ButtonMovement onClick={onClick} type="button">
+      <HiChevronRight />
+    </ButtonMovement>
+  );
+};
+
+export const ButtonPrevious = ({ onClick }: { onClick: () => void }) => {
+  return (
+    <ButtonMovement onClick={onClick} type="button">
+      <HiChevronLeft />
+    </ButtonMovement>
+  );
+};
