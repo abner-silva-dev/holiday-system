@@ -60,20 +60,25 @@ const Head = styled.div`
   gap: 2rem;
 `;
 
-const WatchButton = styled(Button)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.7rem;
+// const WatchButton = styled(Button)`
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   gap: 0.7rem;
 
-  & svg {
-    width: 2.4rem;
-    height: 2.4rem;
-  }
+//   & svg {
+//     width: 2.4rem;
+//     height: 2.4rem;
+//   }
+
+const WatchButton = styled(Button)<{ visible: boolean }>`
+  display: ${({ visible }) =>
+    visible ? 'inline-flex' : 'none'}; /* Mostrar/ocultar según el estado */
 `;
 
-const SaveButton = styled(Button)`
-  display: flex;
+const SaveButton = styled(Button)<{ visible: boolean }>`
+  display: ${({ visible }) =>
+    visible ? 'inline-flex' : 'none'}; /* Mostrar/ocultar según el estado */
   align-items: center;
   justify-content: center;
   gap: 0.7rem;
@@ -89,6 +94,7 @@ const Documents: React.FC<DocumentsProps> = () => {
   const [fileNames, setFileNames] = useState<string[]>(
     Array(4).fill('Seleccionar archivo')
   ); // Array of file names
+  const [savedFiles, setSavedFiles] = useState<boolean[]>(Array(4).fill(false)); // Array to track which files are saved
 
   const handleFileChange = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -97,14 +103,17 @@ const Documents: React.FC<DocumentsProps> = () => {
     const file = event.target.files?.[0];
     if (file) {
       const newFiles = [...files];
-
       newFiles[index] = file;
       setFiles(newFiles);
 
       const newFileNames = [...fileNames];
       newFileNames[index] = file.name;
-
       setFileNames(newFileNames);
+
+      // Reset saved status when new file is selected
+      const newSavedFiles = [...savedFiles];
+      newSavedFiles[index] = false;
+      setSavedFiles(newSavedFiles);
     }
   };
 
@@ -113,18 +122,24 @@ const Documents: React.FC<DocumentsProps> = () => {
     const documentName = fileNames[index];
 
     if (file) {
-      const url = URL.createObjectURL(file); // Obtenemos la URL del archivo
+      const url = URL.createObjectURL(file); // Obtener la URL del archivo
+      const newWindow = window.open(url, '_blank'); // Abre el PDF en una nueva pestaña
 
-      // Abre el PDF en una nueva pestaña
-      const newWindow = window.open(url, '_blank');
-
-      // Esperamos a que el archivo se haya cargado para establecer el nombre
       if (newWindow) {
-        newWindow.document.title = documentName; // Establecemos el nombre del archivo en el título de la nueva ventana
+        newWindow.document.title = documentName; // Establecer el nombre del archivo en el título de la nueva ventana
       }
     } else {
       alert('Por favor, selecciona un archivo primero.');
     }
+  };
+
+  const handleSave = (index: number) => {
+    // Simular el proceso de guardado, por ejemplo, subir el archivo al servidor
+    // En este caso, solo actualizamos el estado para reflejar que el archivo ha sido guardado
+
+    const newSavedFiles = [...savedFiles];
+    newSavedFiles[index] = true;
+    setSavedFiles(newSavedFiles);
   };
 
   return (
@@ -151,10 +166,10 @@ const Documents: React.FC<DocumentsProps> = () => {
             <Field key={index}>
               <Group>
                 <StateIcon>
-                  {files[index] ? (
+                  {savedFiles[index] ? ( // Si el archivo ha sido guardado, mostrar palomita verde
                     <HiCheckCircle color="green" />
                   ) : (
-                    <HiXCircle color="red" />
+                    <HiXCircle color="red" /> // Si no ha sido guardado, mostrar tache rojo
                   )}
                 </StateIcon>
                 <Label>{label}</Label>
@@ -164,29 +179,29 @@ const Documents: React.FC<DocumentsProps> = () => {
                 nameFile={fileNames[index]} // Pasamos el nombre del archivo al componente InputFile
               />
               <Head>
+                {/* Botón "Ver" solo será visible si hay un archivo cargado */}
                 <WatchButton
-                  title="Vista Previa"
                   $variation="secondary"
                   onClick={() => handlePreview(index)}
+                  visible={!!files[index]} // Solo se muestra si hay archivo cargado
                 >
-                  <HiOutlineEye />
                   Ver
                 </WatchButton>
-                <SaveButton title="Guardar" $variation="confirm" $size="medium">
+
+                {/* Botón "Guardar" solo será visible si hay un archivo cargado */}
+                <SaveButton
+                  $variation="confirm"
+                  $size="medium"
+                  visible={!!files[index]} // Solo se muestra si hay archivo cargado
+                  onClick={() => handleSave(index)} // Llamamos a handleSave cuando el usuario haga clic
+                >
                   <HiOutlineCloudArrowUp />
-                  {/* <LiaSave /> */}
                   Guardar
                 </SaveButton>
               </Head>
             </Field>
           ))}
         </FilesContainer>
-
-        {/* <Preview>
-          {previewUrl && (
-            <embed src={previewUrl} type="application/pdf" width="500px" height="750px" />
-          )}
-        </Preview> */}
       </div>
     </DocumentMain>
   );

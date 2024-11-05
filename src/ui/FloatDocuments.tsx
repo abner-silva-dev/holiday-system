@@ -8,6 +8,7 @@ const Float = styled.div`
   right: 0px;
   background-color: var(--color-grey-0);
   box-shadow: var(--shadow-md);
+  z-index: 80;
 `;
 // const Filters = styled.div`
 //   display: flex;
@@ -45,8 +46,8 @@ interface PropsFloatDocuments {
 const FloatDocuments: React.FC<PropsFloatDocuments> = ({ onClose }) => {
   return (
     <>
-      <Float>
-        <Option onClick={onClose}>Contrato de Trabajo</Option>
+      <Float onClick={onClose}>
+        <Option>Contrato de Trabajo</Option>
         <Option>Contrato de Confidencialidad</Option>
         <Option>Carta de Renuncia</Option>
         <Option>Finiquito</Option>

@@ -61,6 +61,15 @@ const NavButton = styled(Button)`
   }
 `;
 
+const NavButtonDoc = styled(Button)`
+  background-color: #845ef7;
+  border-radius: 9px;
+
+  &:hover {
+    background-color: #6844d6;
+  }
+`;
+
 const DropDown = styled.div`
   position: relative;
   margin-left: auto;
@@ -68,9 +77,8 @@ const DropDown = styled.div`
 
 const UserManagement = () => {
   const { user } = useUser2();
-  if (!user) return null;
-
   const [isClicked, setClicked] = useState(false);
+  if (!user) return null;
 
   return (
     <Row>
@@ -94,9 +102,9 @@ const UserManagement = () => {
             Recuperación de Contraseñas
           </NavButton>
           <DropDown>
-            <NavButton $variation="confirm" onClick={() => setClicked(!isClicked)}>
+            <NavButtonDoc $variation="confirm" onClick={() => setClicked(!isClicked)}>
               Generar Documentos
-            </NavButton>
+            </NavButtonDoc>
             {isClicked ? <FloatDocuments onClose={() => setClicked(false)} /> : null}
           </DropDown>
         </Options>
