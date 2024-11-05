@@ -10,6 +10,7 @@ import {
   PageChange,
   Title,
 } from "../../../ui/FormPieces";
+import { useEffect, useState } from 'react';
 
 interface IFormPersonalReference {
   person1: {
@@ -33,11 +34,24 @@ interface IFormPersonalReference {
 }
 
 const FormPersonalReference = ({ handleNext, handleBack }: { handleNext: () => void; handleBack: () => void; }) => {
-  const { register, handleSubmit } = useForm<IFormPersonalReference>();
+  const { register, handleSubmit, reset } = useForm<IFormPersonalReference>();
+  const [formData, setFormData] = useState<IFormPersonalReference | null>(null);
+
+  useEffect(() => {
+    // Restablece el formulario con los datos guardados
+    if (formData) {
+      reset(formData);
+    }
+  }, [formData, reset]);
 
   const onSubmit = (data: IFormPersonalReference) => {
     console.log(data);
-    // Aquí puedes agregar la lógica para guardar los datos
+    setFormData(data); // Guarda los datos del formulario en el estado
+  };
+
+  const handleBackButtonClick = () => {
+    // Aquí puedes decidir qué hacer con los datos guardados al regresar
+    handleBack();
   };
 
   return (
@@ -84,7 +98,7 @@ const FormPersonalReference = ({ handleNext, handleBack }: { handleNext: () => v
           </Field>
           <Field>
             <Label htmlFor="person2Occupation">Ocupación</Label>
-            <Input id="person2.occupationon" type="text" {...register('person2.occupation', { required: true })} />
+            <Input id="person2.occupation" type="text" {...register('person2.occupation', { required: true })} />
           </Field>
         </FormContainer>
 
@@ -109,7 +123,7 @@ const FormPersonalReference = ({ handleNext, handleBack }: { handleNext: () => v
         </FormContainer>
 
         <PageChange>
-          <Button $variation="primary" onClick={handleBack}>
+          <Button $variation="primary" onClick={handleBackButtonClick}>
             Atrás
           </Button>
           <Button $variation="confirm" type="submit">

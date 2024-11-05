@@ -63,25 +63,19 @@ const SaveButton = styled(Button)`
   margin: 5rem auto;
 `;
 
-// const Preview = styled.div`
-//   height: 75rem;
-//   width: 50rem;
-// `;
-
 const Documents = () => {
-  const [files, setFiles] = useState(Array(4).fill(null));
-  const [fileNames, setFileNames] = useState(Array(4).fill('Seleccionar archivo'));
-  const [previewUrl, setPreviewUrl] = useState('');
+  const [files, setFiles] = useState(Array(4).fill(null));  // Almacenamos los archivos cargados
+  const [fileNames, setFileNames] = useState(Array(4).fill('Seleccionar archivo'));  // Almacenamos los nombres de los archivos
 
   const handleFileChange = (event, index) => {
     const file = event.target.files[0];
     if (file) {
       const newFiles = [...files];
-      newFiles[index] = file;
+      newFiles[index] = file;  // Guardamos el archivo cargado en el índice correspondiente
       setFiles(newFiles);
 
       const newFileNames = [...fileNames];
-      newFileNames[index] = file.name;
+      newFileNames[index] = file.name;  // Guardamos el nombre del archivo
       setFileNames(newFileNames);
     }
   };
@@ -89,8 +83,21 @@ const Documents = () => {
   const handlePreview = (index) => {
     const file = files[index];
     if (file) {
-      const url = URL.createObjectURL(file);
-      setPreviewUrl(url);
+      const url = URL.createObjectURL(file);  // Obtenemos la URL del archivo para poder mostrarlo
+
+      const documentName = fileNames[index];  // Usamos el nombre del archivo cargado
+
+      // Abrimos el PDF en una nueva ventana a pantalla completa
+      const newWindow = window.open(url, '_blank');
+      newWindow.document.write(`
+        <html>
+          <head><title>${documentName}</title></head> <!-- Usamos el nombre del archivo como título -->
+          <body style="margin: 0; padding: 0; overflow: hidden;">
+            <embed src="${url}" type="application/pdf" width="100%" height="100%" />
+          </body>
+        </html>
+      `);
+      newWindow.document.close();  // Cerramos el documento para finalizar el proceso de carga
     }
   };
 
@@ -126,8 +133,8 @@ const Documents = () => {
                 <Label>{label}</Label>
               </Group>
               <InputFile
-                nameFile={fileNames[index]}
-                onChange={(event) => handleFileChange(event, index)}
+                onChange={(event) => handleFileChange(event, index)}  // Llamamos a handleFileChange
+                nameFile={fileNames[index]}  // Pasamos el nombre del archivo al componente InputFile
               />
               <WatchButton $variation="secondary" onClick={() => handlePreview(index)}>
                 Ver
@@ -138,11 +145,6 @@ const Documents = () => {
             Guardar
           </SaveButton>
         </FilesContainer>
-        {/* <Preview>
-          {previewUrl && (
-            <embed src={previewUrl} type="application/pdf" width="500px" height="750px" />
-          )}
-        </Preview> */}
       </Content>
     </DocumentMain>
   );
