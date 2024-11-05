@@ -4,6 +4,8 @@ import Heading from '../../ui/Heading';
 import InputFile from '../../ui/InputFile';
 import Button from '../../ui/Button';
 import { HiCheckCircle, HiXCircle } from 'react-icons/hi';
+import { HiOutlineCloudArrowUp } from 'react-icons/hi2';
+import { LiaSave } from 'react-icons/lia';
 
 const StateIcon = styled.div`
   height: 2rem; /* Aumenta el tamaño */
@@ -51,7 +53,11 @@ const Group = styled.div`
   align-self: center;
 `;
 
-const Content = styled.div``;
+const Head = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
 
 const WatchButton = styled(Button)`
   width: 50%;
@@ -59,8 +65,17 @@ const WatchButton = styled(Button)`
 `;
 
 const SaveButton = styled(Button)`
-  justify-self: center;
-  margin: 5rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  width: 11%;
+  margin: 3rem auto;
+
+  & svg {
+    width: 2.4rem;
+    height: 2.4rem;
+  }
 `;
 
 // const Preview = styled.div`
@@ -96,8 +111,10 @@ const Documents = () => {
 
   return (
     <DocumentMain>
-      <Heading as="h2">Documentos de Empleado</Heading>
-      <Content>
+      <Head>
+        <Heading as="h2">Documentos de Empleado</Heading>
+      </Head>
+      <div>
         <FilesContainer>
           {[
             'Curriculum Vitae',
@@ -135,6 +152,8 @@ const Documents = () => {
             </Field>
           ))}
           <SaveButton $variation="confirm" $size="medium">
+            {/* <HiOutlineCloudArrowUp /> */}
+            <LiaSave />
             Guardar
           </SaveButton>
         </FilesContainer>
@@ -143,7 +162,7 @@ const Documents = () => {
             <embed src={previewUrl} type="application/pdf" width="500px" height="750px" />
           )}
         </Preview> */}
-      </Content>
+      </div>
     </DocumentMain>
   );
 };

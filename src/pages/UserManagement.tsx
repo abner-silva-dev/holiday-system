@@ -48,6 +48,23 @@ const UserSubMain = styled.main`
 const Options = styled.div`
   display: flex;
   gap: 2rem;
+
+  & :last-child {
+    margin-left: auto;
+    background-color: #845ef7;
+
+    &:hover {
+      background-color: #6741d9;
+    }
+  }
+`;
+
+const NavButton = styled(Button)`
+  background-color: #0b7285;
+
+  &:hover {
+    background-color: #118ca1;
+  }
 `;
 
 // const Filters = styled.div`
@@ -72,16 +89,16 @@ const UserManagement = () => {
 
       <UserMain>
         <Options>
-          <Button $variation="confirm" as={Link} to="request">
+          <NavButton $variation="confirm" as={Link} to="request">
             Datos Generales
-          </Button>
-          <Button $variation="confirm" as={Link} to="documents">
+          </NavButton>
+          <NavButton $variation="confirm" as={Link} to="documents">
             Documentos
-          </Button>
-          <Button $variation="confirm">Generar Documentos</Button>
-          <Button $variation="confirm" as={Link} to="recovery">
+          </NavButton>
+          <NavButton $variation="confirm" as={Link} to="recovery">
             Recuperación de Contraseñas
-          </Button>
+          </NavButton>
+          <NavButton $variation="confirm">Generar Documentos</NavButton>
         </Options>
         <UserSubMain>
           <Outlet />
