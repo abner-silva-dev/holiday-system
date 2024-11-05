@@ -75,14 +75,14 @@ const FormClinicInformation = ({ handleBack }: { handleBack: () => void }) => {
               <Input
                 id="hasMedicalConditionsYes"
                 type="radio"
-                value="Sí"
+                value="si"
                 {...register('hasMedicalConditions')}
               />
               <span>No</span>
               <Input
                 id="hasMedicalConditionsNo"
                 type="radio"
-                value="No"
+                value="no"
                 {...register('hasMedicalConditions')}
               />
             </FieldRadio>
@@ -105,14 +105,14 @@ const FormClinicInformation = ({ handleBack }: { handleBack: () => void }) => {
               <Input
                 id="hasSurgeryYes"
                 type="radio"
-                value="Sí"
+                value="si"
                 {...register('hasSurgery')}
               />
               <span>No</span>
               <Input
                 id="hasSurgeryNo"
                 type="radio"
-                value="No"
+                value="no"
                 {...register('hasSurgery')}
               />
             </FieldRadio>
@@ -128,14 +128,14 @@ const FormClinicInformation = ({ handleBack }: { handleBack: () => void }) => {
               <Input
                 id="hasPhysicalImpedimentYes"
                 type="radio"
-                value="Sí"
+                value="si"
                 {...register('hasPhysicalImpediment')}
               />
               <span>No</span>
               <Input
                 id="hasPhysicalImpedimentNo"
                 type="radio"
-                value="No"
+                value="no"
                 {...register('hasPhysicalImpediment')}
               />
             </FieldRadio>

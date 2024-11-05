@@ -73,13 +73,12 @@ const UserManagement = () => {
       <UserMain>
         <Options>
           <Button $variation="confirm" as={Link} to="request">
-            Formulario
+            Datos Generales
           </Button>
           <Button $variation="confirm" as={Link} to="documents">
-            Consulta de Documentos
+            Documentos
           </Button>
-          <Button $variation="confirm">Actas Administrativas</Button>
-          <Button $variation="confirm">Contratos</Button>
+          <Button $variation="confirm">Generar Documentos</Button>
           <Button $variation="confirm" as={Link} to="recovery">
             Recuperación de Contraseñas
           </Button>

@@ -24,7 +24,7 @@ const RequestForm = () => {
         <InitialContainer>
           <Heading as="h1">Bienvenido</Heading>
           <Heading as="h2">
-            Haga clic en continuar para comenzar a llenar la solicitud de empleo
+            Haga clic en comenzar para llenar el formulario de datos generales.
           </Heading>
           <Button $variation="primary" onClick={handleNext}>
             COMENZAR

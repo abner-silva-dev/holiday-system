@@ -31,7 +31,7 @@ const DocumentMain = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4rem;
-  padding: 3rem 4rem;
+  padding: 3rem 8rem;
 `;
 
 const FilesContainer = styled.div`
@@ -51,11 +51,7 @@ const Group = styled.div`
   align-self: center;
 `;
 
-const Content = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  justify-items: center;
-`;
+const Content = styled.div``;
 
 const WatchButton = styled(Button)`
   width: 50%;
@@ -63,15 +59,14 @@ const WatchButton = styled(Button)`
 `;
 
 const SaveButton = styled(Button)`
-  width: 40%;
   justify-self: center;
   margin: 5rem auto;
 `;
 
-const Preview = styled.div`
-  height: 75rem;
-  width: 50rem;
-`;
+// const Preview = styled.div`
+//   height: 75rem;
+//   width: 50rem;
+// `;
 
 const Documents = () => {
   const [files, setFiles] = useState(Array(4).fill(null));
@@ -109,6 +104,15 @@ const Documents = () => {
             'Acta de Nacimiento',
             'CURP',
             'Comprobante de Domicilio',
+            'Identificación Oficial (INE)',
+            'Número del IMSS (Pre-afiliación o documento del IMSS)',
+            'RFC (constancia de situación fiscal SAT)',
+            'Crédito INFONAVIT',
+            'AFORE',
+            '2 Cartas de Recomendación Laborales',
+            'Estado de Cuenta Bancario a nombre del Empleado (BBVA o Santander)',
+            'Comprobante de Estudios y Cédula Profesional en su caso',
+            'Licencia Vigente (en caso de requerir)',
           ].map((label, index) => (
             <Field key={index}>
               <Group>
@@ -134,11 +138,11 @@ const Documents = () => {
             Guardar
           </SaveButton>
         </FilesContainer>
-        <Preview>
+        {/* <Preview>
           {previewUrl && (
             <embed src={previewUrl} type="application/pdf" width="500px" height="750px" />
           )}
-        </Preview>
+        </Preview> */}
       </Content>
     </DocumentMain>
   );

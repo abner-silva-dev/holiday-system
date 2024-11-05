@@ -158,13 +158,13 @@ const FormKnowledgeExperience = ({
               <span>Sí</span>
               <Input
                 type="radio"
-                value="Sí"
+                value="si"
                 {...register('hasPracticalExperience', { required: true })}
               />
               <span>No</span>
               <Input
                 type="radio"
-                value="No"
+                value="no"
                 {...register('hasPracticalExperience', { required: true })}
               />
             </FieldRadio>

@@ -87,9 +87,9 @@ const FormFamiliarData = ({
             <Label>¿Vive?</Label>
             <FieldRadio>
               <span>Sí</span>
-              <Input type="radio" value="Sí" {...register('father.lives')} />
+              <Input type="radio" value="si" {...register('father.lives')} />
               <span>No</span>
-              <Input type="radio" value="No" {...register('father.lives')} />
+              <Input type="radio" value="no" {...register('father.lives')} />
             </FieldRadio>
           </Field>
           <Field>
@@ -117,9 +117,9 @@ const FormFamiliarData = ({
             <Label>¿Vive?</Label>
             <FieldRadio>
               <span>Sí</span>
-              <Input type="radio" value="Sí" {...register('mother.lives')} />
+              <Input type="radio" value="si" {...register('mother.lives')} />
               <span>No</span>
-              <Input type="radio" value="No" {...register('mother.lives')} />
+              <Input type="radio" value="no" {...register('mother.lives')} />
             </FieldRadio>
           </Field>
           <Field>
@@ -147,9 +147,9 @@ const FormFamiliarData = ({
             <Label>¿Vive?</Label>
             <FieldRadio>
               <span>Sí</span>
-              <Input type="radio" value="Sí" {...register('couple.lives')} />
+              <Input type="radio" value="si" {...register('couple.lives')} />
               <span>No</span>
-              <Input type="radio" value="No" {...register('couple.lives')} />
+              <Input type="radio" value="no" {...register('couple.lives')} />
             </FieldRadio>
           </Field>
           <Field>
@@ -177,8 +177,8 @@ const FormFamiliarData = ({
             <Label>Sexo</Label>
             <Select {...register('firstSon.genre')}>
               <option value="">Seleccione una opción...</option>
-              <option value="Masculino">Masculino</option>
-              <option value="Femenino">Femenino</option>
+              <option value="masculino">Masculino</option>
+              <option value="femenino">Femenino</option>
             </Select>
           </Field>
           <Field>
@@ -206,8 +206,8 @@ const FormFamiliarData = ({
             <Label>Sexo</Label>
             <Select {...register('secondSon.genre')}>
               <option value="">Seleccione una opción...</option>
-              <option value="Masculino">Masculino</option>
-              <option value="Femenino">Femenino</option>
+              <option value="masculino">Masculino</option>
+              <option value="femenino">Femenino</option>
             </Select>
           </Field>
           <Field>
@@ -235,8 +235,8 @@ const FormFamiliarData = ({
             <Label>Sexo</Label>
             <Select {...register('thirdSon.genre')}>
               <option value="">Seleccione una opción...</option>
-              <option value="Masculino">Masculino</option>
-              <option value="Femenino">Femenino</option>
+              <option value="masculino">Masculino</option>
+              <option value="femenino">Femenino</option>
             </Select>
           </Field>
           <Field>
