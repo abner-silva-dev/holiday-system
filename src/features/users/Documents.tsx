@@ -33,13 +33,13 @@ const DocumentMain = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4rem;
-  padding: 3rem 8rem;
+  padding: 5rem 8rem;
 `;
 
 const FilesContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 2.4rem;
+  gap: 2.8rem;
 `;
 
 const Label = styled.label`
@@ -55,22 +55,18 @@ const Group = styled.div`
 
 const Head = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: center;
+  gap: 2rem;
 `;
 
-const WatchButton = styled(Button)`
-  width: 50%;
-  justify-self: center;
-`;
+const WatchButton = styled(Button)``;
 
 const SaveButton = styled(Button)`
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.7rem;
-  width: 11%;
-  margin: 3rem auto;
 
   & svg {
     width: 2.4rem;
@@ -78,25 +74,19 @@ const SaveButton = styled(Button)`
   }
 `;
 
-// const Preview = styled.div`
-//   height: 75rem;
-//   width: 50rem;
-// `;
-
 const Documents = () => {
-  const [files, setFiles] = useState(Array(4).fill(null));
-  const [fileNames, setFileNames] = useState(Array(4).fill('Seleccionar archivo'));
-  const [previewUrl, setPreviewUrl] = useState('');
+  const [files, setFiles] = useState(Array(4).fill(null)); // Almacenamos los archivos cargados
+  const [fileNames, setFileNames] = useState(Array(4).fill('Seleccionar archivo')); // Almacenamos los nombres de los archivos
 
   const handleFileChange = (event, index) => {
     const file = event.target.files[0];
     if (file) {
       const newFiles = [...files];
-      newFiles[index] = file;
+      newFiles[index] = file; // Guardamos el archivo cargado en el índice correspondiente
       setFiles(newFiles);
 
       const newFileNames = [...fileNames];
-      newFileNames[index] = file.name;
+      newFileNames[index] = file.name; // Guardamos el nombre del archivo
       setFileNames(newFileNames);
     }
   };
@@ -104,16 +94,28 @@ const Documents = () => {
   const handlePreview = (index) => {
     const file = files[index];
     if (file) {
-      const url = URL.createObjectURL(file);
-      setPreviewUrl(url);
+      const url = URL.createObjectURL(file); // Obtenemos la URL del archivo para poder mostrarlo
+
+      const documentName = fileNames[index]; // Usamos el nombre del archivo cargado
+
+      // Abrimos el PDF en una nueva ventana a pantalla completa
+      const newWindow = window.open(url, '_blank');
+      newWindow.document.write(`
+        <html>
+          <head><title>${documentName}</title></head> <!-- Usamos el nombre del archivo como título -->
+          <body style="margin: 0; padding: 0; overflow: hidden;">
+            <embed src="${url}" type="application/pdf" width="100%" height="100%" />
+          </body>
+        </html>
+      `);
+      newWindow.document.close(); // Cerramos el documento para finalizar el proceso de carga
     }
   };
 
   return (
     <DocumentMain>
-      <Head>
-        <Heading as="h2">Documentos de Empleado</Heading>
-      </Head>
+      <Heading as="h2">Documentos de Empleado</Heading>
+
       <div>
         <FilesContainer>
           {[
@@ -143,20 +145,23 @@ const Documents = () => {
                 <Label>{label}</Label>
               </Group>
               <InputFile
-                nameFile={fileNames[index]}
-                onChange={(event) => handleFileChange(event, index)}
+                onChange={(event) => handleFileChange(event, index)} // Llamamos a handleFileChange
+                nameFile={fileNames[index]} // Pasamos el nombre del archivo al componente InputFile
               />
-              <WatchButton $variation="secondary" onClick={() => handlePreview(index)}>
-                Ver
-              </WatchButton>
+              <Head>
+                <WatchButton $variation="secondary" onClick={() => handlePreview(index)}>
+                  Ver
+                </WatchButton>
+                <SaveButton $variation="confirm" $size="medium">
+                  <HiOutlineCloudArrowUp />
+                  {/* <LiaSave /> */}
+                  Guardar
+                </SaveButton>
+              </Head>
             </Field>
           ))}
-          <SaveButton $variation="confirm" $size="medium">
-            {/* <HiOutlineCloudArrowUp /> */}
-            <LiaSave />
-            Guardar
-          </SaveButton>
         </FilesContainer>
+
         {/* <Preview>
           {previewUrl && (
             <embed src={previewUrl} type="application/pdf" width="500px" height="750px" />
