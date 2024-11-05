@@ -40,4 +40,12 @@ export interface UserInfo {
   credit?: { balance: number; exp?: string };
   creditFuture?: { balance: number };
   creditPast?: { balance: number; exp?: string };
+
+  age?: number;
+  gender?: string;
+  address?: string;
+  postalCode?: string;
+  maritalStatus?: string;
+  homePhone?: string;
+  mobilePhone?: string;
 }

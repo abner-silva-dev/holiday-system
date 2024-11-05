@@ -74,7 +74,7 @@ const ProcessBarRequest: React.FC<PropsProcess> = ({ numStates = 9, progress = 2
       <Process $state={progressBar} />
       {[...new Array(numStates + 1).fill(0)].map((_, i) =>
         i === 0 ? (
-          <div></div>
+          <div key={0}></div>
         ) : (
           <Point key={i} $position={i * chunkOfProgress} $state={progressBar} />
         )
