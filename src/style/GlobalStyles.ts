@@ -74,9 +74,12 @@ const GlobalStyles = createGlobalStyle`
  }
 
  ::-webkit-scrollbar-thumb{
-  background-color: var(--color-brand-800);
+  /* background-color: var(--color-red-800); */
+  background: linear-gradient(45deg, #5a9bd8, #357ca5);
   border-radius: 9px;
  }
+
+
   
  ::-webkit-scrollbar-track{
   background-color: var(--color-grey-200);

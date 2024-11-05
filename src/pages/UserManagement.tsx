@@ -8,6 +8,8 @@ import { media } from '../style/media';
 import { useUser2 } from '../features/users/useUser';
 import Button from '../ui/Button';
 import UserMiniCard from '../ui/UserMiniCard';
+import { useState } from 'react';
+import FloatDocuments from '../ui/FloatDocuments';
 
 const GoBack = styled(Link)`
   border: none;
@@ -48,34 +50,27 @@ const UserSubMain = styled.main`
 const Options = styled.div`
   display: flex;
   gap: 2rem;
-
-  & :last-child {
-    margin-left: auto;
-    background-color: #845ef7;
-
-    &:hover {
-      background-color: #6741d9;
-    }
-  }
 `;
 
 const NavButton = styled(Button)`
   background-color: #0b7285;
+  border-radius: 9px;
 
   &:hover {
     background-color: #118ca1;
   }
 `;
 
-// const Filters = styled.div`
-//   display: flex;
-//   justify-content: space-between;
-//   align-items: center;
-// `;
+const DropDown = styled.div`
+  position: relative;
+  margin-left: auto;
+`;
 
 const UserManagement = () => {
   const { user } = useUser2();
   if (!user) return null;
+
+  const [isClicked, setClicked] = useState(false);
 
   return (
     <Row>
@@ -98,7 +93,12 @@ const UserManagement = () => {
           <NavButton $variation="confirm" as={Link} to="recovery">
             Recuperación de Contraseñas
           </NavButton>
-          <NavButton $variation="confirm">Generar Documentos</NavButton>
+          <DropDown>
+            <NavButton $variation="confirm" onClick={() => setClicked(!isClicked)}>
+              Generar Documentos
+            </NavButton>
+            {isClicked ? <FloatDocuments onClose={() => setClicked(false)} /> : null}
+          </DropDown>
         </Options>
         <UserSubMain>
           <Outlet />

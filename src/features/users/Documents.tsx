@@ -4,7 +4,7 @@ import Heading from '../../ui/Heading';
 import InputFile from '../../ui/InputFile';
 import Button from '../../ui/Button';
 import { HiCheckCircle, HiXCircle } from 'react-icons/hi';
-import { HiOutlineCloudArrowUp } from 'react-icons/hi2';
+import { HiOutlineCloudArrowUp, HiOutlineEye } from 'react-icons/hi2';
 import { LiaSave } from 'react-icons/lia';
 
 const StateIcon = styled.div`
@@ -60,7 +60,17 @@ const Head = styled.div`
   gap: 2rem;
 `;
 
-const WatchButton = styled(Button)``;
+const WatchButton = styled(Button)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+
+  & svg {
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+`;
 
 const SaveButton = styled(Button)`
   display: flex;
@@ -154,10 +164,15 @@ const Documents: React.FC<DocumentsProps> = () => {
                 nameFile={fileNames[index]} // Pasamos el nombre del archivo al componente InputFile
               />
               <Head>
-                <WatchButton $variation="secondary" onClick={() => handlePreview(index)}>
+                <WatchButton
+                  title="Vista Previa"
+                  $variation="secondary"
+                  onClick={() => handlePreview(index)}
+                >
+                  <HiOutlineEye />
                   Ver
                 </WatchButton>
-                <SaveButton $variation="confirm" $size="medium">
+                <SaveButton title="Guardar" $variation="confirm" $size="medium">
                   <HiOutlineCloudArrowUp />
                   {/* <LiaSave /> */}
                   Guardar
