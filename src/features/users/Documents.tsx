@@ -6,8 +6,8 @@ import Button from '../../ui/Button';
 import { HiCheckCircle, HiXCircle } from 'react-icons/hi';
 
 const StateIcon = styled.div`
-  height: 2rem; /* Aumenta el tamaño */
-  width: 2rem; /* Aumenta el tamaño */
+  height: 2rem;
+  width: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -15,8 +15,8 @@ const StateIcon = styled.div`
   border-radius: 50%;
 
   svg {
-    height: 3rem; /* Ajusta el tamaño del icono */
-    width: 3rem; /* Ajusta el tamaño del icono */
+    height: 3rem;
+    width: 3rem;
   }
 `;
 
@@ -63,41 +63,41 @@ const SaveButton = styled(Button)`
   margin: 5rem auto;
 `;
 
-const Documents = () => {
-  const [files, setFiles] = useState(Array(4).fill(null));  // Almacenamos los archivos cargados
-  const [fileNames, setFileNames] = useState(Array(4).fill('Seleccionar archivo'));  // Almacenamos los nombres de los archivos
+interface DocumentsProps {}
 
-  const handleFileChange = (event, index) => {
-    const file = event.target.files[0];
+const Documents: React.FC<DocumentsProps> = () => {
+  const [files, setFiles] = useState<(File | null)[]>(Array(4).fill(null));  // Array of File objects
+  const [fileNames, setFileNames] = useState<string[]>(Array(4).fill('Seleccionar archivo'));  // Array of file names
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
+    const file = event.target.files?.[0];
     if (file) {
       const newFiles = [...files];
-      newFiles[index] = file;  // Guardamos el archivo cargado en el índice correspondiente
+      newFiles[index] = file;
       setFiles(newFiles);
 
       const newFileNames = [...fileNames];
-      newFileNames[index] = file.name;  // Guardamos el nombre del archivo
+      newFileNames[index] = file.name;
       setFileNames(newFileNames);
     }
   };
 
-  const handlePreview = (index) => {
+  const handlePreview = (index: number) => {
     const file = files[index];
+    const documentName = fileNames[index];
+
     if (file) {
-      const url = URL.createObjectURL(file);  // Obtenemos la URL del archivo para poder mostrarlo
+      const url = URL.createObjectURL(file); // Obtenemos la URL del archivo
 
-      const documentName = fileNames[index];  // Usamos el nombre del archivo cargado
-
-      // Abrimos el PDF en una nueva ventana a pantalla completa
+      // Abre el PDF en una nueva pestaña
       const newWindow = window.open(url, '_blank');
-      newWindow.document.write(`
-        <html>
-          <head><title>${documentName}</title></head> <!-- Usamos el nombre del archivo como título -->
-          <body style="margin: 0; padding: 0; overflow: hidden;">
-            <embed src="${url}" type="application/pdf" width="100%" height="100%" />
-          </body>
-        </html>
-      `);
-      newWindow.document.close();  // Cerramos el documento para finalizar el proceso de carga
+
+      // Esperamos a que el archivo se haya cargado para establecer el nombre
+      if (newWindow) {
+        newWindow.document.title = documentName; // Establecemos el nombre del archivo en el título de la nueva ventana
+      }
+    } else {
+      alert('Por favor, selecciona un archivo primero.');
     }
   };
 
@@ -133,11 +133,11 @@ const Documents = () => {
                 <Label>{label}</Label>
               </Group>
               <InputFile
-                onChange={(event) => handleFileChange(event, index)}  // Llamamos a handleFileChange
-                nameFile={fileNames[index]}  // Pasamos el nombre del archivo al componente InputFile
+                onChange={(event) => handleFileChange(event, index)}
+                nameFile={fileNames[index]}
               />
               <WatchButton $variation="secondary" onClick={() => handlePreview(index)}>
-                Ver
+             Ver
               </WatchButton>
             </Field>
           ))}
