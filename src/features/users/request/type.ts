@@ -4,4 +4,6 @@ export type RequestType =
   | 'knowledgeExperience'
   | 'familiarData'
   | 'employData'
-  | 'personalData';
+  | 'personalData'
+  | 'personalReference'
+  | 'clinicInformation';

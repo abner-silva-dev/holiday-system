@@ -1,6 +1,8 @@
 import { useForm } from 'react-hook-form';
 import Button from '../../../ui/Button';
 import {
+  ButtonPrevious,
+  ErrorMessage,
   Field,
   FieldCheck,
   FieldRadio,
@@ -13,6 +15,12 @@ import {
   Percentage,
   Title,
 } from '../../../ui/FormPieces';
+import { useUser2 } from '../useUser';
+import { useCreateRequest } from './useCreateRequest';
+import { useUpdateRequest } from './useUpdateRequest';
+import { useRequest } from './useRequest';
+import { useEffect } from 'react';
+import { formatDate } from '../../../utils/helpers';
 
 interface IFormClinicInformation {
   height: number;
@@ -24,14 +32,67 @@ interface IFormClinicInformation {
   surgeryType: string;
   hasPhysicalImpediment: string;
   certifyInformation: boolean;
+  user: string;
 }
 
-const FormClinicInformation = ({ handleBack }: { handleBack: () => void }) => {
-  const { register, handleSubmit } = useForm<IFormClinicInformation>();
+function FormClinicInformation({
+  handleBack,
+}: {
+  handleBack: () => void;
+  handleNext: () => void;
+}) {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+    formState: { errors },
+  } = useForm<IFormClinicInformation>();
 
+  // Get current user
+  const { user, isPending } = useUser2();
+
+  // Create Request
+  const { createRequest } = useCreateRequest<IFormClinicInformation>('clinicInformation');
+
+  // Update Request
+  const { updateRequest } = useUpdateRequest<IFormClinicInformation>('clinicInformation');
+
+  // Get data if Exists
+  const { data: requestData } = useRequest('clinicInformation');
+
+  // Update or Save
+  const isEdditSession = Boolean(!requestData);
+
+  // Action form type Create or Update
   const onSubmit = (data: IFormClinicInformation) => {
-    console.log(data);
+    if (requestData) {
+      updateRequest({ newData: { ...data } });
+    } else {
+      createRequest({ ...data, user: user?.id || '' });
+    }
   };
+
+  const hasMedicalConditions = watch('hasMedicalConditions');
+  const hasSurgery = watch('hasSurgery');
+
+  // Loading data if Exists
+  useEffect(() => {
+    if (requestData) {
+      const previousWorkDateFormat = formatDate(requestData?.previousWorkDate + '', {
+        formatDate: 'yyyy-mm-dd',
+        separationBy: '-',
+        spaces: false,
+      });
+
+      reset({
+        ...requestData,
+        previousWorkDate: previousWorkDateFormat,
+      });
+    }
+  }, [requestData, reset]);
+
+  if (isPending) return <p>Cargando...</p>;
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -44,30 +105,36 @@ const FormClinicInformation = ({ handleBack }: { handleBack: () => void }) => {
               <Input
                 id="height"
                 type="number"
-                {...register('height', { required: true })}
+                {...register('height', { required: 'Este campo es obligatorio' })}
               />
               <span>cm</span>
             </Percentage>
+            {errors.height && <ErrorMessage>{errors.height.message}</ErrorMessage>}
           </Field>
+
           <Field>
             <Label htmlFor="weight">Peso</Label>
             <Percentage>
               <Input
                 id="weight"
                 type="number"
-                {...register('weight', { required: true })}
+                {...register('weight', { required: 'Este campo es obligatorio' })}
               />
               <span>Kg</span>
             </Percentage>
+            {errors.weight && <ErrorMessage>{errors.weight.message}</ErrorMessage>}
           </Field>
+
           <Field>
             <Label htmlFor="bloodType">Tipo de Sangre</Label>
             <Input
               id="bloodType"
               type="text"
-              {...register('bloodType', { required: true })}
+              {...register('bloodType', { required: 'Este campo es obligatorio' })}
             />
+            {errors.bloodType && <ErrorMessage>{errors.bloodType.message}</ErrorMessage>}
           </Field>
+
           <Field>
             <Label>¿Padece o padeció enfermedades que necesiten atención médica?</Label>
             <FieldRadio>
@@ -76,25 +143,40 @@ const FormClinicInformation = ({ handleBack }: { handleBack: () => void }) => {
                 id="hasMedicalConditionsYes"
                 type="radio"
                 value="si"
-                {...register('hasMedicalConditions')}
+                {...register('hasMedicalConditions', {
+                  required: 'Este campo es obligatorio',
+                })}
               />
               <span>No</span>
               <Input
                 id="hasMedicalConditionsNo"
                 type="radio"
                 value="no"
-                {...register('hasMedicalConditions')}
+                {...register('hasMedicalConditions', {
+                  required: 'Este campo es obligatorio',
+                })}
               />
             </FieldRadio>
+            {errors.hasMedicalConditions && (
+              <ErrorMessage>{errors.hasMedicalConditions.message}</ErrorMessage>
+            )}
           </Field>
-          <Field>
-            <Label htmlFor="medicalConditions">¿Qué enfermedades?</Label>
-            <Input
-              id="medicalConditions"
-              type="text"
-              {...register('medicalConditions')}
-            />
-          </Field>
+
+          {/* Esta pregunta se oculta solo si "No" es seleccionado */}
+          {hasMedicalConditions !== 'no' && (
+            <Field>
+              <Label htmlFor="medicalConditions">¿Qué enfermedades?</Label>
+              <Input
+                id="medicalConditions"
+                type="text"
+                {...register('medicalConditions')}
+              />
+              {errors.medicalConditions && (
+                <ErrorMessage>{errors.medicalConditions.message}</ErrorMessage>
+              )}
+            </Field>
+          )}
+
           <Field>
             <Label>
               ¿En el transcurso del último año ha tenido algún tipo de intervención
@@ -106,21 +188,32 @@ const FormClinicInformation = ({ handleBack }: { handleBack: () => void }) => {
                 id="hasSurgeryYes"
                 type="radio"
                 value="si"
-                {...register('hasSurgery')}
+                {...register('hasSurgery', { required: 'Este campo es obligatorio' })}
               />
               <span>No</span>
               <Input
                 id="hasSurgeryNo"
                 type="radio"
                 value="no"
-                {...register('hasSurgery')}
+                {...register('hasSurgery', { required: 'Este campo es obligatorio' })}
               />
             </FieldRadio>
+            {errors.hasSurgery && (
+              <ErrorMessage>{errors.hasSurgery.message}</ErrorMessage>
+            )}
           </Field>
-          <Field>
-            <Label htmlFor="surgeryType">¿De qué tipo?</Label>
-            <Input id="surgeryType" type="text" {...register('surgeryType')} />
-          </Field>
+
+          {/* Esta pregunta se oculta solo si "No" es seleccionado */}
+          {hasSurgery !== 'no' && (
+            <Field>
+              <Label htmlFor="surgeryType">¿De qué tipo?</Label>
+              <Input id="surgeryType" type="text" {...register('surgeryType')} />
+              {errors.surgeryType && (
+                <ErrorMessage>{errors.surgeryType.message}</ErrorMessage>
+              )}
+            </Field>
+          )}
+
           <Field>
             <Label>¿Tiene algún impedimento físico que lo limite en su trabajo?</Label>
             <FieldRadio>
@@ -129,18 +222,26 @@ const FormClinicInformation = ({ handleBack }: { handleBack: () => void }) => {
                 id="hasPhysicalImpedimentYes"
                 type="radio"
                 value="si"
-                {...register('hasPhysicalImpediment')}
+                {...register('hasPhysicalImpediment', {
+                  required: 'Este campo es obligatorio',
+                })}
               />
               <span>No</span>
               <Input
                 id="hasPhysicalImpedimentNo"
                 type="radio"
                 value="no"
-                {...register('hasPhysicalImpediment')}
+                {...register('hasPhysicalImpediment', {
+                  required: 'Este campo es obligatorio',
+                })}
               />
             </FieldRadio>
+            {errors.hasPhysicalImpediment && (
+              <ErrorMessage>{errors.hasPhysicalImpediment.message}</ErrorMessage>
+            )}
           </Field>
         </FormContainer>
+
         <FieldCheck>
           <Label>
             Certifico que la información aquí proporcionada es verídica, por lo que
@@ -154,20 +255,25 @@ const FormClinicInformation = ({ handleBack }: { handleBack: () => void }) => {
           <Input
             id="certifyInformation"
             type="checkbox"
-            {...register('certifyInformation', { required: true })}
+            {...register('certifyInformation', { required: 'Este campo es obligatorio' })}
           />
+          {errors.certifyInformation && (
+            <ErrorMessage>{errors.certifyInformation.message}</ErrorMessage>
+          )}
         </FieldCheck>
+
         <PageChange>
-          <Button $variation="primary" type="submit">
-            Enviar
+          <ButtonPrevious onClick={handleBack} />
+
+          <Button $variation="confirm" type="submit">
+            {isEdditSession ? 'Guardar' : 'Actualizar'}
           </Button>
-          <Button $variation="primary" onClick={handleBack}>
-            Atrás
-          </Button>
+
+          <div />
         </PageChange>
       </Page>
     </Form>
   );
-};
+}
 
 export default FormClinicInformation;
