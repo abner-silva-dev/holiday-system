@@ -283,7 +283,7 @@ const FormScholarData = ({
                 type="radio"
                 id="university.hasCertificate"
                 value="no"
-                {...register('university.hasCertificate', { required: true })}
+                {...register('degree.hasCertificate', { required: true })}
               />
             </FieldRadio>
           </Field>
@@ -333,11 +333,11 @@ const FormScholarData = ({
         </FormContainer>
 
         <PageChange>
-          <Button $variation="confirm" type="submit">
-            Guardar
-          </Button>
           <Button $variation="primary" onClick={handleBack}>
             Atrás
+          </Button>
+          <Button $variation="confirm" type="submit">
+            Guardar
           </Button>
           <Button $variation="confirm" onClick={handleNext}>
             Siguiente
