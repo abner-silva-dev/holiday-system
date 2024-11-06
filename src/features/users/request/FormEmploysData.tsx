@@ -1,5 +1,5 @@
-import { useForm, FieldValues } from 'react-hook-form';
-import { useState } from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { useEffect, useState } from 'react';
 import Button from '../../../ui/Button';
 import {
   ButtonNext,
@@ -15,8 +15,12 @@ import {
   PageChange,
   Title,
 } from '../../../ui/FormPieces';
+import { useUser2 } from '../useUser';
+import { useCreateRequest } from './useCreateRequest';
+import { useUpdateRequest } from './useUpdateRequest';
+import { useRequest } from './useRequest';
 
-interface JobData {
+interface Employ {
   companyName: string;
   businessField: string;
   address: string;
@@ -29,22 +33,47 @@ interface JobData {
   separationReason: string;
 }
 
-interface FormJobsDataProps {
+interface EmploysData {
+  employs: Employ[];
+  user: string;
+}
+
+interface FormEmploysDataProps {
   handleBack: () => void;
   handleNext: () => void;
 }
 
-function FormJobsData({ handleBack, handleNext }: FormJobsDataProps) {
+function FormEmploysData({ handleBack, handleNext }: FormEmploysDataProps) {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FieldValues>();
-  const [employs, setEmploys] = useState<JobData[]>([{} as JobData]);
+    reset,
+  } = useForm<EmploysData>();
+
+  // Get current user
+  const { user, isPending } = useUser2();
+
+  // Create Request
+  const { createRequest } = useCreateRequest<EmploysData>('employData');
+
+  // Update Request
+  const { updateRequest } = useUpdateRequest<EmploysData>('employData');
+
+  // Get data if Exists
+  const { data: requestData } = useRequest('employData');
+
+  console.log(requestData);
+
+  // Update or Save
+  const isEdditSession = Boolean(!requestData);
+
+  // const [employs, setEmploys] = useState<Employ[]>(requestData || []);
+  const [employs, setEmploys] = useState<Employ[]>(requestData?.employs || []);
 
   const addEmploy = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault();
-    if (employs.length < 3) setEmploys([...employs, {} as JobData]);
+    if (employs.length < 3) setEmploys([...employs, {} as Employ]);
   };
 
   const removeEmploy = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -52,10 +81,23 @@ function FormJobsData({ handleBack, handleNext }: FormJobsDataProps) {
     if (employs.length > 1) setEmploys(employs.slice(0, -1));
   };
 
-  const onSubmit = (data: FieldValues) => {
-    console.log(data);
-    handleNext();
+  const onSubmit: SubmitHandler<EmploysData> = (data) => {
+    if (requestData) {
+      updateRequest({ newData: { ...data } });
+    } else {
+      createRequest({ ...data, user: user?.id || '' });
+    }
   };
+
+  useEffect(() => {
+    if (requestData) {
+      reset({
+        ...requestData,
+      });
+    }
+  }, [requestData, reset]);
+
+  if (isPending) return <p>Cargando...</p>;
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -72,9 +114,10 @@ function FormJobsData({ handleBack, handleNext }: FormJobsDataProps) {
                 })}
               />
               {errors.employs?.[index]?.companyName && (
-                <ErrorMessage>{errors.employs[index].companyName.message}</ErrorMessage>
+                <ErrorMessage>{errors.employs[index].companyName?.message}</ErrorMessage>
               )}
             </Field>
+
             <Field>
               <Label>Giro</Label>
               <Input
@@ -84,9 +127,12 @@ function FormJobsData({ handleBack, handleNext }: FormJobsDataProps) {
                 })}
               />
               {errors.employs?.[index]?.businessField && (
-                <ErrorMessage>{errors.employs[index].businessField.message}</ErrorMessage>
+                <ErrorMessage>
+                  {errors.employs[index].businessField?.message}
+                </ErrorMessage>
               )}
             </Field>
+
             <Field>
               <Label>Domicilio</Label>
               <Input
@@ -96,9 +142,10 @@ function FormJobsData({ handleBack, handleNext }: FormJobsDataProps) {
                 })}
               />
               {errors.employs?.[index]?.address && (
-                <ErrorMessage>{errors.employs[index].address.message}</ErrorMessage>
+                <ErrorMessage>{errors.employs[index].address?.message}</ErrorMessage>
               )}
             </Field>
+
             <Field>
               <Label>Teléfono</Label>
               <Input
@@ -108,9 +155,10 @@ function FormJobsData({ handleBack, handleNext }: FormJobsDataProps) {
                 })}
               />
               {errors.employs?.[index]?.phone && (
-                <ErrorMessage>{errors.employs[index].phone.message}</ErrorMessage>
+                <ErrorMessage>{errors.employs[index].phone?.message}</ErrorMessage>
               )}
             </Field>
+
             <Field>
               <Label>Fecha de Ingreso</Label>
               <Input
@@ -120,9 +168,10 @@ function FormJobsData({ handleBack, handleNext }: FormJobsDataProps) {
                 })}
               />
               {errors.employs?.[index]?.startDate && (
-                <ErrorMessage>{errors.employs[index].startDate.message}</ErrorMessage>
+                <ErrorMessage>{errors.employs[index].startDate?.message}</ErrorMessage>
               )}
             </Field>
+
             <Field>
               <Label>Fecha de Salida</Label>
               <Input
@@ -132,9 +181,10 @@ function FormJobsData({ handleBack, handleNext }: FormJobsDataProps) {
                 })}
               />
               {errors.employs?.[index]?.endDate && (
-                <ErrorMessage>{errors.employs[index].endDate.message}</ErrorMessage>
+                <ErrorMessage>{errors.employs[index].endDate?.message}</ErrorMessage>
               )}
             </Field>
+
             <Field>
               <Label>Puesto Desempeñado</Label>
               <Input
@@ -144,9 +194,10 @@ function FormJobsData({ handleBack, handleNext }: FormJobsDataProps) {
                 })}
               />
               {errors.employs?.[index]?.position && (
-                <ErrorMessage>{errors.employs[index].position.message}</ErrorMessage>
+                <ErrorMessage>{errors.employs[index].position?.message}</ErrorMessage>
               )}
             </Field>
+
             <Field>
               <Label>Sueldo Final</Label>
               <Input
@@ -156,9 +207,10 @@ function FormJobsData({ handleBack, handleNext }: FormJobsDataProps) {
                 })}
               />
               {errors.employs?.[index]?.finalSalary && (
-                <ErrorMessage>{errors.employs[index].finalSalary.message}</ErrorMessage>
+                <ErrorMessage>{errors.employs[index].finalSalary?.message}</ErrorMessage>
               )}
             </Field>
+
             <Field>
               <Label>Nombre de Jefe Inmediato</Label>
               <Input
@@ -168,9 +220,12 @@ function FormJobsData({ handleBack, handleNext }: FormJobsDataProps) {
                 })}
               />
               {errors.employs?.[index]?.immediateBoss && (
-                <ErrorMessage>{errors.employs[index].immediateBoss.message}</ErrorMessage>
+                <ErrorMessage>
+                  {errors.employs[index].immediateBoss?.message}
+                </ErrorMessage>
               )}
             </Field>
+
             <Field>
               <Label>Motivo de Separación</Label>
               <Input
@@ -181,7 +236,7 @@ function FormJobsData({ handleBack, handleNext }: FormJobsDataProps) {
               />
               {errors.employs?.[index]?.separationReason && (
                 <ErrorMessage>
-                  {errors.employs[index].separationReason.message}
+                  {errors.employs[index].separationReason?.message}
                 </ErrorMessage>
               )}
             </Field>
@@ -211,7 +266,7 @@ function FormJobsData({ handleBack, handleNext }: FormJobsDataProps) {
           <ButtonPrevious onClick={handleBack} />
 
           <Button $variation="confirm" type="submit">
-            Guardar
+            {isEdditSession ? 'Guardar' : 'Actualizar'}
           </Button>
 
           <ButtonNext onClick={handleNext} />
@@ -221,4 +276,4 @@ function FormJobsData({ handleBack, handleNext }: FormJobsDataProps) {
   );
 }
 
-export default FormJobsData;
+export default FormEmploysData;

@@ -1,1 +1,1 @@
-export type RequestType = 'complementaryData';
+export type RequestType = 'complementaryData' | 'employData' | 'personalData';
