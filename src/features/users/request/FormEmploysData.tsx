@@ -68,8 +68,9 @@ function FormEmploysData({ handleBack, handleNext }: FormEmploysDataProps) {
   // Update or Save
   const isEdditSession = Boolean(!requestData);
 
-  // const [employs, setEmploys] = useState<Employ[]>(requestData || []);
-  const [employs, setEmploys] = useState<Employ[]>(requestData?.employs || []);
+  const [employs, setEmploys] = useState<Employ[]>(
+    requestData?.employs || [{} as Employ]
+  );
 
   const addEmploy = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault();
