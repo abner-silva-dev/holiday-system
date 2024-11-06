@@ -14,6 +14,9 @@ import {
   Title,
 } from '../../../ui/FormPieces';
 import { useUser2 } from '../useUser';
+import { useUpdateRequest } from './useUpdateRequest';
+import { updateUser } from '../../../services/apiUsers';
+import { useUpdateUser } from '../useUpdateUser';
 
 interface IFormPersonalData {
   name: string;
@@ -33,11 +36,8 @@ function FormPersonalData({ handleNext }: { handleNext: () => void }) {
   const { user, isPending } = useUser2();
   const { register, handleSubmit, reset } = useForm<IFormPersonalData>();
 
-  // console.log(user);
-
   useEffect(() => {
     if (user) {
-      // console.log(user);
       reset({
         name: user.name,
         paternSurname: user.paternSurname,
@@ -54,8 +54,11 @@ function FormPersonalData({ handleNext }: { handleNext: () => void }) {
     }
   }, [user, reset]);
 
+  // Update Request
+  const { updateUser } = useUpdateUser();
+
   const onSubmit = (data: IFormPersonalData) => {
-    // console.log(data);s
+    updateUser({ id: user?.id || '', newUser: { ...data } });
   };
 
   if (isPending) return <p>Cargando...</p>; // Mensaje de carga
@@ -161,7 +164,7 @@ function FormPersonalData({ handleNext }: { handleNext: () => void }) {
         <PageChange>
           <div></div>
           <Button $variation="confirm" type="submit">
-            Guardar
+            Actualizar
           </Button>
           <ButtonNext onClick={handleNext} />
         </PageChange>
