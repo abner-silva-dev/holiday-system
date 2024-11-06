@@ -1,6 +1,8 @@
 import { useForm } from 'react-hook-form';
 import Button from '../../../ui/Button';
 import {
+  ButtonNext,
+  ButtonPrevious,
   Field,
   FieldRadio,
   Form,
@@ -12,6 +14,12 @@ import {
   Select,
   Title,
 } from '../../../ui/FormPieces';
+import { useRequest } from './useRequest';
+import { useCreateRequest } from './useCreateRequest';
+import { useUpdateRequest } from './useUpdateRequest';
+import { useUser2 } from '../useUser';
+import { useEffect } from 'react';
+import { formatDate } from '../../../utils/helpers';
 
 interface IFormFamiliarData {
   father: {
@@ -56,6 +64,7 @@ interface IFormFamiliarData {
     ocupation: string;
     address: string;
   };
+  user: string;
 }
 
 const FormFamiliarData = ({
@@ -65,11 +74,62 @@ const FormFamiliarData = ({
   handleNext: () => void;
   handleBack: () => void;
 }) => {
-  const { register, handleSubmit } = useForm<IFormFamiliarData>();
+  // const { register, handleSubmit } = useForm<IFormFamiliarData>();
 
+  // const onSubmit = (data: IFormFamiliarData) => {
+  //   console.log(data);
+  // };
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    // watch,
+    // formState: { errors },
+  } = useForm<IFormFamiliarData>();
+
+  // Get current user
+  const { user, isPending } = useUser2();
+
+  // Create Request
+  const { createRequest } = useCreateRequest<IFormFamiliarData>('familiarData');
+
+  // Update Request
+  const { updateRequest } = useUpdateRequest<IFormFamiliarData>('familiarData');
+
+  // Get data if Exists
+  const { data: requestData } = useRequest('familiarData');
+
+  // Update or Save
+  const isEdditSession = Boolean(!requestData);
+
+  // Action form type Create or Update
   const onSubmit = (data: IFormFamiliarData) => {
-    console.log(data);
+    if (requestData) {
+      updateRequest({ newData: { ...data } });
+    } else {
+      createRequest({ ...data, user: user?.id || '' });
+    }
   };
+
+  // Loading data if Exists
+  useEffect(() => {
+    if (requestData) {
+      console.log(requestData?.previousWorkDate);
+      const previousWorkDateFormat = formatDate(requestData?.previousWorkDate + '', {
+        formatDate: 'yyyy-mm-dd',
+        separationBy: '-',
+        spaces: false,
+      });
+
+      reset({
+        ...requestData,
+        previousWorkDate: previousWorkDateFormat,
+      });
+    }
+  }, [requestData, reset]);
+
+  if (isPending) return <p>Cargando...</p>;
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -254,15 +314,13 @@ const FormFamiliarData = ({
         </FormContainer>
 
         <PageChange>
-          <Button $variation="primary" onClick={handleBack}>
-            Atrás
-          </Button>
+          <ButtonPrevious onClick={handleBack} />
+
           <Button $variation="confirm" type="submit">
-            Guardar
+            {isEdditSession ? 'Guardar' : 'Actualizar'}
           </Button>
-          <Button $variation="confirm" onClick={handleNext}>
-            Siguiente
-          </Button>
+
+          <ButtonNext onClick={handleNext} />
         </PageChange>
       </Page>
     </Form>

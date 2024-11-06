@@ -1,1 +1,5 @@
-export type RequestType = 'complementaryData' | 'scholarData';
+export type RequestType =
+  | 'complementaryData'
+  | 'scholarData'
+  | 'knowledgeExperience'
+  | 'familiarData';

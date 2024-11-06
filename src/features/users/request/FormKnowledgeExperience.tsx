@@ -12,10 +12,18 @@ import {
   Title,
   Input,
   Form,
+  ButtonPrevious,
+  ButtonNext,
+  ErrorMessage,
 } from '../../../ui/FormPieces';
+import { useEffect } from 'react';
+import { useUser2 } from '../useUser';
+import { useCreateRequest } from './useCreateRequest';
+import { useUpdateRequest } from './useUpdateRequest';
+import { useRequest } from './useRequest';
+import { formatDate } from '../../../utils/helpers';
 
 interface IFormKnowledgeExperience {
-  // LANGUAGES
   english: {
     speakingPer: number;
     writtingPer: number;
@@ -25,13 +33,10 @@ interface IFormKnowledgeExperience {
     speakingPer: number;
     writtingPer: number;
   };
-
-  // EXP AREAS
   areas: string[];
-
-  // PRACTICAL EXPERIENCE
   hasPracticalExperience: string;
   practicalExperience: string;
+  user: string;
 }
 
 const FormKnowledgeExperience = ({
@@ -41,9 +46,52 @@ const FormKnowledgeExperience = ({
   handleNext: () => void;
   handleBack: () => void;
 }) => {
-  const { register, handleSubmit, setValue, watch } = useForm<IFormKnowledgeExperience>();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useForm<IFormKnowledgeExperience>();
 
-  // Observa el valor actual de areas
+  const { user, isPending } = useUser2();
+  const { createRequest } =
+    useCreateRequest<IFormKnowledgeExperience>('knowledgeExperience');
+  const { updateRequest } =
+    useUpdateRequest<IFormKnowledgeExperience>('knowledgeExperience');
+  const { data: requestData } = useRequest('knowledgeExperience');
+
+  const isEdditSession = Boolean(!requestData);
+
+  const onSubmit = (data: IFormKnowledgeExperience) => {
+    if (requestData) {
+      updateRequest({ newData: { ...data } });
+    } else {
+      createRequest({ ...data, user: user?.id || '' });
+    }
+  };
+
+  useEffect(() => {
+    if (requestData) {
+      const previousWorkDateFormat = formatDate(requestData?.previousWorkDate + '', {
+        formatDate: 'yyyy-mm-dd',
+        separationBy: '-',
+        spaces: false,
+      });
+
+      reset({
+        ...requestData,
+        previousWorkDate: previousWorkDateFormat,
+      });
+    }
+  }, [requestData, reset]);
+
+  // Conditional Field
+  const itHasPracticalExperience = watch('hasPracticalExperience') === 'si';
+
+  if (isPending) return <p>Cargando...</p>;
+
   const areas = watch('areas') || [];
 
   const handleCheckboxChange = (value: string) => {
@@ -54,14 +102,11 @@ const FormKnowledgeExperience = ({
     setValue('areas', updatedAreas);
   };
 
-  const onSubmit = (data: IFormKnowledgeExperience) => {
-    console.log(data);
-  };
-
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Page>
         <Title as="h2">CONOCIMIENTOS Y EXPERIENCIA</Title>
+        {/* Idioma Inglés */}
         <Title as="h3">Idioma Inglés</Title>
         <FormContainer>
           <Field>
@@ -88,6 +133,7 @@ const FormKnowledgeExperience = ({
           </Field>
         </FormContainer>
 
+        {/* Otro Idioma */}
         <Title as="h3">Otro Idioma</Title>
         <FormContainer>
           <Field>
@@ -122,6 +168,7 @@ const FormKnowledgeExperience = ({
           </Field>
         </FormContainer>
 
+        {/* Áreas de Experiencia */}
         <Title as="h3">Experiencia en:</Title>
         <FormContainer>
           {[
@@ -147,10 +194,12 @@ const FormKnowledgeExperience = ({
                 checked={areas.includes(area)}
                 onChange={() => handleCheckboxChange(area)}
               />
+              {errors.areas && <ErrorMessage>{errors.areas.message}</ErrorMessage>}
             </FieldCheck>
           ))}
         </FormContainer>
 
+        {/* Experiencia Práctica */}
         <FormContainer>
           <Field>
             <Label>¿Tiene experiencia práctica en el puesto que solicita?</Label>
@@ -169,29 +218,30 @@ const FormKnowledgeExperience = ({
               />
             </FieldRadio>
           </Field>
-          <Field>
-            <Label>Especifique</Label>
-            <Input
-              type="text"
-              id="practicalExperience"
-              {...register('practicalExperience')}
-            />
-          </Field>
+          {itHasPracticalExperience && (
+            <Field>
+              <Label>Especifique</Label>
+              <Input
+                type="text"
+                id="practicalExperience"
+                {...register('practicalExperience')}
+              />
+            </Field>
+          )}
         </FormContainer>
 
         <PageChange>
-          <Button $variation="primary" onClick={handleBack}>
-            Atrás
-          </Button>
+          <ButtonPrevious onClick={handleBack} />
+
           <Button $variation="confirm" type="submit">
-            Guardar
+            {isEdditSession ? 'Guardar' : 'Actualizar'}
           </Button>
-          <Button $variation="confirm" onClick={handleNext}>
-            Siguiente
-          </Button>
+
+          <ButtonNext onClick={handleNext} />
         </PageChange>
       </Page>
     </Form>
   );
 };
+
 export default FormKnowledgeExperience;

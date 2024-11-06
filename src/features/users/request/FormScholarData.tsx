@@ -3,6 +3,7 @@ import Button from '../../../ui/Button';
 import {
   ButtonNext,
   ButtonPrevious,
+  ErrorMessage,
   Field,
   FieldRadio,
   Form,
@@ -17,6 +18,8 @@ import { useRequest } from './useRequest';
 import { useUser2 } from '../useUser';
 import { useCreateRequest } from './useCreateRequest';
 import { useUpdateRequest } from './useUpdateRequest';
+import { useEffect } from 'react';
+import { formatDate } from '../../../utils/helpers';
 
 interface IFormScholarData {
   //SECONDARY
@@ -59,6 +62,8 @@ interface IFormScholarData {
   currentStudySchedule: string;
   currentStudyName: string;
   currentSchool: string;
+
+  user: string;
 }
 
 const FormScholarData = ({
@@ -90,9 +95,41 @@ const FormScholarData = ({
   // Update Request
   const { updateRequest } = useUpdateRequest<IFormScholarData>('scholarData');
 
-  const { data: requestData } = useRequest('');
+  const { data: requestData } = useRequest('scholarData');
 
   const isEdditSession = Boolean(!requestData);
+
+  // Action form type Create or Update
+  const onSubmit = (data: IFormScholarData) => {
+    if (requestData) {
+      updateRequest({ newData: { ...data } });
+    } else {
+      createRequest({ ...data, user: user?.id || '' });
+    }
+  };
+
+  // Conditional Field
+  const isCurrentStudying = watch('currentStudying') === 'si';
+
+  // Loading data if Exists
+  useEffect(() => {
+    if (requestData) {
+      console.log(requestData?.previousWorkDate);
+
+      const previousWorkDateFormat = formatDate(requestData?.previousWorkDate + '', {
+        formatDate: 'yyyy-mm-dd',
+        separationBy: '-',
+        spaces: false,
+      });
+
+      reset({
+        ...requestData,
+        previousWorkDate: previousWorkDateFormat,
+      });
+    }
+  }, [requestData, reset]);
+
+  if (isPending) return <p>Cargando...</p>;
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -107,32 +144,52 @@ const FormScholarData = ({
             <Input
               type="number"
               id="secondary.yearsCoursed"
-              {...register('secondary.yearsCoursed')}
+              {...register('secondary.yearsCoursed', {
+                required: 'Este campo es obligatorio',
+              })}
             />
+            {errors.secondary?.yearsCoursed && (
+              <ErrorMessage>{errors.secondary.yearsCoursed.message}</ErrorMessage>
+            )}
           </Field>
           <Field>
             <Label>Nombre de la Escuela</Label>
             <Input
               type="text"
               id="secondary.schoolName"
-              {...register('secondary.schoolName')}
+              {...register('secondary.schoolName', {
+                required: 'Este campo es obligatorio',
+              })}
             />
+            {errors.secondary?.schoolName && (
+              <ErrorMessage>{errors.secondary.schoolName.message}</ErrorMessage>
+            )}
           </Field>
           <Field>
             <Label>Fecha de Inicio</Label>
             <Input
               type="date"
               id="secondary.startDate"
-              {...register('secondary.startDate')}
+              {...register('secondary.startDate', {
+                required: 'Este campo es obligatorio',
+              })}
             />
+            {errors.secondary?.startDate && (
+              <ErrorMessage>{errors.secondary.startDate.message}</ErrorMessage>
+            )}
           </Field>
           <Field>
             <Label>Fecha de Término</Label>
             <Input
               type="date"
               id="secondary.endDate"
-              {...register('secondary.endDate')}
+              {...register('secondary.endDate', {
+                required: 'Este campo es obligatorio',
+              })}
             />
+            {errors.secondary?.endDate && (
+              <ErrorMessage>{errors.secondary.endDate.message}</ErrorMessage>
+            )}
           </Field>
           <Field>
             <Label>Certificado o Título</Label>
@@ -142,16 +199,23 @@ const FormScholarData = ({
                 type="radio"
                 id="secHasCertificate"
                 value="si"
-                {...register('secondary.hasCertificate', { required: true })}
+                {...register('secondary.hasCertificate', {
+                  required: 'Este campo es obligatorio',
+                })}
               />
               <span>No</span>
               <Input
                 type="radio"
                 id="secondary.hasCertificate"
                 value="no"
-                {...register('secondary.hasCertificate', { required: true })}
+                {...register('secondary.hasCertificate', {
+                  required: 'Este campo es obligatorio',
+                })}
               />
             </FieldRadio>
+            {errors.secondary?.hasCertificate && (
+              <ErrorMessage>{errors.secondary.hasCertificate.message}</ErrorMessage>
+            )}
           </Field>
         </FormContainer>
 
@@ -198,14 +262,14 @@ const FormScholarData = ({
                 type="radio"
                 id="highSchool.hasCertificate"
                 value="si"
-                {...register('highSchool.hasCertificate', { required: true })}
+                {...register('highSchool.hasCertificate')}
               />
               <span>No</span>
               <Input
                 type="radio"
                 id="highSchool.hasCertificate"
                 value="no"
-                {...register('highSchool.hasCertificate', { required: true })}
+                {...register('highSchool.hasCertificate')}
               />
             </FieldRadio>
           </Field>
@@ -254,14 +318,14 @@ const FormScholarData = ({
                 type="radio"
                 id="university.hasCertificate"
                 value="si"
-                {...register('university.hasCertificate', { required: true })}
+                {...register('university.hasCertificate')}
               />
               <span>No</span>
               <Input
                 type="radio"
                 id="university.hasCertificate"
                 value="no"
-                {...register('university.hasCertificate', { required: true })}
+                {...register('university.hasCertificate')}
               />
             </FieldRadio>
           </Field>
@@ -302,14 +366,14 @@ const FormScholarData = ({
                 type="radio"
                 id="degree.hasCertificate"
                 value="si"
-                {...register('degree.hasCertificate', { required: true })}
+                {...register('degree.hasCertificate')}
               />
               <span>No</span>
               <Input
                 type="radio"
                 id="university.hasCertificate"
                 value="no"
-                {...register('degree.hasCertificate', { required: true })}
+                {...register('degree.hasCertificate')}
               />
             </FieldRadio>
           </Field>
@@ -329,33 +393,41 @@ const FormScholarData = ({
                 type="radio"
                 id="currentStudying"
                 value="si"
-                {...register('currentStudying', { required: true })}
+                {...register('currentStudying')}
               />
               <span>No</span>
               <Input
                 type="radio"
                 id="currentStudying"
                 value="no"
-                {...register('currentStudying', { required: true })}
+                {...register('currentStudying')}
               />
             </FieldRadio>
           </Field>
-          <Field>
-            <Label>Horario</Label>
-            <Input
-              type="text"
-              id="currentStudySchedule"
-              {...register('currentStudySchedule')}
-            />
-          </Field>
-          <Field>
-            <Label>¿Qué Estudia?</Label>
-            <Input type="text" id="currentStudyName" {...register('currentStudyName')} />
-          </Field>
-          <Field>
-            <Label>Escuela</Label>
-            <Input type="text" id="currentSchool" {...register('currentSchool')} />
-          </Field>
+          {isCurrentStudying && (
+            <>
+              <Field>
+                <Label>Horario</Label>
+                <Input
+                  type="text"
+                  id="currentStudySchedule"
+                  {...register('currentStudySchedule')}
+                />
+              </Field>
+              <Field>
+                <Label>¿Qué Estudia?</Label>
+                <Input
+                  type="text"
+                  id="currentStudyName"
+                  {...register('currentStudyName')}
+                />
+              </Field>
+              <Field>
+                <Label>Escuela</Label>
+                <Input type="text" id="currentSchool" {...register('currentSchool')} />
+              </Field>
+            </>
+          )}
         </FormContainer>
 
         <PageChange>
