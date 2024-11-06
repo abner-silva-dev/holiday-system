@@ -19,6 +19,7 @@ import { useUser2 } from '../useUser';
 import { useEffect } from 'react';
 import { useRequest } from './useRequest';
 import { useUpdateRequest } from './useUpdateRequest';
+import { formatDate } from '../../../utils/helpers';
 
 interface IFormComplementaryData {
   rfc: string;
@@ -37,7 +38,7 @@ interface IFormComplementaryData {
   currentLivingSituation: string;
   economicDependents: string;
   familyContribution: string;
-  ownsCar: boolean;
+  ownsCar: string;
   carModel?: string;
   user: string;
 }
@@ -53,17 +54,26 @@ function FormComplementaryData({
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors },
   } = useForm<IFormComplementaryData>();
 
+  // Get current user
   const { user, isPending } = useUser2();
+
+  // Create Request
   const { createRequest } = useCreateRequest<IFormComplementaryData>('complementaryData');
+
+  // Update Request
   const { updateRequest } = useUpdateRequest<IFormComplementaryData>('complementaryData');
 
+  // Get data if Exists
   const { data: requestData } = useRequest('complementaryData');
 
+  // Update or Save
   const isEdditSession = Boolean(!requestData);
 
+  // Action form type Create or Update
   const onSubmit = (data: IFormComplementaryData) => {
     if (requestData) {
       updateRequest({ newData: { ...data } });
@@ -72,15 +82,28 @@ function FormComplementaryData({
     }
   };
 
+  // Conditional Field
+  const isPreviousWorkInCompany = watch('previousWorkInCompany') === 'si';
+  const isOwnsCar = watch('ownsCar') === 'si';
+
+  // Loading data if Exists
   useEffect(() => {
     if (requestData) {
+      console.log(requestData?.previousWorkDate);
+      const previousWorkDateFormat = formatDate(requestData?.previousWorkDate + '', {
+        formatDate: 'yyyy-mm-dd',
+        separationBy: '-',
+        spaces: false,
+      });
+
       reset({
         ...requestData,
+        previousWorkDate: previousWorkDateFormat,
       });
     }
   }, [requestData, reset]);
 
-  if (isPending) return <p>Cargando...</p>; // Mensaje de carga
+  if (isPending) return <p>Cargando...</p>;
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -253,16 +276,19 @@ function FormComplementaryData({
               <ErrorMessage>{errors.previousWorkInCompany.message}</ErrorMessage>
             )}
           </Field>
+          {isPreviousWorkInCompany && (
+            <>
+              <Field>
+                <Label>¿En qué Fecha?</Label>
+                <Input type="date" {...register('previousWorkDate')} />
+              </Field>
 
-          <Field>
-            <Label>¿En qué Fecha?</Label>
-            <Input type="date" {...register('previousWorkDate')} />
-          </Field>
-
-          <Field>
-            <Label>¿En qué Departamento?</Label>
-            <Input type="text" {...register('previousWorkDepartment')} />
-          </Field>
+              <Field>
+                <Label>¿En qué Departamento?</Label>
+                <Input type="text" {...register('previousWorkDepartment')} />
+              </Field>
+            </>
+          )}
 
           <Field>
             <Label>¿Con quién vive actualmente?</Label>
@@ -349,10 +375,13 @@ function FormComplementaryData({
             </FieldRadio>
             {errors.ownsCar && <ErrorMessage>{errors.ownsCar.message}</ErrorMessage>}
           </Field>
-          <Field>
-            <Label>Marca y Modelo</Label>
-            <Input type="text" {...register('carModel')} />
-          </Field>
+
+          {isOwnsCar && (
+            <Field>
+              <Label>Marca y Modelo</Label>
+              <Input type="text" {...register('carModel')} />
+            </Field>
+          )}
         </FormContainer>
         <PageChange>
           <ButtonPrevious onClick={handleBack} />

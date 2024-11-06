@@ -12,7 +12,7 @@ import { useDepartments } from '../departments/useDepartment';
 import { DepartmentInfo } from '../departments/types';
 import { EnterpriseInfo } from '../enterprises/types';
 import { useUpdateUser } from './useUpdateUser';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import InputImageDrag from '../../ui/InputImageDrag';
 
 const Form = styled.form`

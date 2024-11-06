@@ -1,6 +1,8 @@
 import { useForm } from 'react-hook-form';
 import Button from '../../../ui/Button';
 import {
+  ButtonNext,
+  ButtonPrevious,
   Field,
   FieldRadio,
   Form,
@@ -11,6 +13,10 @@ import {
   PageChange,
   Title,
 } from '../../../ui/FormPieces';
+import { useRequest } from './useRequest';
+import { useUser2 } from '../useUser';
+import { useCreateRequest } from './useCreateRequest';
+import { useUpdateRequest } from './useUpdateRequest';
 
 interface IFormScholarData {
   //SECONDARY
@@ -62,11 +68,31 @@ const FormScholarData = ({
   handleNext: () => void;
   handleBack: () => void;
 }) => {
-  const { register, handleSubmit } = useForm<IFormScholarData>();
+  // const { register, handleSubmit } = useForm<IFormScholarData>();
 
-  const onSubmit = (data: IFormScholarData) => {
-    console.log(data);
-  };
+  // const onSubmit = (data: IFormScholarData) => {
+  //   console.log(data);
+  // };
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+    formState: { errors },
+  } = useForm<IFormScholarData>();
+
+  const { user, isPending } = useUser2();
+
+  // Create Request
+  const { createRequest } = useCreateRequest<IFormScholarData>('scholarData');
+
+  // Update Request
+  const { updateRequest } = useUpdateRequest<IFormScholarData>('scholarData');
+
+  const { data: requestData } = useRequest('');
+
+  const isEdditSession = Boolean(!requestData);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -333,15 +359,13 @@ const FormScholarData = ({
         </FormContainer>
 
         <PageChange>
-          <Button $variation="primary" onClick={handleBack}>
-            Atrás
-          </Button>
+          <ButtonPrevious onClick={handleBack} />
+
           <Button $variation="confirm" type="submit">
-            Guardar
+            {isEdditSession ? 'Guardar' : 'Actualizar'}
           </Button>
-          <Button $variation="confirm" onClick={handleNext}>
-            Siguiente
-          </Button>
+
+          <ButtonNext onClick={handleNext} />
         </PageChange>
       </Page>
     </Form>

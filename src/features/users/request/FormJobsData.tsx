@@ -2,6 +2,8 @@ import { useForm, FieldValues } from 'react-hook-form';
 import { useState } from 'react';
 import Button from '../../../ui/Button';
 import {
+  ButtonNext,
+  ButtonPrevious,
   EmployControllers,
   ErrorMessage,
   Field,
@@ -206,17 +208,13 @@ function FormJobsData({ handleBack, handleNext }: FormJobsDataProps) {
         </EmployControllers>
 
         <PageChange>
-          <Button $variation="primary" onClick={handleBack}>
-            Atrás
-          </Button>
+          <ButtonPrevious onClick={handleBack} />
 
-          <Button $variation="primary" type="submit">
+          <Button $variation="confirm" type="submit">
             Guardar
           </Button>
 
-          <Button $variation="primary" onClick={handleNext}>
-            Siguiete
-          </Button>
+          <ButtonNext onClick={handleNext} />
         </PageChange>
       </Page>
     </Form>
