@@ -75,6 +75,8 @@ const DropDown = styled.div`
   margin-left: auto;
 `;
 
+const Float = styled(FloatDocuments)``;
+
 const UserManagement = () => {
   const { user } = useUser2();
   const [isClicked, setClicked] = useState(false);
@@ -86,7 +88,7 @@ const UserManagement = () => {
         <GoBack to="../users">
           <HiArrowLeft />
         </GoBack>
-        <UserMiniCard />
+        <UserMiniCard user={user} />
         <Heading as="h1">Gestión de Personal</Heading>
       </Row>
 
@@ -105,7 +107,7 @@ const UserManagement = () => {
             <NavButtonDoc $variation="confirm" onClick={() => setClicked(!isClicked)}>
               Generar Documentos
             </NavButtonDoc>
-            {isClicked ? <FloatDocuments onClose={() => setClicked(false)} /> : null}
+            {isClicked ? <Float onClose={() => setClicked(false)} /> : null}
           </DropDown>
         </Options>
         <UserSubMain>

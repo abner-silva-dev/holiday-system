@@ -4,11 +4,27 @@ const Float = styled.div`
   position: absolute;
   width: 30rem;
   border-radius: 9px;
-  top: 5rem;
+  top: 6.3rem;
   right: 0px;
   background-color: var(--color-grey-0);
   box-shadow: var(--shadow-md);
   z-index: 80;
+
+  &::after {
+    position: absolute;
+    border-radius: 5px;
+    top: -0.9rem;
+    left: 75%;
+    content: '';
+    display: inline-block;
+    width: 3rem;
+    height: 3rem;
+    background-color: var(--color-grey-0);
+    z-index: -1;
+    border: 1px solid var(--color-grey-200);
+    box-shadow: var(--shadow-md);
+    transform: rotate(45deg);
+  }
 `;
 // const Filters = styled.div`
 //   display: flex;
@@ -36,7 +52,7 @@ const Option = styled.button`
   }
 
   &:hover {
-    background-color: var(--color-grey-100);
+    background-color: var(--color-blue-100);
   }
 `;
 interface PropsFloatDocuments {

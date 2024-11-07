@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import UserPhoto from '../features/users/UserPhoto';
+import { API_DAI_BASE } from '../config';
+import { UserInfo } from '../features/users/types'; // Importa UserInfo desde donde esté definido
 
 const Info = styled.div`
   display: flex;
@@ -23,17 +25,21 @@ const Card = styled.div`
   padding: 1.4rem 0;
 `;
 
-const UserMiniCard = () => {
+interface UserMiniCardProps {
+  user: UserInfo;
+}
+
+const UserMiniCard: React.FC<UserMiniCardProps> = ({ user }) => {
   return (
     <Card>
       <UserPhoto
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuuHL8dmoC8QdMy4vgvrdIt0qq-9e0jEcPmg&s"
+        src={`${API_DAI_BASE}/img/user/${user.photo}`}
         $size="small"
         $type="circle"
       />
       <Info>
-        <Name>Andrew Zaragoza</Name>
-        <Position>Gerente de TI</Position>
+        <Name>{`${user.name} ${user.paternSurname}`}</Name>
+        <Position>{user.department?.name}</Position>
       </Info>
     </Card>
   );
