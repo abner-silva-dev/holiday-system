@@ -243,7 +243,7 @@ function FormClinicInformation({
         </FormContainer>
 
         <FieldCheck>
-          <Label>
+          <Label style={{ textAlign: 'justify', marginBottom: '6rem' }}>
             Certifico que la información aquí proporcionada es verídica, por lo que
             autorizo a Distribuidora de Auto Industrias, S.A de C.V, a corroborarla
             cuestionando a las referencias señaladas tanto sobre mi conducta personal como
