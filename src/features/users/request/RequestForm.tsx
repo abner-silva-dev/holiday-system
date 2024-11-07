@@ -1,21 +1,24 @@
 import Heading from '../../../ui/Heading';
 import Button from '../../../ui/Button';
-import { useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 
 import FormPersonalData from './FormPersonalData';
 import FormPersonalReference from './FormPersonalReference';
 import FormClinicInformation from './FormClinicInformation';
 import FormComplementaryData from './FormComplementaryData';
-import FormJobsData from './FormEmploysData';
 import FormScholarData from './FormScholarData';
 import FormKnowledgeExperience from './FormKnowledgeExperience';
 import FormFamiliarData from './FormFamilarData';
 import { InitialContainer, Section } from '../../../ui/FormPieces';
 import FormEmploysData from './FormEmploysData';
 
-const RequestForm = () => {
-  const [page, setPage] = useState(0);
-
+const RequestForm = ({
+  page,
+  setPage,
+}: {
+  page: number;
+  setPage: Dispatch<SetStateAction<number>>;
+}) => {
   const handleNext = () => setPage((prevPage) => prevPage + 1);
   const handleBack = () => setPage((prevPage) => prevPage - 1);
 

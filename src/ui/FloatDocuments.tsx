@@ -22,7 +22,7 @@ const Float = styled.div`
     background-color: var(--color-grey-0);
     z-index: -1;
     border: 1px solid var(--color-grey-200);
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-lg);
     transform: rotate(45deg);
   }
 `;

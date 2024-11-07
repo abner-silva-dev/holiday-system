@@ -1,9 +1,9 @@
 export type RequestType =
+  | 'personalData'
   | 'complementaryData'
+  | 'employData'
   | 'scholarData'
   | 'knowledgeExperience'
   | 'familiarData'
-  | 'employData'
-  | 'personalData'
   | 'personalReference'
   | 'clinicInformation';

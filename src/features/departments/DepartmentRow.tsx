@@ -16,7 +16,6 @@ const DepartmentRow: React.FC<Props> = ({ department }) => {
 
   if (!department) return null;
 
-  console.log(department);
   const { name, nameAbreviate, enterprise } = department;
 
   const departmentId = department._id || '';

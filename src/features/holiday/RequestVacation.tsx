@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import UserPhoto from '../users/UserPhoto';
 import { Link } from 'react-router-dom';
 import { HolidayInfo } from './type';
-import { joinName } from '../../utils/helpers';
 import { API_DAI_BASE } from '../../config';
 import React from 'react';
 import { UserInfo } from '../users/types';
@@ -86,7 +85,7 @@ const RequestVacation: React.FC<PropsRequestVacation> = ({ holiday, onClose }) =
       <GroupText>
         <TitleInfo>Creada:</TitleInfo>
         {formattedDate.map((item) => (
-          <ContentInfo>{item}</ContentInfo>
+          <ContentInfo key={item}>{item}</ContentInfo>
         ))}
       </GroupText>
       <ShowMoreAnchor
