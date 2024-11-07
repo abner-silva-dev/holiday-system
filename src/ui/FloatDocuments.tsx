@@ -61,15 +61,13 @@ interface PropsFloatDocuments {
 
 const FloatDocuments: React.FC<PropsFloatDocuments> = ({ onClose }) => {
   return (
-    <>
-      <Float onClick={onClose}>
-        <Option>Contrato de Trabajo</Option>
-        <Option>Contrato de Confidencialidad</Option>
-        <Option>Carta de Renuncia</Option>
-        <Option>Finiquito</Option>
-        <Option>Acta de Demanda</Option>
-      </Float>
-    </>
+    <Float onClick={onClose}>
+      <Option>Contrato de Trabajo</Option>
+      <Option>Contrato de Confidencialidad</Option>
+      <Option>Carta de Renuncia</Option>
+      <Option>Finiquito</Option>
+      <Option>Acta de Demanda</Option>
+    </Float>
   );
 };
 

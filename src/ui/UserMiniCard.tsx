@@ -13,13 +13,15 @@ const Name = styled.span`
 `;
 
 const Position = styled.span`
-  font-size: 1.4rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--color-grey-600);
 `;
 
 const Card = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 20rem;
+  gap: 1.5rem;
   border-top: 1.5px solid var(--color-grey-200);
   border-bottom: 1.5px solid var(--color-grey-200);
   padding: 1.4rem 0;
