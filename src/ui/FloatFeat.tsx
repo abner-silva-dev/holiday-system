@@ -23,15 +23,12 @@ const FloatFeatStyled = styled.div`
   width: 40rem;
   z-index: 999;
   cursor: auto;
-
-  /* padding: 2rem 0.4rem; */
 `;
 
 const FloatHeader = styled.div`
   display: flex;
   align-items: center;
   padding: 1rem 2rem;
-  /* padding-top: 2rem; */
 `;
 
 const FloatTitle = styled.span`
@@ -46,33 +43,11 @@ const Main = styled.main`
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
-  /* gap: 2.8rem; */
   height: 100%;
   font-size: 1.8rem;
   border-top: 1px solid var(--color-grey-300);
   border-bottom: 1px solid var(--color-grey-300);
-  /* padding: 2rem 2.4rem; */
 `;
-
-// const Message = styled.span`
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: center;
-//   align-items: center;
-//   text-align: center;
-//   gap: 2.4rem;
-//   line-height: 1.2;
-//   font-weight: 600;
-//   font-size: 2.5rem;
-
-//   color: var(--color-grey-400);
-
-//   & svg {
-//     height: 10rem !important;
-//     width: 10rem !important;
-//     fill: var(--color-grey-300);
-//   }
-// `;
 
 const LinkShowMore = styled(Link)`
   display: flex;

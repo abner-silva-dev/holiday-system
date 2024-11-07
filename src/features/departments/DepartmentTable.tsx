@@ -37,7 +37,7 @@ const DepartmentTable = () => {
           <Table.Body
             data={dataSearch}
             render={(department: DepartmentInfo) => (
-              <DepartmentRow department={department} key={department.id} />
+              <DepartmentRow department={department} key={department._id} />
             )}
           ></Table.Body>
         </Table>

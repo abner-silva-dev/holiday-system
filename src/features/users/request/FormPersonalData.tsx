@@ -14,8 +14,7 @@ import {
   Title,
 } from '../../../ui/FormPieces';
 import { useUser2 } from '../useUser';
-import { useUpdateRequest } from './useUpdateRequest';
-import { updateUser } from '../../../services/apiUsers';
+
 import { useUpdateUser } from '../useUpdateUser';
 
 interface IFormPersonalData {

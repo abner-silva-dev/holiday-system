@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import Heading from './Heading';
 import { HiChevronLeft, HiChevronRight } from 'react-icons/hi2';
-import { MouseEventHandler } from 'react';
 
 export const FormContainer = styled.div`
   display: grid;

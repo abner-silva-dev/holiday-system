@@ -35,12 +35,7 @@ interface IFormClinicInformation {
   user: string;
 }
 
-function FormClinicInformation({
-  handleBack,
-}: {
-  handleBack: () => void;
-  handleNext: () => void;
-}) {
+function FormClinicInformation({ handleBack }: { handleBack: () => void }) {
   const {
     register,
     handleSubmit,

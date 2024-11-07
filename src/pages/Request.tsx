@@ -2,6 +2,10 @@ import styled from 'styled-components';
 
 import RequestForm from '../features/users/request/RequestForm';
 import ProcessBarRequest from '../features/users/ProcessBarRequest';
+import { useState } from 'react';
+import { useRequest } from '../features/users/request/useRequest';
+import { RequestType } from '../features/users/request/type';
+import { useUser } from '../features/users/useUser';
 
 const Header = styled.div`
   width: 100%;
@@ -23,12 +27,33 @@ const Container = styled.div`
 `;
 
 const Request = () => {
+  const [page, setPage] = useState(0);
+  const { user: data1 } = useUser();
+  const { data: data2 } = useRequest('complementaryData');
+  const { data: data3 } = useRequest('employData');
+  const { data: data4 } = useRequest('scholarData');
+  const { data: data5 } = useRequest('knowledgeExperience');
+  const { data: data6 } = useRequest('familiarData');
+  const { data: data7 } = useRequest('personalReference');
+  const { data: data8 } = useRequest('clinicInformation');
+
+  const poins = [
+    { textTooltip: 'Datos Personales', state: data1 },
+    { textTooltip: 'Datos Complementarios', state: data2 },
+    { textTooltip: 'Datos de Empleo', state: data3 },
+    { textTooltip: 'Datos Escolares', state: data4 },
+    { textTooltip: 'Conocimientos y Experiencia', state: data5 },
+    { textTooltip: 'Datos familiares', state: data6 },
+    { textTooltip: 'Referencias Personales', state: data7 },
+    { textTooltip: 'Información clinica', state: data8 },
+  ];
+
   return (
     <Container>
       <Header>
-        <ProcessBarRequest numStates={9} progress={1} />
+        <ProcessBarRequest points={poins} progress={page} setPage={setPage} />
       </Header>
-      <RequestForm />
+      <RequestForm page={page} setPage={setPage} />
     </Container>
   );
 };

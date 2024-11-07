@@ -24,7 +24,5 @@ export function useRequest(sourceName: RequestType) {
     retry: false,
   });
 
-  console.log(data);
-
   return { isPending, data, error };
 }
