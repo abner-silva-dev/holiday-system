@@ -16,6 +16,7 @@ import {
 import { useUser2 } from '../useUser';
 
 import { useUpdateUser } from '../useUpdateUser';
+import styled from 'styled-components';
 
 interface IFormPersonalData {
   name: string;
@@ -30,6 +31,10 @@ interface IFormPersonalData {
   homePhone: string;
   mobilePhone: string;
 }
+
+const FieldAdd = styled(Field)`
+grid-column: 2 / 4;
+`;
 
 function FormPersonalData({ handleNext }: { handleNext: () => void }) {
   const { user, isPending } = useUser2();
@@ -110,14 +115,14 @@ function FormPersonalData({ handleNext }: { handleNext: () => void }) {
             </Select>
           </Field>
 
-          <Field>
+          <FieldAdd>
             <Label>Domicilio: Calle, Número, Colonia y Delegación</Label>
             <Input
               type="text"
               id="address"
               {...register('address', { required: true })}
             />
-          </Field>
+          </FieldAdd>
 
           <Field>
             <Label>Código Postal</Label>
