@@ -51,8 +51,15 @@ const Group = styled.div`
     padding: 1rem;
     border: none;
     background-color: #f3f4f6;
-    white-space: pre-wrap;
+    white-space: normal;
     word-wrap: break-word;
+    text-align: justify;
+
+    & span {
+      display: inline-block; /* Permite que cada fecha se ajuste individualmente */
+      margin-right: 0.4rem; /* Espacio entre fechas */
+      word-break: break-word; /* Divide las fechas largas si es necesario */
+    }
   }
 `;
 
@@ -147,49 +154,6 @@ const LetterHeadContainer = styled.div`
 const tempHolidays = {
   _id: '67214ad899bdc0455950360a',
   days: [
-    '2024-10-10T06:00:00.000Z',
-    '2024-10-17T06:00:00.000Z',
-    '2024-10-11T06:00:00.000Z',
-    '2024-10-10T06:00:00.000Z',
-    '2024-10-17T06:00:00.000Z',
-    '2024-10-11T06:00:00.000Z',
-    '2024-10-10T06:00:00.000Z',
-    '2024-10-17T06:00:00.000Z',
-    '2024-10-11T06:00:00.000Z',
-    '2024-10-10T06:00:00.000Z',
-    '2024-10-17T06:00:00.000Z',
-    '2024-10-11T06:00:00.000Z',
-    '2024-10-10T06:00:00.000Z',
-    '2024-10-17T06:00:00.000Z',
-    '2024-10-11T06:00:00.000Z',
-    '2024-10-10T06:00:00.000Z',
-    '2024-10-17T06:00:00.000Z',
-    '2024-10-11T06:00:00.000Z',
-    '2024-10-10T06:00:00.000Z',
-    '2024-10-17T06:00:00.000Z',
-    '2024-10-11T06:00:00.000Z',
-    '2024-10-17T06:00:00.000Z',
-    '2024-10-11T06:00:00.000Z',
-    '2024-10-10T06:00:00.000Z',
-    '2024-10-17T06:00:00.000Z',
-    '2024-10-11T06:00:00.000Z',
-    '2024-10-10T06:00:00.000Z',
-    '2024-10-17T06:00:00.000Z',
-    '2024-10-11T06:00:00.000Z',
-    '2024-10-10T06:00:00.000Z',
-    '2024-10-17T06:00:00.000Z',
-    '2024-10-11T06:00:00.000Z',
-    '2024-10-10T06:00:00.000Z',
-    '2024-10-17T06:00:00.000Z',
-    '2024-10-11T06:00:00.000Z',
-    '2024-10-17T06:00:00.000Z',
-    '2024-10-11T06:00:00.000Z',
-    '2024-10-10T06:00:00.000Z',
-    '2024-10-17T06:00:00.000Z',
-    '2024-10-11T06:00:00.000Z',
-    '2024-10-10T06:00:00.000Z',
-    '2024-10-17T06:00:00.000Z',
-    '2024-10-11T06:00:00.000Z',
     '2024-10-10T06:00:00.000Z',
     '2024-10-17T06:00:00.000Z',
     '2024-10-11T06:00:00.000Z',
@@ -411,15 +375,16 @@ const Print: React.FC<{ holiday?: HolidayInfo }> = ({ holiday = tempHolidays }) 
             <Group>
               <Label>Fechas</Label>
               <p>
-                {holiday?.days
-                  ?.map((day) =>
-                    formatDate(day + '', {
+                {holiday?.days?.map((day, index) => (
+                  <span key={index}>
+                    {formatDate(day + '', {
                       monthsName: true,
                       spaces: false,
                       separationBy: '-',
-                    })
-                  )
-                  .join(', ')}
+                    })}
+                    {index < holiday.days.length - 1 && ','}
+                  </span>
+                ))}
               </p>
             </Group>
 
