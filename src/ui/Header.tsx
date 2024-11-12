@@ -14,6 +14,7 @@ import { useMe } from '../features/authentication/useMe';
 import { useLocalStorageState } from '../hooks/useLocalStorageState';
 import { useHolidays } from '../features/holiday/useHolidays';
 import { getStatusHoliday } from '../utils/holidayUtils';
+import { useOutsideClick } from '../hooks/useOutsideClick';
 
 const StyledHeader = styled.header`
   position: relative;
@@ -117,7 +118,7 @@ function Header() {
     'isDarkMode'
   );
 
-  const [isClicked, setClicked] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const { logout } = useLogout();
   const { userAuthenticated } = useMe();
 
@@ -149,14 +150,14 @@ function Header() {
           {isDark ? <HiOutlineSun /> : <HiOutlineMoon />}
         </DarkMode>
 
-        <Bell title="Notificaciones" onClick={() => setClicked(!isClicked)}>
+        <Bell title="Notificaciones" onClick={() => setIsVisible(!isVisible)}>
           {pendingHolidays?.length !== 0 ? (
             <Notification>{pendingHolidays.length}</Notification>
           ) : null}
           <HiOutlineBell />
         </Bell>
 
-        {isClicked ? <FloatFeat onClose={() => setClicked(false)} /> : null}
+        {isVisible ? <FloatFeat onClose={() => setIsVisible(false)} /> : null}
         <LogOff
           title="Cerrar Sesión"
           onClick={() => {

@@ -22,9 +22,10 @@ import AppLayoutUser from './ui/AppLayoutUser';
 import Authentication from './pages/Authentication';
 import Request from './pages/Request';
 import UserManagement from './pages/UserManagement';
-import RequestForm from './features/users/request/RequestForm';
 import Documents from './features/users/Documents';
 import PassRecovery from './features/users/PassRecovery';
+import ContentEmpty from './ui/ContentEmpty';
+import Print from './pages/Print';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -44,6 +45,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             {/* PERSONNEL MANAGEMENT APP */}
+            <Route path="print" element={<Print />} />
             <Route path="request" element={<Request />} />
             <Route path="login" element={<Authentication />} />
             <Route
@@ -89,6 +91,7 @@ function App() {
                   }
                 />
                 <Route path="users/:userId" element={<UserManagement />}>
+                  {/* <Route index element={<ContentEmpty $size="large" />} /> */}
                   <Route path="request" element={<Request />} />
                   <Route path="documents" element={<Documents />} />
                   <Route path="recovery" element={<PassRecovery />} />

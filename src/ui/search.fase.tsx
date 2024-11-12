@@ -73,7 +73,7 @@ const Search: React.FC<SearchProps> = ({
 }) => {
   const [query, setQuery] = useState('');
   const [show, setShow] = useState(false);
-  const ref = useOutsideClick<HTMLDivElement>(() => setShow(false), false);
+  const ref = useOutsideClick<HTMLDivElement>(() => setShow(false));
 
   const handleSetQuery = (e: ChangeEvent<HTMLInputElement>) => {
     const newQuery = e.target.value;

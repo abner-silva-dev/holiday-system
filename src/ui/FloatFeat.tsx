@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import ContentEmpty from './ContentEmpty';
 import { getStatusHoliday } from '../utils/holidayUtils';
 import { Spinner } from 'react-bootstrap';
+import { useOutsideClick } from '../hooks/useOutsideClick';
 
 const FloatFeatStyled = styled.div`
   display: flex;
@@ -76,6 +77,8 @@ const FloatFeat: React.FC<PropsFloatFeat> = ({ onClose }) => {
 
   const { pendingHolidays } = getStatusHoliday(holidays);
 
+  const ref = useOutsideClick<HTMLDivElement>(onClose);
+
   const holidaysFilter = pendingHolidays.sort((a: HolidayInfo, b: HolidayInfo) => {
     if (a.createdAt && b.createdAt)
       if (a?.createdAt > b?.createdAt) return -1;
@@ -84,10 +87,10 @@ const FloatFeat: React.FC<PropsFloatFeat> = ({ onClose }) => {
   });
 
   if (isPending) return <Spinner />;
-  const isEmpty = holidays?.length === 0;
+  const isEmpty = holidaysFilter?.length === 0;
 
   return (
-    <FloatFeatStyled>
+    <FloatFeatStyled ref={ref}>
       <FloatHeader>
         <FloatTitle>Notificaciones</FloatTitle>
       </FloatHeader>
@@ -96,7 +99,7 @@ const FloatFeat: React.FC<PropsFloatFeat> = ({ onClose }) => {
           <RequestVacation key={holiday._id} holiday={holiday} onClose={onClose} />
         ))}
 
-        {isEmpty && <ContentEmpty />}
+        {isEmpty && <ContentEmpty $size="small" />}
       </Main>
 
       <GoTo>

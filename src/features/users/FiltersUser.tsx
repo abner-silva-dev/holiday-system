@@ -11,7 +11,9 @@ import { useStateApp } from '../../context/stateAppContext';
 
 const Filters = styled.div`
   display: flex;
-  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4rem;
 `;
 
 const FilterUser = () => {
@@ -24,9 +26,9 @@ const FilterUser = () => {
   } = useStateApp();
 
   return (
-    <div>
+    <>
       <Row>
-        <Heading as="h2">Filtrar por </Heading>
+        <Heading as="h2">Filtrar por:</Heading>
         <Filters>
           <FormRow label="Filtrar por departamento">
             <Input
@@ -64,7 +66,7 @@ const FilterUser = () => {
           </FormRow>
         </Filters>
       </Row>
-    </div>
+    </>
   );
 };
 
