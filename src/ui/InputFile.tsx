@@ -40,26 +40,24 @@ const Group = styled.div`
 `;
 
 interface PropsInputFile {
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (event: File) => void;
+  file: File | null;
 }
 
-const InputFile: React.FC<PropsInputFile> = ({ onChange }) => {
-  const [fileName, setFileName] = useState<string>('');
+const InputFile: React.FC<PropsInputFile> = ({ onChange, file }) => {
+  const fileName = file?.name || '';
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      const name = file.name;
-      setFileName(name);
-      onChange(event); // Llama a la función onChange pasada como prop
+      onChange(file);
     }
   };
 
-  // Función para acortar el nombre del archivo y dejar solo la extensión
   const getShortName = (name: string) => {
-    const maxLength = 20; // Longitud máxima antes de truncar
+    const maxLength = 20;
     if (name.length <= maxLength) return name;
-    return `${name.slice(0, maxLength - 4)}...${name.slice(-4)}`; // Mantiene los últimos 4 caracteres (ejemplo: .pdf)
+    return `${name.slice(0, maxLength - 4)}...${name.slice(-4)}`;
   };
 
   return (

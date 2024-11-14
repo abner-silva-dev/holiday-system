@@ -22,10 +22,11 @@ import AppLayoutUser from './ui/AppLayoutUser';
 import Authentication from './pages/Authentication';
 import Request from './pages/Request';
 import UserManagement from './pages/UserManagement';
-import Documents from './features/users/Documents';
+import Documents from './features/users/archive/Documents';
 import PassRecovery from './features/users/PassRecovery';
 import ContentEmpty from './ui/ContentEmpty';
 import Print from './pages/Print';
+import Archive from './pages/Archive';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -93,7 +94,7 @@ function App() {
                 <Route path="users/:userId" element={<UserManagement />}>
                   {/* <Route index element={<ContentEmpty $size="large" />} /> */}
                   <Route path="request" element={<Request />} />
-                  <Route path="documents" element={<Documents />} />
+                  <Route path="documents" element={<Archive />} />
                   <Route path="recovery" element={<PassRecovery />} />
                   <Route />
                 </Route>

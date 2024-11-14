@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Heading from '../../ui/Heading';
-import InputFile from '../../ui/InputFile';
-import Button from '../../ui/Button';
+import Heading from '../../../ui/Heading';
+import InputFile from '../../../ui/InputFile';
+import Button from '../../../ui/Button';
 import { HiCheckCircle, HiXCircle } from 'react-icons/hi';
 import { HiOutlineCloudArrowUp, HiOutlineEye } from 'react-icons/hi2';
 import { LiaSave } from 'react-icons/lia';
@@ -182,7 +182,10 @@ const Documents: React.FC<DocumentsProps> = () => {
                 {/* Botón "Ver" solo será visible si hay un archivo cargado */}
                 <WatchButton
                   $variation="secondary"
-                  onClick={() => handlePreview(index)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handlePreview(index);
+                  }}
                   visible={!!files[index]} // Solo se muestra si hay archivo cargado
                 >
                   Ver
