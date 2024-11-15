@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import html2pdf from 'html2pdf.js';
 import { HiOutlineCheck } from 'react-icons/hi2';
-
+import letterhead from './../../public/membretado.png';
 import logo from './../../public/logo-dai.png';
 import { HolidayInfo } from '../features/holiday/type';
 import { formatDate, joinName } from '../utils/helpers';
@@ -21,17 +21,18 @@ const HeadingContainer = styled.div`
 `;
 
 const PrintContainer = styled.div`
+  position: relative;
   color: #000 !important;
   width: 210mm;
-  padding: 1rem 5rem;
+
   border: 2px solid #b3b3b3;
   margin: auto;
   margin-top: 2rem;
-  background-image: url(/membretado.png);
+  /* background-image: url(/membretado.png);
   background-position: center -25px;
   background-size: cover;
   background-repeat: no-repeat;
-  background-size: 119%;
+  background-size: 119%; */
 
   & header {
     display: grid;
@@ -50,8 +51,15 @@ const Group = styled.div`
     padding: 1rem;
     border: none;
     background-color: #f3f4f6;
-    white-space: pre-wrap;
+    white-space: normal;
     word-wrap: break-word;
+    text-align: justify;
+
+    & span {
+      display: inline-block; /* Permite que cada fecha se ajuste individualmente */
+      margin-right: 0.4rem; /* Espacio entre fechas */
+      word-break: break-word; /* Divide las fechas largas si es necesario */
+    }
   }
 `;
 
@@ -60,7 +68,7 @@ const GroupGrid = styled.div`
   grid-template-columns: 1fr 1fr 1fr;
   column-gap: 3rem;
   align-items: center;
-  row-gap: 0.8rem;
+  row-gap: 1.4rem;
 
   & :first-child {
     grid-column: 1/-1;
@@ -130,74 +138,34 @@ const EmployeerFirmContainer = styled.div`
   }
 `;
 
+const LetterHead = styled.img`
+  height: 100%;
+  width: 100%;
+`;
+
+const LetterHeadContainer = styled.div`
+  position: absolute;
+  right: -13%;
+  z-index: -2;
+  height: 100%;
+  width: 130%;
+`;
+
 const tempHolidays = {
   _id: '67214ad899bdc0455950360a',
   days: [
     '2024-10-10T06:00:00.000Z',
     '2024-10-17T06:00:00.000Z',
     '2024-10-11T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-25T06:00:00.000Z',
-    '2024-10-18T06:00:00.000Z',
-    '2024-10-24T06:00:00.000Z',
-    '2024-10-24T06:00:00.000Z',
+    '2024-10-10T06:00:00.000Z',
+    '2024-10-17T06:00:00.000Z',
+    '2024-10-11T06:00:00.000Z',
   ],
   period: 'present',
   authorizationAdmin: 'rejected',
   authorizationManager: 'pending',
-  observation: 'ASDFASDF',
+  observation:
+    'https://forms.office.com/Pages/ResponsePage.aspx?id=xg8s7vPEjkGHlb-yHsaGiaza-kZBmaRPsp5hEl7jw4lUQUM4RTRKVFNSNElaQ0QwRTRaV1dZU1IzTy4u&origin=QRCodehttps://forms.office.com/Pages/ResponsePage.aspx?id=xg8s7vPEjkGHlb-yHsaGiaza-kZBmaRPsp5hEl7jw4lUQUM4RTRKVFNSNElaQ0QwRTRaV1dZU1IzTy4u&origin=QRCodehttps://forms.office.com/Pages/ResponsePage.aspx?id=xg8s7vPEjkGHlb-yHsaGiaza-kZBmaRPsp5hEl7jw4lUQUM4RTRKVFNSNElaQ0QwRTRaV1dZU1IzTy4u&origin=QRCodehttps://forms.office.com/Pages/ResponsePage.aspx?id=xg8s7vPEjkGHlb-yHsaGiaza-kZBmaRPsp5hEl7jw4lUQUM4RTRKVFNSNElaQ0QwRTRaV1dZU1IzTy4u&origin=QRCode',
   createdAt: '2024-10-29T20:51:36.527Z',
   user: {
     daysGrantedBySeniority: {
@@ -334,103 +302,134 @@ const tempHolidays = {
   id: '67214ad899bdc0455950360a',
 };
 
+const GroupContent = styled.div`
+  padding: 4rem 5rem;
+`;
+
+const CutLeft = styled.div`
+  position: absolute;
+  z-index: 100;
+  background-color: white;
+  height: 100%;
+  width: 500px;
+  left: -63.6%;
+`;
+
+const CutRight = styled.div`
+  position: absolute;
+  z-index: 100;
+  background-color: white;
+  height: 100%;
+  width: 500px;
+  right: -63.6%;
+`;
+
 const Print: React.FC<{ holiday?: HolidayInfo }> = ({ holiday = tempHolidays }) => {
   console.log(holiday);
 
   return (
     <PrintContainer id="pdf-content">
-      <header>
-        <Logo src={logo} />
-        <HeadingContainer>
-          <h1>Solicitud de Vacaciones</h1>
-        </HeadingContainer>
-      </header>
+      <CutRight />
+      <LetterHeadContainer>
+        <LetterHead src={letterhead} />
+      </LetterHeadContainer>
+      <CutLeft />
+      <GroupContent>
+        <header>
+          <Logo src={logo} />
+          <HeadingContainer>
+            <h1>Solicitud de Vacaciones</h1>
+          </HeadingContainer>
+        </header>
 
-      {/* CONTENT */}
-      <Section>
-        <GroupGrid>
-          <Group>
-            <Label>Nombre</Label>
-            <Input
-              type="text"
-              defaultValue={joinName({
-                name: holiday.user?.name || '',
-                motherSurname: holiday.user?.motherSurname || '',
-                paternSurname: holiday.user?.paternSurname || '',
-              })}
-            />
-          </Group>
+        {/* CONTENT */}
 
-          <Group>
-            <Label>No. de Empleado</Label>
-            <Input type="text" defaultValue={holiday?.user?.employNumber} />
-          </Group>
-          <Group>
-            <Label>Departamento</Label>
-            <Input type="text" defaultValue={holiday?.user?.department?.name} />
-          </Group>
+        <Section>
+          <GroupGrid>
+            <Group>
+              <Label>Nombre</Label>
+              <Input
+                type="text"
+                defaultValue={joinName({
+                  name: holiday.user?.name || '',
+                  motherSurname: holiday.user?.motherSurname || '',
+                  paternSurname: holiday.user?.paternSurname || '',
+                })}
+              />
+            </Group>
 
-          <Group>
-            <Label>No. de días pedidos</Label>
-            <Input type="text" defaultValue={holiday?.days?.length} />
-          </Group>
+            <Group>
+              <Label>No. de Empleado</Label>
+              <Input type="text" defaultValue={holiday?.user?.employNumber} />
+            </Group>
+            <Group>
+              <Label>Departamento</Label>
+              <Input type="text" defaultValue={holiday?.user?.department?.name} />
+            </Group>
 
-          <Group>
-            <Label>Fechas</Label>
-            <p>
-              {holiday?.days
-                ?.map((day) =>
-                  formatDate(day + '', {
-                    monthsName: true,
-                    spaces: false,
-                    separationBy: '-',
-                  })
-                )
-                .join(', ')}
-            </p>
-          </Group>
+            <Group>
+              <Label>No. de días pedidos</Label>
+              <Input type="text" defaultValue={holiday?.days?.length} />
+            </Group>
 
-          <Group>
-            <Label>Notas del Empleado</Label>
-            <p>{holiday?.observation}</p>
-          </Group>
+            <Group>
+              <Label>Fechas</Label>
+              <p>
+                {holiday?.days?.map((day, index) => (
+                  <span key={index}>
+                    {formatDate(day + '', {
+                      monthsName: true,
+                      spaces: false,
+                      separationBy: '-',
+                    })}
+                    {index < holiday.days.length - 1 && ','}
+                  </span>
+                ))}
+              </p>
+            </Group>
 
-          <ApprovalsContainer>
-            <label>
-              {joinName({
-                name: holiday.manager?.name || '',
-                motherSurname: holiday.manager?.motherSurname || '',
-                paternSurname: holiday.manager?.paternSurname || '',
-              })}
-            </label>
-            <label>Jefe Directo</label>
-            <span>
-              <HiOutlineCheck />
-              Aprobado
-            </span>
-          </ApprovalsContainer>
+            <Group>
+              <Label>Notas del Empleado</Label>
+              <p>{holiday?.observation}</p>
+            </Group>
 
-          <ApprovalsContainer>
-            <label>
-              {joinName({
-                name: holiday.admin?.name || '',
-                motherSurname: holiday.admin?.motherSurname || '',
-                paternSurname: holiday.admin?.paternSurname || '',
-              })}
-            </label>
-            <label>Administrador - R.H</label>
-            <span>
-              <HiOutlineCheck />
-              Aprobado
-            </span>
-          </ApprovalsContainer>
+            <ApprovalsContainer>
+              <label>
+                {joinName({
+                  name: holiday.manager?.name || '',
+                  motherSurname: holiday.manager?.motherSurname || '',
+                  paternSurname: holiday.manager?.paternSurname || '',
+                })}
+              </label>
+              <label>Jefe Directo</label>
+              <span>
+                <HiOutlineCheck />
+                Aprobado
+              </span>
+            </ApprovalsContainer>
 
-          <EmployeerFirmContainer>
-            <div></div>
-            <label>Firma del Empleado</label>
-          </EmployeerFirmContainer>
-        </GroupGrid>
-      </Section>
+            <ApprovalsContainer>
+              <label>
+                {joinName({
+                  name: holiday.admin?.name || '',
+                  motherSurname: holiday.admin?.motherSurname || '',
+                  paternSurname: holiday.admin?.paternSurname || '',
+                })}
+              </label>
+              <label>Administrador - R.H</label>
+              <span>
+                <HiOutlineCheck />
+                Aprobado
+              </span>
+            </ApprovalsContainer>
+
+            <EmployeerFirmContainer>
+              <div></div>
+              <label>Firma del Empleado</label>
+            </EmployeerFirmContainer>
+          </GroupGrid>
+        </Section>
+      </GroupContent>
     </PrintContainer>
   );
 };
