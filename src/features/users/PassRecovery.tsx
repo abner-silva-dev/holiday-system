@@ -1,14 +1,16 @@
 import styled from 'styled-components';
-import Heading from '../../ui/Heading';
-import { useState } from 'react';
-import { HiOutlineEye, HiOutlineEyeSlash } from 'react-icons/hi2';
+
 import Button from '../../ui/Button';
+import { useUser2 } from './useUser';
+import Heading from '../../ui/Heading';
+import { FormEvent, FormEventHandler } from 'react';
+import { useResetPassword } from '../authentication/useResetPassword';
 
 const Input = styled.input`
   border: none;
 
   background-color: var(--color-grey-100);
-  color: var(--color-grey-900);
+  color: var(--color-grey-400);
   letter-spacing: 1px;
   padding: 1rem 1.5rem;
   width: 100%;
@@ -68,42 +70,35 @@ const Content = styled.div`
 `;
 
 const PassRecovery = () => {
-  const [isClicked, setClicked] = useState(false);
+  const { user } = useUser2();
+  const { isPending, resetPassword } = useResetPassword();
+
+  if (!user) return null;
+
+  const handleResetPassword = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    console.log('*********');
+
+    resetPassword();
+  };
+
   return (
-    <>
-      <Content>
-        <Heading as="h2"> Recuperación de Contraseñas</Heading>
-        <p>
-          Genere una nueva contraseña de recuperación, la contraseña generada se enviará
-          a:
-        </p>
-        <Form>
-          <div>
-            <label>Correo Electrónico de Recuperación</label>
-            <Input type="email" readOnly={true} />
-          </div>
-          {/* <div>
-            <label>Contraseña</label>
-            <FieldContainer>
-              <Input
-                title="Completa este campo"
-                type={isClicked ? 'text' : 'password'}
-                placeholder="•••••••••••"
-                readOnly={true}
-                required
-              ></Input>
-              <EyeContainer
-                title={isClicked ? 'Ocultar Contraseña' : 'Mostrar Contraseña'}
-                onClick={() => setClicked(!isClicked)}
-              >
-                {isClicked ? <HiOutlineEyeSlash /> : <HiOutlineEye />}
-              </EyeContainer>
-            </FieldContainer>
-          </div> */}
-          <Button $variation="secondary">GENERAR CONTRASEÑA</Button>
-        </Form>
-      </Content>
-    </>
+    <Content onSubmit={handleResetPassword}>
+      <Heading as="h2"> Recuperación de Contraseñas</Heading>
+      <p>
+        Genere una nueva contraseña de recuperación, la contraseña generada se enviará a:
+      </p>
+      <Form>
+        <div>
+          <label>Correo Electrónico de Recuperación</label>
+          <Input type="email" readOnly={true} value={user?.email} />
+        </div>
+        <Button $variation="secondary" disabled={isPending}>
+          GENERAR CONTRASEÑA
+        </Button>
+      </Form>
+    </Content>
   );
 };
 

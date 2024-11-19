@@ -52,3 +52,15 @@ export const updateMe = async (newData) => {
 
   return data;
 };
+
+export const resetPassword = async (id: string) => {
+  const res = await fetch(`${API_DAI_SYSTEM}/users/${id}/resetPassword`, {
+    credentials: 'include',
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) throw new Error(data.message);
+
+  return data;
+};

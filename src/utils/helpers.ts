@@ -75,6 +75,7 @@ export function yearMothDay(
   const mothsStr = moths ? `${moths} mes${moths === 1 ? ' ' : 'es'}` : '';
   const daysStr = days ? `${days} dia${days === 1 ? ' ' : 's'}` : '';
 
+  if (!years && !moths && !days) return `Sin antiguedad`;
   return `${yearsStr} ${mothsStr} ${daysStr}`;
 }
 

@@ -25,7 +25,6 @@ export function createOne<Model>(sourceName: string) {
         axios.isAxiosError(error) && error.response
           ? error.response.data.message || 'An unknown error occurred'
           : 'An unknown error occurred';
-
       throw new Error(errorMessage);
     }
   };

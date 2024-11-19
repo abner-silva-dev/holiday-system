@@ -7,7 +7,6 @@ import Modal from '../../ui/Modal';
 import CreateUser from './createUser';
 import ConfirmDelete from '../../ui/ConfirmDelete';
 import { formatDate, yearMothDay } from '../../utils/helpers';
-import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 interface Props {

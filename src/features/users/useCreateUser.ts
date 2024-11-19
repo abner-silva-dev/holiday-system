@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 export const useCreateUser = () => {
   const queryClient = useQueryClient();
 
-  const { mutate: createUser, isPending: isCreating } = useMutation({
+  const { mutate: createUser, isPending: isCreatingUser } = useMutation({
     mutationFn: createUserApi,
     onSuccess: () => {
       toast.success('Empleado creado exitosamente');
@@ -19,6 +19,6 @@ export const useCreateUser = () => {
 
   return {
     createUser,
-    isCreating,
+    isCreatingUser,
   };
 };

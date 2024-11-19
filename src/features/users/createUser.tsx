@@ -63,7 +63,7 @@ const CreateUser: React.FC<PropsCreateUSer> = ({ userToUpdate = {}, onCloseModal
   const { departments } = useDepartments();
   const { enterprises } = useEnterprises();
 
-  const { createUser } = useCreateUser();
+  const { createUser, isCreatingUser } = useCreateUser();
   const { updateUser } = useUpdateUser();
 
   // useEffect(() => {
@@ -107,6 +107,7 @@ const CreateUser: React.FC<PropsCreateUSer> = ({ userToUpdate = {}, onCloseModal
   // handle file photo
   const [fileImg, setFileImg] = useState<File | null>(null);
 
+  // if (isCreating) return <Spinner />;
   if (!departments || !enterprises) return null;
 
   return (
@@ -125,6 +126,7 @@ const CreateUser: React.FC<PropsCreateUSer> = ({ userToUpdate = {}, onCloseModal
         </FormRow>
         <FormRow label="Numero de Empleado">
           <Input
+            disabled={isCreatingUser}
             type="number"
             id="employNumber"
             placeholder="201"
@@ -134,6 +136,7 @@ const CreateUser: React.FC<PropsCreateUSer> = ({ userToUpdate = {}, onCloseModal
         </FormRow>
         <FormRow label="Nombre(s)">
           <Input
+            disabled={isCreatingUser}
             type="text"
             id="name"
             placeholder="Jon Smith"
@@ -143,6 +146,7 @@ const CreateUser: React.FC<PropsCreateUSer> = ({ userToUpdate = {}, onCloseModal
         </FormRow>
         <FormRow label="Apellido Paterno">
           <Input
+            disabled={isCreatingUser}
             type="text"
             id="paternSurname"
             placeholder="Snowman"
@@ -152,6 +156,7 @@ const CreateUser: React.FC<PropsCreateUSer> = ({ userToUpdate = {}, onCloseModal
         </FormRow>
         <FormRow label="Apellido Materno">
           <Input
+            disabled={isCreatingUser}
             type="text"
             id="motherSurname"
             placeholder="Sulivan"
@@ -161,6 +166,7 @@ const CreateUser: React.FC<PropsCreateUSer> = ({ userToUpdate = {}, onCloseModal
         </FormRow>
         <FormRow label="Correo electronico">
           <Input
+            disabled={isCreatingUser}
             type="text"
             id="email"
             placeholder="example@email.com"
@@ -169,10 +175,22 @@ const CreateUser: React.FC<PropsCreateUSer> = ({ userToUpdate = {}, onCloseModal
           />
         </FormRow>
         <FormRow label="Fecha de ingreso">
-          <Input type="date" id="dateHiring" {...register('dateHiring')} required />
+          <Input
+            disabled={isCreatingUser}
+            type="date"
+            id="dateHiring"
+            {...register('dateHiring')}
+            required
+          />
         </FormRow>
         <FormRow label="Empresa">
-          <Input id="enterprise" as="select" {...register('enterprise')} required>
+          <Input
+            disabled={isCreatingUser}
+            id="enterprise"
+            as="select"
+            {...register('enterprise')}
+            required
+          >
             <option value="">Selecciona una empresa</option>
             {enterprises?.map((enterprise: EnterpriseInfo) => {
               return (
@@ -184,7 +202,13 @@ const CreateUser: React.FC<PropsCreateUSer> = ({ userToUpdate = {}, onCloseModal
           </Input>
         </FormRow>
         <FormRow label="Departamento">
-          <Input id="department" as="select" {...register('department')} required>
+          <Input
+            disabled={isCreatingUser}
+            id="department"
+            as="select"
+            {...register('department')}
+            required
+          >
             <option value="">Selecciona una departamento</option>
             {departments?.map((department: DepartmentInfo) => {
               return (
@@ -195,7 +219,7 @@ const CreateUser: React.FC<PropsCreateUSer> = ({ userToUpdate = {}, onCloseModal
             })}
           </Input>
         </FormRow>
-        <Button $variation="confirm">
+        <Button $variation="confirm" disabled={isCreatingUser}>
           {isEditSession ? 'Actualizar Empleado' : 'Crear Empleado'}
         </Button>
       </Form>
