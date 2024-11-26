@@ -77,19 +77,16 @@ const PassRecovery = () => {
 
   const handleResetPassword = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    console.log('*********');
-
     resetPassword();
   };
 
   return (
-    <Content onSubmit={handleResetPassword}>
+    <Content>
       <Heading as="h2"> Recuperación de Contraseñas</Heading>
       <p>
         Genere una nueva contraseña de recuperación, la contraseña generada se enviará a:
       </p>
-      <Form>
+      <Form onSubmit={handleResetPassword}>
         <div>
           <label>Correo Electrónico de Recuperación</label>
           <Input type="email" readOnly={true} value={user?.email} />
