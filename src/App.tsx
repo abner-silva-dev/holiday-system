@@ -45,7 +45,7 @@ function App() {
         {/* <ReactQueryDevtools /> */}
         <BrowserRouter>
           <Routes>
-            {/* PERSONNEL MANAGEMENT APP */}
+            {/* GENERAL ACCESS */}
             <Route path="print" element={<Print />} />
             <Route path="request" element={<Request />} />
             <Route path="login" element={<Authentication />} />
@@ -116,6 +116,7 @@ function App() {
                   }
                 />
                 <Route path="seniority" element={<Seniority />} />
+
                 <Route
                   path="settings"
                   element={

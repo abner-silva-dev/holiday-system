@@ -4,6 +4,7 @@ import {
   HiOutlineCalendarDays,
   HiOutlineCheck,
   HiOutlineChevronDown,
+  HiOutlinePencilSquare,
 } from 'react-icons/hi2';
 import { HiOutlineXMark } from 'react-icons/hi2';
 import { HolidayInfo } from './type';
@@ -259,6 +260,26 @@ const DatesModal = styled.div`
   }
 `;
 
+const EditButton = styled.button`
+  border: none;
+  color: black;
+  padding: 0.5rem 1rem;
+  border-radius: 9px;
+  background-color: #ffec99;
+  font-weight: 600;
+  box-shadow: var(--shadow-md);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+
+  & svg {
+    height: 2.4rem;
+    width: 2.4rem;
+  }
+`;
+
 interface PropsAuthorizationCard {
   holiday: HolidayInfo;
 }
@@ -351,9 +372,10 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
               </CreatedAt>
             </Heading>
             {
-              <button onClick={() => setIsEddit((eddit) => !eddit)} type="button">
+              <EditButton onClick={() => setIsEddit((eddit) => !eddit)} type="button">
+                <HiOutlinePencilSquare />
                 Editar
-              </button>
+              </EditButton>
             }
             <TimeTag $time={holiday?.period} />
           </Row>
