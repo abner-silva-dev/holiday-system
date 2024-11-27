@@ -33,8 +33,8 @@ interface IFormComplementaryData {
   familyInCompany: string;
   jobSource: string;
   previousWorkInCompany: string;
-  previousWorkDate?: string;
-  previousWorkDepartment?: string;
+  previousWorkDate?: string | null;
+  previousWorkDepartment?: string | null;
   currentLivingSituation: string;
   economicDependents: string;
   familyContribution: string;
@@ -73,18 +73,25 @@ function FormComplementaryData({
   // Update or Save
   const isEdditSession = Boolean(!requestData);
 
+  // Conditional Field
+  const isPreviousWorkInCompany = watch('previousWorkInCompany') === 'si';
+  const isOwnsCar = watch('ownsCar') === 'si';
+
   // Action form type Create or Update
   const onSubmit = (data: IFormComplementaryData) => {
+    const additionalFields = {
+      ...(!isPreviousWorkInCompany && {
+        previousWorkDate: null,
+        previousWorkDepartment: null,
+      }),
+    };
+
     if (requestData) {
-      updateRequest({ newData: { ...data } });
+      updateRequest({ newData: { ...data, ...additionalFields } });
     } else {
       createRequest({ ...data, user: user?.id || '' });
     }
   };
-
-  // Conditional Field
-  const isPreviousWorkInCompany = watch('previousWorkInCompany') === 'si';
-  const isOwnsCar = watch('ownsCar') === 'si';
 
   // Loading data if Exists
   useEffect(() => {
