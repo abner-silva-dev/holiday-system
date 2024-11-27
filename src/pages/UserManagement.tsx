@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import Heading from '../ui/Heading';
 import Row from '../ui/Row';
 import { Link, Outlet } from 'react-router-dom';
-import { HiArrowLeft } from 'react-icons/hi2';
+import { HiArrowLeft, HiMiniArrowDownTray } from 'react-icons/hi2';
 import { media } from '../style/media';
 // import UserCard from '../features/users/UserCard';
 import { useUser2 } from '../features/users/useUser';
@@ -65,6 +65,15 @@ const NavButtonDoc = styled(Button)`
   background-color: #845ef7;
   border-radius: 9px;
 
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  & svg {
+    width: 2rem;
+    height: 2rem;
+  }
+
   &:hover {
     background-color: #6844d6;
   }
@@ -105,6 +114,7 @@ const UserManagement = () => {
           </NavButton>
           <DropDown>
             <NavButtonDoc $variation="confirm" onClick={() => setClicked(!isClicked)}>
+              <HiMiniArrowDownTray />
               Generar Documentos
             </NavButtonDoc>
             {isClicked ? <Float onClose={() => setClicked(false)} /> : null}
