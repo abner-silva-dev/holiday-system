@@ -17,7 +17,7 @@ import InputImageDrag from '../../ui/InputImageDrag';
 
 const Form = styled.form`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   align-items: center;
   justify-content: center;
   gap: 4rem;
@@ -25,6 +25,11 @@ const Form = styled.form`
   & :first-child {
     border-radius: 2px;
     gap: 0;
+  }
+
+  & :last-child {
+    grid-column: 1/-1;
+    justify-self: center;
   }
 `;
 
@@ -129,7 +134,7 @@ const CreateUser: React.FC<PropsCreateUSer> = ({ userToUpdate = {}, onCloseModal
             disabled={isCreatingUser}
             type="number"
             id="employNumber"
-            placeholder="201"
+            placeholder="Ej: 201"
             {...register('employNumber')}
             required
           />
@@ -139,7 +144,7 @@ const CreateUser: React.FC<PropsCreateUSer> = ({ userToUpdate = {}, onCloseModal
             disabled={isCreatingUser}
             type="text"
             id="name"
-            placeholder="Jon Smith"
+            placeholder="Ej: José Gabriel"
             {...register('name')}
             required
           />
@@ -149,7 +154,7 @@ const CreateUser: React.FC<PropsCreateUSer> = ({ userToUpdate = {}, onCloseModal
             disabled={isCreatingUser}
             type="text"
             id="paternSurname"
-            placeholder="Snowman"
+            placeholder="Ej: Lopez"
             {...register('paternSurname')}
             required
           />
@@ -159,7 +164,7 @@ const CreateUser: React.FC<PropsCreateUSer> = ({ userToUpdate = {}, onCloseModal
             disabled={isCreatingUser}
             type="text"
             id="motherSurname"
-            placeholder="Sulivan"
+            placeholder="Ej: Portillo"
             {...register('motherSurname')}
             required
           />
@@ -171,6 +176,16 @@ const CreateUser: React.FC<PropsCreateUSer> = ({ userToUpdate = {}, onCloseModal
             id="email"
             placeholder="example@email.com"
             {...register('email')}
+            required
+          />
+        </FormRow>
+        <FormRow label="Puesto Asignado">
+          <Input
+            disabled={isCreatingUser}
+            type="text"
+            id="position"
+            placeholder="Ej: Auxiliar de Ventas"
+            {...register('position')}
             required
           />
         </FormRow>

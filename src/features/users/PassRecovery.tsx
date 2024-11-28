@@ -82,7 +82,7 @@ const PassRecovery = () => {
 
   return (
     <Content>
-      <Heading as="h2"> Recuperación de Contraseñas</Heading>
+      <Heading as="h2">Recuperación de Contraseñas</Heading>
       <p>
         Genere una nueva contraseña de recuperación, la contraseña generada se enviará a:
       </p>
