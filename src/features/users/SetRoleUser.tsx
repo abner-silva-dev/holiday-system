@@ -49,9 +49,16 @@ function SetRoleUser() {
   const [role, setRole] = useState(user?.role || 'user');
   const { updateRoleUser } = useUpdateRole();
 
-  const handleChangeRole = (password: string) => {
+  const handleChangeRole = (password: string, onCloseModal: () => void) => {
     if (!password) return;
-    updateRoleUser({ newData: { role, password }, id: user?.id || '' });
+    updateRoleUser(
+      { newData: { role, password }, id: user?.id || '' },
+      {
+        onSuccess: () => {
+          onCloseModal();
+        },
+      }
+    );
   };
 
   return (

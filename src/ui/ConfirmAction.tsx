@@ -25,8 +25,8 @@ const ConfirmActionStyled = styled.div`
 
 interface ConfirmActionProps {
   disabled?: boolean;
-  onConfirm: (password: string) => void;
-  onCloseModal?: () => void;
+  onConfirm: (password: string, onCloseModal: () => void) => void;
+  onCloseModal: () => void;
 }
 
 function ConfirmAction({ disabled, onConfirm, onCloseModal }: ConfirmActionProps) {
@@ -34,7 +34,7 @@ function ConfirmAction({ disabled, onConfirm, onCloseModal }: ConfirmActionProps
 
   const handleConfirmAction = async () => {
     try {
-      await onConfirm(password);
+      onConfirm(password, onCloseModal);
       // onCloseModal?.();
     } catch (error) {
       if (error instanceof Error) toast.error(error.message);
