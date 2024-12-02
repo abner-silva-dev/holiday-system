@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom';
 
 import styled from 'styled-components';
+import Header from '../features/user-app/Header';
 
 const StyledAppLayout = styled.div`
   height: 100vh;
@@ -10,6 +11,7 @@ const StyledAppLayout = styled.div`
 const Main = styled.main`
   background-color: var(--color-grey-50);
   padding: 2rem 4rem 8rem;
+  padding-top: 10rem;
 `;
 
 const Container = styled.div`
@@ -20,6 +22,7 @@ const Container = styled.div`
 function AppLayoutUser() {
   return (
     <StyledAppLayout>
+      <Header />
       <Main>
         <Container>
           <Outlet />
