@@ -16,11 +16,18 @@ import UserPhoto from '../users/UserPhoto';
 import { useLogout } from '../authentication/useLogout';
 
 const HeaderContainer = styled.div`
-  background-color: #000;
-  padding: 0 2rem 0rem 2rem;
-  /* position: fixed;  */
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(50px);
+  padding: 0 2rem;
+  color: #fff;
   width: 100%;
   z-index: 200;
+
+  & svg {
+    height: 3.5rem;
+    width: 3.5rem;
+  }
 `;
 
 const HeaderContent = styled.div`
@@ -30,64 +37,31 @@ const HeaderContent = styled.div`
 `;
 
 const Logo = styled.img`
-  width: 12rem;
-`;
-
-const UserIcon = styled(UserPhoto)`
-  width: 5rem;
-  height: 5rem;
-  border-radius: 50%;
-  border: none;
+  width: 10rem;
 `;
 
 const NavGroup = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 0.4rem;
+  gap: 1rem;
   /* width: 20rem; */
   padding: 1.2rem 0;
   border-bottom: 2px solid transparent;
   transition: all 0.2s;
-  color: #d1d5db;
-
-  & span {
-    font-size: 1.2rem;
-  }
-
-  & svg {
-    height: 4rem;
-    width: 4rem;
-  }
 `;
 
 const NavButton = styled(NavLink)`
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   gap: 0.4rem;
-  /* width: 20rem; */
   padding: 1.2rem 0;
   border-bottom: 2px solid transparent;
   transition: all 0.2s;
   cursor: pointer;
-  color: #d1d5db;
-
-  & span {
-    font-size: 1.2rem;
-  }
-
-  &:hover {
-    color: #dc2626;
-    border-bottom: 2px solid #dc2626;
-  }
-
-  & svg {
-    height: 4rem;
-    width: 4rem;
-  }
 `;
 
 const DarkMode = styled.div`
@@ -99,14 +73,7 @@ const DarkMode = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 4rem;
-    width: 4rem;
-    stroke: #d1d5db;
     transition: all 0.2s;
-
-    &:hover {
-      stroke: #dc2626;
-    }
   }
 
   position: relative;
@@ -114,12 +81,19 @@ const DarkMode = styled.div`
 
 const LogOff = styled.div`
   cursor: pointer;
+`;
 
-  & svg {
-    height: 4rem;
-    width: 4rem;
-    stroke: #e5e7eb;
-  }
+const HeaderText = styled.span`
+  /* font-size: 1.6rem;
+  font-weight: 600; */
+  color: #fff;
+  /* color: var(--color-grey-700); */
+`;
+
+const Group = styled.div`
+  display: flex;
+  gap: 3rem;
+  text-align: center;
 `;
 
 const Header = () => {
@@ -142,37 +116,41 @@ const Header = () => {
   return (
     <HeaderContainer>
       <HeaderContent>
-        <NavButton to="/user/home">
-          <div>
-            <Logo src={logo}></Logo>
-          </div>
-        </NavButton>
+        <Group>
+          <NavButton to="/user/home">
+            <div>
+              <Logo src={logo}></Logo>
+            </div>
+          </NavButton>
 
-        <NavGroup>
-          <UserPhoto
-            src={`${API_DAI_BASE}/img/user/${userAuthenticated?.photo}`}
-            alt="user photo"
-          />
-          <span>{userAuthenticated.name}</span>
-        </NavGroup>
+          <NavGroup>
+            <UserPhoto
+              src={`${API_DAI_BASE}/img/user/${userAuthenticated?.photo}`}
+              alt="user photo"
+            />
+            <HeaderText>{userAuthenticated.name}</HeaderText>
+          </NavGroup>
 
-        <NavButton to={`/user/holidays/${userAuthenticated.id}?history=request`}>
-          <HiCalendarDays />
-          <span>Solicitar Vacaciones</span>
-        </NavButton>
+          <NavButton to={`/user/holidays/${userAuthenticated.id}?history=request`}>
+            <HiCalendarDays />
+            <HeaderText>Solicitar Vacaciones</HeaderText>
+          </NavButton>
+        </Group>
 
-        <DarkMode title="Modo Oscuro / Modo Claro" onClick={() => setIsDark(!isDark)}>
-          {isDark ? <HiOutlineSun /> : <HiOutlineMoon />}
-        </DarkMode>
+        <Group>
+          <DarkMode title="Modo Oscuro / Modo Claro" onClick={() => setIsDark(!isDark)}>
+            {isDark ? <HiOutlineSun /> : <HiOutlineMoon />}
+          </DarkMode>
 
-        <LogOff
-          title="Cerrar Sesión"
-          onClick={() => {
-            logout();
-          }}
-        >
-          <HiOutlineArrowRightOnRectangle />
-        </LogOff>
+          <LogOff
+            title="Cerrar Sesión"
+            onClick={() => {
+              logout();
+            }}
+          >
+            <HiOutlineArrowRightOnRectangle />
+          </LogOff>
+        </Group>
       </HeaderContent>
     </HeaderContainer>
   );

@@ -14,7 +14,6 @@ import { useMe } from '../features/authentication/useMe';
 import { useLocalStorageState } from '../hooks/useLocalStorageState';
 import { useHolidays } from '../features/holiday/useHolidays';
 import { getStatusHoliday } from '../utils/holidayUtils';
-import { useOutsideClick } from '../hooks/useOutsideClick';
 
 const StyledHeader = styled.header`
   position: relative;

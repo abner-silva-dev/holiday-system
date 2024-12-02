@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
 import { Toaster } from 'react-hot-toast';
 import { BrowserRouter, Navigate, Outlet, Route, Routes } from 'react-router-dom';
 
@@ -22,11 +22,10 @@ import AppLayoutUser from './ui/AppLayoutUser';
 import Authentication from './pages/Authentication';
 import Request from './pages/Request';
 import UserManagement from './pages/UserManagement';
-import Documents from './features/users/archive/Documents';
 import PassRecovery from './features/users/PassRecovery';
-import ContentEmpty from './ui/ContentEmpty';
 import Print from './pages/Print';
 import Archive from './pages/Archive';
+import Assignment from './pages/Assignment';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -96,7 +95,7 @@ function App() {
                   <Route path="request" element={<Request />} />
                   <Route path="documents" element={<Archive />} />
                   <Route path="recovery" element={<PassRecovery />} />
-                  <Route />
+                  <Route path="assignment" element={<Assignment />} />
                 </Route>
 
                 <Route

@@ -10,7 +10,7 @@ export const useUpdateMe = () => {
   const { mutate: updateMe, isPending: isPending } = useMutation({
     mutationFn: updateMeApi,
     onSuccess: () => {
-      toast.success('User actualizado exitosamente');
+      toast.success('Empleado actualizado exitosamente');
       queryClient.invalidateQueries({ queryKey: ['authUser'] });
     },
     onError: (err) => {

@@ -112,6 +112,9 @@ const UserManagement = () => {
           <NavButton $variation="confirm" as={Link} to="recovery">
             Recuperación de Contraseñas
           </NavButton>
+          <NavButton $variation="confirm" as={Link} to="assignment">
+            Asignación de rol
+          </NavButton>
           <DropDown>
             <NavButtonDoc $variation="confirm" onClick={() => setClicked(!isClicked)}>
               <HiMiniArrowDownTray />
