@@ -7,7 +7,6 @@ interface Login {
 }
 
 export const login = async (credents: Login) => {
-  console.log(`${API_DAI_SYSTEM}/users/login`);
   try {
     const { data } = await axios.post(`${API_DAI_SYSTEM}/users/login`, credents, {
       headers: {
@@ -63,4 +62,31 @@ export const resetPassword = async (id: string) => {
   if (!res.ok) throw new Error(data.message);
 
   return data;
+};
+
+interface ChangePasswordCredentials {
+  password: string;
+  newPassword: string;
+  confirmNewPassword: string;
+}
+
+export const changePassword = async (credentials: ChangePasswordCredentials) => {
+  try {
+    const response = await axios.post(
+      `${API_DAI_SYSTEM}/users/resetPassword`,
+      credentials,
+      {
+        withCredentials: true,
+      }
+    );
+
+    return response.data.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const message = error.response?.data?.message || 'Error desconocido';
+      throw new Error(message);
+    }
+
+    throw new Error('No se pudo actualizar las credenciales');
+  }
 };

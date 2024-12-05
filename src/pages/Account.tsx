@@ -1,12 +1,10 @@
 import styled from 'styled-components';
-// import FileButton from '../ui/FileButton';
+
 import Heading from '../ui/Heading';
 import Row from '../ui/Row';
-
 import UpdatePassword from '../features/authentication/UpdatePassword';
 import UpdateInfo from '../features/authentication/UpdateInfo';
 
-// Account Settings
 const AccountSection = styled.section`
   display: flex;
   flex-direction: column;
