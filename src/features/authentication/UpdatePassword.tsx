@@ -1,34 +1,8 @@
-import { HiOutlineEye, HiOutlineEyeSlash } from 'react-icons/hi2';
 import styled from 'styled-components';
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import Button from '../../ui/Button';
-
-const EyeContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  cursor: pointer;
-
-  & svg:hover {
-    color: var(--color-grey-700);
-  }
-`;
-
-const TextFieldContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-right: 1.5rem;
-  background-color: var(--color-grey-100);
-  border-radius: 3px;
-
-  & svg {
-    width: 3rem;
-    height: 3rem;
-    color: var(--color-grey-500);
-    transition: all 0.2s;
-  }
-`;
+import PasswordInput from '../../ui/InputPassword';
+import { useChangePassword } from './useChangePassword';
 
 const Form = styled.form`
   display: flex;
@@ -48,25 +22,9 @@ const Label = styled.label`
   color: var(--color-grey-600);
 `;
 
-const TextBox = styled.input`
-  border: none;
-
-  background-color: var(--color-grey-100);
-  color: var(--color-grey-900);
-  letter-spacing: 1px;
-  padding: 1rem 1.5rem;
-  width: 100%;
-  border-radius: 3px;
-
-  &::placeholder {
-    letter-spacing: 3px;
-    font-size: 2rem;
-    color: var(--color-grey-400);
-  }
-
-  &:focus {
-    outline: none;
-  }
+const ErrorMessage = styled.span`
+  color: var(--color-red-500);
+  font-size: 1.4rem;
 `;
 
 const SubmitButton = styled(Button)`
@@ -75,62 +33,89 @@ const SubmitButton = styled(Button)`
 `;
 
 const UpdatePassword = () => {
-  const [isClicked, setClicked] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmNewPassword, setConfirmNewPassword] = useState('');
+  const [currentPasswordError, setCurrentPasswordError] = useState('');
+  const [confirmPasswordError, setConfirmPasswordError] = useState('');
+
+  const { changeUserPassword, isChangingPassword } = useChangePassword();
+
+  const handleChangePassword = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    let hasError = false;
+
+    // Validate if passwords match
+    if (newPassword !== confirmNewPassword) {
+      setConfirmPasswordError('Las contraseñas no coinciden.');
+      hasError = true;
+    } else {
+      setConfirmPasswordError('');
+    }
+
+    if (hasError) return;
+
+    // Call changeUserPassword service
+    changeUserPassword(
+      { password: currentPassword, newPassword, confirmNewPassword },
+      {
+        onSuccess: () => {
+          setCurrentPassword('');
+          setNewPassword('');
+          setConfirmNewPassword('');
+          setCurrentPasswordError('');
+        },
+        onError: (error) => {
+          const errorMessage =
+            error.message || 'Hubo un error al actualizar la contraseña.';
+          if (
+            errorMessage.includes('Contraseña incorrecta') ||
+            errorMessage.includes('Usuario no encontrado')
+          ) {
+            setCurrentPasswordError(errorMessage);
+          } else {
+            setCurrentPasswordError('Error desconocido.');
+          }
+        },
+      }
+    );
+  };
 
   return (
-    <Form>
+    <Form onSubmit={handleChangePassword}>
       <Field>
         <Label>Contraseña Actual</Label>
-        <TextFieldContainer>
-          <TextBox
-            title="Completa este campo"
-            type={isClicked ? 'text' : 'password'}
-            placeholder="•••••••••••"
-            required
-          ></TextBox>
-          <EyeContainer
-            title={isClicked ? 'Ocultar Contraseña' : 'Mostrar Contraseña'}
-            onClick={() => setClicked(!isClicked)}
-          >
-            {isClicked ? <HiOutlineEyeSlash /> : <HiOutlineEye />}
-          </EyeContainer>
-        </TextFieldContainer>
+        <PasswordInput
+          placeholder="•••••••••••"
+          onChange={setCurrentPassword}
+          value={currentPassword}
+          letterSpacing="large"
+        />
+        {currentPasswordError && <ErrorMessage>{currentPasswordError}</ErrorMessage>}
       </Field>
       <Field>
         <Label>Nueva Contraseña</Label>
-        <TextFieldContainer>
-          <TextBox
-            title="Completa este campo"
-            type={isClicked ? 'text' : 'password'}
-            placeholder="•••••••••••"
-            required
-          ></TextBox>
-          <EyeContainer
-            title={isClicked ? 'Ocultar Contraseña' : 'Mostrar Contraseña'}
-            onClick={() => setClicked(!isClicked)}
-          >
-            {isClicked ? <HiOutlineEyeSlash /> : <HiOutlineEye />}
-          </EyeContainer>
-        </TextFieldContainer>
+        <PasswordInput
+          placeholder="•••••••••••"
+          onChange={setNewPassword}
+          value={newPassword}
+          letterSpacing="large"
+        />
       </Field>
       <Field>
         <Label>Confirmar Contraseña</Label>
-        <TextFieldContainer>
-          <TextBox
-            title="Completa este campo"
-            type={isClicked ? 'text' : 'password'}
-            placeholder="•••••••••••"
-            required
-          ></TextBox>
-          <EyeContainer
-            title={isClicked ? 'Ocultar Contraseña' : 'Mostrar Contraseña'}
-            onClick={() => setClicked(!isClicked)}
-          >
-            {isClicked ? <HiOutlineEyeSlash /> : <HiOutlineEye />}
-          </EyeContainer>
-        </TextFieldContainer>
+        <PasswordInput
+          placeholder="•••••••••••"
+          onChange={setConfirmNewPassword}
+          value={confirmNewPassword}
+          letterSpacing="large"
+        />
+        {confirmPasswordError && <ErrorMessage>{confirmPasswordError}</ErrorMessage>}
       </Field>
-      <SubmitButton $variation="confirm">Cambiar Contraseña</SubmitButton>
+      <SubmitButton $variation="confirm" type="submit" disabled={isChangingPassword}>
+        {isChangingPassword ? 'Cambiando...' : 'Cambiar Contraseña'}
+      </SubmitButton>
     </Form>
   );
 };

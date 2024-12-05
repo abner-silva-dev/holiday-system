@@ -18,17 +18,29 @@ const PasswordInputContainer = styled.div`
   }
 `;
 
-// Styled input field
-const StyledInput = styled.input`
+const StyledInput = styled.input<{ $letterSpacing: 'small' | 'medium' | 'large' }>`
   border: none;
   background-color: var(--color-grey-100);
   color: var(--color-grey-900);
-  letter-spacing: 1px;
   padding: 1rem 1.5rem;
   width: 100%;
   border-radius: 3px;
 
+  letter-spacing: ${(props) =>
+    props.$letterSpacing === 'small'
+      ? '1px'
+      : props.$letterSpacing === 'medium'
+      ? '2px'
+      : '3px'};
+
   &::placeholder {
+    letter-spacing: ${(props) =>
+      props.$letterSpacing === 'small'
+        ? '1px'
+        : props.$letterSpacing === 'medium'
+        ? '2px'
+        : '3px'};
+    font-size: 2rem;
     color: var(--color-grey-400);
   }
 
@@ -66,10 +78,12 @@ function PasswordInput({
   placeholder = 'Ingresa tu contraseña',
   value,
   onChange,
+  letterSpacing = 'small',
 }: {
   placeholder?: string;
   value: string;
   onChange: (value: string) => void;
+  letterSpacing: 'small' | 'medium' | 'large';
 }) {
   const [isPasswordVisible, setPasswordVisible] = useState(false);
 
@@ -83,6 +97,7 @@ function PasswordInput({
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        $letterSpacing={letterSpacing}
         required
       />
       <VisibilityToggle

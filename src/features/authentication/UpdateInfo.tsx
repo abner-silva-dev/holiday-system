@@ -1,16 +1,10 @@
-import { useEffect, useState } from 'react';
 import { Spinner } from 'react-bootstrap';
-
-import { useForm } from 'react-hook-form';
-
 import styled from 'styled-components';
-import { useUpdateMe } from './useUpdateMe';
 import { useMe } from './useMe';
-import InputImageDrag from '../../ui/InputImageDrag';
 import { API_DAI_BASE } from '../../config';
-import Button from '../../ui/Button';
+import UserPhoto from '../users/UserPhoto';
+import { joinName } from '../../utils/helpers';
 
-//FORM STYLING
 const TextBox = styled.input`
   border: none;
 
@@ -39,11 +33,6 @@ const Form = styled.form`
   width: 55%;
 `;
 
-const SubmitButton = styled(Button)`
-  margin-top: 2.8rem;
-  align-self: center;
-`;
-
 const Field = styled.div`
   display: flex;
   flex-direction: column;
@@ -60,8 +49,8 @@ const BorderMarker = styled.div`
 `;
 
 const Group = styled.div`
-  width: 22rem;
-  margin: 0 auto;
+  display: flex;
+  justify-content: center;
 `;
 
 const AccountContainer = styled.div`
@@ -75,55 +64,45 @@ const AccountContainer = styled.div`
   padding: 7rem 5rem;
 `;
 
-// TEMPORAL INTERFACE
-interface TempFormInfo {
-  user: string;
-  email: string;
-}
-
 const UpdateInfo = () => {
   const { userAuthenticated, isPending } = useMe();
 
-  const { register, handleSubmit, reset } = useForm<TempFormInfo>();
-  const [fileImg, setFileImg] = useState<File | null>(null);
-  const { updateMe } = useUpdateMe();
-
-  useEffect(() => {
-    if (userAuthenticated) {
-      reset({
-        email: userAuthenticated.email,
-        user: userAuthenticated.name,
-      });
-    }
-  }, [userAuthenticated, reset]);
-
-  const onSubmitInfo = () => {
-    const formData = new FormData();
-    if (fileImg) formData.append('photo', fileImg);
-    updateMe(formData);
-  };
-
+  if (!userAuthenticated) return null;
   if (isPending) return <Spinner />;
+
   return (
     <>
       <Group>
-        <InputImageDrag
-          defaultImage={`${API_DAI_BASE}/img/user/${userAuthenticated?.photo}`}
-          onChangeFile={setFileImg}
-        />
+        <UserPhoto
+          src={`${API_DAI_BASE}/img/user/${userAuthenticated?.photo}`}
+          $size="large"
+        />{' '}
       </Group>
       <BorderMarker>
         <AccountContainer>
-          <Form onSubmit={handleSubmit(onSubmitInfo)}>
+          <Form>
             <Field>
               <Label>Nombre de Usuario</Label>
-              <TextBox type="text" id="user" {...register('user')} required />
+              <TextBox
+                type="text"
+                id="user"
+                disabled={true}
+                value={joinName({
+                  name: userAuthenticated.name || '',
+                  paternSurname: userAuthenticated?.paternSurname || '',
+                  motherSurname: userAuthenticated?.motherSurname || '',
+                })}
+              />
             </Field>
             <Field>
               <Label>Correo Electrónico</Label>
-              <TextBox type="email" id="email" {...register('email')} required></TextBox>
+              <TextBox
+                type="email"
+                id="email"
+                disabled={true}
+                value={userAuthenticated.email}
+              />
             </Field>
-            <SubmitButton $variation="confirm">Guardar Cambios</SubmitButton>
           </Form>
         </AccountContainer>
       </BorderMarker>
