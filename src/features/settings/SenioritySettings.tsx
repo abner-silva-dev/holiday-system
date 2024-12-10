@@ -33,12 +33,12 @@ const Table = styled.div`
 
 const TableHead = styled.div`
   display: grid;
-  grid-template-columns: 2fr 2fr 0.5fr;
+  grid-template-columns: 1fr 1fr;
 `;
 
 const TableRow = styled.div`
   display: grid;
-  grid-template-columns: 2fr 2fr 0.5fr;
+  grid-template-columns: 1fr 1fr;
 `;
 
 const TableCell = styled.div`
@@ -46,6 +46,7 @@ const TableCell = styled.div`
   border: 1px solid var(--color-grey-100);
   background-color: var(--color-grey-0);
   text-align: center;
+  gap: 1rem;
 
   position: relative; // Para el mensaje de arrastre
   display: flex;
@@ -92,96 +93,84 @@ const SenioritySettings = () => {
           <TableHead>
             <TableHeader>Años Laborados (Antigüedad)</TableHeader>
             <TableHeader>Días de Vacaciones</TableHeader>
-            <TableHeader></TableHeader>
           </TableHead>
           <TableRow>
             <TableCell>Año 1</TableCell>
             <TableCell>
-              <input type="number"></input>
+              <span>12</span>
               <span> Días</span>
             </TableCell>
-            <TableCell>Boton</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Año 2</TableCell>
             <TableCell>
-              <input type="number"></input>
+              <span>14</span>
               <span> Días</span>
             </TableCell>
-            <TableCell>Boton</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Año 3</TableCell>
             <TableCell>
-              <input type="number"></input>
+              <span>16</span>
               <span> Días</span>
             </TableCell>
-            <TableCell>Boton</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Año 4</TableCell>
             <TableCell>
-              <input type="number"></input>
+              <span>18</span>
               <span> Días</span>
             </TableCell>
-            <TableCell>Boton</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Año 5</TableCell>
             <TableCell>
-              <input type="number"></input>
+              <span>20</span>
               <span> Días</span>
             </TableCell>
-            <TableCell>Boton</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>De 6 a 10 años</TableCell>
             <TableCell>
-              <input type="number"></input>
+              <span>22</span>
               <span> Días</span>
             </TableCell>
-            <TableCell>Boton</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>De 11 a 15 años</TableCell>
             <TableCell>
-              <input type="number"></input>
+              <span>24</span>
               <span> Días</span>
             </TableCell>
-            <TableCell>Boton</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>De 16 a 20 años</TableCell>
             <TableCell>
-              <input type="number"></input>
+              <span>26</span>
               <span> Días</span>
             </TableCell>
-            <TableCell>Boton</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>De 21 a 25 años</TableCell>
             <TableCell>
-              <input type="number"></input>
+              <span>28</span>
               <span> Días</span>
             </TableCell>
-            <TableCell>Boton</TableCell>
           </TableRow>
 
           <TableRow>
             <TableCell>De 26 a 30 años</TableCell>
             <TableCell>
-              <input type="number"></input>
+              <span>30</span>
               <span> Días</span>
             </TableCell>
-            <TableCell>Boton</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>De 31 a 35 años</TableCell>
             <TableCell>
-              <input type="number"></input>
+              <span>32</span>
               <span> Días</span>
             </TableCell>
-            <TableCell>Boton</TableCell>
           </TableRow>
         </Table>
 
