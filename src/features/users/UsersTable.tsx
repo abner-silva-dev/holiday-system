@@ -24,7 +24,7 @@ const UsersTable = () => {
     return (
       formatText(`${user.name} ${user.paternSurname} ${user.motherSurname}`).includes(
         queryUser
-      ) || user.employNumber.includes(queryUser)
+      ) || user?.employNumber?.includes(queryUser)
     );
   });
 
