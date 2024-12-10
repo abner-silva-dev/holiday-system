@@ -119,7 +119,7 @@ const UserCard: React.FC<{ user: UserInfo; children?: ReactNode }> = ({
         </Group>
         <Group>
           <TextTitle>Jefe directo</TextTitle>
-          <Text>Ricardo Anaya Obrador</Text>
+          <Text></Text>
         </Group>
         <Group>
           <TextTitle>Antigüedad</TextTitle>
@@ -133,7 +133,7 @@ const UserCard: React.FC<{ user: UserInfo; children?: ReactNode }> = ({
         </Group>
         <Group>
           <TextTitle>Puesto</TextTitle>
-          <Text>Hombre de negocios</Text>
+          <Text>{user?.position}</Text>
         </Group>
       </UserData>
       {children}

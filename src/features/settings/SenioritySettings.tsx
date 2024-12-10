@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import Heading from '../../ui/Heading';
-import Button from '../../ui/Button';
 import Row from '../../ui/Row';
 // import Menus from '../../ui/Menus';
 // import { Modal } from 'react-bootstrap';
@@ -72,10 +71,6 @@ const TableHeader = styled.div`
   padding: 1.6rem 2.4rem;
 `;
 
-const SubmitButton = styled(Button)`
-  align-self: center;
-`;
-
 const SenioritySettings = () => {
   return (
     <SenioritySection>
@@ -83,10 +78,10 @@ const SenioritySettings = () => {
         <Row type="vertical">
           <Heading as="h2">Derecho a Vacaciones</Heading>
           <blockquote>
-            La información contenida en esta tabla debe actualizarse periódicamente
-            conforme a las disposiciones vigentes de la Secretaría del Trabajo y Previsión
-            Social (STPS) de México en relación con el derecho a vacaciones de los
-            trabajadores.
+            La información presentada en esta tabla es de carácter referencial y está
+            alineada con las disposiciones vigentes de la Secretaría del Trabajo y
+            Previsión Social (STPS) de México en relación con los derechos de vacaciones
+            de los trabajadores.
           </blockquote>
         </Row>
         <Table>
@@ -173,10 +168,6 @@ const SenioritySettings = () => {
             </TableCell>
           </TableRow>
         </Table>
-
-        <SubmitButton $variation="confirm" $size="medium">
-          GUARDAR CAMBIOS
-        </SubmitButton>
       </SeniorityContainer>
     </SenioritySection>
   );
