@@ -289,6 +289,7 @@ interface PropsAuthorizationCard {
 
 const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
   const queryClient = useQueryClient();
+  const [isAdminEdit, setIsAdminEdit] = useState(false);
   const {
     state: { period },
   } = useStateApp();
@@ -377,7 +378,11 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
 
             <TimeTag $time={holiday?.period} />
           </Row>
-
+          {
+            <EditButton onClick={() => setIsEddit((eddit) => !eddit)} type="button">
+              {isEddit ? <HiMiniXMark /> : <HiOutlinePencilSquare />}
+            </EditButton>
+          }
           <EmployedItem>
             {isEddit ? (
               <InputCalendar
@@ -498,8 +503,8 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
                     : 'En proceso...'}
                 </span>
                 {
-                  <EditButton onClick={() => setIsEddit((eddit) => !eddit)} type="button">
-                    {isEddit ? <HiMiniXMark /> : <HiOutlinePencilSquare />}
+                  <EditButton onClick={() => setIsAdminEdit(!isAdminEdit)} type="button">
+                    {isAdminEdit ? <HiMiniXMark /> : <HiOutlinePencilSquare />}
                   </EditButton>
                 }
               </RowMain>
