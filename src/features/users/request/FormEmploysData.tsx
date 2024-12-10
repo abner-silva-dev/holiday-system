@@ -1,5 +1,5 @@
-import { useForm, SubmitHandler } from 'react-hook-form';
-import { useEffect, useState } from 'react';
+import { useForm, SubmitHandler, useFieldArray } from 'react-hook-form';
+import { useEffect} from 'react';
 import Button from '../../../ui/Button';
 import {
   ButtonNext,
@@ -47,41 +47,34 @@ function FormEmploysData({ handleBack, handleNext }: FormEmploysDataProps) {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
     reset,
-  } = useForm<EmploysData>();
+  } = useForm<EmploysData>({
+    defaultValues: {
+      employs: [{}], // Inicia con un solo objeto de empleo vacío
+    },
+  });
 
-  // Get current user
+  // Obtener datos de usuario
   const { user, isPending } = useUser2();
 
-  // Create Request
+  // Requests de creación y actualización
   const { createRequest } = useCreateRequest<EmploysData>('employData');
-
-  // Update Request
   const { updateRequest } = useUpdateRequest<EmploysData>('employData');
 
-  // Get data if Exists
+  // Obtener los datos si existen
   const { data: requestData } = useRequest('employData');
+  
+  const isEdditSession = Boolean(requestData);
 
-  console.log(requestData);
+  // Gestionar el estado de los empleos
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'employs', // Vincula con el nombre del campo que contiene los empleos
+  });
 
-  // Update or Save
-  const isEdditSession = Boolean(!requestData);
-
-  const [employs, setEmploys] = useState<Employ[]>(
-    requestData?.employs || [{} as Employ]
-  );
-
-  const addEmploy = (e: React.MouseEvent<HTMLButtonElement>): void => {
-    e.preventDefault();
-    if (employs.length < 3) setEmploys([...employs, {} as Employ]);
-  };
-
-  const removeEmploy = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    if (employs.length > 1) setEmploys(employs.slice(0, -1));
-  };
-
+  // Maneja el envío del formulario
   const onSubmit: SubmitHandler<EmploysData> = (data) => {
     if (requestData) {
       updateRequest({ newData: { ...data } });
@@ -90,10 +83,11 @@ function FormEmploysData({ handleBack, handleNext }: FormEmploysDataProps) {
     }
   };
 
+  // Rellenar el formulario si hay datos previos
   useEffect(() => {
     if (requestData) {
       reset({
-        ...requestData,
+        employs: requestData.employs || [{}], // Si no hay empleos, inicia con un objeto vacío
       });
     }
   }, [requestData, reset]);
@@ -104,8 +98,9 @@ function FormEmploysData({ handleBack, handleNext }: FormEmploysDataProps) {
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Page>
         <Title as="h2">DATOS DE EMPLEOS</Title>
-        {employs.map((_, index) => (
-          <FormContainer key={index}>
+
+        {fields.map((item, index) => (
+          <FormContainer key={item.id}>
             <Field>
               <Label>Nombre de la compañía</Label>
               <Input
@@ -128,9 +123,7 @@ function FormEmploysData({ handleBack, handleNext }: FormEmploysDataProps) {
                 })}
               />
               {errors.employs?.[index]?.businessField && (
-                <ErrorMessage>
-                  {errors.employs[index].businessField?.message}
-                </ErrorMessage>
+                <ErrorMessage>{errors.employs[index].businessField?.message}</ErrorMessage>
               )}
             </Field>
 
@@ -221,9 +214,7 @@ function FormEmploysData({ handleBack, handleNext }: FormEmploysDataProps) {
                 })}
               />
               {errors.employs?.[index]?.immediateBoss && (
-                <ErrorMessage>
-                  {errors.employs[index].immediateBoss?.message}
-                </ErrorMessage>
+                <ErrorMessage>{errors.employs[index].immediateBoss?.message}</ErrorMessage>
               )}
             </Field>
 
@@ -236,9 +227,7 @@ function FormEmploysData({ handleBack, handleNext }: FormEmploysDataProps) {
                 })}
               />
               {errors.employs?.[index]?.separationReason && (
-                <ErrorMessage>
-                  {errors.employs[index].separationReason?.message}
-                </ErrorMessage>
+                <ErrorMessage>{errors.employs[index].separationReason?.message}</ErrorMessage>
               )}
             </Field>
           </FormContainer>
@@ -248,16 +237,27 @@ function FormEmploysData({ handleBack, handleNext }: FormEmploysDataProps) {
           <Button
             $variation="secondary"
             type="button"
-            onClick={removeEmploy}
-            disabled={employs.length === 1}
+            onClick={() => remove(fields.length - 1)}
+            disabled={fields.length === 1}
           >
             Quitar Empleo
           </Button>
           <Button
             $variation="secondary"
             type="button"
-            onClick={addEmploy}
-            disabled={employs.length === 3}
+            onClick={() => append({
+              companyName: '',
+              businessField: '',
+              address: '',
+              phone: '',
+              startDate: '',
+              endDate: '',
+              position: '',
+              finalSalary: '',
+              immediateBoss: '',
+              separationReason: ''
+            })}
+            disabled={fields.length === 3}
           >
             Agregar Empleo
           </Button>
@@ -266,8 +266,9 @@ function FormEmploysData({ handleBack, handleNext }: FormEmploysDataProps) {
         <PageChange>
           <ButtonPrevious onClick={handleBack} />
 
+          {/* Aquí se cambia entre el botón Guardar y Actualizar */}
           <Button $variation="confirm" type="submit">
-            {isEdditSession ? 'Guardar' : 'Actualizar'}
+            {isEdditSession ? 'Actualizar' : 'Guardar'}
           </Button>
 
           <ButtonNext onClick={handleNext} />
