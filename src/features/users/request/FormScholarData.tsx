@@ -140,7 +140,7 @@ const FormScholarData = ({
         <Title as="h3">Secundaria</Title>
         <FormContainer>
           <Field>
-            <Label>Años Cursados</Label>
+            <Label>Años Cursados*</Label>
             <Input
               type="number"
               id="secondary.yearsCoursed"
@@ -153,7 +153,7 @@ const FormScholarData = ({
             )}
           </Field>
           <Field>
-            <Label>Nombre de la Escuela</Label>
+            <Label>Nombre de la Escuela*</Label>
             <Input
               type="text"
               id="secondary.schoolName"
@@ -166,7 +166,7 @@ const FormScholarData = ({
             )}
           </Field>
           <Field>
-            <Label>Fecha de Inicio</Label>
+            <Label>Fecha de Inicio*</Label>
             <Input
               type="date"
               id="secondary.startDate"
@@ -179,7 +179,7 @@ const FormScholarData = ({
             )}
           </Field>
           <Field>
-            <Label>Fecha de Término</Label>
+            <Label>Fecha de Término*</Label>
             <Input
               type="date"
               id="secondary.endDate"
@@ -192,7 +192,7 @@ const FormScholarData = ({
             )}
           </Field>
           <Field>
-            <Label>Certificado o Título</Label>
+            <Label>Certificado o Título*</Label>
             <FieldRadio>
               <span>Sí</span>
               <Input

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { API_DAI_SYSTEM } from '../config';
 
-type SourceName = 'users' | 'department' | 'enterprise' | 'holiday';
+type SourceName = 'users' | 'department' | 'enterprise' | 'holiday' | 'seniority';
 
 export const getAll = (sourceName: SourceName) => async () => {
   const res = await fetch(`${API_DAI_SYSTEM}/${sourceName}`, {

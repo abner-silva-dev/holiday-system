@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import Heading from '../../ui/Heading';
 import Row from '../../ui/Row';
+import { SeniorityInfo } from '../seniority/types';
+import { useSeniorities } from '../seniority/useSeniorities';
 // import Menus from '../../ui/Menus';
 // import { Modal } from 'react-bootstrap';
 // import { HiMiniPencil, HiMiniTrash } from 'react-icons/hi2';
@@ -35,7 +37,7 @@ const TableHead = styled.div`
   grid-template-columns: 1fr 1fr;
 `;
 
-const TableRow = styled.div`
+const TableElement = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
 `;
@@ -72,6 +74,12 @@ const TableHeader = styled.div`
 `;
 
 const SenioritySettings = () => {
+  const { seniorities } = useSeniorities();
+  const sortedSeniorities = seniorities?.sort((a: SeniorityInfo, b: SeniorityInfo) => {
+    if (!a.minYears || !b.minYears) return 0;
+    return a.minYears - b.minYears;
+  });
+
   return (
     <SenioritySection>
       <SeniorityContainer>
@@ -89,84 +97,21 @@ const SenioritySettings = () => {
             <TableHeader>Años Laborados (Antigüedad)</TableHeader>
             <TableHeader>Días de Vacaciones</TableHeader>
           </TableHead>
-          <TableRow>
-            <TableCell>Año 1</TableCell>
-            <TableCell>
-              <span>12</span>
-              <span> Días</span>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Año 2</TableCell>
-            <TableCell>
-              <span>14</span>
-              <span> Días</span>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Año 3</TableCell>
-            <TableCell>
-              <span>16</span>
-              <span> Días</span>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Año 4</TableCell>
-            <TableCell>
-              <span>18</span>
-              <span> Días</span>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Año 5</TableCell>
-            <TableCell>
-              <span>20</span>
-              <span> Días</span>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>De 6 a 10 años</TableCell>
-            <TableCell>
-              <span>22</span>
-              <span> Días</span>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>De 11 a 15 años</TableCell>
-            <TableCell>
-              <span>24</span>
-              <span> Días</span>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>De 16 a 20 años</TableCell>
-            <TableCell>
-              <span>26</span>
-              <span> Días</span>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>De 21 a 25 años</TableCell>
-            <TableCell>
-              <span>28</span>
-              <span> Días</span>
-            </TableCell>
-          </TableRow>
-
-          <TableRow>
-            <TableCell>De 26 a 30 años</TableCell>
-            <TableCell>
-              <span>30</span>
-              <span> Días</span>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>De 31 a 35 años</TableCell>
-            <TableCell>
-              <span>32</span>
-              <span> Días</span>
-            </TableCell>
-          </TableRow>
+          <div>
+            {sortedSeniorities?.map((seniority: SeniorityInfo) => (
+              <TableElement key={seniority._id}>
+                <TableCell>
+                  {seniority.minYears === seniority.maxYears
+                    ? `Año ${seniority.minYears}`
+                    : `De ${seniority.minYears} a ${seniority.maxYears} años`}
+                </TableCell>
+                <TableCell>
+                  <span>{seniority.vacationDays}</span>
+                  <span> Días</span>
+                </TableCell>
+              </TableElement>
+            ))}
+          </div>
         </Table>
       </SeniorityContainer>
     </SenioritySection>

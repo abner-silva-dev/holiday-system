@@ -1,6 +1,7 @@
 import StateHoliday from './StateHoliday';
 import styled from 'styled-components';
 import {
+  HiMiniXMark,
   HiOutlineCalendarDays,
   HiOutlineCheck,
   HiOutlineChevronDown,
@@ -268,6 +269,8 @@ const EditButton = styled.button`
   background-color: #ffec99;
   font-weight: 600;
   box-shadow: var(--shadow-md);
+  width: 4rem;
+  height: 3rem;
 
   display: flex;
   align-items: center;
@@ -275,8 +278,8 @@ const EditButton = styled.button`
   gap: 0.6rem;
 
   & svg {
-    height: 2.4rem;
-    width: 2.4rem;
+    height: 2rem;
+    width: 2rem;
   }
 `;
 
@@ -371,12 +374,7 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
                 })}
               </CreatedAt>
             </Heading>
-            {
-              <EditButton onClick={() => setIsEddit((eddit) => !eddit)} type="button">
-                <HiOutlinePencilSquare />
-                Editar
-              </EditButton>
-            }
+
             <TimeTag $time={holiday?.period} />
           </Row>
 
@@ -499,6 +497,11 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
                       })
                     : 'En proceso...'}
                 </span>
+                {
+                  <EditButton onClick={() => setIsEddit((eddit) => !eddit)} type="button">
+                    {isEddit ? <HiMiniXMark /> : <HiOutlinePencilSquare />}
+                  </EditButton>
+                }
               </RowMain>
               <ObservationField
                 defaultValue={holiday.observationAdmin}

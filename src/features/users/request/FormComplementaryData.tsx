@@ -118,7 +118,7 @@ function FormComplementaryData({
         <Title as="h2">DATOS COMPLEMENTARIOS</Title>
         <FormContainer>
           <Field>
-            <Label>R.F.C.</Label>
+            <Label>R.F.C*</Label>
             <Input
               type="text"
               {...register('rfc', { required: 'Este campo es obligatorio' })}
@@ -127,7 +127,7 @@ function FormComplementaryData({
           </Field>
 
           <Field>
-            <Label>No. Afiliación al IMSS</Label>
+            <Label>No. Afiliación al IMSS*</Label>
             <Input
               type="text"
               {...register('imssNumber', { required: 'Este campo es obligatorio' })}
@@ -138,7 +138,7 @@ function FormComplementaryData({
           </Field>
 
           <Field>
-            <Label>CURP</Label>
+            <Label>CURP*</Label>
             <Input
               type="text"
               {...register('curp', { required: 'Este campo es obligatorio' })}
@@ -147,7 +147,7 @@ function FormComplementaryData({
           </Field>
 
           <Field>
-            <Label>No. Crédito Infonavit</Label>
+            <Label>No. Crédito Infonavit*</Label>
             <Input
               type="text"
               {...register('infonavitCredit', { required: 'Este campo es obligatorio' })}
@@ -158,7 +158,7 @@ function FormComplementaryData({
           </Field>
 
           <Field>
-            <Label>Afore</Label>
+            <Label>Afore*</Label>
             <Input
               type="text"
               {...register('afore', { required: 'Este campo es obligatorio' })}
@@ -167,7 +167,7 @@ function FormComplementaryData({
           </Field>
 
           <Field>
-            <Label>¿Disponibilidad para viajar?</Label>
+            <Label>¿Disponibilidad para viajar?*</Label>
             <FieldRadio>
               <span>Sí</span>
               <Input
@@ -192,7 +192,7 @@ function FormComplementaryData({
           </Field>
 
           <Field>
-            <Label>¿Podría cambiar de residencia?</Label>
+            <Label>¿Podría cambiar de residencia?*</Label>
             <FieldRadio>
               <span>Sí</span>
               <Input
@@ -217,7 +217,7 @@ function FormComplementaryData({
           </Field>
 
           <Field>
-            <Label>Licencia tipo</Label>
+            <Label>Licencia tipo*</Label>
             <Input
               type="text"
               {...register('license', { required: 'Este campo es obligatorio' })}
@@ -226,7 +226,7 @@ function FormComplementaryData({
           </Field>
 
           <Field>
-            <Label>¿Tiene familiares en DAI?</Label>
+            <Label>¿Tiene familiares en DAI?*</Label>
             <FieldRadio>
               <span>Sí</span>
               <Input
@@ -251,7 +251,7 @@ function FormComplementaryData({
           </Field>
 
           <Field>
-            <Label>¿Por qué medio se enteró del puesto?</Label>
+            <Label>¿Por qué medio se enteró del puesto?*</Label>
             <Input
               type="text"
               {...register('jobSource', { required: 'Este campo es obligatorio' })}
@@ -260,7 +260,7 @@ function FormComplementaryData({
           </Field>
 
           <Field>
-            <Label>¿Ha trabajado en DAI?</Label>
+            <Label>¿Ha trabajado en DAI?*</Label>
             <FieldRadio>
               <span>Sí</span>
               <Input
@@ -298,7 +298,7 @@ function FormComplementaryData({
           )}
 
           <Field>
-            <Label>¿Con quién vive actualmente?</Label>
+            <Label>¿Con quién vive actualmente?*</Label>
             <Input
               type="text"
               {...register('currentLivingSituation', {
@@ -311,7 +311,7 @@ function FormComplementaryData({
           </Field>
 
           <Field>
-            <Label>¿Dependen personas económicamente de usted?</Label>
+            <Label>¿Dependen personas económicamente de usted?*</Label>
             <FieldRadio>
               <span>Sí</span>
               <Input
@@ -336,7 +336,7 @@ function FormComplementaryData({
           </Field>
 
           <Field>
-            <Label>¿Contribuye con el gasto familiar?</Label>
+            <Label>¿Contribuye con el gasto familiar?*</Label>
             <FieldRadio>
               <span>Sí</span>
               <Input
@@ -361,7 +361,7 @@ function FormComplementaryData({
           </Field>
 
           <Field>
-            <Label>¿Posee Automóvil propio?</Label>
+            <Label>¿Posee Automóvil propio?*</Label>
             <FieldRadio>
               <span>Sí</span>
               <Input

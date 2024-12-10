@@ -169,7 +169,7 @@ const FormKnowledgeExperience = ({
         </FormContainer>
 
         {/* Áreas de Experiencia */}
-        <Title as="h3">Experiencia en:</Title>
+        <Title as="h3">Experiencia en*:</Title>
         <FormContainer>
           {[
             'Compras',
@@ -202,7 +202,7 @@ const FormKnowledgeExperience = ({
         {/* Experiencia Práctica */}
         <FormContainer>
           <Field>
-            <Label>¿Tiene experiencia práctica en el puesto que solicita?</Label>
+            <Label>¿Tiene experiencia práctica en el puesto que solicita?*</Label>
             <FieldRadio>
               <span>Sí</span>
               <Input

@@ -95,7 +95,7 @@ function FormClinicInformation({ handleBack }: { handleBack: () => void }) {
         <Title as="h2">INFORMACIÓN CLÍNICA</Title>
         <FormContainer>
           <Field>
-            <Label htmlFor="height">Estatura</Label>
+            <Label htmlFor="height">Estatura*</Label>
             <Percentage>
               <Input
                 id="height"
@@ -108,7 +108,7 @@ function FormClinicInformation({ handleBack }: { handleBack: () => void }) {
           </Field>
 
           <Field>
-            <Label htmlFor="weight">Peso</Label>
+            <Label htmlFor="weight">Peso*</Label>
             <Percentage>
               <Input
                 id="weight"
@@ -121,7 +121,7 @@ function FormClinicInformation({ handleBack }: { handleBack: () => void }) {
           </Field>
 
           <Field>
-            <Label htmlFor="bloodType">Tipo de Sangre</Label>
+            <Label htmlFor="bloodType">Tipo de Sangre*</Label>
             <Input
               id="bloodType"
               type="text"
@@ -131,7 +131,7 @@ function FormClinicInformation({ handleBack }: { handleBack: () => void }) {
           </Field>
 
           <Field>
-            <Label>¿Padece o padeció enfermedades que necesiten atención médica?</Label>
+            <Label>¿Padece o padeció enfermedades que necesiten atención médica?*</Label>
             <FieldRadio>
               <span>Sí</span>
               <Input
@@ -160,7 +160,7 @@ function FormClinicInformation({ handleBack }: { handleBack: () => void }) {
           {/* Esta pregunta se oculta solo si "No" es seleccionado */}
           {hasMedicalConditions !== 'no' && (
             <Field>
-              <Label htmlFor="medicalConditions">¿Qué enfermedades?</Label>
+              <Label htmlFor="medicalConditions">¿Qué enfermedades?*</Label>
               <Input
                 id="medicalConditions"
                 type="text"
@@ -175,7 +175,7 @@ function FormClinicInformation({ handleBack }: { handleBack: () => void }) {
           <Field>
             <Label>
               ¿En el transcurso del último año ha tenido algún tipo de intervención
-              quirúrgica?
+              quirúrgica?*
             </Label>
             <FieldRadio>
               <span>Sí</span>
@@ -201,7 +201,7 @@ function FormClinicInformation({ handleBack }: { handleBack: () => void }) {
           {/* Esta pregunta se oculta solo si "No" es seleccionado */}
           {hasSurgery !== 'no' && (
             <Field>
-              <Label htmlFor="surgeryType">¿De qué tipo?</Label>
+              <Label htmlFor="surgeryType">¿De qué tipo?*</Label>
               <Input id="surgeryType" type="text" {...register('surgeryType')} />
               {errors.surgeryType && (
                 <ErrorMessage>{errors.surgeryType.message}</ErrorMessage>
@@ -210,7 +210,7 @@ function FormClinicInformation({ handleBack }: { handleBack: () => void }) {
           )}
 
           <Field>
-            <Label>¿Tiene algún impedimento físico que lo limite en su trabajo?</Label>
+            <Label>¿Tiene algún impedimento físico que lo limite en su trabajo?*</Label>
             <FieldRadio>
               <span>Sí</span>
               <Input
@@ -245,7 +245,7 @@ function FormClinicInformation({ handleBack }: { handleBack: () => void }) {
             laboral, así como el uso de mis datos personales con base en el aviso de
             privacidad de la empresa, el cual podré consultar en www.dai.com.mx,
             reconociendo que la presente solicitud no significa el establecimiento de
-            ninguna relación laboral, ni crea el compromiso de que ésta me otorgue.
+            ninguna relación laboral, ni crea el compromiso de que ésta me otorgue. *
           </Label>
           <Input
             id="certifyInformation"

@@ -12,6 +12,7 @@ import {
   Page,
   PageChange,
   Title,
+  Description,
 } from '../../../ui/FormPieces';
 import { useEffect } from 'react';
 import { useUser2 } from '../useUser';
@@ -104,15 +105,15 @@ function FormPersonalReference({
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Page>
         <Title as="h2">REFERENCIAS PERSONALES</Title>
-        <Title as="h4">
+        <Description>
           Favor de incluir los datos de 3 personas que lo conozcan bien, que no sean
           familiares
-        </Title>
+        </Description>
 
         <Title as="h3">Persona 1</Title>
         <FormContainer>
           <Field>
-            <Label htmlFor="person1Name">Nombre Completo</Label>
+            <Label htmlFor="person1Name">Nombre Completo*</Label>
             <Input
               id="person1.name"
               type="text"
@@ -123,7 +124,7 @@ function FormPersonalReference({
             )}
           </Field>
           <Field>
-            <Label htmlFor="person1Duration">Tiempo de Conocerle</Label>
+            <Label htmlFor="person1Duration">Tiempo de Conocerle*</Label>
             <Input
               id="person1.duration"
               type="text"
@@ -134,7 +135,7 @@ function FormPersonalReference({
             )}
           </Field>
           <Field>
-            <Label htmlFor="person1Phone">Teléfono / Celular</Label>
+            <Label htmlFor="person1Phone">Teléfono / Celular*</Label>
             <Input
               id="person1.phone"
               type="text"
@@ -145,7 +146,7 @@ function FormPersonalReference({
             )}
           </Field>
           <Field>
-            <Label htmlFor="person1Occupation">Ocupación</Label>
+            <Label htmlFor="person1Occupation">Ocupación*</Label>
             <Input
               id="person1.occupation"
               type="text"
@@ -162,7 +163,7 @@ function FormPersonalReference({
         <Title as="h3">Persona 2</Title>
         <FormContainer>
           <Field>
-            <Label htmlFor="person2Name">Nombre Completo</Label>
+            <Label htmlFor="person2Name">Nombre Completo*</Label>
             <Input
               id="person2.name"
               type="text"
@@ -173,7 +174,7 @@ function FormPersonalReference({
             )}
           </Field>
           <Field>
-            <Label htmlFor="person2Duration">Tiempo de Conocerle</Label>
+            <Label htmlFor="person2Duration">Tiempo de Conocerle*</Label>
             <Input
               id="person2.duration"
               type="text"
@@ -184,7 +185,7 @@ function FormPersonalReference({
             )}
           </Field>
           <Field>
-            <Label htmlFor="person2Phone">Teléfono / Celular</Label>
+            <Label htmlFor="person2Phone">Teléfono / Celular*</Label>
             <Input
               id="person2.phone"
               type="text"
@@ -195,7 +196,7 @@ function FormPersonalReference({
             )}
           </Field>
           <Field>
-            <Label htmlFor="person2Occupation">Ocupación</Label>
+            <Label htmlFor="person2Occupation">Ocupación*</Label>
             <Input
               id="person2.occupation"
               type="text"
@@ -212,7 +213,7 @@ function FormPersonalReference({
         <Title as="h3">Persona 3</Title>
         <FormContainer>
           <Field>
-            <Label htmlFor="person3Name">Nombre Completo</Label>
+            <Label htmlFor="person3Name">Nombre Completo*</Label>
             <Input
               id="person3.name"
               type="text"
@@ -223,7 +224,7 @@ function FormPersonalReference({
             )}
           </Field>
           <Field>
-            <Label htmlFor="person3Duration">Tiempo de Conocerle</Label>
+            <Label htmlFor="person3Duration">Tiempo de Conocerle*</Label>
             <Input
               id="person3.duration"
               type="text"
@@ -234,7 +235,7 @@ function FormPersonalReference({
             )}
           </Field>
           <Field>
-            <Label htmlFor="person3Phone">Teléfono / Celular</Label>
+            <Label htmlFor="person3Phone">Teléfono / Celular*</Label>
             <Input
               id="person3.phone"
               type="text"
@@ -245,7 +246,7 @@ function FormPersonalReference({
             )}
           </Field>
           <Field>
-            <Label htmlFor="person3Occupation">Ocupación</Label>
+            <Label htmlFor="person3Occupation">Ocupación*</Label>
             <Input
               id="person3.occupation"
               type="text"

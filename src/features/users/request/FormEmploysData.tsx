@@ -107,7 +107,7 @@ function FormEmploysData({ handleBack, handleNext }: FormEmploysDataProps) {
         {employs.map((_, index) => (
           <FormContainer key={index}>
             <Field>
-              <Label>Nombre de la compañía</Label>
+              <Label>Nombre de la compañía*</Label>
               <Input
                 type="text"
                 {...register(`employs.${index}.companyName`, {
@@ -120,7 +120,7 @@ function FormEmploysData({ handleBack, handleNext }: FormEmploysDataProps) {
             </Field>
 
             <Field>
-              <Label>Giro</Label>
+              <Label>Giro*</Label>
               <Input
                 type="text"
                 {...register(`employs.${index}.businessField`, {
@@ -135,7 +135,7 @@ function FormEmploysData({ handleBack, handleNext }: FormEmploysDataProps) {
             </Field>
 
             <Field>
-              <Label>Domicilio</Label>
+              <Label>Domicilio*</Label>
               <Input
                 type="text"
                 {...register(`employs.${index}.address`, {
@@ -148,7 +148,7 @@ function FormEmploysData({ handleBack, handleNext }: FormEmploysDataProps) {
             </Field>
 
             <Field>
-              <Label>Teléfono</Label>
+              <Label>Teléfono*</Label>
               <Input
                 type="text"
                 {...register(`employs.${index}.phone`, {
@@ -161,7 +161,7 @@ function FormEmploysData({ handleBack, handleNext }: FormEmploysDataProps) {
             </Field>
 
             <Field>
-              <Label>Fecha de Ingreso</Label>
+              <Label>Fecha de Ingreso*</Label>
               <Input
                 type="date"
                 {...register(`employs.${index}.startDate`, {
@@ -174,7 +174,7 @@ function FormEmploysData({ handleBack, handleNext }: FormEmploysDataProps) {
             </Field>
 
             <Field>
-              <Label>Fecha de Salida</Label>
+              <Label>Fecha de Salida*</Label>
               <Input
                 type="date"
                 {...register(`employs.${index}.endDate`, {
@@ -187,7 +187,7 @@ function FormEmploysData({ handleBack, handleNext }: FormEmploysDataProps) {
             </Field>
 
             <Field>
-              <Label>Puesto Desempeñado</Label>
+              <Label>Puesto Desempeñado*</Label>
               <Input
                 type="text"
                 {...register(`employs.${index}.position`, {
@@ -200,7 +200,7 @@ function FormEmploysData({ handleBack, handleNext }: FormEmploysDataProps) {
             </Field>
 
             <Field>
-              <Label>Sueldo Final</Label>
+              <Label>Sueldo Final*</Label>
               <Input
                 type="text"
                 {...register(`employs.${index}.finalSalary`, {
@@ -213,7 +213,7 @@ function FormEmploysData({ handleBack, handleNext }: FormEmploysDataProps) {
             </Field>
 
             <Field>
-              <Label>Nombre de Jefe Inmediato</Label>
+              <Label>Nombre de Jefe Inmediato*</Label>
               <Input
                 type="text"
                 {...register(`employs.${index}.immediateBoss`, {
@@ -228,7 +228,7 @@ function FormEmploysData({ handleBack, handleNext }: FormEmploysDataProps) {
             </Field>
 
             <Field>
-              <Label>Motivo de Separación</Label>
+              <Label>Motivo de Separación*</Label>
               <Input
                 type="text"
                 {...register(`employs.${index}.separationReason`, {

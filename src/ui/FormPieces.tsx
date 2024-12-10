@@ -27,6 +27,11 @@ export const Form = styled.form``;
 
 export const Label = styled.label``;
 
+export const Description = styled.label`
+  font-size: 1.7rem;
+  margin-bottom: 5rem;
+`;
+
 export const Input = styled.input`
   width: 100%;
   padding: 0.6rem;
