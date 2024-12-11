@@ -5,12 +5,13 @@ import 'swiper/css/pagination';
 
 import '../../../shared/style/fonts.css';
 
+import ReCAPTCHA from 'react-google-recaptcha';
 import { HiOutlineUserCircle } from 'react-icons/hi2';
 import { HiOutlineEye } from 'react-icons/hi2';
 import { HiOutlineEyeSlash } from 'react-icons/hi2';
 
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useLogin } from '../hooks/useLogin';
 import { media } from '../../../shared/style/media';
@@ -31,7 +32,7 @@ const LoginContainer = styled.div`
   padding: 5rem;
   box-shadow: var(--shadow-md);
 
-  background-color: #d1d5db;
+  background-color: #ebebeb;
   color: #000;
   z-index: 99;
 
@@ -170,6 +171,12 @@ const Title = styled.h1`
   font-size: 4rem;
 `;
 
+const Captcha = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 //TEMPORAL INTERFACE
 interface TempForm {
   employNumber: string;
@@ -181,9 +188,28 @@ export default function Login() {
   const { register, handleSubmit } = useForm<TempForm>({});
   const { login } = useLogin();
 
+  const [isCaptchaValid, setCaptchaValid] = useState(false);
+
   const onSubmit = (data: TempForm) => {
-    console.log(data);
-    login(data);
+    if (isCaptchaValid) {
+      console.log('El usuario no es un robot');
+      console.log(data);
+      login(data);
+    } else {
+      console.log('Por favor acepta el captcha antes de enviar el formulario');
+      alert('Por favor completa el captcha antes de iniciar sesión');
+    }
+  };
+  const captcha = useRef(null);
+
+  const onChange = (value: string | null) => {
+    if (value) {
+      console.log('Captcha validado');
+      setCaptchaValid(true);
+    } else {
+      console.log('Por favor acepta el captcha');
+      setCaptchaValid(false);
+    }
   };
 
   return (
@@ -193,6 +219,7 @@ export default function Login() {
         <Slogan>¡ Tu Soporte en el Camino !</Slogan>
         <Title>¡Bienvenido!</Title>
       </SectionsContainerLeft>
+
       <form onSubmit={handleSubmit(onSubmit)}>
         <SectionsContainerRight>
           <h2>Iniciar Sesión</h2>
@@ -226,7 +253,14 @@ export default function Login() {
               {isClicked ? <HiOutlineEyeSlash /> : <HiOutlineEye />}
             </EyeContainer>
           </TextFieldContainer>
-          <ButtonSubmit>Ingresar</ButtonSubmit>
+          <Captcha>
+            <ReCAPTCHA
+              ref={captcha}
+              sitekey="6LdV95gqAAAAACWILduhgtAMS0WQ_98hc2NbGxNs"
+              onChange={onChange}
+            />
+          </Captcha>
+          <ButtonSubmit disabled={!isCaptchaValid}>Ingresar</ButtonSubmit>
         </SectionsContainerRight>
       </form>
     </LoginContainer>

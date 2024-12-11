@@ -6,6 +6,7 @@ const StyledSwiper = styled(Swiper)`
   position: relative;
   pointer-events: none;
   user-select: none;
+  height: 100vh;
 
   & img {
     filter: brightness(50%);
