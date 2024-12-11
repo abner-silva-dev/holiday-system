@@ -1,7 +1,13 @@
 import axios from 'axios';
 import { API_DAI_SYSTEM } from '../config';
 import { UserInfo } from '../features/users/types';
-import { createOne, deleteOne, getAll, getOne, updateOne } from '../utils/apiFactory';
+import {
+  createOne,
+  deleteOne,
+  getAll,
+  getOne,
+  updateOne,
+} from '../shared/utils/apiFactory';
 
 export const getMe = async () => {
   const res = await fetch(`${API_DAI_SYSTEM}/users/me`, {

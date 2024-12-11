@@ -1,3 +1,3 @@
-import { getAll } from '../utils/apiFactory';
+import { getAll } from '../shared/utils/apiFactory';
 
 export const getSeniorities = getAll('seniority');

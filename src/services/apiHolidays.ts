@@ -1,4 +1,4 @@
-import { createOne, deleteOne, getAll, updateOne } from '../utils/apiFactory';
+import { createOne, deleteOne, getAll, updateOne } from '../shared/utils/apiFactory';
 
 import { HolidayInfo } from './../features/holiday/type';
 

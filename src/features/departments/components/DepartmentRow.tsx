@@ -1,11 +1,11 @@
 import { HiMiniTrash, HiMiniPencil } from 'react-icons/hi2';
-import Menus from '../../shared/ui/Menus';
-import { DepartmentInfo } from './types';
-import Table from '../../shared/ui/Table';
-import { useDeleteDepartment } from './useDeleteDepartment';
-import Modal from '../../shared/ui/Modal';
+import Menus from '../../../shared/ui/Menus';
+import { DepartmentInfo } from '../types';
+import Table from '../../../shared/ui/Table';
+import { useDeleteDepartment } from './../hooks/useDeleteDepartment';
+import Modal from '../../../shared/ui/Modal';
 import CreateDepartment from './CreateDepartment';
-import ConfirmDelete from '../../shared/ui/ConfirmDelete';
+import ConfirmDelete from '../../../shared/ui/ConfirmDelete';
 
 interface Props {
   department: DepartmentInfo;

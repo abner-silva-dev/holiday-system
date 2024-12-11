@@ -4,7 +4,7 @@ import { HiOutlineCheck } from 'react-icons/hi2';
 import letterhead from './../../public/membretado.png';
 import logo from './../../public/logo-dai.png';
 import { HolidayInfo } from '../features/holiday/type';
-import { formatDate, joinName } from '../utils/helpers';
+import { formatDate, joinName } from '../shared/utils/helpers';
 
 const Logo = styled.img`
   width: 14rem;

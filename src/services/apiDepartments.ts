@@ -1,5 +1,5 @@
 import { DepartmentInfo } from '../features/departments/types';
-import { createOne, deleteOne, getAll, updateOne } from '../utils/apiFactory';
+import { createOne, deleteOne, getAll, updateOne } from '../shared/utils/apiFactory';
 
 export const getDepartments = getAll('department');
 export const deleteDepartments = deleteOne('department');
