@@ -287,6 +287,18 @@ interface PropsAuthorizationCard {
   holiday: HolidayInfo;
 }
 
+const printHandler = () => {
+  const printElement = ReactDOMServer.renderToString(Print({ holiday }));
+  const options = {
+    margin: 0,
+    filename: `holiday-${holiday._id}.pdf`,
+    image: { type: 'jpeg', quality: 1 },
+    html2canvas: { scale: 4 },
+    jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' },
+  };
+  html2pdf().set(options).from(printElement).save();
+};
+
 const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
   const queryClient = useQueryClient();
   const [isAdminEdit, setIsAdminEdit] = useState(false);
@@ -334,18 +346,6 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
         },
       }
     );
-  };
-
-  const printHandler = () => {
-    const printElement = ReactDOMServer.renderToString(Print({ holiday }));
-    const options = {
-      margin: 0,
-      filename: `holiday-${holiday._id}.pdf`,
-      image: { type: 'jpeg', quality: 1 },
-      html2canvas: { scale: 4 },
-      jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' },
-    };
-    html2pdf().set(options).from(printElement).save();
   };
 
   let periodCredit = 0;

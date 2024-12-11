@@ -49,9 +49,14 @@ const FieldContainer = styled.div`
   gap: 1rem;
 `;
 
-const Message = styled.label`
+interface MessageProps {
+  $color?: string;
+}
+
+const Message = styled.label<MessageProps>`
   font-size: 1.8rem;
   font-style: italic;
+  color: ${(props) => props.$color || 'curretColor'};
 `;
 
 const RegContainer = styled.div`
@@ -101,30 +106,32 @@ const CreateHoliday: React.FC<PropsCreateDepartment> = ({ edit = {}, onClose }) 
   const { createHoliday } = useCreateHoliday();
   const [dates, setDates] = useState<Date[]>([]);
 
-  const holidays =
-    curUser?.holidays?.filter((holiday) => holiday.period === period) || [];
+  // const holidays =
+  //   curUser?.holidays?.filter((holiday) => holiday.period === period) || [];
 
-  const tempPendingHolidays = holidays.reduce(
-    (acc, cur) => acc + (cur.days?.length || 0),
-    0
-  );
+  // const tempPendingHolidays = holidays.reduce(
+  //   (acc, cur) => acc + (cur.days?.length || 0),
+  //   0
+  // );
 
   const navigate = useNavigate();
   const location = useLocation();
 
-  let periodCredit;
+  let periodCredit = 0;
 
   switch (period) {
     case 'future':
-      periodCredit = curUser?.creditFuture?.balance;
+      periodCredit = curUser?.creditFuture?.balance || 0;
       break;
     case 'present':
-      periodCredit = curUser?.credit?.balance;
+      periodCredit = curUser?.credit?.balance || 0;
       break;
     case 'past':
-      periodCredit = curUser?.creditPast?.balance;
+      periodCredit = curUser?.creditPast?.balance || 0;
       break;
   }
+
+  const hasCredit = periodCredit > 1;
 
   useEffect(() => {
     setDates([]);
@@ -168,21 +175,33 @@ const CreateHoliday: React.FC<PropsCreateDepartment> = ({ edit = {}, onClose }) 
             <InputCalendar
               dates={dates}
               setDates={setDates}
-              maxDateCount={periodCredit}
+              maxDateCount={periodCredit || -1}
             />
           </StyledCalendarInput>
         </FieldContainer>
 
         <FieldContainer>
           <Label>Notas</Label>
-          <TextArea id="observation" placeholder="" {...register('observation')} />
+          <TextArea
+            id="observation"
+            placeholder=""
+            {...register('observation')}
+            disabled={!hasCredit}
+          />
         </FieldContainer>
 
         <FieldContainer>
-          {dates.length === 0 && <Message>Aún no se han seleccionado fechas.</Message>}
+          {!hasCredit && (
+            <Message $color="red">No tiene saldo para solicitar vacaciones.</Message>
+          )}
+          {dates.length === 0 && hasCredit && (
+            <Message>Aún no se han seleccionado fechas.</Message>
+          )}
         </FieldContainer>
         <ButtonRow>
-          <SubmitButton $variation="confirm">Crear Registro</SubmitButton>
+          <SubmitButton $variation="confirm" disabled={!hasCredit}>
+            Crear Registro
+          </SubmitButton>
           <CancelButton
             $variation="secondary"
             type="button"

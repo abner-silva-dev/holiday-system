@@ -1,4 +1,4 @@
-import { HolidayInfo } from '../features/holiday/type';
+import { HolidayInfo } from '../../features/holiday/type';
 
 export const getStatusHoliday = (holidays: HolidayInfo[] = []) => {
   const approvedHolidays = holidays.filter(

@@ -122,9 +122,19 @@ const HolidayManagement = () => {
   const { setPeriod } = useStateApp();
 
   const { user } = useUser();
+
   useEffect(() => {
-    setPeriod('present');
-  }, []);
+    if (!user) return;
+    const currentDate = new Date();
+
+    const isPastPeriod =
+      user?.creditPast?.balance !== undefined &&
+      user.creditPast.balance > 1 &&
+      user.creditPast.exp &&
+      new Date(user.creditPast.exp) > currentDate;
+
+    setPeriod(isPastPeriod ? 'past' : 'present');
+  }, [user]);
 
   if (!user) return null;
 
