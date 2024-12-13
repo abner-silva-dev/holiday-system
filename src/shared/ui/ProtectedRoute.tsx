@@ -1,4 +1,4 @@
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ReactElement, useEffect } from 'react';
 import { useMe } from '../../features/authentication/hooks/useMe';
 import styled from 'styled-components';

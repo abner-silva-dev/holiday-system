@@ -384,6 +384,8 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
         ? { admin: userAuthenticated.id }
         : { manager: userAuthenticated.id };
 
+    console.log({ id: holiday._id || '', newHoliday: { ...data, ...acceptedBy } });
+
     updateHoliday(
       { id: holiday._id || '', newHoliday: { ...data, ...acceptedBy } },
       {

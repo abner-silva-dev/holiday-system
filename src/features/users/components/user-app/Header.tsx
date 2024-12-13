@@ -125,13 +125,13 @@ const Header = () => {
             </div>
           </NavButton>
 
-          <NavGroup>
+          <NavButton to="/user/me">
             <UserPhoto
               src={`${API_DAI_BASE}/img/user/${userAuthenticated?.photo}`}
               alt="user photo"
             />
             <HeaderText>{userAuthenticated.name}</HeaderText>
-          </NavGroup>
+          </NavButton>
 
           <NavButton to={`/user/holidays/${userAuthenticated.id}?history=request`}>
             <HiCalendarDays />
