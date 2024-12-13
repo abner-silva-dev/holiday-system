@@ -15,7 +15,7 @@ import UserCard from '../../users/components/UserCard';
 import { Link, useSearchParams } from 'react-router-dom';
 import CreateHoliday from './CreateHoliday';
 import { useEffect, useState } from 'react';
-import AuthorizationCard from './AuthorizationCard';
+import AuthorizationCardEdit from './AuthorizationCardEdit';
 import { HolidayInfo } from '../type';
 import ContentEmpty from '../../../shared/ui/ContentEmpty';
 import { media } from '../../../shared/style/media';
@@ -279,7 +279,7 @@ const HolidayManagement = () => {
             <>
               {holidaysFilter.length === 0 && <ContentEmpty />}
               {holidaysFilter.map((holiday: HolidayInfo) => {
-                return <AuthorizationCard holiday={holiday} key={holiday._id} />;
+                return <AuthorizationCardEdit holiday={holiday} key={holiday._id} />;
               })}
             </>
           )}

@@ -19,7 +19,7 @@ const GlobalStyles = createGlobalStyle`
     --color-blue-100: #e7f5ff;
     --color-blue-300: #175691;
     
-
+    --color-cyan-800: #0c8599;
   /* Grey */
   --color-grey-0: #fff;
   --color-grey-50: #f9fafb;
@@ -133,6 +133,8 @@ const GlobalStyles = createGlobalStyle`
   
   --color-blue-300: #9bcae9;
   
+
+  --color-cyan-800: #c5f6fa;
     --backdrop-color: rgba(0, 0, 0, 0.3);
 
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);

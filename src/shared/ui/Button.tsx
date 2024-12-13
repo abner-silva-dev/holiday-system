@@ -1,7 +1,14 @@
 import styled, { css } from 'styled-components';
 
 type Props = {
-  $variation?: 'primary' | 'secondary' | 'danger' | 'confirm';
+  $variation?:
+    | 'primary'
+    | 'secondary'
+    | 'danger'
+    | 'confirm'
+    | 'approved'
+    | 'reject'
+    | 'lock';
   $size?: 'small' | 'medium' | 'large';
 };
 
@@ -57,6 +64,32 @@ const variations = {
 
     &:hover {
       background-color: #991b1b;
+    }
+  `,
+  approve: css`
+    color: var(--color-brand-50);
+    background-color: var(--color-red-700);
+
+    &:hover {
+      background-color: var(--color-red-600);
+    }
+  `,
+
+  reject: css`
+    color: var(--color-brand-50);
+    background-color: var(--color-red-700);
+
+    &:hover {
+      background-color: var(--color-red-600);
+    }
+  `,
+
+  lock: css`
+    color: var(--color-brand-50);
+    background-color: var(--color-red-700);
+
+    &:hover {
+      background-color: var(--color-red-600);
     }
   `,
 };
