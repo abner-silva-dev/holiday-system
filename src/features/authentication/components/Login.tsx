@@ -256,7 +256,7 @@ export default function Login() {
           <Captcha>
             <ReCAPTCHA
               ref={captcha}
-              sitekey="6LdV95gqAAAAACWILduhgtAMS0WQ_98hc2NbGxNs"
+              sitekey="6LdOB5kqAAAAAJGqkKSO16YP5sfExmhGSrut9vBJ"
               onChange={onChange}
             />
           </Captcha>
