@@ -50,7 +50,7 @@ function ConfirmAction({ disabled, onConfirm, onCloseModal }: ConfirmActionProps
         para realizar esta acción.
       </p>
 
-      <PasswordInput onChange={setPassword} value={password} />
+      <PasswordInput letterSpacing="medium" onChange={setPassword} value={password} />
 
       <div>
         <Button $variation="secondary" disabled={disabled} onClick={onCloseModal}>
