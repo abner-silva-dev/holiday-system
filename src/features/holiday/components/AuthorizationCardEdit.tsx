@@ -299,7 +299,7 @@ interface PropsAuthorizationCard {
   holiday: HolidayInfo;
 }
 
-const printHandler = () => {
+const printHandler = (holiday: HolidayInfo) => {
   const printElement = ReactDOMServer.renderToString(Print({ holiday }));
   const options = {
     margin: 0,
@@ -312,7 +312,7 @@ const printHandler = () => {
 };
 let requestState: StateAutorization;
 
-const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
+const AuthorizationCardEdit: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
   const queryClient = useQueryClient();
   // const [isAdminEdit, setIsAdminEdit] = useState(false);
   const {
@@ -326,8 +326,8 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
   const [authorizationEditManager, setAuthorizationEditManager] = useState(
     holiday.authorizationManager
   );
-  const [approvedState, setApprovedState] = useState(true);
-  const [rejectedState, setRejectedState] = useState(true);
+  // const [approvedState, setApprovedState] = useState(true);
+  // const [rejectedState, setRejectedState] = useState(true);
 
   const handleButtonAprove = () => {
     if (userAuthenticated?.role === 'admin') {
@@ -400,13 +400,13 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
 
   switch (period) {
     case 'future':
-      periodCredit = curUser?.creditFuture?.balance;
+      periodCredit = curUser?.creditFuture?.balance || 0;
       break;
     case 'present':
-      periodCredit = curUser?.credit?.balance;
+      periodCredit = curUser?.credit?.balance || 0;
       break;
     case 'past':
-      periodCredit = curUser?.creditPast?.balance;
+      periodCredit = curUser?.creditPast?.balance || 0;
       break;
   }
 
@@ -681,7 +681,7 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
         holiday.authorizationAdmin === 'approved' &&
         holiday.authorizationManager === 'approved' && (
           <OptionsAuthorization>
-            <ButtonPDF onClick={printHandler}>
+            <ButtonPDF onClick={() => printHandler(holiday)}>
               <FaFilePdf />
               <span>Descargar</span>
             </ButtonPDF>
@@ -691,4 +691,4 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
   );
 };
 
-export default AuthorizationCard;
+export default AuthorizationCardEdit;

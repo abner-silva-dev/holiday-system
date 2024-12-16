@@ -350,7 +350,7 @@ const Print: React.FC<{ holiday?: HolidayInfo }> = ({ holiday = tempHolidays }) 
               <Input
                 type="text"
                 defaultValue={joinName({
-                  name: holiday.user?.name || '',
+                  name: holiday?.user?.name || '',
                   motherSurname: holiday.user?.motherSurname || '',
                   paternSurname: holiday.user?.paternSurname || '',
                 })}
