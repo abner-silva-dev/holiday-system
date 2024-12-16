@@ -10,15 +10,23 @@ import {
 } from '../shared/utils/apiFactory';
 
 export const getMe = async () => {
-  const res = await fetch(`${API_DAI_SYSTEM}/users/me`, {
-    credentials: 'include',
-  });
+  try {
+    const res = await axios.get(`${API_DAI_SYSTEM}/users/me`, {
+      withCredentials: true,
+    });
 
-  if (!res.ok) throw new Error(`User could not loaded`);
-
-  const { data } = await res.json();
-
-  return data;
+    return res.data.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error('Axios error details:', error.response?.data || error.message);
+      throw new Error(
+        `User could not be loaded. Status: ${error.response?.status || 'unknown'}`
+      );
+    } else {
+      console.error('Unexpected error:', error);
+      throw new Error('An unexpected error occurred.');
+    }
+  }
 };
 
 export async function updateRoleUser<Model>(id: string, newData: Model | FormData) {

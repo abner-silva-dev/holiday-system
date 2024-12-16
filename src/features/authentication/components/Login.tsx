@@ -7,7 +7,6 @@ import '../../../shared/style/fonts.css';
 
 // @ts-expect-error have not typesss
 import ReCAPTCHA from 'react-google-recaptcha';
-
 import { HiOutlineUserCircle } from 'react-icons/hi2';
 import { HiOutlineEye } from 'react-icons/hi2';
 import { HiOutlineEyeSlash } from 'react-icons/hi2';
@@ -18,7 +17,7 @@ import { useForm } from 'react-hook-form';
 import { useLogin } from '../hooks/useLogin';
 import { media } from '../../../shared/style/media';
 import Logo from '../../../shared/ui/Logo';
-// import logoImg from '../../../../public/logo-dai.png';
+import logoImg from '../../../../public/logo-dai.png';
 
 const LoginContainer = styled.div`
   gap: 5rem;
@@ -217,7 +216,7 @@ export default function Login() {
   return (
     <LoginContainer>
       <SectionsContainerLeft>
-        <Image src={'/logo-dai.png'} />
+        <Image src={logoImg} />
         <Slogan>¡ Tu Soporte en el Camino !</Slogan>
         <Title>¡Bienvenido!</Title>
       </SectionsContainerLeft>
