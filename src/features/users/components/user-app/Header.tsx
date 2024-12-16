@@ -8,7 +8,7 @@ import {
 import styled from 'styled-components';
 import { API_DAI_BASE } from '../../../../config';
 
-import logo from './../../../../../public/Logo-dai.png';
+import logo from './../../../../../public/logo-dai.png';
 import UserPhoto from '../../../users/components/UserPhoto';
 import { NavLink } from 'react-router-dom';
 

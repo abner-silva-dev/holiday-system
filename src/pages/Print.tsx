@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { HiOutlineCheck } from 'react-icons/hi2';
 import letterhead from './../../public/membretado.png';
 
-import logo from '../../public/logo-dai.png';
+// import logo from '../../public/logo-dai.png';
 
 import { HolidayInfo } from '../features/holiday/type';
 import { formatDate, joinName } from '../shared/utils/helpers';
@@ -29,11 +29,6 @@ const PrintContainer = styled.div`
   border: 2px solid #b3b3b3;
   margin: auto;
   margin-top: 2rem;
-  /* background-image: url(/membretado.png);
-  background-position: center -25px;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-size: 119%; */
 
   & header {
     display: grid;
@@ -337,7 +332,7 @@ const Print: React.FC<{ holiday?: HolidayInfo }> = ({ holiday }) => {
       <CutLeft />
       <GroupContent>
         <header>
-          <Logo src={logo} />
+          <Logo src={'/logo-dai.png'} />
           <HeadingContainer>
             <h1>Solicitud de Vacaciones</h1>
           </HeadingContainer>
