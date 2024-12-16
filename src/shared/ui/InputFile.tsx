@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { HiOutlineArrowUpTray } from 'react-icons/hi2';
 import styled from 'styled-components';
 
@@ -40,7 +40,7 @@ const Group = styled.div`
 `;
 
 interface PropsInputFile {
-  onChange: (event: File) => void;
+  onChange: (file: File) => void;
   file: File | null;
 }
 

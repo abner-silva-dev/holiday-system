@@ -3,7 +3,7 @@ import Table from '../../../shared/ui/Table';
 import { useDepartments } from './../hooks/useDepartment';
 
 import { DepartmentInfo } from './../types';
-import DepartmentRow from './../components/DepartmentRow';
+import DepartmentRow from './DepartmentRow';
 
 import Menus from '../../../shared/ui/Menus';
 import { useStateApp } from '../../../context/stateAppContext';
