@@ -140,6 +140,13 @@ const CreateHoliday: React.FC<PropsCreateDepartment> = ({ edit = {}, onClose }) 
   if (!curUser) return null;
 
   const onSubmit = (data: HolidayInfo) => {
+    console.log({
+      ...data,
+      days: dates,
+      period,
+      createdAt: new Date().toISOString(),
+      user: curUser?.id || '',
+    });
     createHoliday(
       {
         ...data,
