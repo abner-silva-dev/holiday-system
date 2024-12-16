@@ -411,8 +411,8 @@ const Print: React.FC<{ holiday?: HolidayInfo }> = ({ holiday = tempHolidays }) 
               <label>
                 {joinName({
                   name: holiday.admin?.name || '',
-                  motherSurname: holiday.admin?.motherSurname || '',
-                  paternSurname: holiday.admin?.paternSurname || '',
+                  motherSurname: typeof holiday.admin !== 'string' ? holiday.admin?.motherSurname || '' : '',
+                  paternSurname: typeof holiday.admin !== 'string' ? holiday.admin?.paternSurname || '' : '',
                 })}
               </label>
               <label>Administrador - R.H</label>
