@@ -20,13 +20,6 @@ const Process = styled.div<{ $state: number }>`
   transition: all 0.4s ease-in-out;
 `;
 
-interface PropsPoint {
-  $position: number;
-  $state: boolean;
-  onClick: () => void;
-  tooltipContent: string;
-}
-
 const PointStyled = styled.div<PropsPoint>`
   width: ${(props) => (props.$state ? '3rem' : '2.5rem')};
   height: ${(props) => (props.$state ? '3rem' : '2.5rem')};
@@ -48,6 +41,12 @@ const PointStyled = styled.div<PropsPoint>`
   }
 `;
 
+interface PropsPoint {
+  $position: number;
+  $state: boolean;
+  onClick: () => void;
+  tooltipContent?: string;
+}
 const Point: React.FC<PropsPoint> = ({ $position, $state, onClick, tooltipContent }) => {
   return (
     <>

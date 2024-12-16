@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { API_DAI_SYSTEM } from '../config';
+import { UserInfo } from '../features/users/types';
 
 interface Login {
   employNumber: string;
@@ -38,11 +39,14 @@ export const logout = async () => {
   return data;
 };
 
-export const updateMe = async (newData) => {
+export const updateMe = async (newData: UserInfo) => {
   const res = await fetch(`${API_DAI_SYSTEM}/users/updateMe`, {
     method: 'PATCH',
     credentials: 'include',
-    body: newData,
+    headers: {
+      'Content-Type': 'application/json', // Asegúrate de incluir este encabezado
+    },
+    body: JSON.stringify(newData), // Serializa el objeto a un string JSON
   });
 
   if (!res.ok) throw new Error(`El usuario no se pudo actualizar`);
