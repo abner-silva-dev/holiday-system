@@ -2,7 +2,6 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { API_DAI_SYSTEM } from '../../config';
 import toast from 'react-hot-toast';
-import { HiMiniInboxArrowDown } from 'react-icons/hi2';
 
 const Float = styled.div`
   position: absolute;

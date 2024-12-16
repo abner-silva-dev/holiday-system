@@ -14,7 +14,7 @@ import { useUpdateHoliday } from './../hooks/useUpdateHoliday';
 import { useForm } from 'react-hook-form';
 import { useQueryClient } from '@tanstack/react-query';
 import { useUser } from '../../users/hooks/useUser';
-import html2pdf from 'html2pdf.js';
+
 import Row from '../../../shared/ui/Row';
 import Heading from '../../../shared/ui/Heading';
 import { FaFilePdf } from 'react-icons/fa6';
@@ -27,6 +27,8 @@ import TimeTag from './TimeTag';
 import { media } from '../../../shared/style/media';
 import { useStateApp } from '../../../context/stateAppContext';
 import InputCalendar from '../../../shared/ui/InputCalendar';
+// @ts-expect-error have not types
+import html2pdf from 'html2pdf.js';
 
 const AuthorizationCardStyled = styled.div`
   background-color: var(--color-grey-0);
