@@ -1,11 +1,16 @@
 import styled from 'styled-components';
+import { FC } from 'react';
 
-const styledEmpty = styled.p`
+const StyledEmpty = styled.p`
   text-align: center;
 `;
 
-function Empty({ resourceName }) {
-  return <styledEmpty>No se pudieron encontrar los {resourceName}</styledEmpty>;
-}
+type EmptyProps = {
+  resourceName: string;
+};
+
+const Empty: FC<EmptyProps> = ({ resourceName }) => {
+  return <StyledEmpty>No se pudieron encontrar los {resourceName}</StyledEmpty>;
+};
 
 export default Empty;

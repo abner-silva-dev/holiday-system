@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import html2pdf from 'html2pdf.js';
 import { HiOutlineCheck } from 'react-icons/hi2';
 import letterhead from './../../public/membretado.png';
 import logo from './../../public/logo-dai.png';

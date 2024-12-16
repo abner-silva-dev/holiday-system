@@ -21,7 +21,7 @@ const HolidayTable = () => {
     return (
       formatText(`${user.name} ${user.paternSurname} ${user.motherSurname}`).includes(
         queryHoliday
-      ) || user.employNumber.includes(queryHoliday)
+      ) || user?.employNumber?.includes(queryHoliday)
     );
   });
 

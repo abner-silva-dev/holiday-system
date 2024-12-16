@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, DragEvent } from 'react';
 import styled from 'styled-components';
 
 const StyledDraggable = styled.div`
@@ -7,31 +7,32 @@ const StyledDraggable = styled.div`
 `;
 
 function Draggable() {
-  const [fileUrl, setFileUrl] = useState(null);
+  const [fileUrl, setFileUrl] = useState<string | null>(null);
 
-  function handleDrag(e) {
+  function handleDrag(e: DragEvent<HTMLDivElement>) {
     e.preventDefault();
   }
 
-  function handleDrop(e) {
+  function handleDrop(e: DragEvent<HTMLDivElement>) {
     e.preventDefault();
-    // console.log(e.dataTransfer.files);
 
     const fileReader = new FileReader();
 
     fileReader.addEventListener('load', () => {
-      // console.log(fileReader.result);
-      setFileUrl(fileReader.result);
+      setFileUrl(fileReader.result as string);
     });
 
-    fileReader.readAsDataURL(e.dataTransfer.files[0]);
+    const file = e.dataTransfer.files[0];
+    if (file) {
+      fileReader.readAsDataURL(file);
+    }
   }
 
   return (
     <StyledDraggable onDragOver={handleDrag} onDrop={handleDrop}>
       <span>Drag your file</span>
       <input type="file" hidden />
-      {fileUrl && <img src={fileUrl} />}
+      {fileUrl && <img src={fileUrl} alt="Uploaded file" />}
     </StyledDraggable>
   );
 }

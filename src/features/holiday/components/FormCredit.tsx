@@ -204,7 +204,7 @@ const FormCredit: React.FC<PropsFormCredit> = ({ user }) => {
                   required: 'Este campo es obligatorio',
                   min: { value: 0, message: 'El crédito debe ser al menos 0' },
                   max: {
-                    value: daysGrantedBySeniority.balance,
+                    value: daysGrantedBySeniority.balance || 0,
                     message: `El crédito no debe ser mayor que ${daysGrantedBySeniority.balance}`,
                   },
                 })}

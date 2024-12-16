@@ -1,14 +1,7 @@
 import styled, { css } from 'styled-components';
 
 type Props = {
-  $variation?:
-    | 'primary'
-    | 'secondary'
-    | 'danger'
-    | 'confirm'
-    | 'approved'
-    | 'reject'
-    | 'lock';
+  $variation?: 'primary' | 'secondary' | 'danger' | 'confirm' | 'approve' | 'lock';
   $size?: 'small' | 'medium' | 'large';
 };
 
@@ -41,6 +34,7 @@ const variations = {
       background-color: var(--color-red-600);
     }
   `,
+
   secondary: css`
     color: var(--color-grey-600);
     background: var(--color-grey-0);
@@ -50,6 +44,7 @@ const variations = {
       background-color: var(--color-grey-50);
     }
   `,
+
   confirm: css`
     color: #fff;
     background-color: var(--color-green-700);
@@ -58,6 +53,7 @@ const variations = {
       background-color: var(--color-green-600);
     }
   `,
+
   danger: css`
     color: #fee2e2;
     background-color: #b91c1c;
@@ -66,6 +62,7 @@ const variations = {
       background-color: #991b1b;
     }
   `,
+
   approve: css`
     color: var(--color-brand-50);
     background-color: var(--color-red-700);

@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, ReactNode, ReactElement, cloneElement } from 'react';
+import { useState, ChangeEvent, ReactElement, cloneElement } from 'react';
 import { HiOutlineMagnifyingGlass, HiAdjustmentsHorizontal } from 'react-icons/hi2';
 import styled from 'styled-components';
 import { useOutsideClick } from '../hooks/useOutsideClick';
