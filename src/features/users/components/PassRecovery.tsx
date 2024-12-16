@@ -27,33 +27,6 @@ const Input = styled.input`
   }
 `;
 
-const FieldContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-right: 1.5rem;
-  background-color: var(--color-grey-100);
-  border-radius: 3px;
-
-  & svg {
-    width: 3rem;
-    height: 3rem;
-    color: var(--color-grey-500);
-    transition: all 0.2s;
-  }
-`;
-
-const EyeContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  cursor: pointer;
-
-  & svg:hover {
-    color: var(--color-grey-700);
-  }
-`;
-
 const Form = styled.form`
   width: 30%;
   display: flex;
