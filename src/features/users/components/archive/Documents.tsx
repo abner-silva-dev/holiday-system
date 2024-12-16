@@ -60,26 +60,12 @@ const Head = styled.div`
   gap: 2rem;
 `;
 
-// const WatchButton = styled(Button)`
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   gap: 0.7rem;
-
-//   & svg {
-//     width: 2.4rem;
-//     height: 2.4rem;
-//   }
-
 const WatchButton = styled(Button)<{ visible: boolean }>`
-  display: ${({ visible }) =>
-    visible ? 'inline-flex' : 'none'}; /* Mostrar/ocultar según el estado */
+  display: ${({ visible }) => (visible ? 'inline-flex' : 'none')};
 `;
 
 const SaveButton = styled(Button)<{ visible: boolean }>`
-  display: ${({ visible }) =>
-    visible ? 'inline-flex' : 'none'}; /* Mostrar/ocultar según el estado */
-  align-items: center;
+  display: ${({ visible }) => (visible ? 'inline-flex' : 'none')};
   justify-content: center;
   gap: 0.7rem;
 
@@ -89,18 +75,14 @@ const SaveButton = styled(Button)<{ visible: boolean }>`
   }
 `;
 
-const Documents: React.FC<DocumentsProps> = () => {
-  const [files, setFiles] = useState<(File | null)[]>(Array(4).fill(null)); // Array of File objects
+const Documents: React.FC = () => {
+  const [files, setFiles] = useState<(File | null)[]>(Array(4).fill(null));
   const [fileNames, setFileNames] = useState<string[]>(
     Array(4).fill('Seleccionar archivo')
-  ); // Array of file names
-  const [savedFiles, setSavedFiles] = useState<boolean[]>(Array(4).fill(false)); // Array to track which files are saved
+  );
+  const [savedFiles, setSavedFiles] = useState<boolean[]>(Array(4).fill(false));
 
-  const handleFileChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    index: number
-  ) => {
-    const file = event.target.files?.[0];
+  const handleFileChange = (file: File, index: number) => {
     if (file) {
       const newFiles = [...files];
       newFiles[index] = file;
@@ -110,7 +92,6 @@ const Documents: React.FC<DocumentsProps> = () => {
       newFileNames[index] = file.name;
       setFileNames(newFileNames);
 
-      // Reset saved status when new file is selected
       const newSavedFiles = [...savedFiles];
       newSavedFiles[index] = false;
       setSavedFiles(newSavedFiles);
@@ -122,8 +103,8 @@ const Documents: React.FC<DocumentsProps> = () => {
     const documentName = fileNames[index];
 
     if (file) {
-      const url = URL.createObjectURL(file); // Obtener la URL del archivo
-      const newWindow = window.open(url, '_blank'); // Abre el PDF en una nueva pestaña
+      const url = URL.createObjectURL(file);
+      const newWindow = window.open(url, '_blank');
 
       if (newWindow) {
         newWindow.document.title = documentName; // Establecer el nombre del archivo en el título de la nueva ventana
@@ -175,8 +156,8 @@ const Documents: React.FC<DocumentsProps> = () => {
                 <Label>{label}</Label>
               </Group>
               <InputFile
-                onChange={(event) => handleFileChange(event, index)} // Llamamos a handleFileChange
-                nameFile={fileNames[index]} // Pasamos el nombre del archivo al componente InputFile
+                onChange={(file) => handleFileChange(file, index)}
+                file={files[index]}
               />
               <Head>
                 {/* Botón "Ver" solo será visible si hay un archivo cargado */}
