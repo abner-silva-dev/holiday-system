@@ -14,6 +14,8 @@ import { useUpdateHoliday } from '../hooks/useUpdateHoliday';
 import { useForm } from 'react-hook-form';
 import { useQueryClient } from '@tanstack/react-query';
 import { useUser } from '../../users/hooks/useUser';
+
+// @ts-expect-error have not types
 import html2pdf from 'html2pdf.js';
 import Row from '../../../shared/ui/Row';
 import Heading from '../../../shared/ui/Heading';

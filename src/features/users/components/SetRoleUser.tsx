@@ -49,13 +49,13 @@ function SetRoleUser() {
   const [role, setRole] = useState(user?.role || 'user');
   const { updateRoleUser } = useUpdateRole();
 
-  const handleChangeRole = (password: string, onCloseModal: () => void) => {
+  const handleChangeRole = (password: string, onCloseModal?: () => void) => {
     if (!password) return;
     updateRoleUser(
       { newData: { role, password }, id: user?.id || '' },
       {
         onSuccess: () => {
-          onCloseModal();
+          onCloseModal?.();
         },
       }
     );
@@ -101,12 +101,7 @@ function SetRoleUser() {
             </Modal.Open>
 
             <Modal.Window name="confirmAction">
-              <ConfirmAction
-                onConfirm={handleChangeRole}
-                // resourceName="Empleados"
-                // // disabled={isDeleting}
-                // onConfirm={() => {}}
-              />
+              <ConfirmAction onConfirm={handleChangeRole} />
             </Modal.Window>
           </Modal>
         </UserContainer>

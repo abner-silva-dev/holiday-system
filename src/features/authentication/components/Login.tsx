@@ -5,7 +5,9 @@ import 'swiper/css/pagination';
 
 import '../../../shared/style/fonts.css';
 
+// @ts-expect-error have not typesss
 import ReCAPTCHA from 'react-google-recaptcha';
+
 import { HiOutlineUserCircle } from 'react-icons/hi2';
 import { HiOutlineEye } from 'react-icons/hi2';
 import { HiOutlineEyeSlash } from 'react-icons/hi2';

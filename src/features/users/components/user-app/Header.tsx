@@ -42,18 +42,6 @@ const Logo = styled.img`
   width: 10rem;
 `;
 
-const NavGroup = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  /* width: 20rem; */
-  padding: 1.2rem 0;
-  border-bottom: 2px solid transparent;
-  transition: all 0.2s;
-`;
-
 const NavButton = styled(NavLink)`
   display: flex;
   flex-wrap: wrap;

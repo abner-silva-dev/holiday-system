@@ -85,7 +85,7 @@ const fetchFile = async (url: string) => {
   }
 };
 
-const openFilePreview = (file: File) => {
+const openFilePreview = (file: File | null) => {
   if (file) {
     const url = URL.createObjectURL(file);
     const previewWindow = window.open(url, '_blank');

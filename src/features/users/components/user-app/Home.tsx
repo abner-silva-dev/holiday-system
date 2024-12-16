@@ -236,9 +236,9 @@ const ButtonGroup = styled.div`
 
 const Home = () => {
   const { userAuthenticated } = useMe();
-  const [modalImage, setModalImage] = useState(null);
+  const [modalImage, setModalImage] = useState<null | string>(null);
 
-  const openModal = (image) => {
+  const openModal = (image: string) => {
     setModalImage(image);
   };
 
