@@ -150,156 +150,156 @@ const LetterHeadContainer = styled.div`
   width: 130%;
 `;
 
-const tempHolidays = {
-  _id: '67214ad899bdc0455950360a',
-  days: [
-    '2024-10-10T06:00:00.000Z',
-    '2024-10-17T06:00:00.000Z',
-    '2024-10-11T06:00:00.000Z',
-    '2024-10-10T06:00:00.000Z',
-    '2024-10-17T06:00:00.000Z',
-    '2024-10-11T06:00:00.000Z',
-  ],
-  period: 'present',
-  authorizationAdmin: 'rejected',
-  authorizationManager: 'pending',
-  observation:
-    'https://forms.office.com/Pages/ResponsePage.aspx?id=xg8s7vPEjkGHlb-yHsaGiaza-kZBmaRPsp5hEl7jw4lUQUM4RTRKVFNSNElaQ0QwRTRaV1dZU1IzTy4u&origin=QRCodehttps://forms.office.com/Pages/ResponsePage.aspx?id=xg8s7vPEjkGHlb-yHsaGiaza-kZBmaRPsp5hEl7jw4lUQUM4RTRKVFNSNElaQ0QwRTRaV1dZU1IzTy4u&origin=QRCodehttps://forms.office.com/Pages/ResponsePage.aspx?id=xg8s7vPEjkGHlb-yHsaGiaza-kZBmaRPsp5hEl7jw4lUQUM4RTRKVFNSNElaQ0QwRTRaV1dZU1IzTy4u&origin=QRCodehttps://forms.office.com/Pages/ResponsePage.aspx?id=xg8s7vPEjkGHlb-yHsaGiaza-kZBmaRPsp5hEl7jw4lUQUM4RTRKVFNSNElaQ0QwRTRaV1dZU1IzTy4u&origin=QRCode',
-  createdAt: '2024-10-29T20:51:36.527Z',
-  user: {
-    daysGrantedBySeniority: {
-      startDate: '2024-09-30T06:00:00.000Z',
-      endDate: '2025-09-29T06:00:00.000Z',
-      balance: 18,
-    },
-    daysGrantedBySeniorityFuture: {
-      startDate: '2025-09-30T06:00:00.000Z',
-      endDate: '2026-09-29T06:00:00.000Z',
-      balance: 20,
-    },
-    daysGrantedBySeniorityPast: {
-      startDate: '2023-09-30T06:00:00.000Z',
-      endDate: '2024-09-29T06:00:00.000Z',
-      balance: 16,
-    },
-    credit: {
-      balance: 8,
-      exp: '2025-09-29T06:00:00.000Z',
-    },
-    creditPast: {
-      balance: 16,
-      exp: '2025-11-29T06:00:00.000Z',
-    },
-    creditFuture: {
-      balance: 20,
-    },
-    _id: '64fbf01e9b9f146bdc6a1a05',
-    name: 'Sofía Martínez',
-    paternSurname: 'Martínez',
-    motherSurname: 'Moreno',
-    employNumber: '5',
-    photo: 'default.jpg',
-    role: 'user',
-    dateHiring: '2020-09-30T00:00:00.000Z',
-    email: 'sofia.martinez@example.com',
-    enterprise: {
-      _id: '66d8b097a37e7c7823c03a11',
-      name: 'Distribuidoras de Auto Industrias',
-      nameAbreviate: 'DAI',
-      phoneNumber: '34345343233',
-      logo: 'default.png',
-    },
-    department: {
-      _id: '66d8b2ee3a12eea2060d22fc',
-      name: 'VENTAS NACIONALES',
-      nameAbreviate: 'VN',
-      enterprise: {
-        _id: '66d8b097a37e7c7823c03a11',
-        name: 'Distribuidoras de Auto Industrias',
-        nameAbreviate: 'DAI',
-        email: 'dai@gmail.com',
-        phoneNumber: '34345343233',
-        logo: 'default.png',
-      },
-    },
-    password: 'Sofia1234',
-    active: true,
-    seniority: {
-      years: 4,
-      moths: 1,
-      days: 13,
-    },
-    id: '64fbf01e9b9f146bdc6a1a05',
-  },
-  __v: 0,
-  admin: {
-    daysGrantedBySeniority: {
-      startDate: '2024-08-09T06:00:00.000Z',
-      endDate: '2025-08-08T06:00:00.000Z',
-      balance: 16,
-    },
-    daysGrantedBySeniorityFuture: {
-      startDate: '2025-08-09T06:00:00.000Z',
-      endDate: '2026-08-08T06:00:00.000Z',
-      balance: 18,
-    },
-    daysGrantedBySeniorityPast: {
-      startDate: '2023-08-09T06:00:00.000Z',
-      endDate: '2024-08-08T06:00:00.000Z',
-      balance: 14,
-    },
-    credit: {
-      balance: 16,
-      exp: '2025-08-08T06:00:00.000Z',
-    },
-    creditPast: {
-      balance: 14,
-      exp: '2025-10-08T06:00:00.000Z',
-    },
-    creditFuture: {
-      balance: 18,
-    },
-    _id: '64fbf01e9b9f146bdc6a1a0a',
-    name: 'Roberto Moreno',
-    paternSurname: 'Moreno',
-    motherSurname: 'Ramírez',
-    employNumber: '10',
-    photo: 'default.jpg',
-    role: 'admin',
-    dateHiring: '2021-08-09T00:00:00.000Z',
-    email: 'roberto.moreno@example.com',
-    enterprise: {
-      _id: '66d8b097a37e7c7823c03a11',
-      name: 'Distribuidoras de Auto Industrias',
-      nameAbreviate: 'DAI',
-      phoneNumber: '34345343233',
-      logo: 'default.png',
-    },
-    department: {
-      _id: '66d8b2ee3a12eea2060d22ff',
-      name: 'DIRECCIÓN COMERCIAL',
-      nameAbreviate: 'DC',
-      enterprise: {
-        _id: '66d8b097a37e7c7823c03a11',
-        name: 'Distribuidoras de Auto Industrias',
-        nameAbreviate: 'DAI',
-        email: 'dai@gmail.com',
-        phoneNumber: '34345343233',
-        logo: 'default.png',
-      },
-    },
-    password: 'Roberto1234',
-    active: true,
-    seniority: {
-      years: 3,
-      moths: 3,
-      days: 3,
-    },
-    id: '64fbf01e9b9f146bdc6a1a0a',
-  },
-  observationAdmin: '',
-  id: '67214ad899bdc0455950360a',
-};
+// const tempHolidays = {
+//   _id: '67214ad899bdc0455950360a',
+//   days: [
+//     '2024-10-10T06:00:00.000Z',
+//     '2024-10-17T06:00:00.000Z',
+//     '2024-10-11T06:00:00.000Z',
+//     '2024-10-10T06:00:00.000Z',
+//     '2024-10-17T06:00:00.000Z',
+//     '2024-10-11T06:00:00.000Z',
+//   ],
+//   period: 'present',
+//   authorizationAdmin: 'rejected',
+//   authorizationManager: 'pending',
+//   observation:
+//     'https://forms.office.com/Pages/ResponsePage.aspx?id=xg8s7vPEjkGHlb-yHsaGiaza-kZBmaRPsp5hEl7jw4lUQUM4RTRKVFNSNElaQ0QwRTRaV1dZU1IzTy4u&origin=QRCodehttps://forms.office.com/Pages/ResponsePage.aspx?id=xg8s7vPEjkGHlb-yHsaGiaza-kZBmaRPsp5hEl7jw4lUQUM4RTRKVFNSNElaQ0QwRTRaV1dZU1IzTy4u&origin=QRCodehttps://forms.office.com/Pages/ResponsePage.aspx?id=xg8s7vPEjkGHlb-yHsaGiaza-kZBmaRPsp5hEl7jw4lUQUM4RTRKVFNSNElaQ0QwRTRaV1dZU1IzTy4u&origin=QRCodehttps://forms.office.com/Pages/ResponsePage.aspx?id=xg8s7vPEjkGHlb-yHsaGiaza-kZBmaRPsp5hEl7jw4lUQUM4RTRKVFNSNElaQ0QwRTRaV1dZU1IzTy4u&origin=QRCode',
+//   createdAt: '2024-10-29T20:51:36.527Z',
+//   user: {
+//     daysGrantedBySeniority: {
+//       startDate: '2024-09-30T06:00:00.000Z',
+//       endDate: '2025-09-29T06:00:00.000Z',
+//       balance: 18,
+//     },
+//     daysGrantedBySeniorityFuture: {
+//       startDate: '2025-09-30T06:00:00.000Z',
+//       endDate: '2026-09-29T06:00:00.000Z',
+//       balance: 20,
+//     },
+//     daysGrantedBySeniorityPast: {
+//       startDate: '2023-09-30T06:00:00.000Z',
+//       endDate: '2024-09-29T06:00:00.000Z',
+//       balance: 16,
+//     },
+//     credit: {
+//       balance: 8,
+//       exp: '2025-09-29T06:00:00.000Z',
+//     },
+//     creditPast: {
+//       balance: 16,
+//       exp: '2025-11-29T06:00:00.000Z',
+//     },
+//     creditFuture: {
+//       balance: 20,
+//     },
+//     _id: '64fbf01e9b9f146bdc6a1a05',
+//     name: 'Sofía Martínez',
+//     paternSurname: 'Martínez',
+//     motherSurname: 'Moreno',
+//     employNumber: '5',
+//     photo: 'default.jpg',
+//     role: 'user',
+//     dateHiring: '2020-09-30T00:00:00.000Z',
+//     email: 'sofia.martinez@example.com',
+//     enterprise: {
+//       _id: '66d8b097a37e7c7823c03a11',
+//       name: 'Distribuidoras de Auto Industrias',
+//       nameAbreviate: 'DAI',
+//       phoneNumber: '34345343233',
+//       logo: 'default.png',
+//     },
+//     department: {
+//       _id: '66d8b2ee3a12eea2060d22fc',
+//       name: 'VENTAS NACIONALES',
+//       nameAbreviate: 'VN',
+//       enterprise: {
+//         _id: '66d8b097a37e7c7823c03a11',
+//         name: 'Distribuidoras de Auto Industrias',
+//         nameAbreviate: 'DAI',
+//         email: 'dai@gmail.com',
+//         phoneNumber: '34345343233',
+//         logo: 'default.png',
+//       },
+//     },
+//     password: 'Sofia1234',
+//     active: true,
+//     seniority: {
+//       years: 4,
+//       moths: 1,
+//       days: 13,
+//     },
+//     id: '64fbf01e9b9f146bdc6a1a05',
+//   },
+//   __v: 0,
+//   admin: {
+//     daysGrantedBySeniority: {
+//       startDate: '2024-08-09T06:00:00.000Z',
+//       endDate: '2025-08-08T06:00:00.000Z',
+//       balance: 16,
+//     },
+//     daysGrantedBySeniorityFuture: {
+//       startDate: '2025-08-09T06:00:00.000Z',
+//       endDate: '2026-08-08T06:00:00.000Z',
+//       balance: 18,
+//     },
+//     daysGrantedBySeniorityPast: {
+//       startDate: '2023-08-09T06:00:00.000Z',
+//       endDate: '2024-08-08T06:00:00.000Z',
+//       balance: 14,
+//     },
+//     credit: {
+//       balance: 16,
+//       exp: '2025-08-08T06:00:00.000Z',
+//     },
+//     creditPast: {
+//       balance: 14,
+//       exp: '2025-10-08T06:00:00.000Z',
+//     },
+//     creditFuture: {
+//       balance: 18,
+//     },
+//     _id: '64fbf01e9b9f146bdc6a1a0a',
+//     name: 'Roberto Moreno',
+//     paternSurname: 'Moreno',
+//     motherSurname: 'Ramírez',
+//     employNumber: '10',
+//     photo: 'default.jpg',
+//     role: 'admin',
+//     dateHiring: '2021-08-09T00:00:00.000Z',
+//     email: 'roberto.moreno@example.com',
+//     enterprise: {
+//       _id: '66d8b097a37e7c7823c03a11',
+//       name: 'Distribuidoras de Auto Industrias',
+//       nameAbreviate: 'DAI',
+//       phoneNumber: '34345343233',
+//       logo: 'default.png',
+//     },
+//     department: {
+//       _id: '66d8b2ee3a12eea2060d22ff',
+//       name: 'DIRECCIÓN COMERCIAL',
+//       nameAbreviate: 'DC',
+//       enterprise: {
+//         _id: '66d8b097a37e7c7823c03a11',
+//         name: 'Distribuidoras de Auto Industrias',
+//         nameAbreviate: 'DAI',
+//         email: 'dai@gmail.com',
+//         phoneNumber: '34345343233',
+//         logo: 'default.png',
+//       },
+//     },
+//     password: 'Roberto1234',
+//     active: true,
+//     seniority: {
+//       years: 3,
+//       moths: 3,
+//       days: 3,
+//     },
+//     id: '64fbf01e9b9f146bdc6a1a0a',
+//   },
+//   observationAdmin: '',
+//   id: '67214ad899bdc0455950360a',
+// };
 
 const GroupContent = styled.div`
   padding: 4rem 5rem;
@@ -323,7 +323,7 @@ const CutRight = styled.div`
   right: -63.6%;
 `;
 
-const Print: React.FC<{ holiday?: HolidayInfo }> = ({ holiday = tempHolidays }) => {
+const Print: React.FC<{ holiday?: HolidayInfo }> = ({ holiday }) => {
   console.log(holiday);
 
   return (
@@ -350,20 +350,45 @@ const Print: React.FC<{ holiday?: HolidayInfo }> = ({ holiday = tempHolidays }) 
               <Input
                 type="text"
                 defaultValue={joinName({
-                  name: holiday?.user?.name || '',
-                  motherSurname: holiday.user?.motherSurname || '',
-                  paternSurname: holiday.user?.paternSurname || '',
+                  name:
+                    typeof holiday?.user === 'object' && holiday?.user?.name
+                      ? holiday.user.name
+                      : '',
+                  motherSurname:
+                    typeof holiday?.user === 'object' && holiday?.user?.motherSurname
+                      ? holiday.user.motherSurname
+                      : '',
+                  paternSurname:
+                    typeof holiday?.user === 'object' && holiday?.user?.paternSurname
+                      ? holiday.user.paternSurname
+                      : '',
                 })}
               />
             </Group>
 
             <Group>
               <Label>No. de Empleado</Label>
-              <Input type="text" defaultValue={holiday?.user?.employNumber} />
+              <Input
+                type="text"
+                defaultValue={
+                  typeof holiday?.user === 'object' && holiday?.user?.employNumber
+                    ? holiday.user.employNumber
+                    : ''
+                }
+              />
             </Group>
             <Group>
               <Label>Departamento</Label>
-              <Input type="text" defaultValue={holiday?.user?.department?.name} />
+              <Input
+                type="text"
+                defaultValue={
+                  typeof holiday?.user === 'object' &&
+                  holiday?.user?.department &&
+                  holiday?.user?.department?.name
+                    ? holiday.user.department.name
+                    : ''
+                }
+              />
             </Group>
 
             <Group>
@@ -381,7 +406,7 @@ const Print: React.FC<{ holiday?: HolidayInfo }> = ({ holiday = tempHolidays }) 
                       spaces: false,
                       separationBy: '-',
                     })}
-                    {index < holiday.days.length - 1 && ','}
+                    {holiday?.days && index < holiday.days.length - 1 && ','}
                   </span>
                 ))}
               </p>
@@ -395,9 +420,20 @@ const Print: React.FC<{ holiday?: HolidayInfo }> = ({ holiday = tempHolidays }) 
             <ApprovalsContainer>
               <label>
                 {joinName({
-                  name: holiday.manager?.name || '',
-                  motherSurname: holiday.manager?.motherSurname || '',
-                  paternSurname: holiday.manager?.paternSurname || '',
+                  name:
+                    typeof holiday?.manager === 'object' && holiday?.manager?.name
+                      ? holiday.manager.name
+                      : '',
+                  motherSurname:
+                    typeof holiday?.manager === 'object' &&
+                    holiday?.manager?.motherSurname
+                      ? holiday.manager.motherSurname
+                      : '',
+                  paternSurname:
+                    typeof holiday?.manager === 'object' &&
+                    holiday?.manager?.paternSurname
+                      ? holiday.manager.paternSurname
+                      : '',
                 })}
               </label>
               <label>Jefe Directo</label>
@@ -410,9 +446,20 @@ const Print: React.FC<{ holiday?: HolidayInfo }> = ({ holiday = tempHolidays }) 
             <ApprovalsContainer>
               <label>
                 {joinName({
-                  name: holiday.admin?.name || '',
-                  motherSurname: typeof holiday.admin !== 'string' ? holiday.admin?.motherSurname || '' : '',
-                  paternSurname: typeof holiday.admin !== 'string' ? holiday.admin?.paternSurname || '' : '',
+                  name:
+                    typeof holiday?.admin === 'object' && holiday?.admin?.name
+                      ? holiday.admin.name
+                      : '',
+
+                  motherSurname:
+                    typeof holiday?.admin === 'object' && holiday?.admin?.motherSurname
+                      ? holiday.admin.motherSurname
+                      : '',
+
+                  paternSurname:
+                    typeof holiday?.admin === 'object' && holiday?.admin?.paternSurname
+                      ? holiday.admin.paternSurname
+                      : '',
                 })}
               </label>
               <label>Administrador - R.H</label>
