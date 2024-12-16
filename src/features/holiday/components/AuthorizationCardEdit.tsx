@@ -664,7 +664,7 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
                       Rechazar
                     </ButtonState>
                     <GeneralButton
-                      type="submit"
+                      type={authorizationEditAdmin === 'approved' ? 'button' : 'submit'}
                       onClick={() => setValue('authorizationAdmin', requestState)}
                       $variation="secondary"
                     >
