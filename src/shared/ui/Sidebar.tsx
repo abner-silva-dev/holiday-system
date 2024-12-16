@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import MainNav from './MainNav';
-import logoImg from '../../../public/logo-dai.png';
 import Logo from './Logo';
 import { media } from '../style/media';
+// import logoImg from '../../../public/logo-dai.png';
 
 interface PropsSidebar {
   $isOpen?: boolean;
@@ -40,7 +40,7 @@ const StyleSidebar = styled.aside<PropsSidebar>`
 const Sidebar: React.FC<PropsSidebar> = ({ $isOpen }) => {
   return (
     <StyleSidebar $isOpen={$isOpen}>
-      <Logo src={logoImg} />
+      <Logo src={'/logo-dai.png'} />
       <MainNav />
     </StyleSidebar>
   );

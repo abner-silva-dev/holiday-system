@@ -8,7 +8,7 @@ import {
 import styled from 'styled-components';
 import { API_DAI_BASE } from '../../../../config';
 
-import logo from './../../../../../public/logo-dai.png';
+// import logo from './../../../../../public/logo-dai.png';
 import UserPhoto from '../../../users/components/UserPhoto';
 import { NavLink } from 'react-router-dom';
 
@@ -109,7 +109,7 @@ const Header = () => {
         <Group>
           <NavButton to="/user/home">
             <div>
-              <Logo src={logo}></Logo>
+              <Logo src={'/logo-dai.png'}></Logo>
             </div>
           </NavButton>
 

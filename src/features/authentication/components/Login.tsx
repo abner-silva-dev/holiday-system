@@ -18,7 +18,7 @@ import { useForm } from 'react-hook-form';
 import { useLogin } from '../hooks/useLogin';
 import { media } from '../../../shared/style/media';
 import Logo from '../../../shared/ui/Logo';
-import logoImg from '../../../../public/logo-dai.png';
+// import logoImg from '../../../../public/logo-dai.png';
 
 const LoginContainer = styled.div`
   gap: 5rem;
@@ -217,7 +217,7 @@ export default function Login() {
   return (
     <LoginContainer>
       <SectionsContainerLeft>
-        <Image src={logoImg} />
+        <Image src={'/logo-dai.png'} />
         <Slogan>¡ Tu Soporte en el Camino !</Slogan>
         <Title>¡Bienvenido!</Title>
       </SectionsContainerLeft>
