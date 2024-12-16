@@ -25,8 +25,8 @@ const ConfirmActionStyled = styled.div`
 
 interface ConfirmActionProps {
   disabled?: boolean;
-  onConfirm: (password: string, onCloseModal: () => void) => void;
-  onCloseModal: () => void;
+  onConfirm: (password: string, onCloseModal?: () => void) => void;
+  onCloseModal?: () => void;
 }
 
 function ConfirmAction({ disabled, onConfirm, onCloseModal }: ConfirmActionProps) {
