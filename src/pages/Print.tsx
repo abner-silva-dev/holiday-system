@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 import { HiOutlineCheck } from 'react-icons/hi2';
 import letterhead from './../../public/membretado.png';
-import logo from './../../public/logo-dai.png';
+
+import logo from '../../public/logo-dai.png';
+
 import { HolidayInfo } from '../features/holiday/type';
 import { formatDate, joinName } from '../shared/utils/helpers';
 
