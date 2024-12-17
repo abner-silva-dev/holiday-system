@@ -1,11 +1,11 @@
 [[redirects]]
-  from = "/api/*"                           # Todas las rutas de la API
-  to = "https://holiday-system-api-production.up.railway.app"  # URL de tu backend
+  from = "/api/*"
+  to = "https://holiday-system-api-production.up.railway.app/:splat"
   status = 200
   force = true
   headers = { Access-Control-Allow-Origin = "https://piapdai.netlify.app/", Access-Control-Allow-Credentials = "true" }
 
 [[redirects]]
-  from = "/*"                               # Todas las demás rutas
+  from = "/*"                           
   to = "/index.html"
   status = 200
