@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { formatDate, joinName } from '../../../shared/utils/helpers';
+import { joinName } from '../../../shared/utils/helpers';
 import { API_DAI_BASE } from '../../../config';
 import UserPhoto from '../../users/components/UserPhoto';
 import { UserInfo } from '../../users/types';
