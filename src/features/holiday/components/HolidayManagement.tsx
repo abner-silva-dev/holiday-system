@@ -26,6 +26,7 @@ import PeriodComponent from './PeriodComponent';
 import { formatDate } from '../../../shared/utils/helpers';
 import RestrictRoute from '../../../shared/ui/RestrictRoute';
 import { useStateApp } from '../../../context/stateAppContext';
+import Spinner from '../../../shared/ui/Spinner';
 
 const HolidayInfoStyles = styled.div`
   display: grid;
@@ -136,7 +137,7 @@ const HolidayManagement = () => {
     setPeriod(isPastPeriod ? 'past' : 'present');
   }, [user]);
 
-  if (!user) return null;
+  if (!user) return <Spinner />;
 
   const {
     holidays,

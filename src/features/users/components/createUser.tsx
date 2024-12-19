@@ -49,8 +49,6 @@ interface PropsCreateUSer {
 const CreateUser: React.FC<PropsCreateUSer> = ({ userToUpdate = {}, onCloseModal }) => {
   const { id: userId = '', ...editValues } = userToUpdate as UserInfo;
 
-  console.log(userToUpdate);
-
   // Check if is Edition or Create user
   const isEditSession = Boolean(userId);
 
@@ -70,16 +68,6 @@ const CreateUser: React.FC<PropsCreateUSer> = ({ userToUpdate = {}, onCloseModal
 
   const { createUser, isCreatingUser } = useCreateUser();
   const { updateUser } = useUpdateUser();
-
-  // useEffect(() => {
-  //   if (isEditSession && departments && enterprises) {
-  //     reset({
-  //       ...editValues,
-  //       department: editValues.department?._id ?? '',
-  //       enterprise: editValues.enterprise?._id ?? '',
-  //     });
-  //   }
-  // }, [editValues, departments, enterprises, isEditSession, reset]);
 
   // Get Current data after to submit
   const onSubmit = (data: UserInfo) => {

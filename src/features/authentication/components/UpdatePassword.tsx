@@ -3,12 +3,17 @@ import { FormEvent, useState } from 'react';
 import Button from '../../../shared/ui/Button';
 import PasswordInput from '../../../shared/ui/InputPassword';
 import { useChangePassword } from '../hooks/useChangePassword';
+import { media } from '../../../shared/style/media';
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 2.6rem;
   width: 55%;
+
+  @media ${media.mobile} {
+    width: 100%;
+  }
 `;
 
 const Field = styled.div`

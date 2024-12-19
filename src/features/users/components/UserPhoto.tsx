@@ -9,15 +9,15 @@ interface Props {
 const sizes = {
   small: css`
     width: 4rem;
-    height: 4rem;
+    /* height: 4rem; */
   `,
   medium: css`
     width: 8rem;
-    height: 8rem;
+    /* height: 8rem; */
   `,
   large: css`
     width: 16rem;
-    height: 16rem;
+    /* height: 16rem; */
   `,
   adaptative: css`
     width: 100%;
@@ -45,6 +45,9 @@ const UserPhoto = styled.img<Props>`
 
   ${(props) => sizes[props.$size!]}
   ${(props) => types[props.$type!]}
+
+  /* aspect-ratio: 1 / 1; */
+  object-fit: contain;
 `;
 
 UserPhoto.defaultProps = {

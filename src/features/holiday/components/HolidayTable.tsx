@@ -42,12 +42,12 @@ const HolidayTable = () => {
   });
 
   return (
-    <Table columns=".4fr .7fr 1fr 1fr  1fr 1.2fr">
+    <Table columns=".4fr .6fr 1fr 1fr  1.2fr">
       <Table.Header>
         <span></span>
         <span>N° Empleado</span>
         <span>Nombre</span>
-        <span>Puesto</span>
+        {/* <span>Puesto</span> */}
         <span>Departamento</span>
         <span>Solicitudes</span>
       </Table.Header>

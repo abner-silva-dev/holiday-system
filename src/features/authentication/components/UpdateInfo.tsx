@@ -4,6 +4,7 @@ import { useMe } from '../hooks/useMe';
 import { API_DAI_BASE } from '../../../config';
 import UserPhoto from '../../users/components/UserPhoto';
 import { joinName } from '../../../shared/utils/helpers';
+import { media } from '../../../shared/style/media';
 
 const TextBox = styled.input`
   border: none;
@@ -31,6 +32,10 @@ const Form = styled.form`
   flex-direction: column;
   gap: 2.6rem;
   width: 55%;
+
+  @media ${media.mobile} {
+    width: 100%;
+  }
 `;
 
 const Field = styled.div`
@@ -76,7 +81,7 @@ const UpdateInfo = () => {
         <UserPhoto
           src={`${API_DAI_BASE}/img/user/${userAuthenticated?.photo}`}
           $size="large"
-        />{' '}
+        />
       </Group>
       <BorderMarker>
         <AccountContainer>
