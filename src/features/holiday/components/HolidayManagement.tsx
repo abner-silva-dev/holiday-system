@@ -220,6 +220,7 @@ const HolidayManagement = () => {
               value={`  ${user.creditPast?.balance ?? 0} de ${
                 daysGrantedBySeniorityPast.balance ?? 0
               }`}
+              expiration={user.creditPast?.exp}
             />
             <Stat
               color="brand"
