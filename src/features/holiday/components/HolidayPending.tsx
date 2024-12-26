@@ -92,8 +92,6 @@ const sortDates = (dates: Date[]): Date[] => {
 
 const HolidayPending: React.FC<HolidayPendingProps> = ({ holiday }) => {
   if (!holiday.days) return;
-  console.log(sortDates(holiday.days));
-  // console.log(groupConsecutiveDates(holiday.days));
 
   return (
     <HolidayPendingStyled>

@@ -27,6 +27,7 @@ import { formatDate } from '../../../shared/utils/helpers';
 import RestrictRoute from '../../../shared/ui/RestrictRoute';
 import { useStateApp } from '../../../context/stateAppContext';
 import Spinner from '../../../shared/ui/Spinner';
+import AuthorizationCard from './authorization/AuthorizationCard';
 
 const HolidayInfoStyles = styled.div`
   display: grid;
@@ -279,8 +280,11 @@ const HolidayManagement = () => {
           ) : (
             <>
               {holidaysFilter.length === 0 && <ContentEmpty />}
-              {holidaysFilter.map((holiday: HolidayInfo) => {
+              {/* {holidaysFilter.map((holiday: HolidayInfo) => {
                 return <AuthorizationCardEdit holiday={holiday} key={holiday._id} />;
+              })} */}
+              {holidaysFilter.map((holiday: HolidayInfo) => {
+                return <AuthorizationCard holiday={holiday} key={holiday._id} />;
               })}
             </>
           )}

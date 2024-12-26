@@ -1,34 +1,34 @@
-import StateHoliday from './StateHoliday';
+import StateHoliday from '../StateHoliday';
 import styled from 'styled-components';
 import {
   HiMiniXMark,
   HiOutlineCalendarDays,
-  HiOutlineCheck,
   HiOutlineChevronDown,
   HiOutlinePencilSquare,
 } from 'react-icons/hi2';
-import { HiOutlineXMark } from 'react-icons/hi2';
-import { HolidayInfo } from './../type';
-import { formatDate, joinName } from '../../../shared/utils/helpers';
-import { useUpdateHoliday } from './../hooks/useUpdateHoliday';
+
+import { HolidayInfo, StateAutorization } from '../../type';
+import { formatDate, joinName } from '../../../../shared/utils/helpers';
+import { useUpdateHoliday } from '../../hooks/useUpdateHoliday';
 import { useForm } from 'react-hook-form';
 import { useQueryClient } from '@tanstack/react-query';
-import { useUser } from '../../users/hooks/useUser';
+import { useUser } from '../../../users/hooks/useUser';
 
-import Row from '../../../shared/ui/Row';
-import Heading from '../../../shared/ui/Heading';
+import Row from '../../../../shared/ui/Row';
+import Heading from '../../../../shared/ui/Heading';
 import { FaFilePdf } from 'react-icons/fa6';
-import Print from '../../../pages/Print';
+import Print from '../../../../pages/Print';
 import ReactDOMServer from 'react-dom/server';
 import { useState } from 'react'; // Importa useState
-import { useMe } from '../../authentication/hooks/useMe';
-import { UserInfo } from '../../users/types';
-import TimeTag from './TimeTag';
-import { media } from '../../../shared/style/media';
-import { useStateApp } from '../../../context/stateAppContext';
-import InputCalendar from '../../../shared/ui/InputCalendar';
+import { useMe } from '../../../authentication/hooks/useMe';
+import { UserInfo } from '../../../users/types';
+import TimeTag from '../TimeTag';
+import { media } from '../../../../shared/style/media';
+import { useStateApp } from '../../../../context/stateAppContext';
+import InputCalendar from '../../../../shared/ui/InputCalendar';
 // @ts-expect-error have not types
 import html2pdf from 'html2pdf.js';
+import AuthorizationButtons from './AutorizationButtons';
 
 const AuthorizationCardStyled = styled.div`
   background-color: var(--color-grey-0);
@@ -99,37 +99,6 @@ const ObservationField = styled.textarea`
   padding: 1rem;
   resize: none;
   width: 100%;
-`;
-
-const AuthorizationButtons = styled.div`
-  background-color: transparent;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 1.8rem;
-  gap: 4rem;
-`;
-
-interface PropsButton {
-  $color?: string;
-}
-
-const Button = styled.button<PropsButton>`
-  background-color: ${(props) => props.$color};
-  border: none;
-  text-transform: uppercase;
-  font-weight: 700;
-  padding: 1rem 1.5rem;
-  border-radius: var(--border-radius-sm);
-  color: #fff;
-  display: flex;
-  align-items: center;
-  text-transform: uppercase;
-  gap: 1rem;
-
-  & svg {
-    height: 2rem;
-    width: 2rem;
-  }
 `;
 
 const ButtonPDF = styled.button`
@@ -265,14 +234,12 @@ const DatesModal = styled.div`
 
 const EditButton = styled.button`
   border: none;
-  color: black;
+  color: #000;
   padding: 0.5rem 1rem;
   border-radius: 9px;
   background-color: #ffec99;
   font-weight: 600;
   box-shadow: var(--shadow-md);
-  width: 4rem;
-  height: 3rem;
 
   display: flex;
   align-items: center;
@@ -301,9 +268,10 @@ const printHandler = (holiday: HolidayInfo) => {
   html2pdf().set(options).from(printElement).save();
 };
 
+let requestState: StateAutorization;
+
 const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
   const queryClient = useQueryClient();
-  const [isAdminEdit, setIsAdminEdit] = useState(false);
   const {
     state: { period },
   } = useStateApp();
@@ -327,7 +295,12 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
 
   const [dates, setDates] = useState<Date[]>(formatDates || []);
   const { userAuthenticated } = useMe();
-
+  const [authorizationEditAdmin, setAuthorizationEditAdmin] = useState(
+    holiday.authorizationAdmin
+  );
+  const [authorizationEditManager, setAuthorizationEditManager] = useState(
+    holiday.authorizationManager
+  );
   if (!userAuthenticated) return null;
   if (!curUser) return null;
 
@@ -339,15 +312,35 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
       userAuthenticated.role === 'admin'
         ? { admin: userAuthenticated.id }
         : { manager: userAuthenticated.id };
-
     updateHoliday(
-      { id: holiday._id || '', newHoliday: { ...data, ...acceptedBy } },
+      { id: holiday._id || '', newHoliday: { ...data, ...acceptedBy, days: dates } },
       {
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: ['user', curUser.id] });
         },
       }
     );
+    console.log({ ...data, ...acceptedBy, days: dates });
+  };
+
+  const handleButtonAprove = () => {
+    if (userAuthenticated?.role === 'admin') {
+      requestState = 'approved';
+      setAuthorizationEditAdmin(requestState);
+    } else if (userAuthenticated?.role === 'manager') {
+      requestState = 'approved';
+      setAuthorizationEditManager(requestState);
+    }
+  };
+
+  const handleButtonReject = () => {
+    if (userAuthenticated?.role === 'admin') {
+      requestState = 'rejected';
+      setAuthorizationEditAdmin(requestState);
+    } else if (userAuthenticated?.role === 'manager') {
+      requestState = 'rejected';
+      setAuthorizationEditManager(requestState);
+    }
   };
 
   let periodCredit = 0;
@@ -378,13 +371,20 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
               </CreatedAt>
             </Heading>
 
+            {holiday &&
+              !(
+                holiday.authorizationAdmin === 'approved' &&
+                holiday.authorizationManager === 'approved'
+              ) && (
+                <EditButton onClick={() => setIsEddit((eddit) => !eddit)} type="button">
+                  {isEddit ? <HiMiniXMark /> : <HiOutlinePencilSquare />}
+                  Editar
+                </EditButton>
+              )}
+
             <TimeTag $time={holiday?.period} />
           </Row>
-          {
-            <EditButton onClick={() => setIsEddit((eddit) => !eddit)} type="button">
-              {isEddit ? <HiMiniXMark /> : <HiOutlinePencilSquare />}
-            </EditButton>
-          }
+
           <EmployedItem>
             {isEddit ? (
               <InputCalendar
@@ -455,33 +455,35 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
                     : 'En proceso...'}
                 </span>
               </RowMain>
+
               <ObservationField
                 defaultValue={holiday?.observationManager}
                 {...register('observationManager')}
-                disabled={
-                  userAuthenticated.role !== 'manager' ||
-                  holiday.authorizationManager === 'approved'
-                }
+                disabled={!isEddit && userAuthenticated.role === 'manager'}
               />
+
+              {/* Initial state */}
               {userAuthenticated.role === 'manager' &&
-                holiday.authorizationManager !== 'approved' && (
-                  <AuthorizationButtons>
-                    <Button
-                      onClick={() => setValue('authorizationManager', 'approved')}
-                      $color="#087f5b"
-                    >
-                      <HiOutlineCheck />
-                      Aceptar
-                    </Button>
-                    <Button
-                      onClick={() => setValue('authorizationManager', 'rejected')}
-                      $color="#a61e4d"
-                    >
-                      <HiOutlineXMark />
-                      Rechazar
-                    </Button>
-                  </AuthorizationButtons>
+                holiday.authorizationManager !== 'approved' &&
+                holiday.authorizationManager !== 'rejected' &&
+                !isEddit && (
+                  <AuthorizationButtons
+                    authorization={authorizationEditManager || ''}
+                    handleApprove={handleButtonAprove}
+                    handleReject={handleButtonReject}
+                    setValue={() => setValue('authorizationManager', requestState)}
+                  />
                 )}
+
+              {/* Edit state */}
+              {userAuthenticated.role === 'manager' && isEddit && (
+                <AuthorizationButtons
+                  authorization={authorizationEditManager || ''}
+                  handleApprove={handleButtonAprove}
+                  handleReject={handleButtonReject}
+                  setValue={() => setValue('authorizationManager', requestState)}
+                />
+              )}
             </Authorization>
           </AuthorizationItem>
 
@@ -504,37 +506,35 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
                       })
                     : 'En proceso...'}
                 </span>
-                {
-                  <EditButton onClick={() => setIsAdminEdit(!isAdminEdit)} type="button">
-                    {isAdminEdit ? <HiMiniXMark /> : <HiOutlinePencilSquare />}
-                  </EditButton>
-                }
               </RowMain>
               <ObservationField
                 defaultValue={holiday.observationAdmin}
                 disabled={userAuthenticated.role !== 'admin'}
                 {...register('observationAdmin')}
               />
+
+              {/* Initial state */}
               {userAuthenticated.role === 'admin' &&
                 holiday.authorizationAdmin !== 'approved' &&
-                holiday.authorizationAdmin !== 'rejected' && (
-                  <AuthorizationButtons>
-                    <Button
-                      onClick={() => setValue('authorizationAdmin', 'approved')}
-                      $color="#087f5b"
-                    >
-                      <HiOutlineCheck />
-                      Aceptar
-                    </Button>
-                    <Button
-                      onClick={() => setValue('authorizationAdmin', 'rejected')}
-                      $color="#a61e4d"
-                    >
-                      <HiOutlineXMark />
-                      Rechazar
-                    </Button>
-                  </AuthorizationButtons>
+                holiday.authorizationAdmin !== 'rejected' &&
+                !isEddit && (
+                  <AuthorizationButtons
+                    authorization={authorizationEditAdmin || ''}
+                    handleApprove={handleButtonAprove}
+                    handleReject={handleButtonReject}
+                    setValue={() => setValue('authorizationAdmin', requestState)}
+                  />
                 )}
+
+              {/* Edit state */}
+              {userAuthenticated.role === 'admin' && isEddit && (
+                <AuthorizationButtons
+                  authorization={authorizationEditAdmin || ''}
+                  handleApprove={handleButtonAprove}
+                  handleReject={handleButtonReject}
+                  setValue={() => setValue('authorizationAdmin', requestState)}
+                />
+              )}
             </Authorization>
           </AuthorizationItem>
         </Row>
