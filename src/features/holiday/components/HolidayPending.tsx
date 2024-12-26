@@ -9,15 +9,33 @@ const HolidayPendingStyled = styled.div`
   align-items: start;
 
   padding: 1rem;
-  background-color: var(--color-brand-400);
+  background-color: var(--color-lime-100);
   /* border-top: 1px solid #ffe066;
   border-bottom: 1px solid #ffe066; */
 `;
 
 const ListDays = styled.ul`
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 0.5fr 1fr;
+  margin-bottom: 1rem;
   gap: 1rem;
+
+  & :last-child {
+    background-color: #e8590c;
+  }
+
+  & :first-child {
+    background-color: #66a80f;
+  }
+`;
+
+const ListDaysSeparated = styled.ul`
+  display: grid;
+  grid-template-columns: 1fr 0.5fr 1fr;
+  column-gap: 2rem;
+  row-gap: 2rem;
+  align-items: center;
+  justify-items: center;
 `;
 
 const Day = styled.span`
@@ -33,10 +51,14 @@ const HolidayPendingInfo = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 0.5rem 1rem;
+  box-shadow: var(--shadow-md);
+  border: 1px solid #f3e39e;
   background-color: #fff3bf;
 `;
 
 const TitlePending = styled.p`
+  color: #363636;
   font-weight: 600;
   line-height: 1;
 `;
@@ -51,10 +73,60 @@ interface HolidayPendingProps {
   holiday: HolidayInfo;
 }
 
-const sortDates = (dates: Date[]): Date[] => {
-  return [...dates]
-    .map((dates) => new Date(dates))
-    .sort((a: Date, b: Date) => a.getTime() - b.getTime());
+const separateDates = (
+  dates: Date[]
+): { consecutive: string[][]; unconsecutive: string[] } => {
+  // Ordenar las fechas
+  const sortedDates = [...dates]
+    .map((date) => new Date(date))
+    .sort((a, b) => a.getTime() - b.getTime());
+
+  // Formato de fecha
+  const formatDate = (date: Date): string => {
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+
+  // Inicializar resultados
+  const consecutive: string[][] = [];
+  const unconsecutive: string[] = [];
+  let tempRange: string[] = [];
+
+  sortedDates.forEach((date, index) => {
+    const previousDate = sortedDates[index - 1];
+    const dayDifference = previousDate
+      ? (date.getTime() - previousDate.getTime()) / (1000 * 60 * 60 * 24)
+      : null;
+
+    if (tempRange.length === 0 || dayDifference === 1) {
+      // Agrupar días consecutivos
+      tempRange.push(formatDate(date));
+    } else if (dayDifference === 2 && previousDate.getDay() === 6) {
+      // Si solo hay un día de diferencia (domingo) y el día anterior es sábado
+      tempRange.push(formatDate(date));
+    } else {
+      // Si no son consecutivos, guardar el rango y reiniciar
+      if (tempRange.length === 1) {
+        unconsecutive.push(tempRange[0]);
+      } else {
+        consecutive.push(tempRange);
+      }
+      tempRange = [formatDate(date)];
+    }
+  });
+
+  // Verificar último grupo
+  if (tempRange.length > 0) {
+    if (tempRange.length === 1) {
+      unconsecutive.push(tempRange[0]);
+    } else {
+      consecutive.push(tempRange);
+    }
+  }
+
+  return { consecutive, unconsecutive };
 };
 
 // function groupConsecutiveDates(dates) {
@@ -92,16 +164,34 @@ const sortDates = (dates: Date[]): Date[] => {
 
 const HolidayPending: React.FC<HolidayPendingProps> = ({ holiday }) => {
   if (!holiday.days) return;
+<<<<<<< HEAD
+=======
+  const datesGrouping = separateDates(holiday.days);
+  console.log(datesGrouping);
+>>>>>>> 8a9fe90efb8d3b3da95fd527757f9109bb844028
 
   return (
     <HolidayPendingStyled>
-      <ListDays>
-        <Day>2/10/2024</Day>
-        al
-        <Day>2/10/2024</Day>
-      </ListDays>
+      <div>
+        {/* Renderizar Rangos Consecutivos */}
+        {datesGrouping.consecutive.map((range, index) => (
+          <ListDays key={index}>
+            <Day>{range[0]}</Day>
+            <span>al</span> <Day>{range[range.length - 1]}</Day>
+          </ListDays>
+        ))}
+
+        {/* Renderizar Fechas No Consecutivas */}
+        {datesGrouping.unconsecutive.length > 0 && (
+          <ListDaysSeparated>
+            {datesGrouping.unconsecutive.map((date, index) => (
+              <Day key={index}>{date}</Day>
+            ))}
+          </ListDaysSeparated>
+        )}
+      </div>
       <HolidayPendingInfo>
-        <TitlePending>Numero de Dias</TitlePending>
+        <TitlePending>Número de Dias</TitlePending>
         <DaysPendingNum>{holiday?.days?.length}</DaysPendingNum>
       </HolidayPendingInfo>
     </HolidayPendingStyled>

@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import { useStateApp } from '../../context/stateAppContext';
+import { HolidayInfo } from '../../features/holiday/type';
+import { UserInfo } from '../../features/users/types';
 
 interface PropsStats {
   $selected: boolean;
@@ -71,20 +73,42 @@ const Tag = styled.label`
   user-select: none;
 `;
 
+const Expiration = styled.span`
+  font-size: 1.3rem;
+  color: var(--color-redesp);
+  display: flex;
+  gap: 0.7rem;
+  grid-column: 2/-1;
+  font-weight: 600;
+
+  & span {
+    font-weight: 700;
+  }
+`;
+
 interface Props {
   icon: JSX.Element;
   title: string;
   value: string;
   color: string;
   periodName?: 'past' | 'present' | 'future';
+  expiration?: string;
 }
 
-function Stat({ icon, title, value, color, periodName }: Props) {
+function Stat({ icon, title, value, color, periodName, expiration }: Props) {
   const {
     state: { period },
   } = useStateApp();
 
   const hasPeriod = periodName === period;
+
+  const formatExpirationDate = new Date(expiration + '');
+  const formatDate = (date: Date): string => {
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
 
   return (
     <StyledStat $selected={hasPeriod}>
@@ -92,6 +116,11 @@ function Stat({ icon, title, value, color, periodName }: Props) {
       <Icon color={color}>{icon}</Icon>
       <Title>{title}</Title>
       <Value>{value}</Value>
+      {periodName === 'past' && (
+        <Expiration>
+          Expiración: <span>{formatDate(formatExpirationDate) + ''}</span>
+        </Expiration>
+      )}
     </StyledStat>
   );
 }
