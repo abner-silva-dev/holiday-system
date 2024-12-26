@@ -164,11 +164,8 @@ const separateDates = (
 
 const HolidayPending: React.FC<HolidayPendingProps> = ({ holiday }) => {
   if (!holiday.days) return;
-<<<<<<< HEAD
-=======
+
   const datesGrouping = separateDates(holiday.days);
-  console.log(datesGrouping);
->>>>>>> 8a9fe90efb8d3b3da95fd527757f9109bb844028
 
   return (
     <HolidayPendingStyled>
