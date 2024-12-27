@@ -386,7 +386,9 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
           </Row>
 
           <EmployedItem>
-            {isEddit ? (
+            {isEddit &&
+            holiday.authorizationAdmin !== 'rejected' &&
+            holiday.authorizationManager !== 'rejected' ? (
               <InputCalendar
                 dates={dates}
                 setDates={setDates}
