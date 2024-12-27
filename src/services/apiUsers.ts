@@ -56,6 +56,8 @@ export async function updateRoleUser<Model>(id: string, newData: Model | FormDat
   }
 }
 
+export const deleteUserBoss = deleteOne('boss');
+
 export const getUsers = getAll('users');
 export const getUser = getOne('users');
 export const deleteUser = deleteOne('users');
