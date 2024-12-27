@@ -9,6 +9,7 @@ import { useState } from 'react';
 import Modal from '../../../shared/ui/Modal';
 import ConfirmAction from '../../../shared/ui/ConfirmAction';
 import { useUpdateRole } from '../../authentication/hooks/useUpdateRole';
+import { useDegradeRole } from '../../authentication/hooks/useDegradeRole';
 
 const Container = styled.div`
   display: flex;
@@ -48,17 +49,21 @@ function SetRoleUser() {
   const { user } = useUser2();
   const [role, setRole] = useState(user?.role || 'user');
   const { updateRoleUser } = useUpdateRole();
+  const { deleteUserBoss } = useDegradeRole();
 
   const handleChangeRole = (password: string, onCloseModal?: () => void) => {
     if (!password) return;
-    updateRoleUser(
-      { newData: { role, password }, id: user?.id || '' },
-      {
-        onSuccess: () => {
-          onCloseModal?.();
-        },
-      }
-    );
+    if (role === 'user') {
+      deleteUserBoss(user?.id || '');
+    } else
+      updateRoleUser(
+        { newData: { role, password }, id: user?.id || '' },
+        {
+          onSuccess: () => {
+            onCloseModal?.();
+          },
+        }
+      );
   };
 
   return (
