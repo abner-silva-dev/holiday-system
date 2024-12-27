@@ -10,6 +10,7 @@ import {
   Form,
   FormContainer,
   Input,
+  InputNumber,
   Label,
   Page,
   PageChange,
@@ -94,6 +95,13 @@ function FormEmploysData({ handleBack, handleNext }: FormEmploysDataProps) {
 
   if (isPending) return <p>Cargando...</p>;
 
+  const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    // Limitar a un máximo de 10 caracteres
+    const maxLength = 10;
+    const value = event.target.value.slice(0, maxLength);
+    event.target.value = value;
+  };
+
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Page>
@@ -144,8 +152,9 @@ function FormEmploysData({ handleBack, handleNext }: FormEmploysDataProps) {
 
             <Field>
               <Label>Teléfono*</Label>
-              <Input
-                type="text"
+              <InputNumber
+                type="number"
+                onInput={handleInput}
                 {...register(`employs.${index}.phone`, {
                   required: 'Este campo es obligatorio',
                 })}

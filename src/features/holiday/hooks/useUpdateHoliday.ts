@@ -11,7 +11,7 @@ export const useUpdateHoliday = () => {
     mutationFn: ({ id, newHoliday }: { id: string; newHoliday: HolidayInfo }) =>
       updateHolidayApi(id, newHoliday),
     onSuccess: () => {
-      toast.success('Holiday actualizado exitosamente');
+      toast.success('Vacación actualizada exitosamente');
       queryClient.invalidateQueries({ queryKey: ['holidays'] });
     },
     onError: (err) => {

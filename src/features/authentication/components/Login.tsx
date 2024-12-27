@@ -3,8 +3,6 @@ import 'swiper/css/effect-fade';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-import '../../../shared/style/fonts.css';
-
 // @ts-expect-error have not typesss
 import ReCAPTCHA from 'react-google-recaptcha';
 import { HiOutlineUserCircle } from 'react-icons/hi2';
@@ -17,6 +15,7 @@ import { useForm } from 'react-hook-form';
 import { useLogin } from '../hooks/useLogin';
 import { media } from '../../../shared/style/media';
 import Logo from '../../../shared/ui/Logo';
+import '../../../shared/style/fonts.css';
 
 // import logoImg from '../../../../public/logo-dai.png';
 

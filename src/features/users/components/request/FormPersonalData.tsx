@@ -14,6 +14,7 @@ import {
   Title,
   Description,
   ErrorMessage,
+  InputNumber,
 } from '../../../../shared/ui/FormPieces';
 import { useUser2 } from '../../hooks/useUser';
 
@@ -74,6 +75,13 @@ function FormPersonalData({ handleNext }: { handleNext: () => void }) {
 
   if (isPending) return <p>Cargando...</p>; // Mensaje de carga
   if (!user) return null; // Evita que el formulario se renderice si no hay datos
+
+  const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    // Limitar a un máximo de 10 caracteres
+    const maxLength = 10;
+    const value = event.target.value.slice(0, maxLength);
+    event.target.value = value;
+  };
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -182,18 +190,23 @@ function FormPersonalData({ handleNext }: { handleNext: () => void }) {
 
           <Field>
             <Label>Teléfono Particular</Label>
-            <Input
-              type="text"
+            <InputNumber
+              type="number"
+              onInput={handleInput}
+              inputMode="numeric"
               id="homePhone"
+              maxLength={10}
               {...register('homePhone', { required: false })}
             />
           </Field>
 
           <Field>
             <Label>Celular*</Label>
-            <Input
+            <InputNumber
               type="text"
               id="mobilePhone"
+              onInput={handleInput}
+              maxLength={10}
               {...register('mobilePhone', { required: 'Este campo es obligatorio' })}
             />
             {errors?.mobilePhone && (

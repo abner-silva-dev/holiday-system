@@ -13,6 +13,7 @@ import {
   PageChange,
   Title,
   Description,
+  InputNumber,
 } from '../../../../shared/ui/FormPieces';
 import { useEffect } from 'react';
 import { useUser2 } from '../../hooks/useUser';
@@ -101,6 +102,13 @@ function FormPersonalReference({
 
   if (isPending) return <p>Cargando...</p>;
 
+  const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    // Limitar a un máximo de 10 caracteres
+    const maxLength = 10;
+    const value = event.target.value.slice(0, maxLength);
+    event.target.value = value;
+  };
+
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Page>
@@ -136,9 +144,10 @@ function FormPersonalReference({
           </Field>
           <Field>
             <Label htmlFor="person1Phone">Teléfono / Celular*</Label>
-            <Input
+            <InputNumber
               id="person1.phone"
-              type="text"
+              onInput={handleInput}
+              type="number"
               {...register('person1.phone', { required: 'Este campo es obligatorio' })}
             />
             {errors.person1?.phone && (
@@ -186,9 +195,10 @@ function FormPersonalReference({
           </Field>
           <Field>
             <Label htmlFor="person2Phone">Teléfono / Celular*</Label>
-            <Input
+            <InputNumber
               id="person2.phone"
-              type="text"
+              onInput={handleInput}
+              type="number"
               {...register('person2.phone', { required: 'Este campo es obligatorio' })}
             />
             {errors.person2?.phone && (
@@ -236,9 +246,10 @@ function FormPersonalReference({
           </Field>
           <Field>
             <Label htmlFor="person3Phone">Teléfono / Celular*</Label>
-            <Input
+            <InputNumber
               id="person3.phone"
-              type="text"
+              onInput={handleInput}
+              type="number"
               {...register('person3.phone', { required: 'Este campo es obligatorio' })}
             />
             {errors.person3?.phone && (

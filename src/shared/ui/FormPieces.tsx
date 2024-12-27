@@ -40,6 +40,24 @@ export const Input = styled.input`
   background-color: var(--color-grey-0);
 `;
 
+export const InputNumber = styled.input`
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 9px;
+  border: 1px solid var(--color-grey-300);
+  background-color: var(--color-grey-0);
+
+  appearance: none;
+  -moz-appearance: textfield;
+
+  /* Compatibilidad adicional para navegadores */
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    appearance: none;
+    margin: 0;
+  }
+`;
+
 export const Title = styled(Heading)`
   margin-bottom: 3rem;
 `;
