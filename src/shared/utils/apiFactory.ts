@@ -93,7 +93,7 @@ export function updateOne<Model>(sourceName: SourceName) {
     } catch (error) {
       const errorMessage =
         axios.isAxiosError(error) && error.response
-          ? error.response.data.error.message || 'An unknown error occurred'
+          ? error.response.data.message || 'An unknown error occurred'
           : 'An unknown error occurred';
 
       throw new Error(errorMessage);
