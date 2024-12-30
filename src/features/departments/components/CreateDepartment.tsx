@@ -101,7 +101,7 @@ const CreateDepartment: React.FC<PropsCreateDepartment> = ({
           <Input
             type="text"
             id="nameDepartment"
-            placeholder="Ventas"
+            placeholder="Ej: Ventas"
             {...register('name')}
             required
           />
@@ -110,7 +110,7 @@ const CreateDepartment: React.FC<PropsCreateDepartment> = ({
           <Input
             type="text"
             id="nameAbreviate"
-            placeholder="V"
+            placeholder="Ej: Vtas"
             {...register('nameAbreviate')}
             required
           />

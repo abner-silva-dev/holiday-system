@@ -74,10 +74,10 @@ const Tag = styled.label`
 `;
 
 const Expiration = styled.span`
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   color: var(--color-redesp);
   display: flex;
-  gap: 0.7rem;
+  flex-direction: column;
   grid-column: 2/-1;
   font-weight: 600;
 
@@ -103,10 +103,16 @@ function Stat({ icon, title, value, color, periodName, expiration }: Props) {
   const hasPeriod = periodName === period;
 
   const formatExpirationDate = new Date(expiration + '');
+
   const formatDate = (date: Date): string => {
+    if (!date || isNaN(date.getTime())) {
+      return 'Sin Expiración';
+    }
+
     const day = date.getDate().toString().padStart(2, '0');
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const year = date.getFullYear();
+
     return `${day}/${month}/${year}`;
   };
 

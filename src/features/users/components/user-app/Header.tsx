@@ -126,7 +126,6 @@ const Header = () => {
             <HeaderText>Solicitar Vacaciones</HeaderText>
           </NavButton>
         </Group>
-
         <Group>
           <DarkMode title="Modo Oscuro / Modo Claro" onClick={() => setIsDark(!isDark)}>
             {isDark ? <HiOutlineSun /> : <HiOutlineMoon />}

@@ -100,7 +100,7 @@ const CreateEnterprise: React.FC<PropsCreateEnterprise> = ({
           <Input
             type="text"
             id="name"
-            placeholder="Distribuidora de Auto Industrias"
+            placeholder="Ej: Distribuidora de Auto Industrias"
             {...register('name')}
             required
           />
@@ -109,7 +109,7 @@ const CreateEnterprise: React.FC<PropsCreateEnterprise> = ({
           <Input
             type="text"
             id="nameAbreviate"
-            placeholder="DAI"
+            placeholder="Ej: DAI"
             {...register('nameAbreviate')}
             required
           />
@@ -118,7 +118,7 @@ const CreateEnterprise: React.FC<PropsCreateEnterprise> = ({
           <Input
             type="text"
             id="email"
-            placeholder="dai_enterprise@gmail.com"
+            placeholder="example_enterprise@gmail.com"
             {...register('email')}
             required
           />
@@ -127,7 +127,7 @@ const CreateEnterprise: React.FC<PropsCreateEnterprise> = ({
           <Input
             type="text"
             id="phoneNumber"
-            placeholder="5523728112"
+            placeholder="Ej: 5511223344"
             {...register('phoneNumber')}
             required
           />
