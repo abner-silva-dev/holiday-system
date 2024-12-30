@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useStateApp } from '../../context/stateAppContext';
-import { HolidayInfo } from '../../features/holiday/type';
-import { UserInfo } from '../../features/users/types';
+// import { HolidayInfo } from '../../features/holiday/type';
+// import { UserInfo } from '../../features/users/types';
 
 interface PropsStats {
   $selected: boolean;
