@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { API_DAI_SYSTEM } from '../config';
 import { UserInfo } from '../features/users/types';
+import { getOne } from '../shared/utils/apiFactory';
 
 interface Login {
   employNumber: string;
@@ -94,3 +95,5 @@ export const changePassword = async (credentials: ChangePasswordCredentials) => 
     throw new Error('No se pudo actualizar las credenciales');
   }
 };
+
+export const getBoss = getOne('boss');

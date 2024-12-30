@@ -6,6 +6,7 @@ import UserPhoto from './UserPhoto';
 import { API_DAI_BASE } from '../../../config';
 import FormCredit from '../../holiday/components/FormCredit';
 import RestrictRoute from '../../../shared/ui/RestrictRoute';
+import { useBoss } from '../../authentication/hooks/useBoss';
 
 const StyledUserCard = styled.aside`
   position: relative;
@@ -83,6 +84,10 @@ const UserCard: React.FC<{ user: UserInfo; children?: ReactNode }> = ({
   user,
   children,
 }) => {
+  const { boss } = useBoss();
+
+  console.log(boss);
+
   return (
     <StyledUserCard>
       <RestrictRoute restrictTo={['user', 'manager']}>
@@ -119,7 +124,13 @@ const UserCard: React.FC<{ user: UserInfo; children?: ReactNode }> = ({
         </Group>
         <Group>
           <TextTitle>Jefe directo</TextTitle>
-          <Text></Text>
+          <Text>
+            {joinName({
+              motherSurname: boss?.user?.motherSurname || '',
+              name: boss?.user?.name || '',
+              paternSurname: boss?.user?.paternSurname || '',
+            })}
+          </Text>
         </Group>
         <Group>
           <TextTitle>Antigüedad</TextTitle>
