@@ -6,12 +6,19 @@ import Spinner from '../../../shared/ui/Spinner';
 import { formatText } from '../../../shared/utils/helpers';
 import Table from '../../../shared/ui/Table';
 import { getStatusHoliday } from '../../../shared/utils/holidayUtils';
+import { useEffect } from 'react';
 
 const HolidayTable = () => {
   const { users, isPending, error } = useUsers();
   const {
-    state: { queryHoliday },
+    state: { queryHoliday, filterDepartment, filterEnterprise },
+    handleFilter,
   } = useStateApp();
+
+  useEffect(() => {
+    handleFilter('department', 'all');
+    handleFilter('enterprise', 'all');
+  }, []);
 
   if (isPending) return <Spinner />;
   if (error) return <h1>{error.message}</h1>;
@@ -41,6 +48,23 @@ const HolidayTable = () => {
     return 0;
   });
 
+  // DATA FILTER
+  const dataFilters = sortedData
+    .filter((user: UserInfo) => {
+      const departmentId =
+        typeof user.department === 'object' && user.department
+          ? user.department._id || ''
+          : '';
+      return departmentId.includes(filterDepartment) || filterDepartment === 'all';
+    })
+    .filter((user: UserInfo) => {
+      const enterpriseId =
+        typeof user.enterprise === 'object' && user.enterprise
+          ? user.enterprise._id || ''
+          : '';
+      return enterpriseId.includes(filterEnterprise) || filterEnterprise === 'all';
+    });
+
   return (
     <Table columns=".4fr .6fr 1fr 1fr  1.2fr">
       <Table.Header>
@@ -52,7 +76,7 @@ const HolidayTable = () => {
         <span>Solicitudes</span>
       </Table.Header>
       <Table.Body
-        data={sortedData}
+        data={dataFilters}
         render={(user: UserInfo) => <HolidayRow user={user} key={user.id} />}
       />
     </Table>

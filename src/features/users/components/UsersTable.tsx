@@ -5,20 +5,24 @@ import { useUsers } from '../hooks/useUsers';
 import { UserInfo } from '../types';
 import UserRow from './userRow';
 import Menus from '../../../shared/ui/Menus';
-import { useStateApp } from '../../../context/stateAppContext';
 import { formatText } from '../../../shared/utils/helpers';
+import { useStateApp } from '../../../context/stateAppContext';
+import { useEffect } from 'react';
 
 const UsersTable = () => {
   const { users, isPending, error } = useUsers();
   const {
     state: { queryUser, filterDepartment, filterEnterprise },
+    handleFilter,
   } = useStateApp();
 
-  // console.log(filterDepartment, filterEnterprise);
+  useEffect(() => {
+    handleFilter('department', 'all');
+    handleFilter('enterprise', 'all');
+  }, []);
 
   if (isPending) return <Spinner />;
   if (error) return <h1>{error.message}</h1>;
-
   // DATA SEARCH
   const dataSearch = users.filter((user: UserInfo) => {
     return (
@@ -27,7 +31,6 @@ const UsersTable = () => {
       ) || user?.employNumber?.includes(queryUser)
     );
   });
-
   // DATA FILTER
   const dataFilters = dataSearch
     .filter((user: UserInfo) => {
@@ -35,7 +38,6 @@ const UsersTable = () => {
         typeof user.department === 'object' && user.department
           ? user.department._id || ''
           : '';
-
       return departmentId.includes(filterDepartment) || filterDepartment === 'all';
     })
     .filter((user: UserInfo) => {
@@ -43,7 +45,6 @@ const UsersTable = () => {
         typeof user.enterprise === 'object' && user.enterprise
           ? user.enterprise._id || ''
           : '';
-
       return enterpriseId.includes(filterEnterprise) || filterEnterprise === 'all';
     });
 

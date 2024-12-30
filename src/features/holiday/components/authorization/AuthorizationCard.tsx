@@ -375,7 +375,8 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
               !(
                 holiday.authorizationAdmin === 'approved' &&
                 holiday.authorizationManager === 'approved'
-              ) && (
+              ) &&
+              userAuthenticated.role !== 'user' && (
                 <EditButton onClick={() => setIsEddit((eddit) => !eddit)} type="button">
                   {isEddit ? <HiMiniXMark /> : <HiOutlinePencilSquare />}
                   Editar
@@ -461,7 +462,7 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
               <ObservationField
                 defaultValue={holiday?.observationManager}
                 {...register('observationManager')}
-                disabled={!isEddit && userAuthenticated.role === 'manager'}
+                disabled={!(isEddit && userAuthenticated.role === 'manager')}
               />
 
               {/* Initial state */}
@@ -511,7 +512,7 @@ const AuthorizationCard: React.FC<PropsAuthorizationCard> = ({ holiday }) => {
               </RowMain>
               <ObservationField
                 defaultValue={holiday.observationAdmin}
-                disabled={userAuthenticated.role !== 'admin'}
+                disabled={!(isEddit && userAuthenticated.role === 'admin')}
                 {...register('observationAdmin')}
               />
 
