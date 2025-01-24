@@ -17,24 +17,21 @@ import { media } from '../../../shared/style/media';
 import Logo from '../../../shared/ui/Logo';
 import '../../../shared/style/fonts.css';
 
-// import logoImg from '../../../../public/logo-dai.png';
-
 const LoginContainer = styled.div`
-  gap: 5rem;
-  font-size: 2rem;
+  display: flex;
+  gap: 6rem;
 
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  min-width: 60rem;
 
   border-radius: 12px;
-  padding: 5rem;
+  padding: 4rem;
   box-shadow: var(--shadow-md);
 
-  background-color: #ebebeb;
-  color: #000;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
   z-index: 99;
 
   @media (${media.mobile}) {
@@ -66,26 +63,67 @@ const SectionsContainerLeft = styled.div`
   gap: 1.4rem;
   align-items: center;
   justify-content: space-around;
+  text-align: center;
 
   & :last-child {
     margin: 2rem 0;
   }
 `;
 
+const Image = styled(Logo)`
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.459));
+
+  @media ${media.mobile} {
+    width: 25rem;
+  }
+`;
+
+const Slogan = styled.blockquote`
+  font-family: 'Brunshscn', sans-serif;
+  font-size: 2rem;
+
+  @media ${media.mobile} {
+    font-size: 4rem;
+  }
+`;
+
+const Title = styled.h1`
+  font-family: 'Brunshscn', sans-serif;
+  font-size: 4rem;
+  font-weight: 700;
+  letter-spacing: 0.3rem;
+  font-style: italic;
+
+  @media ${media.mobile} {
+    font-size: 5rem;
+  }
+`;
+
 const SectionsContainerRight = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1.4rem;
+  gap: 2rem;
+
+  @media ${media.mobile} {
+    gap: 4rem;
+  }
 
   & h2 {
     text-align: center;
+    font-weight: 700;
+    font-size: 1.8rem;
+    text-transform: uppercase;
+
+    @media ${media.mobile} {
+      font-size: 3rem;
+    }
   }
 `;
 
 const TextBox = styled.input`
   border: none;
   background-color: transparent;
-  color: black;
+  color: #ced4da;
   letter-spacing: 0.7px;
   padding: 0.4rem;
   width: 100%;
@@ -95,7 +133,7 @@ const TextBox = styled.input`
   }
 
   @media (${media.mobile}) {
-    color: #fff;
+    color: #ced4da;
 
     &::placeholder {
       color: #bbbfc5;
@@ -108,7 +146,6 @@ const TextFieldContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   border-bottom: 3px solid #9ca3af;
-  margin-bottom: 2rem;
 
   & svg {
     width: 3rem;
@@ -133,49 +170,36 @@ const EyeContainer = styled.div`
   }
 `;
 
-const Image = styled(Logo)`
-  width: 20rem;
-  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.459));
-
-  @media ${media.mobile} {
-    width: 25rem;
-  }
-`;
-
 const Labels = styled.label`
-  font-weight: bold;
+  color: #ced4da;
+  font-weight: 600;
 `;
 
 const ButtonSubmit = styled.button`
-  margin-top: 2rem;
   background-color: #b91c1c;
   color: #e5e7eb;
   border: none;
-  padding: 0.7rem;
+  font-size: 1.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+  border-radius: 8px;
+  padding: 0.7rem 0.7rem;
 
   &:hover {
     background-color: #991b1b;
   }
-`;
-
-const Slogan = styled.blockquote`
-  font-family: 'Brunshscn', sans-serif;
-  font-size: 2rem;
 
   @media ${media.mobile} {
-    font-size: 3rem;
+    font-size: 2.5rem;
   }
-`;
-
-const Title = styled.h1`
-  margin-bottom: 2rem;
-  font-size: 4rem;
 `;
 
 const Captcha = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  transform: scale(0.8);
 `;
 
 //TEMPORAL INTERFACE
@@ -216,15 +240,16 @@ export default function Login() {
   return (
     <LoginContainer>
       <SectionsContainerLeft>
-        <Image src={'/logo-dai.png'} />
-        <Slogan>¡ Tu Soporte en el Camino !</Slogan>
-        <Title>¡Bienvenido!</Title>
+        <div>
+          <Image src={'/logo-dai.png'} />
+          <Slogan>¡ Tu Soporte en el Camino !</Slogan>
+          <Title>¡Bienvenido!</Title>
+        </div>
       </SectionsContainerLeft>
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <SectionsContainerRight>
           <h2>Iniciar Sesión</h2>
-
           <Labels>Usuario</Labels>
           <TextFieldContainer>
             <TextBox
@@ -254,13 +279,16 @@ export default function Login() {
               {isClicked ? <HiOutlineEyeSlash /> : <HiOutlineEye />}
             </EyeContainer>
           </TextFieldContainer>
+
           <Captcha>
             <ReCAPTCHA
               ref={captcha}
               sitekey="6LdOB5kqAAAAAJGqkKSO16YP5sfExmhGSrut9vBJ"
               onChange={onChange}
+              width={10}
             />
           </Captcha>
+
           <ButtonSubmit disabled={!isCaptchaValid}>Ingresar</ButtonSubmit>
         </SectionsContainerRight>
       </form>
