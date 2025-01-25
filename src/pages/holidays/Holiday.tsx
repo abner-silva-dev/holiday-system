@@ -1,5 +1,5 @@
 import { useStateApp } from '../../context/stateAppContext';
-import HolidayOptions from '../../features/holiday/components/HolildayOptions';
+// import HolidayOptions from '../../features/holiday/components/HolildayOptions';
 import HolidayTable from '../../features/holiday/components/HolidayTable';
 import FilterUser from '../../features/users/components/FiltersUser';
 import Row from '../../shared/ui/Row';
@@ -23,7 +23,7 @@ const Holiday = () => {
             onSetQuery={(query) => handleSearch('holiday', formatText(query))}
             popUpFilter={<FilterUser />}
           />
-          <HolidayOptions />
+          {/* <HolidayOptions /> */}
         </Row>
         <HolidayTable />
         {/* <div>

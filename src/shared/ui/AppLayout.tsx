@@ -11,7 +11,7 @@ import { media } from '../style/media';
 const StyledAppLayout = styled.div<{ $isOpen: boolean }>`
   height: 100vh;
   display: grid;
-  grid-template-columns: 28rem 1fr;
+  grid-template-columns: 25rem 1fr;
   grid-template-rows: auto 1fr;
 
   /* responsive */
@@ -27,7 +27,7 @@ const Main = styled.main`
   padding: 2rem 4rem 8rem;
   overflow-y: scroll;
 
-  padding: 1.5rem;
+  padding: 4rem;
 `;
 
 const Container = styled.div`

@@ -36,6 +36,10 @@ const UserView = styled(Link)`
   margin-left: 4rem;
 `;
 
+const UserName = styled.span`
+  font-size: 1.6rem;
+`;
+
 const ImageContainer = styled.div`
   display: flex;
   align-items: center;
@@ -145,7 +149,7 @@ function Header() {
             alt="user photo"
           />
         </ImageContainer>
-        <span>{userAuthenticated?.name}</span>
+        <UserName>{userAuthenticated?.name}</UserName>
       </UserView>
 
       <IconSpacing>

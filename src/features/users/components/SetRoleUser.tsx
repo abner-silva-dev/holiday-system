@@ -27,6 +27,7 @@ const Form = styled.div`
 `;
 const UserContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
   gap: 2rem;
   align-items: center;
 `;

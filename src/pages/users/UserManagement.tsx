@@ -10,6 +10,7 @@ import Button from '../../shared/ui/Button';
 import UserMiniCard from '../../shared/ui/UserMiniCard';
 import { useState } from 'react';
 import FloatDocuments from '../../shared/ui/FloatDocuments';
+import Spinner from '../../shared/ui/Spinner';
 
 const GoBack = styled(Link)`
   border: none;
@@ -28,7 +29,7 @@ const UserMain = styled.div`
   grid-template-rows: auto 1fr;
   gap: 2rem;
 
-  @media (${media.tablet}) {
+  @media (${media.smallTablet}) {
     grid-template-columns: 1fr;
   }
 `;
@@ -49,6 +50,7 @@ const UserSubMain = styled.main`
 
 const Options = styled.div`
   display: flex;
+  flex-wrap: wrap;
   gap: 2rem;
 `;
 
@@ -80,15 +82,23 @@ const NavButtonDoc = styled(Button)`
 `;
 
 const DropDown = styled.div`
+  display: inline-block;
   position: relative;
+
   margin-left: auto;
+
+  @media (${media.tablet}) {
+    margin-left: 0;
+  }
 `;
 
 const Float = styled(FloatDocuments)``;
 
 const UserManagement = () => {
-  const { user } = useUser2();
+  const { user, isPending } = useUser2();
   const [isClicked, setClicked] = useState(false);
+
+  if (isPending) return <Spinner />;
   if (!user) return null;
 
   return (
