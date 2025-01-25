@@ -15,7 +15,6 @@ import { useForm } from 'react-hook-form';
 import { useLogin } from '../hooks/useLogin';
 import { media } from '../../../shared/style/media';
 import Logo from '../../../shared/ui/Logo';
-import '../../../shared/style/fonts.css';
 
 const LoginContainer = styled.div`
   display: flex;
@@ -217,11 +216,8 @@ export default function Login() {
 
   const onSubmit = (data: TempForm) => {
     if (isCaptchaValid) {
-      console.log('El usuario no es un robot');
-      console.log(data);
       login(data);
     } else {
-      console.log('Por favor acepta el captcha antes de enviar el formulario');
       alert('Por favor completa el captcha antes de iniciar sesión');
     }
   };
@@ -229,10 +225,8 @@ export default function Login() {
 
   const onChange = (value: string | null) => {
     if (value) {
-      console.log('Captcha validado');
       setCaptchaValid(true);
     } else {
-      console.log('Por favor acepta el captcha');
       setCaptchaValid(false);
     }
   };
@@ -283,7 +277,7 @@ export default function Login() {
           <Captcha>
             <ReCAPTCHA
               ref={captcha}
-              sitekey="6LdOB5kqAAAAAJGqkKSO16YP5sfExmhGSrut9vBJ"
+              sitekey="6LdUnsIqAAAAAJ7drnNdDz0SS3MmFhiIZoz7kzW9"
               onChange={onChange}
               width={10}
             />

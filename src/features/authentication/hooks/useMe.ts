@@ -10,6 +10,7 @@ export const useMe = () => {
   } = useQuery<UserInfo | null>({
     queryKey: ['authUser'],
     queryFn: getMe,
+    retry: false,
   });
 
   return {

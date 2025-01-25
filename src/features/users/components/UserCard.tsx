@@ -37,7 +37,7 @@ const Group = styled.div`
 const UserData = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  row-gap: 3rem;
+  row-gap: 2.5rem;
   column-gap: 2rem;
   padding: 0rem 4rem;
 `;
@@ -85,8 +85,6 @@ const UserCard: React.FC<{ user: UserInfo; children?: ReactNode }> = ({
   children,
 }) => {
   const { boss } = useBoss();
-
-  console.log(boss);
 
   return (
     <StyledUserCard>
