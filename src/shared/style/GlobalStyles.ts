@@ -1,8 +1,19 @@
 import { createGlobalStyle } from 'styled-components';
 import { media } from './media';
+import BrushscnFont from './fonts/Brushscn.ttf';
 
 /* Colors adapted from https://tailwindcss.com/docs/customizing-colors */
 const GlobalStyles = createGlobalStyle`
+
+@font-face {
+  font-family: 'Brunshscn';
+  src: url(${BrushscnFont}) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+
 :root {
   &, &.light-mode{
 /* Indigo */

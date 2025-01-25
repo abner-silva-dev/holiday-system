@@ -11,7 +11,7 @@ interface PropsSidebar {
 const StyleSidebar = styled.aside<PropsSidebar>`
   background-color: var(--color-grey-0);
   border-right: 1px solid var(--color-grey-100);
-  padding: 2.4rem 2.4rem;
+  padding: 3rem 1.4rem;
 
   grid-row: 1/-1;
 
